@@ -1,5 +1,5 @@
 import React from "react";
-import { FormSubmissionStatus } from "@/utils/form";
+import { FormSubmissionStatus } from "@utils/form";
 
 type UseFormLoaderReturnType = [
   boolean,

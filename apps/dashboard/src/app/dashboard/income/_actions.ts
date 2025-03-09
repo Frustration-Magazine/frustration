@@ -1,10 +1,10 @@
 "use server";
 
 // 💽 Database
-import { prisma } from "@/data-access/prisma";
+import { prisma } from "@data-access/prisma";
 
 // 🔧 Libs
-import { stripe, formatStripeTransactions } from "@/data-access/stripe";
+import { stripe, formatStripeTransactions } from "@data-access/stripe";
 
 // 🗿 Models
 import { type Transactions } from "./_models";

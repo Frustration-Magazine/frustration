@@ -1,6 +1,6 @@
 import React from "react";
-import { cn } from "@/utils/tailwind";
-import { Button } from "@/ui/components/button";
+import { cn } from "@/libs/tailwind";
+import { Button } from "@ui/components/button";
 
 interface Props {
   readonly gradient?: string;
@@ -18,7 +18,7 @@ function GradientButton({ gradient, id, children }: Props) {
       )}>
       <div
         className={cn(
-          "bg-gradient-conic absolute inset-[-1000%] animate-spin blur [animation-duration:5s]",
+          "absolute inset-[-1000%] animate-spin bg-gradient-conic blur [animation-duration:5s]",
           gradient,
         )}
       />

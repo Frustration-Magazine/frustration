@@ -12,11 +12,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/ui/components/table";
-import { Button } from "@dashboard/components/Button";
+} from "@ui/components/table";
+import { Button } from "@/components/Button";
 
 // 🔧 Utils
-import { prettifyName } from "@/utils/strings";
+import { prettifyName } from "@utils/strings";
 
 // 🎁 Libraries
 import {
@@ -32,7 +32,7 @@ import {
 import { ArrowUpDown } from "lucide-react";
 
 // 🗿 Models
-import { Customer } from "@/data-access/stripe";
+import { Customer } from "@data-access/stripe";
 
 const DEFAULT_VALUE = "-";
 

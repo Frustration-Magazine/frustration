@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { fetchCustomers, fetchActiveCustomersLastMonth } from "../_actions";
 
 // 🗿 Models
-import { Customer } from "@/data-access/stripe";
+import { Customer } from "@data-access/stripe";
 
 const useCustomers = () => {
   const [loadingCustomers, setLoadingCustomers] = useState(true);

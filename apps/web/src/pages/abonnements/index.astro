@@ -1,19 +1,19 @@
 ---
-// 🧱 Components
 import SubscriptionCard from "./_components/Description/SubscriptionCard.astro";
 import CheckoutFormWrapper from "./_components/Form/CheckoutFormWrapper";
 
-// 🎨 Assets
 import { Image } from "astro:assets";
-import Tipeee from "./_assets/tipeee.png";
+import Tipeee from "./_assets/tipeee.webp";
 import ParasitesCover from "./_assets/parasites.webp";
 import Numero2025 from "./_assets/numero_2025.webp";
 
 import PageLayout from "@/layout/PageLayout/PageLayout.astro";
 
-// 💽 Data
 import { SUBSCRIPTIONS } from "./_models";
 
+import { cn } from "@/libs/tailwind";
+
+// Database imports ?
 const { mini, maxi, medium } = SUBSCRIPTIONS;
 ---
 
@@ -21,16 +21,28 @@ const { mini, maxi, medium } = SUBSCRIPTIONS;
   <article slot="content">
     <!-- 🅰️ Titles -->
     <h2
-      class="text-4xl sm:text-5xl md:text-5xl mb-2 md:zs-8 lg:text-7xl text-pretty text-center font-bold uppercase font-bakbak">
+      class={cn(
+        "text-4xl mb-2 text-pretty text-center font-bold uppercase font-bakbak",
+        "sm:text-5xl",
+        "sm:text-5xl md:zs-8",
+        "lg:text-7xl",
+      )}>
       Frustration a besoin de vous !
     </h2>
     <h3
-      class="text-2xl lg:text-4xl text-pretty text-center font-light uppercase font-bakbak">
+      class={cn(
+        "text-pretty text-center font-light uppercase font-bakbak",
+        "text-2xl",
+        "lg:text-4xl",
+      )}>
       Faites-nous grandir d'un coup 🌱
     </h3>
     <!-- 🔠 Text -->
     <article
-      class="mt-8 md:mt-10 mx-auto w-[700px] max-w-[90vw] font-open-sans tracking-wide md:text-lg space-y-4">
+      class={cn(
+        "mt-8 md:mt-10 mx-auto w-[700px] max-w-[90vw] font-open-sans tracking-wide space-y-4",
+        "md:text-lg",
+      )}>
       <p>
         Frustration est un <b>média d’opinion, engagé et apartisan</b> : financés
         à 100% par nos lectrices et lecteurs, nous ne percevons ni subventions ni
@@ -89,18 +101,29 @@ const { mini, maxi, medium } = SUBSCRIPTIONS;
       </p>
     </article>
     <h3
-      class="mt-14 mb-6 text-4xl sm:text-5xl md:text-5xl md:mb-8 lg:text-6xl lg:mb-20 text-pretty text-center font-bold uppercase font-bakbak">
+      class={cn(
+        "mt-14 text-pretty text-center font-bold uppercase font-bakbak",
+        "text-4xl mb-6",
+        "sm:text-5xl sm:mb-6",
+        "md:text-5xl md:mb-8",
+        "lg:text-6xl lg:mb-20",
+      )}>
       Nos formules de soutien
     </h3>
     <!-- 🃏 CARDS -->
     <div
-      class="relative w-[1100px] max-w-[90vw] left-1/2 -translate-x-1/2 grid grid-cols-1 gap-6 lg:grid-cols-3">
+      class={cn(
+        "relative w-[1100px] max-w-[90vw] left-1/2 -translate-x-1/2 grid gap-6",
+        "grid-cols-1",
+        "lg:grid-cols-3",
+      )}>
       <!-- 🤏 MINI -->
       <SubscriptionCard {...mini}>
         <p>
           ✊ Notre <b>newsletter</b> régulière
         </p>
       </SubscriptionCard>
+
       <!-- 💪 MEDIUM -->
       <SubscriptionCard
         {...medium}
@@ -121,6 +144,7 @@ const { mini, maxi, medium } = SUBSCRIPTIONS;
           />
         </div>
       </SubscriptionCard>
+
       <!-- 💥 MAXI -->
       <SubscriptionCard {...maxi}>
         <p>
@@ -140,7 +164,7 @@ const { mini, maxi, medium } = SUBSCRIPTIONS;
             src={Numero2025}
             alt="Couverture du numéro papier Frustration 2025"
           />
-          <span class="text-xl lg:text-3xl">+</span>
+          <span class={cn("text-xl", "lg:text-3xl")}>+</span>
           <Image
             class="drop-shadow-lg"
             width="100"
@@ -157,7 +181,11 @@ const { mini, maxi, medium } = SUBSCRIPTIONS;
       href="https://fr.tipeee.com/frustration-magazine"
       target="_blank">
       <h5
-        class="font-montserrat text-balance font-bold text-2xl md:text-3xl mb-4">
+        class={cn(
+          "font-montserrat text-balance font-bold mb-4",
+          "text-2xl",
+          "md:text-3xl",
+        )}>
         Vous pouvez aussi nous soutenir sur notre Tipeee 😃 <br />
         👇
       </h5>
@@ -165,7 +193,7 @@ const { mini, maxi, medium } = SUBSCRIPTIONS;
         src={Tipeee}
         class="mx-auto"
         width="200"
-        alt="Logo de la plateforme de finance participatif Tipeee"
+        alt="Logo de la plateforme de financement participatif Tipeee"
       />
     </a>
     <!-- <MarqueeDemo
@@ -174,7 +202,7 @@ const { mini, maxi, medium } = SUBSCRIPTIONS;
       /> -->
 
     <!-- 📝 💰 FORM 💰 -->
-    <div class="mt-6 md:mt-12 mb-6 md:mb-12">
+    <div class={cn("mt-6 mb-6", "md:mt-12 md:mb-12")}>
       <CheckoutFormWrapper client:load />
     </div>
   </article>

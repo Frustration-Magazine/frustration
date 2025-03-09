@@ -4,8 +4,8 @@ import {
   // fetchStripeNewCustomers,
   Customer,
   fetchActiveSubscriptions,
-} from "@/data-access/stripe";
-import { fetchNumberOfActiveCustomersLastMonth } from "@/data-access/database";
+} from "@data-access/stripe";
+import { fetchNumberOfActiveCustomersLastMonth } from "@data-access/database";
 
 export async function fetchCustomers({
   from,

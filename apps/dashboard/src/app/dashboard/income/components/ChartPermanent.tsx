@@ -6,12 +6,12 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/ui/components/chart";
+} from "@ui/components/chart";
 import { Area, AreaChart, XAxis, Legend } from "recharts";
 
 // 🔧 Libs
 import { inEuros, debounce } from "../_utils";
-import { formatExplicitMonth } from "@/utils/dates";
+import { formatExplicitMonth } from "@utils/dates";
 
 // 🗿 Models
 import { Transactions } from "../_models";

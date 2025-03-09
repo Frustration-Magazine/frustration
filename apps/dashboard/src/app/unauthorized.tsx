@@ -1,4 +1,4 @@
-import RedirectionMessage from "@components/RedirectionMessage";
+import RedirectionMessage from "@/components/RedirectionMessage";
 
 export default function Unauthorized() {
   return (

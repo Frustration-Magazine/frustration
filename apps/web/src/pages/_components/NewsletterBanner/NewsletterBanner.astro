@@ -1,31 +1,21 @@
 ---
-// 🔧 Libs
-import { cn } from "@/utils/tailwind";
+import { cn } from "@/libs/tailwind";
 
-// 🧱 Components
 import Thumbnail from "./Thumbnail.astro";
 import newsletter from "./assets/_newsletter.jpg";
 import newsletter2 from "./assets/_newsletter2.jpg";
 
-// 🎨 Styles
 const THUMBNAIL_WIDTH = 350;
-
-const multiColorBackground =
-  "relative my-10 flex h-[275px] w-full overflow-hidden bg-[linear-gradient(90deg,rgba(131,58,180,1)_0%,rgba(253,29,29,1)_50%,rgba(252,176,69,1)100%)] shadow-[inset_0_0_20px_rgba(0,0,0,.5)] md:my-16 lg:my-24 xl:my-32";
-
-const barElement =
-  "hidden relative md:block grow md:bottom-[9px] md:ml-[10px] md:h-[3px] md:bg-gradient-to-r md:from-white md:to-transparent";
-
-const whiteTitle =
-  "relative flex w-full justify-center text-white items-end overflow-hidden font-arca text-5xl text-center md:text-left md:text-6xl";
-
-const whiteSubtitle =
-  "text-white mb-6 text-center text-sm md:text-left md:text-base";
-
-const buttons = "h-[40px] w-full rounded-full ";
 ---
 
-<section class={multiColorBackground}>
+<section
+  class={cn(
+    "relative flex h-[275px] w-full overflow-hidden bg-[linear-gradient(90deg,rgba(131,58,180,1)_0%,rgba(253,29,29,1)_50%,rgba(252,176,69,1)100%)] shadow-[inset_0_0_20px_rgba(0,0,0,.5)]",
+    "my-10",
+    "md:my-16",
+    "lg:my-24",
+    "xl:my-32",
+  )}>
   <div class="relative z-10 m-auto w-full max-w-[1600px] px-6 lg:px-8 xl:px-10">
     {/* 🖼️ Images */}
     <div
@@ -43,16 +33,31 @@ const buttons = "h-[40px] w-full rounded-full ";
     </div>
     {/* 🔠 Newsletter */}
     <div class="grow">
-      <h3 class={cn(whiteTitle)}>
+      <h3
+        class={cn(
+          "relative flex w-full justify-center text-white items-end overflow-hidden font-bakbak ",
+          "text-center text-5xl",
+          "md:text-left md:text-6xl",
+        )}>
         <span class="mr:auto">Newsletter</span>
-        <div class={cn(barElement)}></div>
+        <div
+          class={cn(
+            "hidden relative grow",
+            "md:block md:bottom-[9px] md:ml-[10px] md:h-[3px] md:bg-gradient-to-r md:from-white md:to-transparent",
+          )}>
+        </div>
       </h3>
-      <p class={whiteSubtitle}>
+      <p
+        class={cn(
+          "text-white mb-6",
+          "text-center text-sm",
+          "md:text-left md:text-base",
+        )}>
         <span class="xs:inline hidden"> 🗞️ </span>
         Recevez régulièrement nos dernières publications !
       </p>
       <form
-        data-form="newsletter"
+        id="form-newsletter-footer"
         class="newsletter-form mx-auto max-w-[350px] space-y-2 md:mx-0"
         method="post">
         {/* 📮 Mail */}
@@ -61,14 +66,17 @@ const buttons = "h-[40px] w-full rounded-full ";
           required
           name="email"
           placeholder="Entrez votre email ici"
-          class={cn(buttons, "px-6 py-2 font-open-sans text-black text-base")}
+          class={cn(
+            "h-[40px] w-full rounded-full px-6 py-2 font-open-sans text-black text-base",
+          )}
         />
         {/* 📩 Button */}
         <button
           type="submit"
           class={cn(
-            buttons,
-            "text-lg md:text-xl bg-[linear-gradient(90deg,rgba(252,176,69,1)_0%,rgba(253,29,29,1)_100%)] font-bakbak uppercase text-white",
+            "h-[40px] w-full rounded-full bg-[linear-gradient(90deg,rgba(252,176,69,1)_0%,rgba(253,29,29,1)_100%)] font-bakbak uppercase text-white",
+            "text-lg",
+            "md:text-xl",
           )}>
           Recevoir la newsletter
         </button>
@@ -77,40 +85,9 @@ const buttons = "h-[40px] w-full rounded-full ";
   </div>
 </section>
 <script>
-  import { actions } from "astro:actions";
-  const form = document.querySelector(
-    "[data-form=newsletter]",
+  import { addToNewsletter } from "@/scripts/add-to-newsletter";
+  const form = document.getElementById(
+    "form-newsletter-footer",
   ) as HTMLFormElement;
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const { error } = await actions.addSubscriber(formData);
-      if (error)
-        console.error("error while creating a new subscriber contact", e);
-      if (!error) {
-        const input = document.querySelector(
-          "[data-form=newsletter] input[type=email]",
-        ) as HTMLInputElement;
-
-        const submitButton = document.querySelector(
-          "[data-form=newsletter] button[type=submit]",
-        ) as HTMLButtonElement;
-
-        // Hide input
-        input.disabled = true;
-        input.placeholder = "";
-        input.hidden = true;
-
-        // Change submit button style
-        submitButton.disabled = true;
-        submitButton.style.backgroundImage = "none";
-        submitButton.textContent =
-          "Vous êtes bien inscrit.e à notre newsletter !";
-
-        // Reset form
-        form.reset();
-      }
-    });
-  }
+  if (form) addToNewsletter(form);
 </script>

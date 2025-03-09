@@ -1,16 +1,19 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
+import { Resend } from "resend";
 
-import { addSubscriber } from "@/data-access/mail";
+export const resend = new Resend(process.env.RESEND_API_KEY);
+
+import { addSubscriberToNewsletter } from "./add-to-newsletter";
 
 export const server = {
-  addSubscriber: defineAction({
+  addSubscriberToNewsletter: defineAction({
     accept: "form",
     input: z.object({
       email: z.string(),
       firstName: z.string().optional(),
       lastName: z.string().optional(),
     }),
-    handler: addSubscriber,
+    handler: addSubscriberToNewsletter,
   }),
 };

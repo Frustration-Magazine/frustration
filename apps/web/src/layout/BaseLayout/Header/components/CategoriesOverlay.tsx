@@ -57,7 +57,7 @@ function CategoriesOverlay({ categories }: Props) {
       type="button"
       title="Nous contacter"
       className={cn(
-        "fixed bottom-5 right-5 rounded-full bg-yellow p-2 text-black opacity-0 transition-opacity duration-1000",
+        "bg-frustration-yellow fixed bottom-5 right-5 rounded-full p-2 text-black opacity-0 transition-opacity duration-1000",
         opened && "opacity-100",
       )}
       aria-label="Nous contacter">

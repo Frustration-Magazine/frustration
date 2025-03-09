@@ -2,12 +2,7 @@
 import { getTransactionsForPeriod } from "./_actions";
 
 // 🧱 Components
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@dashboard/components/Tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/Tabs";
 import PanelTemporary from "./components/PanelTemporary";
 
 // 🔧 Libs

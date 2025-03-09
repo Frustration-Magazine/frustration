@@ -1,5 +1,5 @@
 // 🗿 Models
-import { type YoutubeResourceType } from "@/data-access/youtube";
+import { type YoutubeResourceType } from "@data-access/youtube";
 
 // Card resources
 interface Card {

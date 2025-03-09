@@ -101,6 +101,10 @@
   padding-left: 15px;
 }
 
+.content ul.wp-block-list li {
+  margin-left: 10px;
+}
+
 .content iframe:not([src^="https://www.youtube.com"])
 {
   display: none;

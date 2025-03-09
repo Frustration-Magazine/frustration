@@ -1,8 +1,14 @@
-import { Resend, type ErrorResponse } from "resend";
+import { resend } from "./index";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export async function addSubscriber({ email, firstName, lastName }: { email: string; firstName: string | undefined; lastName: string | undefined }) {
+export async function addSubscriberToNewsletter({
+  email,
+  firstName,
+  lastName,
+}: {
+  email: string;
+  firstName: string | undefined;
+  lastName: string | undefined;
+}) {
   // ❌ Early return if the api key is not set
   if (!process.env.RESEND_API_KEY) {
     console.warn("🔎 Missing api key to add subscriber");
@@ -20,13 +26,16 @@ export async function addSubscriber({ email, firstName, lastName }: { email: str
       firstName,
       lastName,
       unsubscribed: false,
-      audienceId: process.env.RESEND_NEWSLETTER_AUDIENCE_ID
+      audienceId: process.env.RESEND_NEWSLETTER_AUDIENCE_ID,
     });
 
     if (error) throw new Error(error.message);
     return { success: true, message: null };
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : "An error occurred while creating a new subscriber contact";
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "An error occurred while creating a new subscriber contact";
     console.error(errorMessage);
     return { success: false, message: errorMessage };
   }

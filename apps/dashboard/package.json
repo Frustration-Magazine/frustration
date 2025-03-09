@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "dotenv -e ../../.env -- next dev",
-    "build": "dotenv -e ../../.env -- next build",
-    "start": "dotenv -e ../../.env -- next start",
+    "dev": "infisical run -- next dev",
+    "build": "infisical run -- next build",
+    "start": "infisical run --env prod -- next start",
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "vercel-build": "cd ../../packages/data-access && pnpm dlx prisma generate && pnpm dlx prisma db push --accept-data-loss && cd - && next build"
+    "vercel-prisma": "cd ../../ && pnpm dlx prisma generate --schema='./packages/data-access/prisma/schema.prisma' && cd -",
+    "vercel-build": "pnpm run vercel-prisma && eslint . && next build"
   },
   "dependencies": {
     "@/data-access": "workspace:*",

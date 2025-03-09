@@ -4,12 +4,12 @@
 import {
   fetchStripeTransactions,
   fetchStripeBalance,
-} from "@/data-access/stripe";
-import { fetchHelloAssoTransactions } from "@/data-access/helloasso";
+} from "@data-access/stripe";
+import { fetchHelloAssoTransactions } from "@data-access/helloasso";
 
 // 🫙 Database
-import { prisma } from "@/data-access/prisma";
-import { fetchLastUpdate } from "@/data-access/database";
+import { prisma } from "@data-access/prisma";
+import { fetchLastUpdate } from "@data-access/database";
 
 // 🗿 Models
 import {
@@ -23,10 +23,10 @@ import {
   ERROR_UPDATE_BALANCE,
 } from "./_models";
 
-import { Transaction } from "@/data-access/models/transactions";
+import { Transaction } from "@data-access/models/transactions";
 
 // 🔧 Utils
-import { convertLocalDateToDateUTC } from "@/utils/dates";
+import { convertLocalDateToDateUTC } from "@utils/dates";
 
 const isProduction = process.env.NODE_ENV === "production";
 

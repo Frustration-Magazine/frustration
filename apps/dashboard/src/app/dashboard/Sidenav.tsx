@@ -4,7 +4,7 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { cn } from "@dashboard/utils/style";
+import { cn } from "@/utils/style";
 
 // 🖼️ Icons
 import { FaCreditCard } from "react-icons/fa";
@@ -14,7 +14,7 @@ import { FaYoutube } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
 
 // 🧱 Components
-import { Separator } from "@dashboard/components/Separator";
+import { Separator } from "@/components/Separator";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,8 +24,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@dashboard/components/AlertDialog";
-import { Button } from "@dashboard/components/Button";
+} from "@/components/AlertDialog";
+import { Button } from "@/components/Button";
 
 interface Link {
   label: string;
@@ -101,7 +101,7 @@ const Sidenav = () => {
 
   return (
     <aside className="flex w-60 flex-col items-center justify-between bg-black pb-4">
-      <ul className="text-yellow w-full space-y-2 px-3">
+      <ul className="w-full space-y-2 px-3 text-yellow">
         {LINKS.map(({ label, icon, href, key }) => {
           return (
             <React.Fragment key={key}>

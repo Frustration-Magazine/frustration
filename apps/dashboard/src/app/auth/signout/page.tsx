@@ -2,7 +2,7 @@
 
 import { signOutAction } from "./_actions";
 import { useEffect } from "react";
-import RedirectionMessage from "@dashboard/components/RedirectionMessage";
+import RedirectionMessage from "@/components/RedirectionMessage";
 
 function SignOut() {
   useEffect(() => {

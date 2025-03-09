@@ -20,6 +20,7 @@
       "destination": "/abonnements",
       "permanent": true
     },
+
     {
       "source": "/chere-frustration",
       "destination": "/contact",

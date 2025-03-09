@@ -3,14 +3,14 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "dotenv -e ../../.env -- astro dev",
-    "start": "dotenv -e ../../.env -- astro dev",
-    "build": "dotenv -e ../../.env -- astro build",
-    "preview": "dotenv -e ../../.env -- astro preview",
-    "astro": "dotenv -e ../../.env -- astro",
+    "dev": "infisical run -- astro dev",
+    "start": "infisical run --env prod -- astro dev",
+    "build": "infisical run -- astro build",
+    "preview": "infisical run -- astro preview",
+    "astro": "infisical run -- astro",
     "lint": "eslint .",
-    "stripe-webhook": "dotenv -e ../../.env -- stripe listen --forward-to http://localhost:4321/api/webhook",
-    "vercel-prisma": "cd ../../ && pnpm dlx prisma generate --schema='./packages/data-access/prisma/schema.prisma' && pnpm dlx prisma db push --schema='./packages/data-access/prisma/schema.prisma' --accept-data-loss && cd -",
+    "stripe-webhook": "stripe listen --forward-to http://localhost:4321/api/webhook",
+    "vercel-prisma": "cd ../../ && pnpm dlx prisma generate --schema='./packages/data-access/prisma/schema.prisma' && cd -",
     "vercel-build": "pnpm run vercel-prisma && eslint . && astro build"
   },
   "dependencies": {
@@ -76,6 +76,7 @@
     "stripe": "^17.6.0",
     "tailwind-merge": "^2.6.0",
     "tailwind-scrollbar": "^4.0.1",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "vite": "^6.2.1"
   }
 }

@@ -7,10 +7,10 @@ import {
   YoutubeResourceType,
   YOUTUBE_VIDEO_URL_REGEX,
   YOUTUBE_PLAYLIST_URL_REGEX,
-} from "@/data-access/youtube";
+} from "@data-access/youtube";
 
 // 💽 Database
-import { prisma, createRecord, deleteRecord } from "@/data-access/prisma";
+import { prisma, createRecord, deleteRecord } from "@data-access/prisma";
 
 // 🌍 i18n
 import { typesTranslations } from "./_models";
@@ -398,14 +398,16 @@ export async function redeploy() {
   }
 
   // ❌ Early return | No deploy hook found
-  if (!process.env.DEPLOY_HOOK) {
+  if (!process.env.VERCEL_DEPLOY_HOOK) {
     status.error =
       "Aucun hook de déploiement trouvé parmi les variables d'environnement";
     return status;
   }
 
   try {
-    const response = await fetch(process.env.DEPLOY_HOOK, { method: "POST" });
+    const response = await fetch(process.env.VERCEL_DEPLOY_HOOK, {
+      method: "POST",
+    });
     if (response.ok) status.success = "🚀 Redéploiement du site...";
     if (!response.ok)
       status.error =

@@ -4,7 +4,7 @@
 import React from "react";
 
 // 🧱 Components
-import { Button } from "@dashboard/components/Button";
+import { Button } from "@/components/Button";
 import {
   Dialog,
   DialogContent,
@@ -12,8 +12,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/ui/components/dialog";
-import { Input } from "@/ui/components/input";
+} from "@ui/components/dialog";
+import { Input } from "@ui/components/input";
 import SuperBallsLoader from "@/ui/loaders/loader-super-balls";
 
 import VideoPreview from "./VideoPreview";
@@ -22,7 +22,7 @@ import VideoPreview from "./VideoPreview";
 import {
   YoutubeResourceType,
   getYoutubeResourceId,
-} from "@/data-access/youtube";
+} from "@data-access/youtube";
 
 // 🌍 i18n
 import { typesTranslations } from "../_models";

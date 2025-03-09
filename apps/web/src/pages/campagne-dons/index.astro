@@ -11,7 +11,7 @@ import { Image } from "astro:assets";
 import PageLayout from "@/layout/PageLayout/PageLayout.astro";
 
 // 🔧 Libs
-import { stripe } from "@/data-access/stripe";
+import { stripe } from "@data-access/stripe";
 // import puppeteer from "puppeteer";
 
 // 🎨 Assets
@@ -134,7 +134,7 @@ const progressInPercent = Math.max(
       client:load
       value={progressInPercent}
       delayInSeconds={2}
-      background="bg-yellow"
+      background="bg-frustration-yellow"
       className="h-10 mt-12 shadow-lg"
     />
     <!-- 🔠 Text -->

@@ -1,4 +1,4 @@
-import { cn } from "@/utils/tailwind";
+import { cn } from "@/libs/tailwind";
 
 type Props = {
   readonly className?: string;

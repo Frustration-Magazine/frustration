@@ -1,7 +1,7 @@
 // 🧱 Components
-import { Toaster } from "@components/Toaster";
-import { Badge } from "@components/Badge";
-import { cn } from "@libs/tailwind";
+import { Toaster } from "@/components/Toaster";
+import { Badge } from "@/components/Badge";
+import { cn } from "@/libs/tailwind";
 
 // 👨‍🎨 Global style
 import "./globals.css";
@@ -53,7 +53,7 @@ const DevelopmentBadge =
 const Header = () => (
   <header className="flex h-fit w-full items-center justify-center bg-black py-2">
     <Link href="/">
-      <h1 className="text-yellow font-bebas text-7xl uppercase">Dashboard</h1>
+      <h1 className="font-bebas text-7xl uppercase text-yellow">Dashboard</h1>
     </Link>
     {DevelopmentBadge}
   </header>

@@ -12,9 +12,6 @@ const { title, description, ogImageUrl, width, height, mimeType } = Astro.props;
 const permalink = new URL(Astro.url.pathname, Astro.site).href;
 const author = Astro.props.author?.node;
 const authorFullname = `${author?.firstName} ${author?.lastName}`;
-
-const RANDOM_QUERY_PARAM_TO_FORCE_TWITTER_CARD_VALIDATOR_TO_REFETCH_IMAGE =
-  Math.round(Math.random() * 1000);
 ---
 
 <head>
@@ -86,7 +83,7 @@ const RANDOM_QUERY_PARAM_TO_FORCE_TWITTER_CARD_VALIDATOR_TO_REFETCH_IMAGE =
   />
   <meta
     property="og:image"
-    content={`${ogImageUrl}?${RANDOM_QUERY_PARAM_TO_FORCE_TWITTER_CARD_VALIDATOR_TO_REFETCH_IMAGE}`}
+    content={ogImageUrl}
   />
   <meta
     property="og:locale"
@@ -140,7 +137,7 @@ const RANDOM_QUERY_PARAM_TO_FORCE_TWITTER_CARD_VALIDATOR_TO_REFETCH_IMAGE =
   />
   <meta
     name="twitter:image"
-    content={`${ogImageUrl}?${RANDOM_QUERY_PARAM_TO_FORCE_TWITTER_CARD_VALIDATOR_TO_REFETCH_IMAGE}`}
+    content={ogImageUrl}
   />
   <meta
     name="twitter:creator"

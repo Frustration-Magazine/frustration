@@ -4,7 +4,8 @@ import type { NextAuthConfig } from "next-auth";
 export default {
   providers: [
     Resend({
-      from: "redaction@frustrationmagazine.fr"
-    })
-  ]
+      apiKey: process.env.RESEND_API_KEY,
+      from: "redaction@frustrationmagazine.fr",
+    }),
+  ],
 } satisfies NextAuthConfig;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { cn } from "@/utils/tailwind";
+import { cn } from "@/libs/tailwind";
 interface RainbowButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 

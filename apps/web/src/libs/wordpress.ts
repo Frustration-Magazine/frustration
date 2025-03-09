@@ -243,15 +243,16 @@ export async function fetchCategories() {
 /* ========================================================= */
 
 async function fetchWordpress({ query, variables = {} }: any) {
-  const PUBLIC_WP_URL = import.meta.env.PUBLIC_WP_URL;
+  const PUBLIC_WORDPRESS_GRAPHQL_API = import.meta.env
+    .PUBLIC_WORDPRESS_GRAPHQL_API;
 
-  if (!PUBLIC_WP_URL) {
-    console.error("Missing PUBLIC_WP_URL env variable");
+  if (!PUBLIC_WORDPRESS_GRAPHQL_API) {
+    console.error("Missing PUBLIC_WORDPRESS_GRAPHQL_API env variable");
     return;
   }
 
   try {
-    const res = await fetch(PUBLIC_WP_URL, {
+    const res = await fetch(PUBLIC_WORDPRESS_GRAPHQL_API, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

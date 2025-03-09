@@ -9,12 +9,12 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/ui/components/chart";
+} from "@ui/components/chart";
 import { Area, AreaChart, XAxis } from "recharts";
 
 // 🔧 Libs
 import { inEuros } from "../_utils";
-import { formatExplicitDay } from "@/utils/dates";
+import { formatExplicitDay } from "@utils/dates";
 
 // 🗿 Models
 import { Transactions } from "../_models";

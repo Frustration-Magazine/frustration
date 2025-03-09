@@ -18,32 +18,20 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/data-access/*": [
+      "@data-access/*": [
         "../../packages/data-access/*"
       ],
-      "@/ui/*": [
+      "@ui/*": [
         "../../packages/ui/*"
       ],
-      "@/data-access/prisma": [
-        "../../packages/data-access/prisma/client"
-      ],
-      "@/utils/*": [
+      "@utils/*": [
         "../../packages/utils/*"
       ],
-      "@/layout/*": [
-        "src/layout/*"
+      "@data-access/prisma": [
+        "../../packages/data-access/prisma/client"
       ],
-      "@/styles/*": [
-        "src/styles/*"
-      ],
-      "@/utils": [
-        "src/utils.ts"
-      ],
-      "@/components/*": [
-        "src/components/*"
-      ],
-      "@/libs/*": [
-        "src/libs/*"
+      "@/*": [
+        "src/*"
       ],
     },
   },

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/libs/tailwind";
-import { Button } from "@/ui/components/button";
+import { Button } from "@ui/components/button";
 import { CgArrowTopRight } from "react-icons/cg";
 
 type Props = {
@@ -17,7 +17,7 @@ type Post = {
   readonly slug: string;
 };
 
-const { PUBLIC_WP_URL } = import.meta.env;
+const { PUBLIC_WORDPRESS_GRAPHQL_API } = import.meta.env;
 
 const NoResults = (
   <p className="flex justify-center gap-2 text-center text-xl">
@@ -91,7 +91,7 @@ function Results({
     `;
 
     try {
-      const res = await fetch(PUBLIC_WP_URL, {
+      const res = await fetch(PUBLIC_WORDPRESS_GRAPHQL_API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -128,7 +128,7 @@ function Results({
       {pageInfo.hasNextPage ? (
         <Button
           className={cn(
-            "mt-12 box-content bg-black px-5 py-2 font-bebas text-2xl text-yellow hover:bg-black hover:text-yellow",
+            "text-frustration-yellow hover:text-frustration-yellow mt-12 box-content bg-black px-5 py-2 font-bebas text-2xl hover:bg-black",
             "md:px-6 md:py-3 md:text-3xl",
           )}
           onClick={handleMoreArticles}

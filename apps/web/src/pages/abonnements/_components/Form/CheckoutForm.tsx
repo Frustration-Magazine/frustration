@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, type FormEvent } from "react";
 import {
   PaymentElement,
   AddressElement,
@@ -9,8 +9,8 @@ import {
 import { actions } from "astro:actions";
 import { MessageCircleWarning } from "lucide-react";
 import { type StripePaymentElementOptions } from "@stripe/stripe-js";
-import { cn } from "@/utils/tailwind";
-import CircleLoader from "@/ui/components/loaders/loader-circle";
+import { cn } from "@/libs/tailwind";
+import CircleLoader from "@ui/components/loaders/loader-circle";
 import { RainbowButton } from "./RainbowButton";
 
 // 💰 Stripe
@@ -59,7 +59,7 @@ export default function StripeForm({
   // 🔼 State
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
+  // const [message, setMessage] = useState<string | null>(null);
 
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
@@ -67,7 +67,7 @@ export default function StripeForm({
 
   /* Handle payment */
   /* -------------- */
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // 🔁 Check everything is loaded
@@ -240,7 +240,7 @@ export default function StripeForm({
       formData.append("firstName", firstName);
       formData.append("lastName", lastName);
 
-      actions.addSubscriber(formData);
+      actions.addSubscriberToNewsletter(formData);
 
       const { error } = await stripe.confirmPayment({
         elements,
@@ -323,7 +323,7 @@ export default function StripeForm({
           {isLoading ? (
             <CircleLoader color="#FFF200" />
           ) : (
-            <span className="text-xl font-bold text-yellow lg:text-2xl">
+            <span className="text-frustration-yellow text-xl font-bold lg:text-2xl">
               💝 Soutenir Frustration
             </span>
           )}

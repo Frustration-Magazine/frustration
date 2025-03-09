@@ -24,34 +24,23 @@
       }
     ],
     "paths": {
-      // 🧱 Components
-      "@dashboard/components/*": [
-        "./src/components/*"
+      "@/*": [
+        "./src/*"
       ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@libs/*": [
-        "./src/libs/*"
-      ],
-      // 🔑 Auth
-      "@dashboard/auth": [
+      "@/auth": [
         "./src/app/auth/auth.ts"
       ],
-      "@auth": [
-        "./src/app/auth/auth.ts"
+      "@data-access/*": [
+        "../../packages/data-access/*"
       ],
-      // 🪝 Hooks
-      "@dashboard/hooks/*": [
-        "./src/hooks/*"
+      "@data-access/prisma": [
+        "../../packages/data-access/prisma/client"
       ],
-      // 🖋️ Fonts
-      "@dashboard/fonts": [
-        "./src/fonts.ts"
+      "@ui/*": [
+        "../../packages/ui/*"
       ],
-      // 🔧 Utils
-      "@dashboard/utils/*": [
-        "./src/utils/*"
+      "@utils/*": [
+        "../../packages/utils/*"
       ],
     }
   },

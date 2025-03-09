@@ -1,4 +1,4 @@
-import { cn } from "@/utils/tailwind";
+import { cn } from "@/libs/tailwind";
 import { useEffect, useState } from "react";
 
 interface MeteorsProps {

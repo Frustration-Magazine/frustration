@@ -7,8 +7,8 @@ import React from "react";
 import { BiMailSend } from "react-icons/bi";
 
 // 🧱 Components
-import { Button } from "@dashboard/components/Button";
-import { Input } from "@dashboard/components/Input";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
 import {
   Form,
   FormControl,
@@ -16,7 +16,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@dashboard/components/Form";
+} from "@/components/Form";
 
 // 🗒️ Form
 import { sendLink as serverAction } from "./_actions";
@@ -26,7 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // 🪝 Hooks
 import { useForm } from "react-hook-form";
-import { useToast } from "@dashboard/hooks/useToast";
+import { useToast } from "@/hooks/useToast";
 
 const initial: Status = {
   success: "",

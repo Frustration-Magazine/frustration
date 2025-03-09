@@ -16,7 +16,7 @@ import {
 import {
   YoutubeResourceType,
   getYoutubeResourceId,
-} from "@/data-access/youtube";
+} from "@data-access/youtube";
 
 const isProduction = process.env.NODE_ENV === "production";
 

@@ -8,7 +8,7 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { RiChatFollowUpFill } from "react-icons/ri";
 
 // 🗿 Models
-import { Customer } from "@/data-access/stripe";
+import { Customer } from "@data-access/stripe";
 
 const BottomBar = ({
   customers,

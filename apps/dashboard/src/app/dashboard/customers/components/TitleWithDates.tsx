@@ -4,7 +4,7 @@
 import React from "react";
 
 // 🔧 Utils
-import { explicitDate } from "@/utils/dates";
+import { explicitDate } from "@utils/dates";
 
 /* =============== */
 /*       UI        */

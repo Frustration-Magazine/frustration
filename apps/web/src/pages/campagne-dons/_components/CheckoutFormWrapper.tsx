@@ -10,7 +10,7 @@ import { TbBulb } from "react-icons/tb";
 
 // 🔧 Utils
 import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
-import { formatCurrency } from "@/utils/strings";
+import { formatCurrency } from "@utils/strings";
 
 // 🧱 Components
 import { Elements } from "@stripe/react-stripe-js";
@@ -146,7 +146,7 @@ const Form = () => {
           <label
             htmlFor={`amount-${amount}`}
             key={`amount-${amount}`}
-            className="inline-block w-1/2 cursor-pointer rounded-sm border px-6 py-4 text-center font-bold hover:bg-gray-100 has-[:checked]:bg-black has-[:checked]:text-yellow">
+            className="has-[:checked]:text-frustration-yellow inline-block w-1/2 cursor-pointer rounded-sm border px-6 py-4 text-center font-bold hover:bg-gray-100 has-[:checked]:bg-black">
             <input
               type="radio"
               className="button-amount hidden"
@@ -170,7 +170,7 @@ const Form = () => {
         {/* 🍡 CUSTOM */}
         <label
           htmlFor="amount-custom"
-          className="mx-auto mt-4 block w-full cursor-pointer rounded-sm border px-6 py-4 text-center text-lg font-bold hover:bg-gray-100 has-[:checked]:bg-black has-[:checked]:text-yellow">
+          className="has-[:checked]:text-frustration-yellow mx-auto mt-4 block w-full cursor-pointer rounded-sm border px-6 py-4 text-center text-lg font-bold hover:bg-gray-100 has-[:checked]:bg-black">
           <input
             type="radio"
             name="amount"

@@ -4,10 +4,10 @@
 import React from "react";
 
 // 🔧 Libs
-import { createYoutubeUrlFromIdAndType } from "@/data-access/youtube";
+import { createYoutubeUrlFromIdAndType } from "@data-access/youtube";
 
 // 🧱 Components
-import { Button } from "@dashboard/components/Button";
+import { Button } from "@/components/Button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,16 +17,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/ui/components/alert-dialog";
+} from "@ui/components/alert-dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/ui/components/tooltip";
+} from "@ui/components/tooltip";
 
 // 🗿 Models
-import { type YoutubeResourceType } from "@/data-access/youtube";
+import { type YoutubeResourceType } from "@data-access/youtube";
 
 // 🖼️ Images
 import Image from "next/image";

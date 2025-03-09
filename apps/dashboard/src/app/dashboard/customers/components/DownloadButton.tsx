@@ -1,15 +1,15 @@
 "use client";
 
 // 🧱 Components
-import { Button } from "@dashboard/components/Button";
+import { Button } from "@/components/Button";
 import { IoIosDownload } from "react-icons/io";
 
 // 🔧 Libs
-import { createCSVinURL, downloadFileFromUrl } from "@/utils/files";
-import { explicitDate } from "@/utils/dates";
+import { createCSVinURL, downloadFileFromUrl } from "@utils/files";
+import { explicitDate } from "@utils/dates";
 
 // 🗿 Models
-import { Customer } from "@/data-access/stripe";
+import { Customer } from "@data-access/stripe";
 
 export interface FileHeader {
   name: string;

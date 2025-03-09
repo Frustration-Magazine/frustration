@@ -1,8 +1,8 @@
 ---
-import Banner2025 from "./assets/banner_2025.webp";
-import BannerBackground from "./assets/banner_bg_2025.jpg";
 import { Image } from "astro:assets";
-const backgroundUrl = `url(${BannerBackground.src})`;
+import Banner2025 from "./assets/banner_2025.webp";
+import Banner2025Background from "./assets/banner_bg_2025.jpg";
+const backgroundUrl = `url(${Banner2025Background.src})`;
 ---
 
 <a
@@ -13,7 +13,7 @@ const backgroundUrl = `url(${BannerBackground.src})`;
     src={Banner2025}
     width="500"
     class="max-h-[15vh] max-w-[80vw] w-auto h-auto m-auto"
-    alt="Une bannière pour mener à la page d'abonnement de Frustration"
+    alt="Soutenez Frustration Magazine !"
   />
 </a>
 <style define:vars={{ backgroundUrl }}>

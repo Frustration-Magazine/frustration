@@ -4,10 +4,10 @@
 import React from "react";
 
 // 🧱 Components
-import { Button } from "@dashboard/components/Button";
+import { Button } from "@/components/Button";
 
 // 🪝 Hooks
-import { useToast } from "@dashboard/hooks/useToast";
+import { useToast } from "@/hooks/useToast";
 
 // 🖼️ Assets
 import { ImUpload } from "react-icons/im";

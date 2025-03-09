@@ -3,13 +3,8 @@
 import React, { useState } from "react";
 
 // 🧱 Components
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@dashboard/components/Card";
-import { Separator } from "@dashboard/components/Separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/Card";
+import { Separator } from "@/components/Separator";
 import TransactionsChart from "./ChartPermanent";
 import NoData from "./NoData";
 
@@ -18,7 +13,7 @@ import { type Transactions } from "../_models";
 
 // 🔧 Libs
 import { getTotalMonthAndEvolution, inEuros } from "../_utils";
-import { cn } from "@dashboard/utils/style";
+import { cn } from "@/utils/style";
 
 const Entry = ({
   name,

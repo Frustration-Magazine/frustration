@@ -1,5 +1,5 @@
 import { type APIRoute } from "astro";
-import { addSubscriber } from "@/data-access/mail";
+import { addSubscriber } from "@data-access/mail";
 
 export const prerender = false;
 

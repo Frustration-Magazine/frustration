@@ -21,7 +21,7 @@ function SearchOverlay() {
       title="Recherche"
       className={cn("w-4", "md:w-5", "xl:w-6")}
       onClick={() => setOpened(true)}
-      aria-label="Recherche">
+      aria-label="Rechercher sur le site de Frustration Magazine">
       <FaMagnifyingGlass size="100%" />
     </button>
   );
@@ -35,7 +35,7 @@ function SearchOverlay() {
         opened && "opacity-100",
       )}
       onClick={() => setOpened(false)}
-      aria-label="Fermer">
+      aria-label="Fermer la barre de recherche">
       <IoCloseSharp size="clamp(40px, 5vw, 72px)" />
     </button>
   );
@@ -45,7 +45,7 @@ function SearchOverlay() {
       type="text"
       onChange={(e) => setSearch(e.target.value)}
       className={cn(
-        "color-yellow w-[600px] max-w-[90vw] border-4 border-dashed border-yellow bg-black px-4 py-2 font-bold",
+        "border-frustration-yellow w-[600px] max-w-[90vw] border-4 border-dashed bg-black px-4 py-2 font-bold",
         "text-xl",
         "md:text-2xl",
         "xl:text-3xl",
@@ -57,7 +57,7 @@ function SearchOverlay() {
   const SearchButton = (
     <button
       className={cn(
-        "rounded-full bg-yellow font-bakbak text-black transition-opacity duration-300 disabled:opacity-20",
+        "bg-frustration-yellow rounded-full font-bakbak text-black transition-opacity duration-300 disabled:opacity-20",
         "px-4 py-1.5 text-xl",
         "md:px-6 md:py-2 md:text-2xl",
         "xl:px-6 xl:py-2 xl:text-3xl",

@@ -1,13 +1,9 @@
 ---
-// 🖼️ Assets
 import { Image } from "astro:assets";
-import frustrationLogo from "./frustration-yellow.webp";
-// import { GiHamburgerMenu } from "react-icons/gi";
-
-// 🧱 Components
+import frustrationLogo from "./frustration-logo-header.webp";
 import Banner from "./banners/Banner.astro";
-import SearchOverlay from "./_components/SearchOverlay";
-import CategoriesOverlay from "./_components/CategoriesOverlay";
+import SearchOverlay from "./components/SearchOverlay";
+import CategoriesOverlay from "./components/CategoriesOverlay";
 
 import { cn } from "@/libs/tailwind";
 
@@ -18,7 +14,7 @@ const categories = await fetchCategories();
 
 <header
   class={cn(
-    "flex justify-between bg-black text-yellow sticky top-0 z-20 @container",
+    "flex justify-between bg-black text-frustration-yellow sticky top-0 z-20 @container",
     "p-1.5",
     "xs:p-2",
     "lg:px-4 lg:py-3",
@@ -40,13 +36,6 @@ const categories = await fetchCategories();
       categories={categories}
       client:load
     />
-    <!-- <button
-            type="button"
-            title="Menu"
-            class="w-4 md:w-5 xl:w-6"
-            aria-label="Menu">
-            <GiHamburgerMenu size="100%" />
-          </button> -->
   </div>
 </header>
 <Banner />

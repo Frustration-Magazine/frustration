@@ -27,7 +27,7 @@ const MAIL = "redaction@frustrationmagazine.fr";
     {
       mode === "payment" ? (
         <>
-          <p class="mb-3">
+          <p class="mb-3 text-balance">
             Votre don de soutien a bien été reçu ! 🎉 Nous avons hâte de vous
             partager tous les projets que nous vous préparons pour 2025 !
           </p>
@@ -55,7 +55,7 @@ const MAIL = "redaction@frustrationmagazine.fr";
         </>
       ) : mode === "subscription" ? (
         <>
-          <p class="mb-5 text-2xl font-bold text-center">
+          <p class="mb-5 text-2xl text-balance font-bold text-center">
             Votre abonnement est bien activé ! 🎉
           </p>
           {hasGifts ? (

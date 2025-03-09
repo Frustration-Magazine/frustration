@@ -125,7 +125,7 @@ export default {
     // 🎨 Colors
     colors: {
       ...colors,
-      yellow: "#FFF200",
+      "frustration-yellow": "#FFF200",
       paleYellow: "#F2EC80",
       black: "#000",
       white: "#fff",
@@ -145,7 +145,6 @@ export default {
       bebas: "Bebas Neue",
       bakbak: "Bakbak One",
       parisienne: "Parisienne",
-      arca: "'Arca Majora 3'",
       "open-sans": "Open Sans",
     },
   },

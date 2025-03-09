@@ -1,4 +1,4 @@
-import { signedIn } from "@auth";
+import { signedIn } from "@/auth";
 import { redirect } from "next/navigation";
 
 async function AuthRoot() {

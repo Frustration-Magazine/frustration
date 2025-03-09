@@ -20,7 +20,7 @@ import H5 from "./H5.astro";
     Recevez régulièrement une sélection de nos derniers articles !
   </p>
   <form
-    data-form="newsletter-footer"
+    id="form-newsletter-banner"
     class="flex flex-col gap-3 w-full max-w-[600px]">
     <input
       class="px-5 py-2"
@@ -34,7 +34,7 @@ import H5 from "./H5.astro";
     <button
       type="submit"
       class={cn(
-        "bg-black py-2 font-open-sans justify-center font-bold text-yellow flex items-center gap-2",
+        "bg-black py-2 font-open-sans justify-center font-bold text-frustration-yellow flex items-center gap-2",
         "text-base",
         "md:text-lg",
       )}>
@@ -43,43 +43,10 @@ import H5 from "./H5.astro";
     </button>
   </form>
   <script>
-    import { actions } from "astro:actions";
-    const form = document.querySelector(
-      "[data-form=newsletter-footer]",
+    import { addToNewsletter } from "@/scripts/add-to-newsletter";
+    const form = document.getElementById(
+      "form-newsletter-banner",
     ) as HTMLFormElement;
-
-    if (form) {
-      const subscribeNewsletter = async (e: any) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        const { error } = await actions.addSubscriber(formData);
-
-        if (error) {
-          console.error("Error while creating a new subscriber contact", error);
-          return;
-        }
-        const mailInput = form.querySelector(
-          "input[type=email]",
-        ) as HTMLInputElement;
-
-        const submitButton = form.querySelector(
-          "button[type=submit]",
-        ) as HTMLButtonElement;
-
-        // Hide input
-        mailInput.disabled = true;
-        mailInput.placeholder = "";
-
-        // Change submit button style
-        submitButton.disabled = true;
-        submitButton.style.backgroundImage = "none";
-        submitButton.textContent =
-          "🎉 Vous êtes bien inscrit.e à notre newsletter !";
-
-        // Reset form
-        form.reset();
-      };
-      form.addEventListener("submit", subscribeNewsletter);
-    }
+    if (form) addToNewsletter(form);
   </script>
 </div>

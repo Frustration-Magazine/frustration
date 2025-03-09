@@ -11,7 +11,7 @@ import { actions } from "astro:actions";
 
 // 🧱 Components
 import { FREQUENCY } from "../_models";
-import CircleLoader from "@/ui/components/loaders/loader-circle";
+import CircleLoader from "@ui/components/loaders/loader-circle";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,12 +21,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/ui/components/alert-dialog";
-import { Button } from "@/ui/components/button";
+} from "@ui/components/alert-dialog";
+import { Button } from "@ui/components/button";
 import { RainbowButton } from "./RainbowButton";
 
 // 🔧 Utils
-import { cn } from "@/utils/tailwind";
+import { cn } from "@/libs/tailwind";
 import { MessageCircleWarning } from "lucide-react";
 
 const paymentElementOptions: StripePaymentElementOptions = {
@@ -354,7 +354,7 @@ const CheckoutForm = ({
                 disableCheckout && "opacity-30",
               )}>
               <RainbowButton className="mx-auto rounded-md px-4 py-3 lg:py-4">
-                <span className="text-xl font-bold text-yellow lg:text-2xl">
+                <span className="text-frustration-yellow text-xl font-bold lg:text-2xl">
                   💝 Soutenir Frustration
                 </span>
               </RainbowButton>
@@ -394,7 +394,7 @@ const CheckoutForm = ({
             {isLoading ? (
               <CircleLoader color="##FFF200" />
             ) : (
-              <span className="text-xl font-bold text-yellow lg:text-2xl">
+              <span className="text-frustration-yellow text-xl font-bold lg:text-2xl">
                 💝 Soutenir Frustration
               </span>
             )}

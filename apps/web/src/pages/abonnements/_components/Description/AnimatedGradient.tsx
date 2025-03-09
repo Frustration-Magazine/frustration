@@ -2,7 +2,7 @@
 
 import React, { useMemo, useRef } from "react";
 
-import { cn } from "@/utils/tailwind";
+import { cn } from "@/libs/tailwind";
 import useDimensions from "../../_hooks/use-debounced-dimensions";
 
 interface AnimatedGradientProps {
@@ -43,7 +43,7 @@ const AnimatedGradient: React.FC<AnimatedGradientProps> = ({
         {colors.map((color, index) => (
           <svg
             key={index}
-            className="animate-background-gradient absolute"
+            className="absolute animate-background-gradient"
             style={
               {
                 top: `${Math.random() * 50}%`,

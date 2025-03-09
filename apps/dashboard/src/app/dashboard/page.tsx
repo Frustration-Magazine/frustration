@@ -1,5 +1,5 @@
 // 🔑 Auth
-import { signedIn } from "@dashboard/auth";
+import { signedIn } from "@/auth";
 import { redirect } from "next/navigation";
 
 async function DashboardRoot() {

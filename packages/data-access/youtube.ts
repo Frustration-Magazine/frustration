@@ -30,15 +30,15 @@ export const YOUTUBE_PLAYLIST_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?(?:youtube\
 /* ------------- */
 export async function fetchYoutube({ params, type }: { params: Record<string, any>; type?: YoutubeResourceType }): Promise<any> {
   // ❌ #1 Early return if no API key detected
-  if (!process.env.API_KEY_GOOGLE) {
+  if (!process.env.GOOGLE_API_KEY) {
     console.warn("No API key for Google found.");
     return [];
   }
 
   // 🥘 Prepare
-  const endpoint = type ? `${process.env.API_ENDPOINT_YOUTUBE}/${type}s` : `${process.env.API_ENDPOINT_YOUTUBE}/search`;
+  const endpoint = type ? `${process.env.YOUTUBE_API}/${type}s` : `${process.env.YOUTUBE_API}/search`;
   const url = new URL(endpoint);
-  url.searchParams.append("key", process.env.API_KEY_GOOGLE);
+  url.searchParams.append("key", process.env.GOOGLE_API_KEY);
   url.searchParams.append("part", "snippet");
   // Add each param from params object that was passed to URL
   for (let param in params) url.searchParams.append(param, params[param]);

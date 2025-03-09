@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { createIdAnchor } from "@/utils/strings";
+import { createIdAnchor } from "@utils/strings";
 import { cn } from "@/libs/tailwind";
 
 function PostSummary() {
@@ -67,7 +67,7 @@ function PostSummary() {
       <h3
         onClick={() => window.scrollTo({ top: 0 })}
         className={cn(
-          "mb-4 w-fit cursor-pointer border-b-[6px] border-b-yellow font-bakbak",
+          "border-b-frustration-yellow mb-4 w-fit cursor-pointer border-b-[6px] font-bakbak",
           "text-2xl",
           "lg:text-3xl",
         )}>

@@ -1,7 +1,7 @@
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import * as React from "react";
 import { NumberTicker } from "./NumberTicker";
-import { cn } from "@/utils/tailwind";
+import { cn } from "@/libs/tailwind";
 
 interface ProgressBarProps
   extends React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> {

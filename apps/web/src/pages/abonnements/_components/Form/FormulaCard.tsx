@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/ui/components/card";
+} from "@ui/components/card";
 
 // 🎨 Assets
 import { Check } from "lucide-react";
@@ -42,7 +42,7 @@ const FormulaCard = ({
     />
     <label
       htmlFor={id}
-      className="peer-checked block cursor-pointer rounded-lg peer-checked:bg-black peer-checked:text-yellow">
+      className="peer-checked peer-checked:text-frustration-yellow block cursor-pointer rounded-lg peer-checked:bg-black">
       <Card className="rounded-lg">
         <CardHeader className="relative mb-2 mt-4 px-5 py-0 font-bakbak text-2xl uppercase">
           <CardTitle className="!font-normal">{name}</CardTitle>

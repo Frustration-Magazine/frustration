@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { signedIn, signOut } from "@dashboard/auth";
+import { signedIn, signOut } from "@/auth";
 
 export const signOutAction = async () => {
   const isSignedIn = await signedIn();

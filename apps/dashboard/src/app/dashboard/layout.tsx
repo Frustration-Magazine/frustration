@@ -1,5 +1,5 @@
 // 🔑 Auth
-import { signedIn } from "@dashboard/auth";
+import { signedIn } from "@/auth";
 import { unauthorized } from "next/navigation";
 import Sidenav from "./Sidenav";
 

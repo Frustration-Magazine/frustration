@@ -8,33 +8,28 @@ import { TfiReload } from "react-icons/tfi";
 // 🧱 Components
 import TooltipUpdate from "./TooltipUpdate";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-} from "@dashboard/components/Form";
-import { Button } from "@dashboard/components/Button";
+import { Form, FormControl, FormField, FormItem } from "@/components/Form";
+import { Button } from "@/components/Button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/ui/components/select";
+} from "@ui/components/select";
 
 // 🗒️ Form
 import { updateDashboard } from "../_actions";
 import { FormUpdateSchema } from "../_models";
-import { toFormData } from "@/utils/form";
+import { toFormData } from "@utils/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // 🪝 Hooks
 import { useForm } from "react-hook-form";
-import { useFormToast } from "@dashboard/hooks/useFormToast";
-import { useFormLoader } from "@dashboard/hooks/useFormLoader";
-import { useFormAction } from "@dashboard/hooks/useFormAction";
+import { useFormToast } from "@/hooks/useFormToast";
+import { useFormLoader } from "@/hooks/useFormLoader";
+import { useFormAction } from "@/hooks/useFormAction";
 
 const FormUpdate = () => {
   const [formState, formAction] = useFormAction(updateDashboard, true);

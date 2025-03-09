@@ -1,8 +1,6 @@
 ---
-// 🖼️ Layout
 import BaseLayout from "@/layout/BaseLayout/BaseLayout.astro";
 
-// 🧱 Components
 import MainSlider from "./_components/MainSlider/MainSlider.astro";
 import Videos from "./_components/Videos/Videos.astro";
 import NewsletterBanner from "./_components/NewsletterBanner/NewsletterBanner.astro";
@@ -12,7 +10,7 @@ import SeparationWave from "./_components/Separators/Wave.astro";
 import Interviews from "./_components/Interviews/Interviews.astro";
 import SeparationSpades from "./_components/Separators/Spades.astro";
 
-// 🧰 Config
+// Database import
 const metadata = {
   title: "Accueil",
   description:
@@ -20,6 +18,8 @@ const metadata = {
 };
 
 import { fetchLastPosts } from "@/libs/wordpress";
+
+// Database import
 const MAX_POSTS = 9;
 const posts = await fetchLastPosts({ first: MAX_POSTS });
 ---

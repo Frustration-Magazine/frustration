@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@dashboard/components/Card";
+} from "@/components/Card";
 import NoData from "./NoData";
 
 // 🗿 Models
@@ -16,7 +16,7 @@ import { type Transactions } from "../_models";
 
 // 🔧 Libs
 import { inEuros } from "../_utils";
-import { explicitDate } from "@/utils/dates";
+import { explicitDate } from "@utils/dates";
 
 const Entry = ({ title, value }: { title: string; value: string | number }) => (
   <div>

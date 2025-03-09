@@ -4,7 +4,7 @@
 import React from "react";
 
 // 🧱 Components
-import { DatePickerWithRange } from "@/ui/components/date-range-picker";
+import { DatePickerWithRange } from "@ui/components/date-range-picker";
 import TitleWithDates from "./TitleWithDates";
 import CustomersTable from "./CustomersTable";
 import TopBar from "./TopBar";
