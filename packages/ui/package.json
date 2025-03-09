@@ -11,18 +11,18 @@
     "test": "echo \"Error: no test specified\" as exit 1"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.2.6",
-    "@eslint/js": "^9.20.0",
-    "@types/react": "^19.0.8",
-    "autoprefixer": "^10.4.20",
+    "@eslint/compat": "^1.2.7",
+    "@eslint/js": "^9.22.0",
+    "@types/react": "^19.0.10",
+    "autoprefixer": "^10.4.21",
     "esbuild": "^0.23.1",
-    "eslint": "^9.20.0",
+    "eslint": "^9.22.0",
     "eslint-plugin-react": "^7.37.4",
-    "globals": "^15.14.0",
-    "postcss": "^8.5.1",
+    "globals": "^15.15.0",
+    "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.23.0"
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0"
   },
   "peerDependencies": {
     "react": "^18.2.0"
@@ -42,7 +42,7 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.6",
     "@radix-ui/react-tooltip": "^1.1.8",
-    "@tanstack/react-table": "^8.20.6",
+    "@tanstack/react-table": "^8.21.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
@@ -51,7 +51,7 @@
     "recharts": "^2.15.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.24.1"
+    "zod": "^3.24.2"
   },
   "exports": {
     "./components/*": [
