@@ -25,7 +25,8 @@ const posts = await fetchLastPosts({ first: MAX_POSTS });
 ---
 
 <BaseLayout {...metadata}>
-  <section class="block w-full overflow-hidden bg-home-first-section">
+  <section
+    class="block w-full overflow-hidden bg-[url(/textures/stone.png),linear-gradient(var(--frustration-yellow),var(--frustration-yellow))]">
     <MainSlider posts={posts} />
     <Videos />
     <NewsletterBanner />
@@ -37,3 +38,5 @@ const posts = await fetchLastPosts({ first: MAX_POSTS });
     <SeparationSpades />
   </section>
 </BaseLayout>
+
+<!-- url('/textures/home-stone-texture.png'), linear-gradient(#FFF200, #FFF200) -->

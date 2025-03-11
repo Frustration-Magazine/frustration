@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
 import { loadEnv } from "vite";
 
 const { BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN } = loadEnv(
@@ -9,7 +10,6 @@ const { BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN } = loadEnv(
 
 import vercel from "@astrojs/vercel";
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
 
 import sitemap from "@astrojs/sitemap";
 
@@ -25,14 +25,15 @@ export default defineConfig({
     webAnalytics: { enabled: true },
   }),
 
-  integrations: [react(), tailwind(), sitemap()],
+  integrations: [react(), sitemap()],
   image: {
     domains: [BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN],
   },
   plugins: ["prettier-plugin-astro"],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   env: {
-    schema: {
-      // ...
-    },
+    schema: {},
   },
 });

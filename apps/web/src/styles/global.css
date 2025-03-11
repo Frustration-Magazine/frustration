@@ -1,6 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@source "../components";
+@source "../components/";
+@source "../components/ui";
+@source "../components/ui/";
+@source "../pages";
+@source "../layout";
 
 html {
   scroll-padding-top: 100px;
@@ -10,4 +15,176 @@ html {
   --color-rainbow-3: 210 100% 63%;
   --color-rainbow-4: 195 100% 63%;
   --color-rainbow-5: 90 100% 63%;
+
+  --frustration-yellow: #fff200;
+  --frustration-purple: #8955e0;
+}
+
+@theme {
+  --font-sans: "Inter", "sans-serif";
+  --font-montserrat: "Montserrat";
+  --font-roboto: "Roboto";
+  --font-bebas: "Bebas Neue";
+  --font-bakbak: "Bakbak One";
+  --font-parisienne: "Parisienne";
+  --font-open-sans: "Open Sans";
+
+  --color-frustration-yellow: var(--frustration-yellow);
+  --color-frustration-purple: var(--frustration-purple);
+  --color-paleYellow: #f2ec80;
+  --color-black: #000;
+  --color-white: #fff;
+  --color-palePurple: #7c76b0;
+  --color-blue: #1e40af;
+  --color-primary: var(--frustration-yellow);
+  --color-rainbow-1: hsl(var(--color-rainbow-1));
+  --color-rainbow-2: hsl(var(--color-rainbow-2));
+  --color-rainbow-3: hsl(var(--color-rainbow-3));
+  --color-rainbow-4: hsl(var(--color-rainbow-4));
+  --color-rainbow-5: hsl(var(--color-rainbow-5));
+
+  --animate-sliding: sliding 60s linear infinite;
+  --animate-slidingReverse: slidingReverse 60s linear infinite;
+  --animate-disco: disco 2s linear infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-slideProgress: slideProgres 2s linear infinite;
+  --animate-rainbow: rainbow var(--speed; 2s) infinite linear;
+  --animate-grid: grid 15s linear infinite;
+  --animate-meteor: meteor 5s linear infinite;
+  --animate-marquee: marquee var(--duration) linear infinite;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-background-gradient: background-gradient
+    var(--background-gradient-speed, 15s) cubic-bezier(0.445, 0.05, 0.55, 0.95)
+    infinite;
+
+  @keyframes sliding {
+    0% {
+      translate: 0 10%;
+    }
+    100% {
+      translate: 0 -100%;
+    }
+  }
+
+  @keyframes slidingReverse {
+    0% {
+      translate: 0 -105%;
+    }
+    100% {
+      translate: 0 0%;
+    }
+  }
+  @keyframes disco {
+    0% {
+      rotate: 0turn;
+    }
+    100% {
+      rotate: 1turn;
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: -200% 0;
+    }
+  }
+  @keyframes grid {
+    0% {
+      transform: translateY(-50%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideProgres {
+    0% {
+      left: 0%;
+      translate: -100% 0;
+    }
+    100% {
+      left: 100%;
+      translate: 0 0;
+    }
+  }
+
+  @keyframes rainbow {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 200%;
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes meteor {
+    0% {
+      transform: rotate(215deg) translateX(0);
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(215deg) translateX(-500px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes background-gradient {
+    0%,
+    100% {
+      transform: translate(0, 0);
+      animation-delay: var(--background-gradient-delay, 0s);
+    }
+
+    20% {
+      transform: translate(
+        calc(100% * var(--tx-1, 1)),
+        calc(100% * var(--ty-1, 1))
+      );
+    }
+
+    40% {
+      transform: translate(
+        calc(100% * var(--tx-2, -1)),
+        calc(100% * var(--ty-2, 1))
+      );
+    }
+
+    60% {
+      transform: translate(
+        calc(100% * var(--tx-3, 1)),
+        calc(100% * var(--ty-3, -1))
+      );
+    }
+
+    80% {
+      transform: translate(
+        calc(100% * var(--tx-4, -1)),
+        calc(100% * var(--ty-4, -1))
+      );
+    }
+  }
 }
