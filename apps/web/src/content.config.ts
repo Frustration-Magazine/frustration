@@ -6,15 +6,15 @@ const authors = defineCollection({
   schema: ({ image }) =>
     z.object({
       id: z.number(),
-      first_name: z.string(),
-      last_name: z.string().optional(),
-      full_name: z.string(),
+      name: z.string(),
+      nickname: z.string().optional(),
       email: z.string().email().optional(),
-      role: z.string().optional(),
+      role: z.string().optional().optional(),
       picture: image(),
       punchline: z.string().optional(),
       themes: z.array(z.string()).optional(),
-      public: z.boolean().optional().default(false),
+      public: z.boolean().optional(),
+      slug: z.string().optional(),
     }),
 });
 

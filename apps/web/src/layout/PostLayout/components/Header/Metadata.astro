@@ -21,8 +21,8 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
     class="flex items-center">
     <div class={cn("w-5 mr-2 grid place-items-center")}>
       <Image
-        title={author.full_name}
-        alt={author.full_name}
+        title={author.name}
+        alt={author.name}
         width={50}
         height={50}
         src={author.picture}
@@ -30,7 +30,7 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
       />
     </div>
     <span class={cn("space-x-0.5", "text-base", "md:text-xl")}>
-      <span class="font-bold">{author.full_name}</span>
+      <span class="font-bold">{author.name}</span>
       <span>|</span>
       <span>{DD_MM_YYYY}</span>
     </span>

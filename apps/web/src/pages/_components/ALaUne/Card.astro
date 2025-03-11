@@ -7,7 +7,7 @@ import { getEntry, getCollection } from "astro:content";
 const {
   title,
   author: {
-    node: { userId },
+    node: { userId, name },
   },
   featuredImage: { node: featuredImage },
   date,
@@ -18,8 +18,19 @@ const {
 // Author
 const authors = await getCollection("authors");
 const DEFAULT = await getEntry("authors", "default");
-const author =
-  authors.find(({ data: { id } }) => id === userId)?.data ?? DEFAULT?.data;
+let AUTHOR = authors.find(({ data: { id } }) => id === userId)?.data;
+
+let author;
+// Use only wordpress informations
+if (!author) {
+  author = {
+    ...AUTHOR,
+    id: userId,
+    name,
+    picture: (AUTHOR ? AUTHOR?.picture : DEFAULT?.data.picture) as any,
+    slug,
+  };
+}
 
 // Categories
 let mainCategories = categories.map(({ name, parent, slug }: any) =>
@@ -94,7 +105,7 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
               />
             ) : null
           }
-          <span class="author">{author?.full_name}</span>
+          <span class="author">{author?.name}</span>
           <span>|</span>
           <FcCalendar />
           <date class="date">{DD_MM_YYYY}</date>

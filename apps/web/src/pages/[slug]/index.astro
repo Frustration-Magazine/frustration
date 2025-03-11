@@ -8,7 +8,6 @@ const post = await fetchPostBySlug({ slug });
 
 if (!post) return Astro.rewrite("/404");
 const htmlContent = post.content;
-
 // This will cache the content of any page for 5 minutes in user browser and 1 week in CDN (every page is invalidated on every deploy)
 Astro.response.headers.set(
   "Cache-Control",

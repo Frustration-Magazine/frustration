@@ -2,7 +2,7 @@
   "id": 6,
   "first_name": "Rédaction",
   "last_name": "Rédaction",
-  "full_name": "Rédaction",
+  "name": "Rédaction",
   "picture": "./redaction.png",
   "public": false
 }

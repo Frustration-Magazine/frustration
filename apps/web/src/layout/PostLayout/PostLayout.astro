@@ -19,7 +19,7 @@ import MoreArticles from "./components/Footer/MoreArticles";
 const {
   title,
   author: {
-    node: { userId, slug },
+    node: { userId, name, slug },
   },
   categories: { nodes: categories },
   date,
@@ -28,8 +28,19 @@ const featuredImage = Astro.props?.featuredImage?.node;
 
 const authors = await getCollection("authors");
 const DEFAULT = await getEntry("authors", "default");
-const author =
-  authors.find(({ data: { id } }) => id === userId)?.data ?? DEFAULT?.data;
+let AUTHOR = authors.find(({ data: { id } }) => id === userId)?.data;
+
+let author;
+// Use only wordpress informations
+if (!author) {
+  author = {
+    ...AUTHOR,
+    id: userId,
+    name,
+    picture: (AUTHOR ? AUTHOR?.picture : DEFAULT?.data.picture) as any,
+    slug,
+  };
+}
 ---
 
 <PageLayout {...Astro.props}>

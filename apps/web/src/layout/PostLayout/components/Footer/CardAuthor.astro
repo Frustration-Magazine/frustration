@@ -15,8 +15,8 @@ const { author } = Astro.props;
   <div class={cn("flex items-center", "gap-4", "sm:gap-6")}>
     <div class={cn("shrink-0 size-11", "sm:size-14", "lg:size-16")}>
       <Image
-        title={author.full_name}
-        alt={author.full_name}
+        title={author.name}
+        alt={author.name}
         width={100}
         height={100}
         src={author.picture}
@@ -26,7 +26,7 @@ const { author } = Astro.props;
 
     <div>
       <h5 class={cn("font-bebas", "text-3xl", "sm:text-5xl")}>
-        {author.full_name}
+        {author.name}
       </h5>
       {
         author.role ? (
@@ -36,7 +36,7 @@ const { author } = Astro.props;
         ) : null
       }
       {
-        author.public ? (
+        (
           <a
             class={cn(
               "mt-1 font-open-sans font-semibold flex items-center gap-1.5",
@@ -47,7 +47,7 @@ const { author } = Astro.props;
             <GrArticle />
             <span> Tous les articles </span>
           </a>
-        ) : null
+        )
       }
     </div>
   </div>

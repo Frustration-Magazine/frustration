@@ -5,7 +5,7 @@ export async function fetchPostBySlug({ slug }: any) {
           title(format: RENDERED)
           slug
           date
-          author { node { firstName lastName userId slug } }
+          author { node { name userId slug } }
           categories { nodes { slug name parent { node { name } } } }
           content(format: RENDERED)
           featuredImage {
@@ -23,7 +23,6 @@ export async function fetchPostBySlug({ slug }: any) {
   let {
     data: { post },
   } = await fetchWordpress({ query });
-
   return post;
 }
 
@@ -35,7 +34,7 @@ export async function fetchLastPosts({ first = 6 }: any) {
             title(format: RENDERED)
             slug
             date
-            author { node { firstName lastName userId } }
+            author { node { name userId } }
             categories { nodes { slug name parent { node { name } } } }
             excerpt(format: RENDERED)
             featuredImage {
