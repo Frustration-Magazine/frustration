@@ -7,5 +7,5 @@
   "picture": "./clement_senechal.png",
   "punchline": "",
   "themes": ["Écologie politique", "Lutte des classes"],
-  "public": false
+  "public": true
 }

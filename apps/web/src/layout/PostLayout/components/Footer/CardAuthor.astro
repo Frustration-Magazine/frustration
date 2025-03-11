@@ -35,16 +35,20 @@ const { author } = Astro.props;
           </h6>
         ) : null
       }
-      <a
-        class={cn(
-          "mt-1 font-open-sans font-semibold flex items-center gap-1.5",
-          "text-xs",
-          "sm:text-sm ",
-        )}
-        href={`/posts?author=${author.slug}`}>
-        <GrArticle />
-        <span> Tous les articles </span>
-      </a>
+      {
+        author.public ? (
+          <a
+            class={cn(
+              "mt-1 font-open-sans font-semibold flex items-center gap-1.5",
+              "text-xs",
+              "sm:text-sm ",
+            )}
+            href={`/posts?author=${author.slug}`}>
+            <GrArticle />
+            <span> Tous les articles </span>
+          </a>
+        ) : null
+      }
     </div>
   </div>
 </div>
