@@ -120,6 +120,22 @@ model Balance {
 }
 
 // ***********
+// 📅 Events  *
+// ***********
+
+model events {
+  id             Int      @id @default(autoincrement())
+  date           DateTime
+  displayHour    Boolean  @default(true)
+  description    String
+  city           String
+  place          String
+  contact        String
+  displayContact Boolean  @default(true)
+  displayEvent   Boolean  @default(true)
+}
+
+// ***********
 // 🎥 Media  *
 // ***********
 

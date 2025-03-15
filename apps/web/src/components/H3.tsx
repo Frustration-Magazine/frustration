@@ -7,15 +7,16 @@ type Props = {
 
 function H3({ className, children }: Props) {
   return (
-    <div
+    <h3
       className={cn(
         "mb-2 text-balance font-bold",
-        "text-2xl",
+        "text-xl",
+        "sm:text-2xl",
         "lg:text-3xl",
         className,
       )}>
       {children}
-    </div>
+    </h3>
   );
 }
 

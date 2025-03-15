@@ -18,7 +18,7 @@ export async function readRecords({ table, where, orderBy, take, success }: { ta
   };
   let data = [];
 
-  // 🔁 Read
+  // 🔁 readableError
   try {
     data = await (prisma as any)[table].findMany({ where, orderBy, take });
     status.success = success;

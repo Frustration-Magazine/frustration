@@ -1,0 +1,71 @@
+---
+import PageLayout from "@/layout/PageLayout/PageLayout.astro";
+import CardEvent from "./_components/CardEvent";
+import H2 from "@/components/H2";
+import H3 from "@/components/H3";
+import { readRecords } from "@data-access/prisma";
+import { type Event } from "./_models";
+import VousNeDetestez from "./_assets/vous_ne_detestez_pas_le_lundi_compressed.webp";
+import { Image } from "astro:assets";
+
+const TITLE = "Évenements";
+const DESCRIPTION =
+  "Liste des événements à venir autour de Frustration Magazine et Nicolas Framont";
+
+const { data: events }: { data: Event[] } = await readRecords({
+  table: "events",
+  where: {},
+  orderBy: { date: "asc" },
+  success: "Events read!",
+});
+
+const displayedEvents = events.filter(
+  ({ date, displayEvent }) => displayEvent && date >= new Date(),
+);
+
+const thereAreEvents = displayedEvents.length > 0;
+---
+
+<PageLayout
+  title={TITLE}
+  description={DESCRIPTION}>
+  <article slot="content">
+    <H2>Frustra'tour</H2>
+    <H3 className="text-center"
+      >Venez rencontrer l'équipe de Frustration Magazine lors de nos événements
+      publics !</H3
+    >
+    <section class="space-y-16 mt-12 relative">
+      {
+        thereAreEvents ? (
+          <>
+            {displayedEvents.map((event, index) => (
+              <div class="relative z-10">
+                <div class="absolute opacity-5 z-10" />
+                <CardEvent {event}>
+                  <Image
+                    src={VousNeDetestez}
+                    alt="Couverture de Vous ne détestez pas le lundi, vous détestez la domination au travail de Nicolas Framont"
+                    width="200"
+                    height="500"
+                    class="w-auto h-full"
+                  />
+                </CardEvent>
+                {index > 0 && (
+                  <div class="absolute after-top-[-5px] after-left-1/2 after-transform top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-[#FCCF00] size-5 rounded-full" />
+                )}
+              </div>
+            ))}
+            <div class="absolute h-full w-2 top-0 !mt-0 bg-[#FCCF00] left-1/2 -translate-x-1/2" />
+          </>
+        ) : (
+          <p class="text-center">
+            Aucun événement à venir pour l'instant, n'hésitez pas à nous suivre
+            sur nos réseaux sociaux pour ne rien rater de l'actualité de
+            Frustration Magazine 😁
+          </p>
+        )
+      }
+    </section>
+  </article>
+</PageLayout>

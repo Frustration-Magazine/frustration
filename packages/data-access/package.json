@@ -10,6 +10,7 @@
     "generate": "infisical run -- prisma generate && infisical run -- prisma db push",
     "studio": "infisical run -- pnpx prisma studio",
     "push": "infisical run -- prisma db push",
+    "push-prod": "infisical run --env=prod -- prisma db push",
     "prod": "infisical run -- prisma generate -- prisma db pull"
   },
   "keywords": [],

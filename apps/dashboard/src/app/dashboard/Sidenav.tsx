@@ -12,6 +12,7 @@ import { MdUpdate } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
 import { FaYoutube } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
+import { MdEvent as CalendarIcon } from "react-icons/md";
 
 // 🧱 Components
 import { Separator } from "@/components/Separator";
@@ -46,6 +47,12 @@ const LINKS: Link[] = [
     icon: <IoIosPeople size={18} />,
     href: "/dashboard/customers",
     key: "customers",
+  },
+  {
+    label: "Événements",
+    icon: <CalendarIcon size={18} />,
+    href: "/dashboard/events",
+    key: "events",
   },
   {
     label: "Vidéos à la une",

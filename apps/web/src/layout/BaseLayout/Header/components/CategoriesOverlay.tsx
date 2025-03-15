@@ -1,9 +1,10 @@
 "use client";
 
+import MailButton from "./MailButton";
+import AgendaButton from "./AgendaButton";
 import React from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
-import { IoIosMail } from "react-icons/io";
 
 import { cn } from "@/libs/tailwind";
 
@@ -51,20 +52,6 @@ function CategoriesOverlay({ categories }: Props) {
     </button>
   );
 
-  const MailButton = (
-    <a
-      href="/contact"
-      type="button"
-      title="Nous contacter"
-      className={cn(
-        "bg-frustration-yellow fixed bottom-5 right-5 rounded-full p-2 text-black opacity-0 transition-opacity duration-1000",
-        opened && "opacity-100",
-      )}
-      aria-label="Nous contacter">
-      <IoIosMail size="clamp(30px, 2vw, 72px)" />
-    </a>
-  );
-
   return (
     <>
       {OpenButton}
@@ -74,10 +61,13 @@ function CategoriesOverlay({ categories }: Props) {
           opened && "h-screen",
         )}>
         {CloseButton}
-        {MailButton}
+        <div className="fixed bottom-5 right-5 flex gap-4">
+          <AgendaButton className={cn(opened && "opacity-100")} />
+          <MailButton className={cn(opened && "opacity-100")} />
+        </div>
         <ul
           className={cn(
-            "flex h-full flex-col overflow-y-scroll py-[15dvh] text-center font-bakbak uppercase scrollbar scrollbar-track-yellow scrollbar-thumb-yellow",
+            "scrollbar-track-yellow scrollbar-thumb-yellow flex h-full flex-col overflow-y-scroll py-[15dvh] text-center font-bakbak uppercase scrollbar",
             "gap-2 text-xl",
             "sm:gap-3 sm:text-2xl",
             "md:gap-3 md:text-3xl",
