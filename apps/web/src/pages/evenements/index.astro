@@ -1,0 +1,190 @@
+---
+import PageLayout from "@/layout/PageLayout/PageLayout.astro";
+import H2 from "@/components/H2";
+import H3 from "@/components/H3";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { cn } from "@/libs/tailwind";
+import { IoMailOutline as MailIcon } from "react-icons/io5";
+import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
+
+const TITLE = "Évenements";
+const DESCRIPTION =
+  "Liste des événements à venir autour de Frustration Magazine et Nicolas Framont";
+
+const formatDate = (date: Date, displayHour: boolean) => {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    ...(displayHour
+      ? {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: false,
+        }
+      : null),
+  };
+
+  let formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(date);
+  formattedDate = formattedDate.replace(":", "h");
+  return formattedDate;
+};
+
+const EVENTS = [
+  {
+    date: new Date("2025-03-18T19:30:00+01:00"),
+    displayHour: true,
+    description:
+      'Présentation de "Vous ne détestez pas le lundi, vous détestez la domination au travail".',
+    city: "Lyon",
+    place: "Bar le Toï Toï",
+    contact: "duhamel.simon@gmail.com",
+    displayContact: true,
+    displayEvent: true,
+  },
+  {
+    date: new Date("2025-04-09T19:30:00+01:00"),
+    displayHour: false,
+    description:
+      'Présentation de "Vous ne détestez pas le lundi, vous détestez la domination au travail".',
+    city: "Paris",
+    place: "Club Le Silencio",
+    contact: "duhamel.simon@gmail.com",
+    displayContact: true,
+    displayEvent: true,
+  },
+  {
+    date: new Date("2025-05-06T19:30:00+01:00"),
+    displayHour: false,
+    description:
+      'Présentation de "Vous ne détestez pas le lundi, vous détestez la domination au travail".',
+    city: "Strasbourg",
+    place: "Librairie Gutenberg",
+    contact: "librairie.gutenberg@free.fr",
+    displayContact: true,
+    displayEvent: true,
+  },
+  {
+    date: new Date("2025-05-07T19:30:00+01:00"),
+    displayHour: false,
+    description:
+      'Présentation de "Vous ne détestez pas le lundi, vous détestez la domination au travail".',
+    city: "Haguenau",
+    place: "Librairie la Marge",
+    contact: "librairie.gutenberg@free.fr",
+    displayContact: true,
+    displayEvent: true,
+  },
+  {
+    date: new Date("2025-06-11T19:30:00+01:00"),
+    displayHour: false,
+    description:
+      'Présentation de "Vous ne détestez pas le lundi, vous détestez la domination au travail".',
+    city: "Valence",
+    place: "Librairie Notre Temps",
+    contact: "nafpi@tuta.io",
+    displayContact: true,
+    displayEvent: true,
+  },
+  {
+    date: new Date("2025-06-12T19:30:00+01:00"),
+    displayHour: false,
+    description:
+      'Présentation de "Vous ne détestez pas le lundi, vous détestez la domination au travail".',
+    city: "Privas",
+    place: "CGT - à préciser",
+    contact: "nafpi@tuta.io",
+    displayContact: true,
+    displayEvent: true,
+  },
+  {
+    date: new Date("2025-06-12T19:30:00+01:00"),
+    displayHour: false,
+    description:
+      'Présentation de "Vous ne détestez pas le lundi, vous détestez la domination au travail"..',
+    city: "Montpellier",
+    place: "à préciser",
+    contact: "nafpi@tuta.io",
+    displayContact: true,
+    displayEvent: false,
+  },
+];
+
+const DISPLAYED_EVENTS = EVENTS.filter(
+  ({ date, displayEvent }) => displayEvent && date >= new Date(),
+);
+---
+
+<PageLayout
+  title={TITLE}
+  description={DESCRIPTION}>
+  <article slot="content">
+    <H2>Agenda</H2>
+    <H3 className="text-center"
+      >Venez rencontrer l'équipe de Frustration Magazine lors de nos événements
+      publics !</H3
+    >
+    <section class="space-y-16 mt-12 relative">
+      {
+        DISPLAYED_EVENTS.length > 0 ? (
+          <>
+            {DISPLAYED_EVENTS.map(
+              (
+                { date, displayHour, description, city, place, contact },
+                index,
+              ) => (
+                <div class="relative z-10">
+                  <Card
+                    className={cn(
+                      "relative left-0 bg-white overflow-hidden",
+                      "first:after:content-none",
+                    )}>
+                    <div class="w-1 h-full bg-[#FCCF00] absolute" />
+                    <CardHeader>
+                      <CardTitle className="text-2xl first-letter:capitalize">
+                        {formatDate(date, displayHour)} - {city}
+                      </CardTitle>
+                      <CardDescription className="text-lg flex items-center gap-1">
+                        <MapMarkerIcon />
+                        {place}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p>{description}</p>
+                      <br />
+                      <i> Entrée libre</i>
+                    </CardContent>
+                    <CardFooter className="flex gap-1 items-center text-sm">
+                      <MailIcon />
+                      <a
+                        href={`mailto:${contact}`}
+                        class="underline">
+                        {contact}
+                      </a>
+                    </CardFooter>
+                  </Card>
+                  {index > 0 && (
+                    <div class="absolute after-top-[-5px] after-left-1/2 after-transform top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-[#FCCF00] size-5 rounded-full" />
+                  )}
+                </div>
+              ),
+            )}
+            <div class="absolute h-full w-2 top-0 !mt-0 bg-[#FCCF00] left-1/2 -translate-x-1/2" />
+          </>
+        ) : (
+          <p class="text-center">
+            Aucun événement à venir, n'hésitez pas à nous suivre sur nos réseaux
+            sociaux pour ne rien rater de l'actualité de Frustration Magazine 😁
+          </p>
+        )
+      }
+    </section>
+  </article>
+</PageLayout>
