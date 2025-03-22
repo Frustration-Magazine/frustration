@@ -1,0 +1,181 @@
+---
+import PageLayout from "@/layout/PageLayout/PageLayout.astro";
+import H2 from "@/components/H2";
+import H3 from "@/components/H3";
+import { Image } from "astro:assets";
+import CoverImage from "./assets/cover.webp";
+import { QUESTIONS, BAREMES } from "./bourgeois-test";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/libs/tailwind";
+
+function shuffleArray<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+}
+---
+
+<PageLayout title="Êtes-vous un bourgeois ?">
+  <article
+    slot="content"
+    class="font-open-sans text-lg space-y-6">
+    <H2>Êtes-vous un bourgeois ?</H2>
+    <Image
+      src={CoverImage}
+      class="mx-auto !mb-12"
+      alt=""
+      width="600"
+      height="307"
+    />
+    <p>
+      Parfois, des personnes se sentent visées par le terme « bourgeois » <a
+        class="underline text-blue"
+        href="/entre-soi-elitisme-et-obsession-du-fric-ce-que-radio-classique-nous-apprend-de-la-bourgeoisie/"
+        >que nous utilisons dans Frustration</a
+      >. Peut-être qu’on les a déjà affublés de ce titre (qui peut avoir une
+      connotation péjorative dans la langue française) parce qu’ils savent dans
+      quel ordre s’utilisent les multiples couverts d’un restaurant chic, qu’ils
+      ont l’accent de Valérie Lemercier dans <i>Les Visiteurs</i> ou qu’ils adorent
+      la voile. N’est pas bourgeois qui veut : le fonctionnement même du capitalisme
+      veut qu’il y ait une minorité de bourgeois pour une majorité de travailleuses
+      et de travailleurs, administrés par <a
+        href="/a-t-on-vraiment-besoin-des-csp/"
+        >une classe intermédiaire faite de sous-bourgeois cadres, ingénieurs et
+        intellectuels</a
+      >. Vos chances ne sont donc pas si élevées.
+    </p>
+
+    <p>
+      Notre appartenance de classe n'est pas un détail de nos vies. Elle
+      détermine souvent <a
+        class="underline text-blue"
+        href="https://www.inegalites.fr/Inegaux-face-a-la-solitude">
+        notre vie sociale</a
+      >, notre <a
+        class="underline text-blue"
+        href="https://www.inegalites.fr/niveau-de-diplome-de-la-population"
+        >"réussite" scolaire</a
+      >, nos <a
+        class="underline text-blue"
+        href="www.lexpress.fr/actualite/politique/lrem/legislatives-les-electeurs-d-en-marche-sont-ils-vraiment-tous-des-cadres_1916848.html"
+        >choix politiques
+      </a>et nos disputes de couple, quand on vient d'un milieu différent (même
+      <a
+        class="underline text-blue"
+        href="www.bibamagazine.fr/love-sexe/couple/le-milieu-social-dorigine-premiere-source-de-tensions-dans-le-couple-26787.html"
+        >Biba le dit</a
+      >). Surtout, la division de la société en classe nourrit le pouvoir de la
+      classe bourgeoise et <a
+        class="underline text-blue"
+        href="https://www.insee.fr/fr/statistiques/4265758"
+        >sa récupération des richesses produites</a
+      >, du fruit de notre travail.
+    </p>
+    <p>Alors, vous pensez subir ou faire subir ? Un test s'impose :</p>
+
+    <!-- Quiz -->
+    <div class="space-y-12">
+      {
+        shuffleArray(QUESTIONS).map(
+          ({ title, name, srTitle, image, description, options }) => (
+            <div class="space-y-6">
+              <H3 className="mb-12">{title}</H3>
+              <Image
+                src={image}
+                class="mx-auto !mb-12 max-w-[50%]"
+                alt=""
+                width="300"
+                height="307"
+              />
+              <p set:html={description} />
+              <hr />
+              <fieldset data-name={name}>
+                <legend class="sr-only">{srTitle}</legend>
+                <div class="space-y-4">
+                  {shuffleArray(options).map(
+                    ({ description, value, points }) => (
+                      <div>
+                        <input
+                          class="mr-1 cursor-pointer"
+                          type="radio"
+                          id={value}
+                          name={name}
+                          value={value}
+                          data-points={points}
+                        />
+                        <label
+                          for={value}
+                          class="cursor-pointer">
+                          {description}
+                        </label>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </fieldset>
+            </div>
+          ),
+        )
+      }
+    </div>
+
+    <div class="mx-auto w-fit !mt-12">
+      <Button
+        className={cn(
+          "!transition-opacity bg-black font-bakbak text-frustration-yellow p-8 rounded-md text-2xl",
+          "hover:bg-black hover:text-frustration-yellow hover:opacity-80",
+        )}
+        disabled
+        data-button="compute-points"
+        type="submit"
+        >Calculer mon score</Button
+      >
+    </div>
+    <div class="score-container text-xl font-bold text-center invisible">
+      <p>Votre total est de <span class="total-points"></span> !</p>
+      <span class="resultat-description"></span>
+    </div>
+  </article>
+</PageLayout>
+<script define:vars={{ BAREMES }}>
+  const allFieldsets = document.querySelectorAll("fieldset");
+  const fieldsetsChecked = new Set();
+  const computeButton = document.querySelector(
+    "button[data-button='compute-points']",
+  );
+  const scoreContainer = document.querySelector(".score-container");
+  const scorePlaceholder = document.querySelector(".total-points");
+  const resultatDescription = document.querySelector(".resultat-description");
+
+  // 1️⃣ Enable button if all fields completed
+  Array.from(allFieldsets).forEach((fieldset) =>
+    fieldset.addEventListener("click", (e) => {
+      const name = fieldset.getAttribute("data-name");
+      fieldsetsChecked.add(name);
+      if (fieldsetsChecked.size === allFieldsets.length)
+        computeButton.disabled = false;
+    }),
+  );
+
+  // 2️⃣ Compute score
+  computeButton.addEventListener("click", () => {
+    if (!computeButton.disabled) {
+      const inputsChecked = document.querySelectorAll(
+        "input[type='radio']:checked",
+      );
+
+      const totalPoints = Array.from(inputsChecked).reduce(
+        (acc, input) => acc + +(input?.getAttribute("data-points") || 0),
+        0,
+      );
+
+      scoreContainer.style.visibility = "visible";
+      scorePlaceholder.textContent =
+        totalPoints > 1 ? `${totalPoints} points` : `${totalPoints} point`;
+      const resultat = BAREMES.find(({ seuil }) => totalPoints > seuil);
+      resultatDescription.textContent = resultat.description;
+    }
+  });
+</script>
