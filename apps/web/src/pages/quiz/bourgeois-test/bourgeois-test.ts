@@ -1,11 +1,11 @@
-import RevenusImage from "./assets/revenus.webp";
-import VieSocialeImage from "./assets/vie_sociale.webp";
-import HierarchieSocialeImage from "./assets/hierarchie_sociale.webp";
-import ScolariteImage from "./assets/scolarite.webp";
-import PolitiqueImage from "./assets/politique.webp";
-import ImmobilierImage from "./assets/immobilier.webp";
-import LoisirsImage from "./assets/loisirs.webp";
-import FinancierImage from "./assets/financier.webp";
+import RevenusImage from "./_assets/_revenus.webp";
+import VieSocialeImage from "./_assets/_vie_sociale.webp";
+import HierarchieSocialeImage from "./_assets/_hierarchie_sociale.webp";
+import ScolariteImage from "./_assets/_scolarite.webp";
+import PolitiqueImage from "./_assets/_politique.webp";
+import ImmobilierImage from "./_assets/_immobilier.webp";
+import LoisirsImage from "./_assets/_loisirs.webp";
+import FinancierImage from "./_assets/_financier.webp";
 
 export const QUESTIONS = [
   // Revenus
