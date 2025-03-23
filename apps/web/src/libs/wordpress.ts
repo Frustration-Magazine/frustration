@@ -26,6 +26,31 @@ export async function fetchPostBySlug({ slug }: any) {
   return post;
 }
 
+export async function fetchDraftByPostId({ post_id, wp_session }: any) {
+  const query = `
+   query fetchDraftByPostId {
+        post(id: "${post_id}", idType: DATABASE_ID) {
+          title(format: RENDERED)
+          author { node { name userId slug } }
+          categories { nodes { slug name parent { node { name } } } }
+          content(format: RENDERED)
+          featuredImage {
+            node {
+              title(format: RENDERED)
+              altText
+              sourceUrl
+              mediaDetails { height width }
+              mimeType
+            }
+          }
+        }
+    }`;
+  let {
+    data: { post },
+  } = await fetchWordpress({ query, wp_session });
+  return post;
+}
+
 export async function fetchLastPosts({ first = 6 }: any) {
   const query = `
    query fetchLastPosts {
@@ -206,7 +231,7 @@ export async function fetchLinkPreview(link: string) {
 
 export async function fetchCategories() {
   const query = `
-    query GetDraftPosts {
+    query fetchCategories {
       categories(first: 30) {
         nodes {
           slug
@@ -249,13 +274,20 @@ async function fetchWordpress({ query, variables = {} }: any) {
     console.error("Missing PUBLIC_WORDPRESS_GRAPHQL_API env variable");
     return;
   }
+  const username = process.env.WORDPRESS_APPLICATION_USERNAME;
+  const password = process.env.WORDPRESS_APPLICATION_PASSWORD;
 
   try {
+    const headers = {
+      "Content-Type": "application/json",
+      ...(username && password
+        ? { Authorization: "Basic " + btoa(`${username}:${password}`) }
+        : null),
+    };
+
     const res = await fetch(PUBLIC_WORDPRESS_GRAPHQL_API, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({ query, variables }),
     });
 

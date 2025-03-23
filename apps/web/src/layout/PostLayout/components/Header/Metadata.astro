@@ -4,11 +4,13 @@ import TagIcon from "../../assets/icons/tag.svg?raw";
 import { Image } from "astro:assets";
 const { author, date, categories } = Astro.props;
 
-let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-});
+let DD_MM_YYYY = date
+  ? new Date(date).toLocaleDateString("fr-FR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    })
+  : null;
 ---
 
 <div
@@ -31,8 +33,9 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
     </div>
     <span class={cn("space-x-0.5", "text-base", "md:text-xl")}>
       <span class="font-bold">{author.name}</span>
+      {date &&
       <span>|</span>
-      <span>{DD_MM_YYYY}</span>
+      <span>{DD_MM_YYYY}</span>}
     </span>
   </a>
   <div class="categories flex items-center flex-wrap gap-y-0 gap-x-2">

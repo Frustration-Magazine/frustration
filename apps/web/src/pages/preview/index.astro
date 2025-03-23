@@ -1,0 +1,20 @@
+---
+import PostLayout from "@/layout/PostLayout/PostLayout.astro";
+import { fetchDraftByPostId } from "@/libs/wordpress";
+export const prerender = false;
+
+const wp_session = Astro.url.searchParams.get("wp_session");
+const post_id = Astro.url.searchParams.get("post_id");
+
+const post = await fetchDraftByPostId({ post_id, wp_session });
+
+if (!post) return Astro.rewrite("/404");
+const htmlContent = post.content;
+---
+
+<PostLayout {...post}>
+  <Fragment
+    slot="content"
+    set:html={htmlContent}
+  />
+</PostLayout>
