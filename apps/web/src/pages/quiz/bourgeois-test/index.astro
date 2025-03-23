@@ -15,9 +15,12 @@ function shuffleArray<T>(array: T[]): T[] {
   }
   return array;
 }
+const coverImage = "https://frustrationmagazine.fr/covers/test_bourgeois.webp";
 ---
 
-<PageLayout title="Êtes-vous un bourgeois ?">
+<PageLayout
+  title="Quiz | Êtes-vous un bourgeois ?"
+  coverImage={coverImage}>
   <article
     slot="content"
     class="font-open-sans text-lg space-y-6">

@@ -13,11 +13,13 @@ import { SUBSCRIPTIONS } from "./_models";
 
 import { cn } from "@/libs/tailwind";
 
-// Database imports ?
 const { mini, maxi, medium } = SUBSCRIPTIONS;
+const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
 ---
 
-<PageLayout title="Abonnements">
+<PageLayout
+  title="S'abonner à Frustration Magazine"
+  coverImage={coverImage}>
   <article slot="content">
     <!-- 🅰️ Titles -->
     <h2
