@@ -17,8 +17,8 @@ export const QUESTIONS = [
     description: `
     Pour répondre à cette question, il faut estimer son revenu personnel, même quand on est en couple et en famille et avoir en tête <a
         class="underline text-blue"
-        href="https://www.capital.fr/votre-carriere/on-connait-le-salaire-moyen-dans-le-prive-etes-vous-riche-ou-pauvre-1336109#:~:text=1.789%20euros.,mois%20et%2050%25%20gagnent%20plus."
-        >que le salaire net médian en France est de 1789€ par mois</a
+        href="https://fr.statista.com/infographie/25111/distribution-des-salaires-mensuels-nets-en-equivalent-temps-plein-en-france/"
+        >que le salaire net médian en France est de 2183€ net mensuel</a
       >. La moitié des Français gagnent moins, la moitié plus.
     `,
     options: [
@@ -73,8 +73,13 @@ export const QUESTIONS = [
       },
       {
         description:
-          " Je suis surtout proche de mes amis d’enfance et mes collègues, on se reçoit chez les uns et chez les autres de temps en temps",
+          "Je suis surtout proche de mes amis d’enfance et mes collègues, on se reçoit chez les uns et chez les autres de temps en temps",
         value: "amis-enfance",
+        points: 0,
+      },
+      {
+        description: "J'ai une vie solitaire",
+        value: "solitaire",
         points: 0,
       },
       {
@@ -151,6 +156,16 @@ export const QUESTIONS = [
         value: "liberal",
         points: 7,
       },
+      {
+        description: "Je suis agricultrice/agriculteur, sans salarié.e",
+        value: "agriculteur-sans-salarie",
+        points: 0,
+      },
+      {
+        description: "Je suis agricultrice/agriculteur avec des salarié.e.s",
+        value: "agriculteur-avec-salarie",
+        points: 2,
+      },
     ],
   },
   // Vos opinions politiques
@@ -160,7 +175,7 @@ export const QUESTIONS = [
     name: "politique",
     image: PolitiqueImage,
     description: `
-    Les idéaux politiques ne suffisent pas à se classer socialement, mais sont très révélateurs. <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/https://www.lexpress.fr/actualite/politique/lrem/legislatives-les-electeurs-d-en-marche-sont-ils-vraiment-tous-des-cadres_1916848.html">Les électeurs LREM sont majoritairement des cadres</a>, ça alors ! Les ouvriers s'abstiennent <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/https://fr.statista.com/statistiques/717028/abstentionnistes-deuxieme-tour-legislatives-selon-csp-france/">nettement plus que les cadres</a>, seuls 27% des personnes sondées ont confiance dans le gouvernement en 2020 et 69% pensent que "l'économie actuelle profite aux patrons aux dépens de ceux qui travaillent" <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/https://www.sciencespo.fr/cevipof/sites/sciencespo.fr.cevipof/files/OpinionWay%20pour%20le%20CEVIPOF-Barome%CC%80tre%20de%20la%20confiance%20en%20politique%20-%20vague11%20-%20Comparaison-1.pdf">selon le baromètre du CEVIPOF</a>.
+    Les idéaux politiques ne suffisent pas à se classer socialement, mais sont très révélateurs. <a class="underline text-blue" href="https://www.jean-jaures.org/publication/que-sont-les-electeurs-macronistes-devenus/">Les supporters de Macron restant sont principalement des cadres supérieurs, sans surprise</a>. <a class="underline text-blue" href="https://www.observationsociete.fr/modes-de-vie/vie-politique-et-associative/vote-des-pratiques-inegales-selon-lage-et-la-categorie-sociale/">Les ouvriers s'abstiennent nettement plus que les cadres, 73% des Français sondés par le CEVIPOF pensent que "l'économie actuelle profite aux patrons aux dépens de ceux qui travaillent", et 57% jugent que "pour établir la justice sociale, il faudrait prendre aux riches pour donner aux pauvres"</a>.
     `,
     options: [
       {
@@ -220,16 +235,16 @@ export const QUESTIONS = [
     name: "scolarite",
     image: ScolariteImage,
     description: `
-    En France, <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/https://www.inegalites.fr/niveau-de-diplome-de-la-population">18% de la population a un diplôme supérieur à bac+2</a>. L'éducation reste un énorme marqueur de classe. "l'ascenseur social" est globalement une fable : 75% des enfants de cadres sont diplômés du supérieur, <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/http://classes.blogs.liberation.fr/2014/10/29/pour-reussir-mieux-vaut-etre-enfants-de-cadres-que-douvriers/">contre 22% des enfants d’ouvriers</a>. La bourgeoisie monopolise des grandes écoles qui viennent ensuite légitimer le pouvoir de ses enfants sur nos vies : <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/https://www.inegalites.fr/Des-classes-preparatoires-et-des-grandes-ecoles-toujours-aussi-fermees">L’ENA accueille ainsi 4,4 % de fils d’ouvriers et d’employés </a>(deux catégories qui représentent plus de la moitié de la population).
+    En France, <a class="underline text-blue" href="https://www.inegalites.fr/niveau-de-diplome-de-la-population">23% de la population a un diplôme équivalent ou supérieur à Bac+3</a>. L'éducation reste un énorme marqueur de classe. "l'ascenseur social" est globalement une fable : 75% des enfants de cadres sont diplômés du supérieur, <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/http://classes.blogs.liberation.fr/2014/10/29/pour-reussir-mieux-vaut-etre-enfants-de-cadres-que-douvriers/">contre 22% des enfants d’ouvriers</a>. La bourgeoisie monopolise des grandes écoles qui viennent ensuite légitimer le pouvoir de ses enfants sur nos vies : <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/https://www.inegalites.fr/Des-classes-preparatoires-et-des-grandes-ecoles-toujours-aussi-fermees">L’ENA accueille ainsi 4,4 % de fils d’ouvriers et d’employés </a>(deux catégories qui représentent plus de la moitié de la population).
     `,
     options: [
       {
-        description: 'Vous avez un diplôme dit "professionnalisant" (BEP, CAP)',
+        description: "Vous avez un diplôme de type CAP ou BEP",
         value: "bep-cap",
         points: 0,
       },
       {
-        description: "Vous avez un diplôme médico-social",
+        description: "Vous avez un diplôme dans le médico-social",
         value: "medico-social",
         points: 0,
       },
@@ -246,7 +261,7 @@ export const QUESTIONS = [
       },
       {
         description:
-          "Vous avez un diplôme bac+5 obtenu dans une grande école ou une école de commerce",
+          "Vous avez un diplôme bac+5 obtenu dans une fac de médecine, une grande école ou une école de commerce",
         value: "bac-5-commerce",
         points: 6,
       },
@@ -269,7 +284,7 @@ export const QUESTIONS = [
     name: "immobilier",
     image: ImmobilierImage,
     description: `
-    Si 58% des Français sont propriétaires de leur domicile, seuls 13% ont une résidence secondaire, <a class="underline text-blue" href="https://web.archive.org/web/20231128095645/https://www.vousfinancer.com/credit-immobilier/actualites/les-rn-sidences-secondaires-font-elles-encore-rn-ver-les-frann-ais-#:~:text=Les%20r%C3%A9sidences%20secondaires%20repr%C3%A9sentent%2010,8%25%20de%20logements%20vacants).&text=Il%20s'agit%20d'un,observ%C3%A9%20pour%20les%20r%C3%A9sidences%20principales.">héritée dans 26% des cas</a>.
+    Si 58% des Français sont propriétaires de leur domicile, les ménages propriétaires d’au moins 5 logements <a class="underline text-blue" href="https://www.insee.fr/fr/statistiques/5432517?sommaire=5435421#:~:text=Parmi%20les%2010%20%25%20les%20plus,%2C1%20%25%20les%20plus%20ais%C3%A9s.">représentent 3,5 % des ménages</a>, mais détiennent 50 % des logements en location possédés par des particuliers.
     `,
     options: [
       {
