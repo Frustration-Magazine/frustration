@@ -78,7 +78,7 @@ export const QUESTIONS = [
         points: 0,
       },
       {
-        description: "J'ai une vie solitaire",
+        description: "J'ai une vie très solitaire",
         value: "solitaire",
         points: 0,
       },
@@ -103,7 +103,7 @@ export const QUESTIONS = [
     name: "hierarchie-sociale",
     image: HierarchieSocialeImage,
     description: `
-    A la télé,  <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/https://www.csa.fr/content/download/16666/310416/version/3/file/barometre_diversite_vague_1_20_oct_09.pdf">70% des personnes qu'on nous montre sont cadres et professions intellectuelles supérieures</a>. Dans la réalité, plus de la moitié d'entre nous sont ouvrières ou employés. On est loin de <i>Plus Belle la Vie</i>.
+    A la télé,  <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/https://www.csa.fr/content/download/16666/310416/version/3/file/barometre_diversite_vague_1_20_oct_09.pdf">70% des personnes qu'on nous montre sont cadres et professions intellectuelles supérieures</a>. Dans la réalité, plus de la moitié d'entre nous sont ouvrières ou employés.
     `,
     options: [
       {
@@ -235,7 +235,7 @@ export const QUESTIONS = [
     name: "scolarite",
     image: ScolariteImage,
     description: `
-    En France, <a class="underline text-blue" href="https://www.inegalites.fr/niveau-de-diplome-de-la-population">23% de la population a un diplôme équivalent ou supérieur à Bac+3</a>. L'éducation reste un énorme marqueur de classe. "l'ascenseur social" est globalement une fable : 75% des enfants de cadres sont diplômés du supérieur, <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/http://classes.blogs.liberation.fr/2014/10/29/pour-reussir-mieux-vaut-etre-enfants-de-cadres-que-douvriers/">contre 22% des enfants d’ouvriers</a>. La bourgeoisie monopolise des grandes écoles qui viennent ensuite légitimer le pouvoir de ses enfants sur nos vies : <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/https://www.inegalites.fr/Des-classes-preparatoires-et-des-grandes-ecoles-toujours-aussi-fermees">L’ENA accueille ainsi 4,4 % de fils d’ouvriers et d’employés </a>(deux catégories qui représentent plus de la moitié de la population).
+    En France, <a class="underline text-blue" href="https://www.inegalites.fr/niveau-de-diplome-de-la-population">23% de la population a un diplôme équivalent ou supérieur à Bac+3</a>. L'éducation reste un énorme marqueur de classe. "l'ascenseur social" est globalement une fable : 75% des enfants de cadres sont diplômés du supérieur, <a class="underline text-blue" href="https://web.archive.org/web/20240720032340/http://classes.blogs.liberation.fr/2014/10/29/pour-reussir-mieux-vaut-etre-enfants-de-cadres-que-douvriers/">contre 22% des enfants d’ouvriers</a>. La bourgeoisie monopolise des grandes écoles qui viennent ensuite légitimer le pouvoir de ses enfants sur nos vies.
     `,
     options: [
       {
@@ -472,18 +472,26 @@ export const QUESTIONS = [
 export const BAREMES = [
   {
     seuil: 20,
-    description: "Vous êtes un bourgeois intégral",
+    result: "Vous êtes un bourgeois intégral",
+    description:
+      "Vous êtes un bourgeois intégral. Félicitations, vous trônez au sommet de la pyramide sociale, là où l’air est parfumé au champagne millésimé et où les factures ne sont qu’une vague abstraction gérée par un comptable zélé. Vous possédez probablement un appartement haussmannien dont le prix au mètre carré suffirait à financer une révolution, et vos vacances à Courchevel sont aussi naturelles que le mépris discret que vous portez aux 'gens d’en bas'. Votre vie est un Monopoly où vous avez déjà acheté toutes les rues chics et où les autres joueurs n’ont même pas de pions.",
   },
   {
     seuil: 15,
-    description: "Vous êtes un sous-bourgeois",
+    result: "Vous êtes un sous-bourgeois",
+    description:
+      "Vous êtes un sous-bourgeois. Pas tout à fait au sommet, mais assez haut pour snober le commun des mortels tout en enviant secrètement ceux qui ont un plus gros yacht. Vous jonglez entre un CDI bien payé, une épargne conséquente et des brunchs bio hors de prix dans des quartiers gentrifiés. Vous aimez parler 'égalité' tout en profitant d’un système qui vous gave de privilèges, et votre indignation s’arrête pile là où commence votre confort. Un bourgeois en devenir, quoi, mais avec encore un pied dans la culpabilité petite-bourgeoise.",
   },
   {
     seuil: 10,
-    description: "Vous faites partie de la classe laborieuse supérieure",
+    result: "Vous faites partie de la classe laborieuse supérieure.",
+    description:
+      "Vous bossez dur, et ça paye juste assez pour tenir la tête hors de l’eau : un petit pavillon en banlieue ou un appart correct, pas de luxe ostentatoire, mais un quotidien qui ne sent pas le désespoir. Vous ne rêvez pas de yacht ou de rooftop avec vue sur la tour Eiffel, non, vous voulez juste une vie digne, sans courber l’échine ni lécher les bottes des puissants. Vous êtes le genre à construire quelque chose de solide avec ce qu’on vous laisse, et ça force le respect dans un monde qui préfère admirer les rentiers.",
   },
   {
     seuil: 0,
-    description: "Vous faites partie de la classe laborieuse inférieure",
+    result: "Vous faites partie de la classe laborieuse inférieure.",
+    description:
+      "Bienvenue dans le vrai monde, celui où les fins de mois commencent le 10, où le loyer bouffe la moitié de vos rêves et où les transports en commun sont votre arène quotidienne. Vous n’héritez pas, vous n'épargnez pas, vous survivez. Pendant que les bourgeois intégraux sirotent leur spritz en terrasse, vous trimez pour payer leurs privilèges. Mais ne vous inquiétez pas : votre colère est une arme, et elle pourrait bien faire trembler leurs immeubles cossus un jour.",
   },
 ];

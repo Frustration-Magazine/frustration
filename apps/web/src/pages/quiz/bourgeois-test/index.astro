@@ -136,9 +136,12 @@ const coverImage = "https://frustrationmagazine.fr/covers/test_bourgeois.webp";
         >Calculer mon score</Button
       >
     </div>
-    <div class="score-container text-xl font-bold text-center invisible">
-      <p>Votre total est de <span class="total-points"></span> !</p>
-      <span class="resultat-description"></span>
+    <div
+      class="score-container text-xl space-y-4 font-bold text-center invisible">
+      <div class="resultat"></div>
+      <div
+        class="resultat-description text-sm text-justify max-w-[500px] mx-auto font-normal">
+      </div>
     </div>
   </article>
 </PageLayout>
@@ -149,7 +152,7 @@ const coverImage = "https://frustrationmagazine.fr/covers/test_bourgeois.webp";
     "button[data-button='compute-points']",
   );
   const scoreContainer = document.querySelector(".score-container");
-  const scorePlaceholder = document.querySelector(".total-points");
+  const resultat = document.querySelector(".resultat");
   const resultatDescription = document.querySelector(".resultat-description");
 
   // 1️⃣ Enable button if all fields completed
@@ -175,10 +178,9 @@ const coverImage = "https://frustrationmagazine.fr/covers/test_bourgeois.webp";
       );
 
       scoreContainer.style.visibility = "visible";
-      scorePlaceholder.textContent =
-        totalPoints > 1 ? `${totalPoints} points` : `${totalPoints} point`;
-      const resultat = BAREMES.find(({ seuil }) => totalPoints > seuil);
-      resultatDescription.textContent = resultat.description;
+      const bareme = BAREMES.find(({ seuil }) => totalPoints > seuil);
+      resultat.textContent = bareme.result;
+      resultatDescription.textContent = bareme.description;
     }
   });
 </script>
