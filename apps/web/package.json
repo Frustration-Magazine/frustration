@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "infisical run -- astro dev",
+    "dev": "infisical run -- astro dev --host",
     "start": "infisical run --env prod -- astro dev",
     "build": "infisical run -- astro build",
     "preview": "infisical run -- astro preview",

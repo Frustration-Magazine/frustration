@@ -30,7 +30,9 @@
 
 .content a {
   text-decoration: underline;
-  color: blue;
+  text-decoration-thickness: 3px;
+  text-decoration-color: #fccf00;
+  text-underline-offset: 2px;
 }
 .content p {
   margin-bottom: 15px;
