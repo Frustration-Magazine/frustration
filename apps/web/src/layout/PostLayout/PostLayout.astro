@@ -19,7 +19,7 @@ import MoreArticles from "./components/Footer/MoreArticles";
 const {
   title,
   author: {
-    node: { userId, name, slug },
+    node: { userId, name, slug, description: role },
   },
   categories: { nodes: categories },
   date,
@@ -35,6 +35,7 @@ let author;
 if (!author) {
   author = {
     ...AUTHOR,
+    role: role ? role : AUTHOR?.role,
     id: userId,
     name,
     picture: (AUTHOR ? AUTHOR?.picture : DEFAULT?.data.picture) as any,

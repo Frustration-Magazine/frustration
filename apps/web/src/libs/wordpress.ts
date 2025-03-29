@@ -5,7 +5,7 @@ export async function fetchPostBySlug({ slug }: any) {
           title(format: RENDERED)
           slug
           date
-          author { node { name userId slug } }
+          author { node { name userId slug description } }
           categories { nodes { slug name parent { node { name } } } }
           content(format: RENDERED)
           featuredImage {
@@ -274,8 +274,8 @@ async function fetchWordpress({ query, variables = {} }: any) {
     console.error("Missing PUBLIC_WORDPRESS_GRAPHQL_API env variable");
     return;
   }
-  const username = process.env.WORDPRESS_APPLICATION_USERNAME;
-  const password = process.env.WORDPRESS_APPLICATION_PASSWORD;
+  const username = import.meta.env.WORDPRESS_APPLICATION_USERNAME;
+  const password = import.meta.env.WORDPRESS_APPLICATION_PASSWORD;
 
   try {
     const headers = {
