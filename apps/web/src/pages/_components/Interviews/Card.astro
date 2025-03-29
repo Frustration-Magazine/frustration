@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import H5 from "./CardTitle.astro";
-const { link, image, title, slug } = Astro.props;
+const { image, title, slug } = Astro.props;
 ---
 
 <a href={`/${slug}`}>
@@ -15,7 +15,7 @@ const { link, image, title, slug } = Astro.props;
   />
   <H5>{title}</H5>
   <button
-    class="b-2 m-auto block w-fit border-2 border-white px-4 py-1 font-bakbak text-2xl uppercase text-white transition-all hover:scale-125 hover:bg-white hover:text-black group-hover:scale-125 group-hover:bg-white group-hover:text-black">
+    class="b-2 m-auto block w-fit border-2 border-white px-4 py-1 font-bakbak text-2xl uppercase text-white transition-all hover:bg-white hover:text-black group-hover:bg-white group-hover:text-black">
     Lire
   </button>
 </a>

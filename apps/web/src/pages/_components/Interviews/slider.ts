@@ -9,13 +9,13 @@ document.addEventListener("astro:page-load", () => {
     focus: "center",
     autoWidth: true,
     pagination: false,
-    arrows: false,
+    arrows: true,
     perPage: 3,
     autoScroll: {
       speed: 1,
     },
     breakpoints: {
-      425: {
+      550: {
         perPage: 1,
         pagination: true,
         arrows: true,

@@ -88,7 +88,11 @@ function SearchOverlay() {
           {SearchInput}
           {SearchButton}
         </form>
-        <div className="fixed bottom-5 right-5 flex gap-4">
+        <div
+          className={cn(
+            "fixed bottom-5 right-5 hidden gap-4",
+            opened && "flex",
+          )}>
           <AgendaButton className={cn(opened && "opacity-100")} />
           <MailButton className={cn(opened && "opacity-100")} />
         </div>

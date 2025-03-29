@@ -27,6 +27,26 @@ import Interview from "./Card.astro";
   .splide-interviews .splide__pagination {
     bottom: -2rem !important;
   }
+
+  .splide-interviews .splide__arrow {
+    width: 75px;
+    height: 75px;
+    font-size: 25px;
+  }
+  @media (width < 550px) {
+    .splide-interviews .splide__arrow {
+      width: 45px;
+      height: 45px;
+      font-size: 16px;
+      top: 105%;
+    }
+    .splide-interviews .splide__arrow--prev {
+      left: 15%;
+    }
+    .splide-interviews .splide__arrow--next {
+      right: 15%;
+    }
+  }
 </style>
 <script>
   import "./slider";
