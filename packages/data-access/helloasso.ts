@@ -83,7 +83,7 @@ function formatHelloAssoTransactions({ id, date, amount, items, state }: HelloAs
 
 async function fetchHelloAssoTransactionsAndToken(endpoint_payments: string): Promise<{ payments: any[]; nextToken: string | null }> {
   const access_token = await fetchHelloAssoToken({
-    endpoint_access_token: process.env.HELLOASSO_API_ENDPOINT ?? ""
+    endpoint_access_token: process.env.HELLOASSO_API ?? ""
   });
 
   let payments: any[] = [];

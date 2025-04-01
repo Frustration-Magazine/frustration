@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "infisical run -- next dev",
+    "dev:prod": "infisical run --env prod -- next dev",
     "build": "infisical run -- next build",
     "start": "infisical run --env prod -- next start",
     "lint": "next lint",
