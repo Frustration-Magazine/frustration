@@ -12,7 +12,7 @@ import { Area, AreaChart, XAxis, Legend } from "recharts";
 // 🔧 Libs
 import { inEuros, debounce } from "../_utils";
 import { formatExplicitMonth } from "@utils/dates";
-
+import { cn } from "@utils/tailwind";
 // 🗿 Models
 import { Transactions } from "../_models";
 
@@ -72,10 +72,13 @@ const TransactionsChart = ({
   /* ************** */
 
   return (
-    <section className="relative w-full rounded-md">
+    <section className="relative flex-grow rounded-md">
       <ChartContainer
         config={chartConfig}
-        className="h-full max-h-full w-full rounded-md bg-black/5 p-6 backdrop-blur-md [&_.recharts-cartesian-axis-tick_text]:fill-primary [&_.recharts-cartesian-axis-tick_text]:font-bold [&_.recharts-cartesian-axis-tick_text]:opacity-70"
+        className={cn(
+          "max-h-full rounded-md bg-black/5 p-6 backdrop-blur-md",
+          "[&_.recharts-cartesian-axis-tick_text]:fill-primary [&_.recharts-cartesian-axis-tick_text]:font-bold [&_.recharts-cartesian-axis-tick_text]:opacity-70",
+        )}
       >
         <AreaChart
           accessibilityLayer

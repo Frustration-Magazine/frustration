@@ -26,14 +26,10 @@ const IncomePage = () => (
   >
     <TabsList className="mx-auto mb-3 grid h-fit w-[400px] grid-cols-1 gap-2 bg-transparent">
       <Tab value="permanent">Global</Tab>
-      {/* <Tab value="temporary">Campagne</Tab> */}
     </TabsList>
     <TabsContent className="grow overflow-auto" value="permanent">
       <Permanent />
     </TabsContent>
-    {/* <TabsContent className="grow overflow-auto" value="temporary">
-      <Temporary />
-    </TabsContent> */}
   </Tabs>
 );
 
