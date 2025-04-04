@@ -1,9 +1,5 @@
 "use client";
-
-// 🔩 Base
 import React from "react";
-
-// 🧱 Components
 import {
   Table,
   TableBody,
@@ -14,11 +10,6 @@ import {
   TableRow,
 } from "@ui/components/table";
 import { Button } from "@/components/Button";
-
-// 🔧 Utils
-import { prettifyName } from "@utils/strings";
-
-// 🎁 Libraries
 import {
   ColumnDef,
   SortingState,
@@ -27,11 +18,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
-// ✅ Icons
 import { ArrowUpDown } from "lucide-react";
-
-// 🗿 Models
 import { Customer } from "@data-access/stripe";
 
 const DEFAULT_VALUE = "-";
@@ -92,7 +79,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
       );
     },
     cell: ({ row }) => {
-      const amountInEuro = (row.getValue("amount") as unknown as number) / 100;
+      const amountInEuro = row.getValue("amount") as unknown as number;
       const formattedAmount = new Intl.NumberFormat("fr-FR", {
         style: "currency",
         currency: "EUR",
@@ -103,18 +90,18 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     },
   },
   {
-    accessorKey: "adresse",
+    accessorKey: "line1",
     header: "Adresse",
     cell: ({ row }) => {
-      const address = row.getValue("adresse") as unknown as string;
+      const address = row.getValue("line1") as unknown as string;
       return address || DEFAULT_VALUE;
     },
   },
   {
-    accessorKey: "ville",
+    accessorKey: "city",
     header: "Ville",
     cell: ({ row }) => {
-      const city = row.getValue("ville") as unknown as string;
+      const city = row.getValue("city") as unknown as string;
       return (
         <span className="capitalize">
           {city ? city.toLowerCase() : DEFAULT_VALUE}
@@ -123,27 +110,27 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     },
   },
   {
-    accessorKey: "pays",
-    header: "Pays",
+    accessorKey: "state",
+    header: "Région",
     cell: ({ row }) => {
-      const country = row.getValue("pays") as unknown as string;
+      const country = row.getValue("state") as unknown as string;
       return country || DEFAULT_VALUE;
     },
   },
   {
-    accessorKey: "code_postal",
-    header: "Code postal",
+    accessorKey: "country",
+    header: "Pays",
     cell: ({ row }) => {
-      const postalCode = row.getValue("code_postal") as unknown as string;
-      return postalCode || DEFAULT_VALUE;
+      const country = row.getValue("country") as unknown as string;
+      return country || DEFAULT_VALUE;
     },
   },
   {
-    accessorKey: "campaign",
-    header: "Campagne",
+    accessorKey: "postal_code",
+    header: "Code postal",
     cell: ({ row }) => {
-      const campaign = row.getValue("campaign") as unknown as string;
-      return campaign || DEFAULT_VALUE;
+      const postalCode = row.getValue("postal_code") as unknown as string;
+      return postalCode || DEFAULT_VALUE;
     },
   },
 ];
@@ -155,7 +142,6 @@ const columnsCustomers: ColumnDef<Customer>[] = [
 export default function ({ customers }: { customers: Customer[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const filteredCustomers = customers;
-
   const table = useReactTable<Customer>({
     data: filteredCustomers,
     columns: columnsCustomers,

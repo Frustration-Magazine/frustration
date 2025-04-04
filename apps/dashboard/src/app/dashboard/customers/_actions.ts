@@ -3,7 +3,7 @@
 import {
   // fetchStripeNewCustomers,
   Customer,
-  fetchActiveSubscriptions,
+  fetchStripeNewCustomers,
 } from "@data-access/stripe";
 import { fetchNumberOfActiveCustomersLastMonth } from "@data-access/database";
 
@@ -14,8 +14,8 @@ export async function fetchCustomers({
   from: Date;
   to: Date;
 }): Promise<Customer[]> {
-  const newSubscriptions = await fetchActiveSubscriptions({ from, to });
-  return [];
+  const newSubscriptions = await fetchStripeNewCustomers({ from, to });
+  return newSubscriptions;
 }
 
 export async function fetchActiveCustomersLastMonth() {

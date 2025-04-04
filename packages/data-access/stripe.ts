@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { TRANSACTION_TYPES, TRANSACTION_SUBTYPES, Transaction } from "./models/transactions";
 import { convertUTCtoDate } from "@utils/dates";
-import { convertCountryInitials } from "@utils/strings";
+import { convertCountryInitials, prettifyName } from "@utils/strings";
 
 /* ------------------- */
 /*        STRIPE       */
@@ -166,13 +166,13 @@ export async function fetchActiveSubscriptions(
       customerId: subscription.customer,
       line1: (subscription.metadata.line1 || subscription.metadata.adresse) ?? "",
       city: (subscription.metadata.city || subscription.metadata.ville) ?? "",
-      postal_codal: (subscription.metadata.postal_code || subscription.metadata.code_postal) ?? "",
+      postal_code: (subscription.metadata.postal_code || subscription.metadata.code_postal) ?? "",
       country: (subscription.metadata.country || subscription.metadata.pays) ?? "",
       state: subscription.metadata.state ?? ""
     };
   });
 
-  // 2️⃣ We fetch customers
+  // 2️⃣ We fetch customers to get additional information
   let customers: any = [];
   let paymentMethods: any = [];
   const customersId: any = subscriptions_f.map(({ customerId }: { customerId: string }) => customerId);
@@ -181,13 +181,13 @@ export async function fetchActiveSubscriptions(
     const sliceCustomersId = customersId.slice(i, i + 100);
     const sliceCustomers = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.customers.retrieve(customerId)));
     customers = [...customers, ...sliceCustomers];
-    console.log("wait...");
-    await wait(1000);
+    console.log("wait to avoid rate limit...");
+    await wait(100);
     let slicePaymentMethods = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.paymentMethods.list({ customer: customerId })));
     slicePaymentMethods = slicePaymentMethods.map((paymentMethod: any) => paymentMethod?.data.at(0));
     paymentMethods = [...paymentMethods, ...slicePaymentMethods];
-    console.log("wait...");
-    await wait(1000);
+    console.log("wait to avoid rate limit...");
+    await wait(100);
   }
   subscriptions_f.forEach((subscription) => {
     const customer = customers.find((customer: any) => customer.id === subscription.customerId);
@@ -199,9 +199,6 @@ export async function fetchActiveSubscriptions(
   });
 
   return subscriptions_f;
-
-  // const csv = parse(subscriptions_f);
-  // writeFileSync("./subscriptions.csv", csv);
 }
 
 /*    CUSTOMERS     */
@@ -209,15 +206,16 @@ export async function fetchActiveSubscriptions(
 
 export interface Customer {
   id: string;
-  created: Date;
   name: string;
   email: string;
-  adresse: string;
-  code_postal: string;
-  ville: string;
-  pays: string;
+  created: Date;
   amount: number;
-  campaign: string;
+  customerId: string;
+  line1: string;
+  postal_code: string;
+  city: string;
+  country: string;
+  state: string;
 }
 
 const firstDayOfCurrentYear = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
@@ -235,62 +233,75 @@ export async function fetchStripeNewCustomers(
     to: now
   }
 ) {
-  // let hasMore;
-  // let subscriptions: any[] = [];
-  // let customersId: any[] = [];
-  // // 1️⃣ We fetch new subscriptions
-  // // do {
-  // console.log("start fetching subscriptions...");
-  // const { data, has_more } = await stripe.subscriptions.list({
-  //   created: {
-  //     gte: convertDateTimestamp(from),
-  //     lte: convertDateTimestamp(to)
-  //   },
-  //   limit: 100,
-  //   starting_after: subscriptions.at(-1)?.id
-  // });
-  // hasMore = has_more;
-  // // Filter out non valid subscriptions
-  // const newSubscriptions = data.filter((subscription: any) => subscription.status === "active");
-  // subscriptions = [...subscriptions, ...newSubscriptions];
-  // const newCustomersId = newSubscriptions.map(({ customer }: { customer: string }) => customer);
-  // customersId = [...customersId, ...newCustomersId];
-  // // } while (hasMore);
-  // // 2️⃣ We fetch new customers
-  // let customers: any[] = [];
-  // let paymentMethods: any[] = [];
-  // for (let i = 0; i < customersId.length; i += 100) {
-  //   console.log("start fetching customers...");
-  //   const sliceCustomersId = customersId.slice(i, i + 99);
-  //   const sliceCustomers = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.customers.retrieve(customerId)));
-  //   customers = [...customers, ...sliceCustomers];
-  //   let slicePaymentMethods = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.paymentMethods.list({ customer: customerId })));
-  //   slicePaymentMethods = slicePaymentMethods.map((paymentMethod: any) => paymentMethod?.data.at(0));
-  //   paymentMethods = [...paymentMethods, ...slicePaymentMethods];
-  // }
-  // const formattedCustomers: Customer[] = customers.map(({ id, created, name, email, metadata, address }) => {
-  //   const subscription = subscriptions.find((subscription) => subscription.customer === id);
-  //   const paymentMethod = paymentMethods.find((paymentMethod) => paymentMethod.customer === id);
-  //   const adresse = address?.line1 || subscription.metadata?.adresse || subscription.metadata?.line1;
-  //   const ville = address?.city || subscription.metadata?.ville || subscription.metadata?.city;
-  //   const code_postal = address?.postal_code || subscription.metadata?.code_postal || subscription.metadata?.postal_code;
-  //   const amount = subscription.items.data[0].price.unit_amount;
-  //   const pays = convertCountryInitials(address?.country || paymentMethod?.card?.country);
-  //   const campaign = metadata?.campaign || "permanente";
-  //   return {
-  //     id,
-  //     created: new Date(created * 1000),
-  //     name: name ? prettifyName(name) : "-",
-  //     email,
-  //     adresse,
-  //     code_postal,
-  //     ville,
-  //     pays,
-  //     amount,
-  //     campaign
-  //   };
-  // });
-  // return formattedCustomers;
+  let hasMore;
+  let subscriptions: any[] = [];
+  let customersId: any[] = [];
+
+  // 1️⃣ We fetch new subscriptions
+  do {
+    console.log("start fetching subscriptions...");
+    const lastSubscription = subscriptions.at(-1);
+
+    const { data, has_more } = await stripe.subscriptions.list({
+      created: {
+        gte: convertDateTimestamp(from),
+        lte: convertDateTimestamp(to)
+      },
+      limit: 100,
+      starting_after: lastSubscription?.id
+    });
+    hasMore = has_more;
+
+    // Filter out non valid subscriptions
+    const newSubscriptions = data.filter((subscription: any) => subscription.status === "active");
+    subscriptions = [...subscriptions, ...newSubscriptions];
+  } while (hasMore);
+
+  const subscriptions_f = subscriptions.map((subscription) => {
+    return {
+      id: subscription.id,
+      name: "",
+      email: "",
+      created: new Date(subscription.created * 1000),
+      amount: subscription.items.data[0].price.unit_amount / 100,
+      customerId: subscription.customer,
+      line1: (subscription.metadata.line1 || subscription.metadata.adresse) ?? "",
+      city: (subscription.metadata.city || subscription.metadata.ville) ?? "",
+      postal_code: (subscription.metadata.postal_code || subscription.metadata.code_postal) ?? "",
+      country: (subscription.metadata.country || subscription.metadata.pays) ?? "",
+      state: subscription.metadata.state ?? ""
+    };
+  });
+
+  // 2️⃣ We fetch new customers
+  let customers: any[] = [];
+  let paymentMethods: any[] = [];
+  customersId = subscriptions_f.map(({ customerId }: { customerId: string }) => customerId);
+
+  for (let i = 0; i < customersId.length; i += 100) {
+    console.log("start fetching customers...");
+    const sliceCustomersId = customersId.slice(i, i + 99);
+    const sliceCustomers = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.customers.retrieve(customerId)));
+    customers = [...customers, ...sliceCustomers];
+    console.log("wait to avoid rate limit...");
+    await wait(100);
+    let slicePaymentMethods = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.paymentMethods.list({ customer: customerId })));
+    slicePaymentMethods = slicePaymentMethods.map((paymentMethod: any) => paymentMethod?.data.at(0));
+    paymentMethods = [...paymentMethods, ...slicePaymentMethods];
+    console.log("wait to avoid rate limit...");
+    await wait(100);
+  }
+
+  subscriptions_f.forEach((subscription) => {
+    const customer = customers.find((customer: any) => customer.id === subscription.customerId);
+    const paymentMethod = paymentMethods.find((paymentMethod: any) => paymentMethod.customer === subscription.customerId);
+
+    subscription.name = customer?.name ? prettifyName(customer.name) : "";
+    subscription.email = customer?.email;
+    subscription.country = convertCountryInitials(subscription.country || paymentMethod?.card?.country);
+  });
+
+  return subscriptions_f;
 }
 
 /*    BALANCE     */

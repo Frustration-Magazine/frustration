@@ -5,47 +5,30 @@ import Section from "../Section.astro";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Image } from "astro:assets";
-import { cn } from '@/libs/tailwind';
+import { cn } from "@/libs/tailwind";
 import { LuExternalLink } from "react-icons/lu";
 import SidePanel from "./SidePanel.astro";
 
-/* ----------- */
-//  📦 Data    //
-/* ----------- */
-
-/* 📀 READ TABLE VIDEO */
-const { data: records } : { data: any[] } = await readRecords({
+const { data: records }: { data: any[] } = await readRecords({
   table: "media_video",
   where: {},
   take: 6,
   orderBy: { publishedAt: "desc" },
-  success: "Videos read !",
+  success: "Videos found !",
 });
 
-/* ------------- */
-//  🎨 Styles    //
-/* ------------- */
-
-const arrowSizesMobile="[&>button>svg]:!h-[35px] [&>button>svg]:!w-[15px] [&>button]:!h-[40px] [&>button]:!w-[40px]"
-const arrowSizesSm="[&>button>svg]:sm:!h-[45px] [&>button>svg]:sm:!w-[20px] [&>button]:sm:!h-[55px] [&>button]:sm:!w-[55px]"
-const arrowSizesLg="[&>button>svg]:lg:!h-[70px] [&>button>svg]:lg:!w-[30px] [&>button]:lg:!h-[80px] [&>button]:lg:!w-[80px]"
-
-/* ------------- */
-//     🖥️ UI     //
-/* ------------- */
+console.log("records", records);
 ---
-{records.length > 0 ?
-<Section>
-  <SectionTitle position="right">Vidéos</SectionTitle>
-  <div class="main-home-videos-container mx-auto">
-    <!--                   -->
-    <!--     PANELS        -->
-    <!--                   -->
-    <div class="video-informations-container relative">
-      <div class="absolute h-full w-full text-white">
-        {
-          records.map(
-            ({
+
+{
+  records.length === 0 ? null : (
+    <Section>
+      <SectionTitle position="right">Vidéos</SectionTitle>
+      <div class="main-home-videos-container mx-auto">
+        <div class="video-informations-container relative">
+          <div class="absolute h-full w-full text-white">
+            {records.map(
+              ({
                 id,
                 title,
                 channelId,
@@ -65,92 +48,93 @@ const arrowSizesLg="[&>button>svg]:lg:!h-[70px] [&>button>svg]:lg:!w-[30px] [&>b
                   playlistUrl={`https://www.youtube.com/playlist?list=${playlistId}`}
                   id={`panel-${id}`}
                 />
-              )
-          )
-        }
-      </div>
-    </div>
-    <!--               -->
-    <!--     SLIDER    -->
-    <!--               -->
-    <div class="splide splide-videos bg-black shadow-[0_0_1rem_4px_rgba(0,0,0,0.5)]">
-      <!-- ARROWS -->
-      <!--        -->
-     {<div
-        class={cn("splide__arrows", arrowSizesMobile, arrowSizesSm, arrowSizesLg, records.length < 2 ? "hidden" : "")}>
-        <button class="splide__arrow splide__arrow--prev">
-          <ChevronLeft
-            color="#FFF200"
-            className="!scale-125"
-            size={60}
-          />
-        </button>
-        <button class="splide__arrow splide__arrow--next">
-          <ChevronRight
-            color="#FFF200"
-            className="!scale-125"
-            size={60}
-          />
-        </button>
-      </div>}
-      <!--                    -->
-      <!--    TRACK SLIDER    -->
-      <!--                    -->
-      <div class="splide__track">
-        <ul class="splide__list">
+              ),
+            )}
+          </div>
+        </div>
+        <div class="splide splide-videos bg-black shadow-[0_0_1rem_4px_rgba(0,0,0,0.5)]">
           {
-            records.map((video) => (
-              <li
-                class="splide__slide"
-                data-id={video.id}
-                data-splide-youtube={`https://www.youtube.com/watch?v=${video.id}`}>
-                <Image
-                  src={video.thumbnailMaxResolution}
-                  alt="Illustration vidéo"
-                  width="1280"
-                  height="720"
+            <div
+              class={cn(
+                "splide__arrows",
+                "[&>button>svg]:!h-[35px] [&>button>svg]:!w-[15px] [&>button]:!h-[40px] [&>button]:!w-[40px]",
+                "[&>button>svg]:sm:!h-[45px] [&>button>svg]:sm:!w-[20px] [&>button]:sm:!h-[55px] [&>button]:sm:!w-[55px]",
+                "[&>button>svg]:lg:!h-[70px] [&>button>svg]:lg:!w-[30px] [&>button]:lg:!h-[80px] [&>button]:lg:!w-[80px]",
+                records.length < 2 && "hidden",
+              )}>
+              <button class="splide__arrow splide__arrow--prev">
+                <ChevronLeft
+                  color="#FFF200"
+                  className="!scale-125"
+                  size={60}
                 />
-                <a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" class={cn("max-md:hidden", "absolute z-10 bottom-2 flex items-center gap-2  bg-black text-white font-montserrat px-3 rounded-lg font-semibold py-1 right-2")}>
-                  <img src="img/favicon_yt.png" width="21" alt=""/>
-                  <span>
-                    Regarder sur Youtube
-                  </span>
-                  <LuExternalLink size={14}/>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-    <!--                 -->
-    <!--    MAIN TRACK   -->
-    <!--                 -->
-    <div class="splide splide-videos-thumbnails">
-      <div class="splide__track">
-        <ul class="splide__list gap-2">
-          {
-            records.map((video) => (
-              <li
-                class="splide__slide rounded-lg"
-                data-id={video.id}
-                data-splide-youtube={`https://www.youtube.com/watch?v=${video.id}`}>
-                <Image
-                  src={video.thumbnailMaxResolution}
-                  alt="Illustration vidéo"
-                  width="1280"
-                  height="720"
+              </button>
+              <button class="splide__arrow splide__arrow--next">
+                <ChevronRight
+                  color="#FFF200"
+                  className="!scale-125"
+                  size={60}
                 />
-              </li>
-            ))
+              </button>
+            </div>
           }
-        </ul>
+          <div class="splide__track">
+            <ul class="splide__list">
+              {records.map((video) => (
+                <li
+                  class="splide__slide"
+                  data-id={video.id}
+                  data-splide-youtube={`https://www.youtube.com/watch?v=${video.id}`}>
+                  <Image
+                    src={video.thumbnailMaxResolution}
+                    alt="Illustration vidéo"
+                    width="1280"
+                    height="720"
+                  />
+                  <a
+                    href={`https://www.youtube.com/watch?v=${video.id}`}
+                    target="_blank"
+                    class={cn(
+                      "max-md:hidden",
+                      "absolute z-10 bottom-2 flex items-center gap-2  bg-black text-white font-montserrat px-3 rounded-lg font-semibold py-1 right-2",
+                    )}>
+                    <img
+                      src="img/favicon_yt.png"
+                      width="21"
+                      alt=""
+                    />
+                    <span>Regarder sur Youtube</span>
+                    <LuExternalLink size={14} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div class="splide splide-videos-thumbnails">
+          <div class="splide__track">
+            <ul class="splide__list gap-2">
+              {records.map((video) => (
+                <li
+                  class="splide__slide rounded-lg"
+                  data-id={video.id}
+                  data-splide-youtube={`https://www.youtube.com/watch?v=${video.id}`}>
+                  <Image
+                    src={video.thumbnailMaxResolution}
+                    alt="Illustration vidéo"
+                    width="1280"
+                    height="720"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</Section> : null }
-<style is:global>
-
+    </Section>
+  )
+}
+<style>
   /* GRID LAYOUT */
   .main-home-videos-container {
     display: grid;
@@ -182,42 +166,48 @@ const arrowSizesLg="[&>button>svg]:lg:!h-[70px] [&>button>svg]:lg:!w-[30px] [&>b
     grid-area: thumbnails;
   }
   @media (min-width: 1000px) {
-  .main-home-videos-container .video-informations-container {
-    grid-area: informations;
+    .main-home-videos-container .video-informations-container {
+      grid-area: informations;
     }
   }
 
   /* SPLIDE CUSTOMIZATION */
 
   .splide__track--nav {
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
     cursor: auto;
     will-change: auto;
   }
 
   /* PLAY ICON */
-  .splide-videos .splide__video__play {
+  .splide-videos :global(.splide__video__play) {
     height: clamp(50px, 7vw, 125px);
     width: clamp(50px, 7vw, 125px);
     opacity: 1;
-    background: #FFF200;
+    background: #fff200;
   }
 
-  .splide-videos .splide__video__play::after {
+  .splide-videos :global(.splide__video__play::after) {
     border-color: transparent transparent transparent black;
     border-width: 9px 0 9px 14px;
   }
 
-   @media (min-width: 640px) {
-   .splide-videos .splide__video__play::after {
-    border-color: transparent transparent transparent black;
-    border-width: 13px 0 13px 21px;
+  @media (min-width: 640px) {
+    .splide-videos :global(.splide__video__play::after) {
+      border-color: transparent transparent transparent black;
+      border-width: 13px 0 13px 21px;
     }
   }
-   @media (min-width: 1000px) {
-   .splide-videos .splide__video__play::after {
-    border-color: transparent transparent transparent black;
-    border-width: 18px 0 18px 27px;
+  @media (min-width: 1000px) {
+    .splide-videos :global(.splide__video__play::after) {
+      border-color: transparent transparent transparent black;
+      border-width: 18px 0 18px 27px;
     }
   }
 
@@ -231,7 +221,7 @@ const arrowSizesLg="[&>button>svg]:lg:!h-[70px] [&>button>svg]:lg:!w-[30px] [&>b
   }
 
   .splide-videos:hover .splide__arrow {
-    opacity:1;
+    opacity: 1;
   }
 
   .splide-videos.is-playing .splide__arrow {
@@ -259,7 +249,7 @@ const arrowSizesLg="[&>button>svg]:lg:!h-[70px] [&>button>svg]:lg:!w-[30px] [&>b
   }
 
   .splide-videos .splide__pagination__page.is-active {
-    background: #FFF200;
+    background: #fff200;
   }
 
   .splide-videos-thumbnails .splide__track--nav .splide__list > .splide__slide {
@@ -287,7 +277,9 @@ const arrowSizesLg="[&>button>svg]:lg:!h-[70px] [&>button>svg]:lg:!w-[30px] [&>b
   const ADDITIONAL_INFORMATIONS_SELECTOR = ".video-informations";
 
   function manageDisplayOfAdditionalInformations(index: number = 0): void {
-    const videoInformations = document.querySelectorAll(ADDITIONAL_INFORMATIONS_SELECTOR) as unknown as HTMLElement[];
+    const videoInformations = document.querySelectorAll(
+      ADDITIONAL_INFORMATIONS_SELECTOR,
+    ) as unknown as HTMLElement[];
     videoInformations.forEach((element, elementIndex) => {
       if (elementIndex === index) {
         element.style.display = "block";
@@ -340,6 +332,8 @@ const arrowSizesLg="[&>button>svg]:lg:!h-[70px] [&>button>svg]:lg:!w-[30px] [&>b
     splideVideosThumbnails.mount();
 
     manageDisplayOfAdditionalInformations();
-    splideVideos.on("active", ({ index }) => manageDisplayOfAdditionalInformations(index));
-});
+    splideVideos.on("active", ({ index }) =>
+      manageDisplayOfAdditionalInformations(index),
+    );
+  });
 </script>
