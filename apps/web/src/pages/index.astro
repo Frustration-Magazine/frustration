@@ -1,14 +1,14 @@
 ---
 import BaseLayout from "@/layout/BaseLayout/BaseLayout.astro";
 
-import MainSlider from "./_components/MainSlider/MainSlider.astro";
-import Videos from "./_components/Videos/Videos.astro";
-import NewsletterBanner from "./_components/NewsletterBanner/NewsletterBanner.astro";
-import ALaUne from "./_components/ALaUne/ALaUne.astro";
-import SeparationWave from "./_components/Separators/Wave.astro";
+// import MainSlider from "./_components/MainSlider/MainSlider.astro";
+// import Videos from "./_components/Videos/Videos.astro";
+// import NewsletterBanner from "./_components/NewsletterBanner/NewsletterBanner.astro";
+// import ALaUne from "./_components/ALaUne/ALaUne.astro";
+// import SeparationWave from "./_components/Separators/Wave.astro";
 
-import Interviews from "./_components/Interviews/Interviews.astro";
-import SeparationSpades from "./_components/Separators/Spades.astro";
+// import Interviews from "./_components/Interviews/Interviews.astro";
+// import SeparationSpades from "./_components/Separators/Spades.astro";
 
 // Database import
 const metadata = {
@@ -17,23 +17,21 @@ const metadata = {
     "Page d'accueil du magazine de critique sociale pour grand public Frustration Magazine sur lequel vous pourrez retrouver nos dernières vidéos et articles pour mieux comprendre l'actualité politique, économique et sociale ainsi que toutes nos analyses sur la guerre en cours que mène la bourgeoisie contre les travailleuses et travailleurs.",
 };
 
-import { fetchLastPosts } from "@/libs/wordpress";
+// import { fetchLastPosts } from "@/libs/wordpress";
 
 // Database import
-const MAX_POSTS = 9;
-const posts = await fetchLastPosts({ first: MAX_POSTS });
+// const MAX_POSTS = 9;
+// const posts = await fetchLastPosts({ first: MAX_POSTS });
 ---
 
 <BaseLayout {...metadata}>
-  <section class="block w-full overflow-hidden bg-home-first-section">
-    <MainSlider posts={posts} />
-    <Videos />
-    <NewsletterBanner />
-    <ALaUne posts={posts} />
-    <SeparationWave />
-  </section>
-  <section class="relative block w-full bg-black pb-12 sm:pb-20 pt-7">
-    <Interviews />
-    <SeparationSpades />
+  <section class="text-5xl text-center m-auto">
+    Starting from a blank page 🥱
+    <br />
+    <a
+      class="underline text-blue text-2xl"
+      href="https://www.figma.com/design/98afmV2xplnGMIz4gBqDMp/Website?node-id=0-1&p=f&t=j6O61YQlprojUtUd-0">
+      Figma</a
+    >
   </section>
 </BaseLayout>
