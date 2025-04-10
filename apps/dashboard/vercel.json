@@ -1,11 +1,11 @@
 {
    "crons": [
     {
-      "path": "/api/updateTransactions",
-      "schedule": "0 5 * * *"
+      "path": "/api/update-payments",
+      "schedule": "0 5 1 * *"
     },
     {
-      "path": "/api/updateVideos",
+      "path": "/api/update-videos",
       "schedule": "0 5 * * *"
     }
   ]

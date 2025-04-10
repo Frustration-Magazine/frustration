@@ -1,17 +1,23 @@
-import { TRANSACTION_TYPES, Transaction } from "./models/transactions";
+import { type Payment } from "./models/transactions";
+import { areSameDay, areSameMonth, explicitDate, truncateMonth } from "@utils/dates";
 
-/* ------------------ */
-/*     HELLOASSO      */
-/* ------------------ */
+/* ----------------------- */
+/*     Authentication      */
+/* ----------------------- */
 
 async function fetchHelloAssoToken({ endpoint_access_token }: { endpoint_access_token: string }): Promise<string | null> {
   console.info("🔁 Récupération d'un token HelloAsso");
   let accessToken = null;
 
+  if (!process.env.HELLOASSO_CLIENT_SECRET || !process.env.HELLOASSO_CLIENT_ID) {
+    console.error("❌ Missing HelloAsso credentials");
+    return null;
+  }
+
   const params = new URLSearchParams({
     grant_type: "client_credentials",
-    client_secret: process.env.HELLOASSO_CLIENT_SECRET ?? "",
-    client_id: process.env.HELLOASSO_CLIENT_ID ?? ""
+    client_secret: process.env.HELLOASSO_CLIENT_SECRET,
+    client_id: process.env.HELLOASSO_CLIENT_ID
   });
 
   await fetch(endpoint_access_token, {
@@ -23,21 +29,21 @@ async function fetchHelloAssoToken({ endpoint_access_token }: { endpoint_access_
   })
     .then((response) => response.json())
     .then(({ access_token }) => {
-      console.info("✅ Récupération d'un token HelloAsso réussie");
+      console.info("✅ Authentication token HelloAsso retrieved successfully");
       accessToken = access_token;
     })
-    .catch((err) => console.error("Error while trying to get Helloasso access token", err));
+    .catch((err) => console.error("❌ Error while trying to get Helloasso access token", err));
 
   return accessToken;
 }
 
-/* ------------------- */
-/*    TRANSACTIONS     */
-/* ------------------- */
+/* --------------- */
+/*    PAYMENTS     */
+/* --------------- */
 
 const START_DATE_STRING = "2020-01-01T00:00:00Z";
 
-export interface HelloAssoTransaction {
+export interface HelloAssoPayment {
   id: string;
   date: string;
   amount: number;
@@ -45,112 +51,95 @@ export interface HelloAssoTransaction {
   state: string;
 }
 
-function getTransactionType(helloassoType: string): string {
-  if (helloassoType === "MonthlyDonation") return TRANSACTION_TYPES.SUBSCRIPTION;
-  if (helloassoType === "Donation") return TRANSACTION_TYPES.DONATION;
-  if (helloassoType === "Payment") return TRANSACTION_TYPES.PAYMENT_FOR_INVOICE;
-  return TRANSACTION_TYPES.OTHER;
-}
-
-function formatHelloAssoTransactions({ id, date, amount, items, state }: HelloAssoTransaction): Transaction {
-  const type = items[0]?.type;
-  const transactionType = getTransactionType(type);
-
-  if (transactionType === TRANSACTION_TYPES.OTHER) {
-    console.info(`Unknown type: ${type}\n`);
-    console.info({
-      id,
-      date,
-      amount,
-      items,
-      state
-    });
+export async function fetchHelloAssoPayments({ from } = { from: START_DATE_STRING }): Promise<any[]> {
+  if (!process.env.HELLOASSO_API_PAYMENTS || !process.env.HELLOASSO_API_TOKEN || !process.env.HELLOASSO_ORGANIZATION_SLUG) {
+    console.error("❌ Missing HelloAsso API URL or slug");
+    return [];
   }
 
-  return {
-    id: String(id),
-    created: new Date(date),
-    available: new Date(date),
-    amount: amount / 100,
-    net: amount / 100,
-    source: "helloasso",
-    type: transactionType,
-    stripe_source: null,
-    subtype: null,
-    status: state
-  };
-}
+  const pageSize = "100";
+  let hasMore = false;
+  let payments = [];
 
-async function fetchHelloAssoTransactionsAndToken(endpoint_payments: string): Promise<{ payments: any[]; nextToken: string | null }> {
-  const access_token = await fetchHelloAssoToken({
-    endpoint_access_token: process.env.HELLOASSO_API ?? ""
-  });
-
-  let payments: any[] = [];
-  let nextToken = null;
-
-  console.info("🔁 Récupération d'une page de paiements \r\n");
-  await fetch(endpoint_payments, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${access_token}`
-    }
-  })
-    .then((res) => res.json())
-    .then(({ data, pagination: { continuationToken } }) => {
-      console.info("✅ Récupération d'une page de paiements réussie \r\n");
-      payments = data;
-      nextToken = continuationToken;
-    })
-    .catch((error) => console.error(error));
-
-  return {
-    payments,
-    nextToken
-  };
-}
-
-export async function fetchHelloAssoTransactions({ from } = { from: START_DATE_STRING }): Promise<any[]> {
-  const PAGE_SIZE = "100";
-  let ENDPOINT_PAYMENTS;
-
-  const payments = [];
   let continuationToken = null;
   let counter = 1;
 
   const startingDate = new Date(from);
   let endingDate = new Date();
 
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  };
-  console.info(`Récupération des données entre le ${startingDate.toLocaleDateString("fr-FR", options)} et le ${endingDate.toLocaleDateString("fr-FR", options)}`);
+  console.info(`Récupération des données entre le ${explicitDate(startingDate)} et le ${explicitDate(endingDate)}`);
 
   const params = new URLSearchParams({
-    organizationSlug: process.env.HELLOASSO_ORGANIZATION_SLUG ?? "",
+    organizationSlug: process.env.HELLOASSO_ORGANIZATION_SLUG,
     from,
     to: endingDate.toISOString(),
-    pageSize: PAGE_SIZE
+    pageSize
   });
 
-  while (true) {
+  const access_token = await fetchHelloAssoToken({
+    endpoint_access_token: process.env.HELLOASSO_API_TOKEN
+  });
+
+  do {
     console.info(`📄 [HELLO ASSO] Page de paiements : ${counter}`);
     if (continuationToken) params.set("continuationToken", continuationToken);
-    ENDPOINT_PAYMENTS = `https://api.helloasso.com/v5/organizations/${process.env.HELLOASSO_ORGANIZATION_SLUG ?? ""}/payments?${params}`;
-    const { payments: nextPayments, nextToken } = await fetchHelloAssoTransactionsAndToken(ENDPOINT_PAYMENTS);
-    const thereAreNoNextPayments = !nextPayments || nextPayments.length === 0;
-    if (thereAreNoNextPayments) {
-      break;
-    } else {
-      payments.push(...nextPayments);
-      continuationToken = nextToken;
+    const endpoint = `${process.env.HELLOASSO_API_PAYMENTS}?${params}`;
+
+    console.info("🔁 Récupération d'une page de paiements \r\n");
+    const {
+      data,
+      pagination: { continuationToken: newContinuationToken }
+    } = await fetch(endpoint, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${access_token}` }
+    })
+      .then((res) => res.json())
+      .catch((error) => console.error(error));
+
+    hasMore = data && data.length > 0;
+
+    if (hasMore) {
+      payments.push(...data);
+      continuationToken = newContinuationToken;
       ++counter;
     }
-  }
+  } while (hasMore);
 
-  const formattedTransactions: Transaction[] = payments.map(formatHelloAssoTransactions);
-  return formattedTransactions;
+  // 2️⃣ Filter, format, reduce, sort
+  // ---------------------------------
+  payments = payments.filter(({ state }) => state === "Authorized");
+  payments = payments.map(formatHelloAssoPayments);
+  payments = payments.reduce((acc: Payment[], payment: Payment) => {
+    const existingPayment = acc.find(({ date, type }) => areSameMonth(date, payment.date) && type === payment.type);
+    if (existingPayment) {
+      existingPayment.amount += payment.amount;
+    } else {
+      acc.push({
+        ...payment,
+        date: truncateMonth(payment.date)
+      });
+    }
+    return acc;
+  }, []);
+  payments.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  return payments;
+}
+
+function getTransactionType(helloassoType: string): "subscription" | "donation" | "other" {
+  if (helloassoType === "MonthlyDonation") return "subscription";
+  if (helloassoType === "Donation" || helloassoType === "Payment") return "donation";
+  return "other";
+}
+
+function formatHelloAssoPayments({ date, amount, items }: HelloAssoPayment): Payment {
+  const type = items?.[0]?.type;
+  const transactionType = getTransactionType(type);
+  if (transactionType === "other") console.info(`Unknown type: ${type}\n`);
+  return {
+    date: new Date(date),
+    amount: Math.round(amount / 100),
+    source: "helloasso",
+    type: transactionType
+  };
 }

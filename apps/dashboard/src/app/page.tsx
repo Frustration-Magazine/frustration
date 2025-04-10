@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 async function Root() {
   const signed = await signedIn();
   if (!signed) redirect("/auth/signin");
-  if (signed) redirect("/dashboard/income");
+  if (signed) redirect("/income");
   return null;
 }
 

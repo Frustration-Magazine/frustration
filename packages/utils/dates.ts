@@ -130,3 +130,51 @@ export function explicitDate(date: Date): string {
   });
   return explicitDate;
 }
+
+/* ------------- */
+/* Truncate date */
+/* ------------- */
+/*
+  Input : Sun Aug 18 2024 18:16:35 GMT+0200 (Central European Summer Time)
+  Output : Sun Aug 18 2024 00:00:00 GMT+0200 (Central European Summer Time)
+*/
+
+export function truncateDateToDay(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+/* ------------- */
+/* Are same day */
+/* ------------- */
+
+export function areSameDay(date1: Date, date2: Date): boolean {
+  if (!(date1 instanceof Date) || !(date2 instanceof Date)) {
+    return false;
+  }
+  if (isNaN(date1.getTime()) || isNaN(date2.getTime())) {
+    return false;
+  }
+  return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
+}
+
+/* -------------- */
+/* Are same month */
+/* -------------- */
+
+export function areSameMonth(date1: Date, date2: Date): boolean {
+  if (!(date1 instanceof Date) || !(date2 instanceof Date)) {
+    return false;
+  }
+  if (isNaN(date1.getTime()) || isNaN(date2.getTime())) {
+    return false;
+  }
+  return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth();
+}
+
+/* -------------- */
+/* truncateMonth  */
+/* -------------- */
+
+export function truncateMonth(date: Date) {
+  return new Date(date.getFullYear(), date.getMonth());
+}

@@ -1,6 +1,6 @@
 import Stripe from "stripe";
-import { TRANSACTION_TYPES, TRANSACTION_SUBTYPES, Transaction } from "./models/transactions";
-import { convertUTCtoDate } from "@utils/dates";
+import { type Payment } from "./models/transactions";
+import { convertUTCtoDate, truncateDateToDay, explicitDate, areSameMonth, truncateMonth } from "@utils/dates";
 import { convertCountryInitials, prettifyName } from "@utils/strings";
 
 /* ------------------- */
@@ -14,118 +14,124 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export const { STRIPE_PRICE_SUBSCRIPTION_MINI, STRIPE_PRICE_SUBSCRIPTION_MEDIUM, STRIPE_PRICE_SUBSCRIPTION_MAXI } = process.env;
 
 /* ================== */
-/*      FORMAT        */
+/*     Payments       */
 /* ================== */
 
-function getTransactionType(description: string): string {
-  if (/^(Subscription creation)|(Subscription update)/.test(description)) return TRANSACTION_TYPES.SUBSCRIPTION;
-  if (/numéro/gi.test(description)) return TRANSACTION_TYPES.SALE;
-  if (/(🙏 Faire un don)|(Montant libre)|(\d+€)/.test(description)) return TRANSACTION_TYPES.DONATION;
-  if (/STRIPE PAYOUT/.test(description)) return TRANSACTION_TYPES.PAYOUT;
-  if (/REFUND FOR CHARGE/.test(description)) return TRANSACTION_TYPES.REFUND;
-  if (/Payment for Invoice/.test(description)) return TRANSACTION_TYPES.PAYMENT_FOR_INVOICE;
-  if (/^Billing/.test(description)) return TRANSACTION_TYPES.FEE;
-  else return TRANSACTION_TYPES.OTHER;
-}
-
-function getTransactionSubtype(description: string): "creation" | "update" | null {
-  if (/Subscription creation/.test(description)) return TRANSACTION_SUBTYPES.SUBSCRIPTION_CREATION;
-  if (/Subscription update/.test(description)) return TRANSACTION_SUBTYPES.SUBSCRIPTION_UPDATE;
-  else return null;
-}
-
-export const formatStripeTransactions = ({ id, description, amount, net, available_on, created, status, source }: StripeTransaction): Transaction => {
-  const transactionType = getTransactionType(description);
-  const transactionSubtype = getTransactionSubtype(description);
-  if (transactionType === TRANSACTION_TYPES.OTHER) console.info(`Unknown type: ${description}\n`);
-  return {
-    id,
-    created: convertUTCtoDate(created),
-    available: convertUTCtoDate(available_on),
-    amount: amount / 100,
-    net: net / 100,
-    stripe_source: source ?? null,
-    source: "stripe",
-    type: transactionType,
-    subtype: transactionSubtype,
-    status
-  };
-};
-
-/* ================== */
-/*        READ        */
-/* ================== */
-
-async function fetchStripeData({ getAll, afterTimestamp } = { getAll: false, afterTimestamp: 0 }): Promise<any[]> {
-  const PAGE_SIZE = 100;
-  let data = [];
+export async function fetchStripePayments({ afterTimestamp } = { afterTimestamp: 0 }): Promise<any[]> {
+  let payments = [];
+  const limit = 100;
   let hasMore = true;
   let starting_after;
   let page = 0;
 
-  console.info(`📄 [STRIPE] Récupération des données...`);
-
-  do {
-    try {
-      console.info(`📄 [STRIPE] Page de résultats : ${page + 1}`);
+  // 1️⃣ We fetch all payments
+  // -----------------------
+  console.info(`📄 [STRIPE] Fetching data from ${explicitDate(convertUTCtoDate(afterTimestamp))}...`);
+  try {
+    do {
+      console.info(`📄 [STRIPE] Page ${page + 1}`);
       let listOptions: any = {
-        limit: PAGE_SIZE,
-        starting_after
+        limit,
+        starting_after,
+        ...(afterTimestamp ? { created: { gte: afterTimestamp } } : null)
       };
 
-      // List options
-      if (afterTimestamp) {
-        listOptions = {
-          ...listOptions,
-          created: { gt: afterTimestamp }
-        };
-      }
-      const { data: stripeData, has_more } = await stripe.balanceTransactions.list({
-        limit: PAGE_SIZE,
-        starting_after,
-        created: { gt: afterTimestamp }
-      });
-
-      data.push(...stripeData);
+      const { data, has_more } = await stripe.balanceTransactions.list(listOptions);
+      payments.push(...data);
       hasMore = has_more;
+
       if (hasMore) {
-        const lastItem: any = data.slice(-1)[0];
-        starting_after = lastItem.id;
+        const { id } = data.slice(-1)[0];
+        starting_after = id;
         page++;
       }
-    } catch (error: any) {
-      if (error.type === "StripeInvalidRequestError") {
-        console.info("Invalid request error:", error.message);
-      } else {
-        console.info("Unexpected error:", error);
-      }
-    }
-  } while (getAll && hasMore);
+    } while (hasMore);
+  } catch (error) {
+    handleStripeError(error);
+  }
 
-  return data;
+  // 2️⃣ Filter, format, reduce, sort
+  // ---------------------------------
+  payments = payments.map(formatStripePayments);
+  payments = payments.filter((payment: Payment) => payment.type !== "other");
+  payments = payments.reduce((acc: Payment[], payment: Payment) => {
+    const existingPayment = acc.find(({ date, type }) => areSameMonth(date, payment.date) && type === payment.type);
+    if (existingPayment) {
+      existingPayment.amount += payment.amount;
+    } else {
+      acc.push({
+        ...payment,
+        date: truncateMonth(payment.date)
+      });
+    }
+    return acc;
+  }, []);
+
+  payments.sort((a: Payment, b: Payment) => {
+    if (a.date < b.date) return -1;
+    if (a.date > b.date) return 1;
+    return 0;
+  });
+
+  return payments;
 }
 
-/*    TRANSACTIONS     */
+function handleStripeError(error: any) {
+  if (!error?.type) console.error("[❌ Stripe API] Unknown error:", error);
+  switch (error.type) {
+    case "StripeInvalidRequestError":
+      console.error("[❌ Stripe API] Invalid request error:", error.message);
+      break;
+    case "StripeAPIError":
+      console.error("[❌ Stripe API] API error:", error.message);
+      break;
+    case "StripeAuthenticationError":
+      console.error("[❌ Stripe API] Authentication error:", error.message);
+      break;
+    case "StripePermissionError":
+      console.error("[❌ Stripe API] Permission error:", error.message);
+      break;
+    case "StripeRateLimitError":
+      console.error("[❌ Stripe API] Rate limit error:", error.message);
+      break;
+    case "StripeConnectionError":
+      console.error("[❌ Stripe API] Connection error:", error.message);
+      break;
+    case "StripeCardError":
+      console.error("[❌ Stripe API] Card error:", error.message);
+      break;
+    default:
+      console.error("[❌ Stripe API] Unexpected error:", error.message);
+      break;
+  }
+}
+
+function getTransactionType(description: string): "donation" | "subscription_creation" | "subscription_update" | "other" {
+  if (/^(Subscription creation)/.test(description)) return "subscription_creation";
+  if (/^(Subscription update)/.test(description)) return "subscription_update";
+  if (/(🙏 Faire un don)|(Montant libre)|(\d+€)/.test(description)) return "donation";
+  return "other";
+}
+
+export function formatStripePayments({ description, net, created }: any): Payment {
+  const transactionType = getTransactionType(description);
+  if (transactionType === "other") console.info(`Unknown type: ${description}\n`);
+  return {
+    date: truncateDateToDay(convertUTCtoDate(created)),
+    amount: Math.round(net / 100),
+    source: "stripe",
+    type: transactionType
+  };
+}
+
+/*    Payments     */
 /* ------------------- */
 
-interface StripeTransaction {
+interface StripePayment {
   id: string;
-  amount: number;
-  available_on: number;
   created: number;
   description: string;
-  source?: string;
   net: number;
-  status: string;
-}
-
-export async function fetchStripeTransactions({ afterTimestamp } = { afterTimestamp: 0 }) {
-  let balanceTransactions: StripeTransaction[] = [];
-  balanceTransactions = await fetchStripeData({ getAll: true, afterTimestamp });
-
-  const formattedBalanceTransactions: Transaction[] = balanceTransactions.map(formatStripeTransactions);
-
-  return formattedBalanceTransactions;
 }
 
 /*    SUBSCRIPTIONS     */
@@ -302,21 +308,6 @@ export async function fetchStripeNewCustomers(
   });
 
   return subscriptions_f;
-}
-
-/*    BALANCE     */
-/* -------------- */
-
-export async function fetchStripeBalance(): Promise<{
-  available: number;
-  pending: number;
-}> {
-  const balance = await stripe.balance.retrieve();
-  const formattedBalance = {
-    available: balance.available[0].amount / 100,
-    pending: balance.pending[0].amount / 100
-  };
-  return formattedBalance;
 }
 
 /* ==================== */

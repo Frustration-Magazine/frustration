@@ -74,49 +74,33 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
-// ******************
-// 🫴 Campaigns     *
-// ******************
+// **************
+// 💰 Payments  *
+// **************
 
-model Campaign {
-  id        String    @id @default(cuid())
-  name      String
-  type      String
-  begin     DateTime
-  end       DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
+model payments {
+  date   DateTime
+  amount Float
+  source PaymentSource
+  type   PaymentType
 
-// ******************
-// 💰 Transactions  *
-// ******************
-
-model BalanceTransactions {
-  id            String                     @id
-  created       DateTime
-  available     DateTime
-  amount        Float
-  net           Float
-  stripe_source String?
-  source        String
-  status        String
-  type          String
-  subtype       BalanceTransactionSubtype?
+  @@unique([date, source, type])
 }
 
 // Types
 // ******
 
-enum BalanceTransactionSubtype {
-  creation
-  update
+enum PaymentSource {
+  stripe
+  helloasso
+  tipeee
 }
 
-model Balance {
-  available Float
-  pending   Float
-  updatedAt DateTime @id @default(now())
+enum PaymentType {
+  subscription
+  subscription_creation
+  subscription_update
+  donation
 }
 
 // ***********

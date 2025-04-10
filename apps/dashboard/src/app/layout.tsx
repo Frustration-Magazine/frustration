@@ -1,19 +1,14 @@
-// 🧱 Components
-import { Toaster } from "@/components/Toaster";
-import { Badge } from "@/components/Badge";
-import { cn } from "@/libs/tailwind";
-
-// 👨‍🎨 Global style
-import "./globals.css";
-
-// 🔧 Libs
-import Link from "next/link";
-
-// 🧰 Config
 import type { Metadata } from "next";
+import Sidenav from "./_components/Sidenav";
+import Header from "./_components/Header";
+import { Toaster } from "@/components/Toaster";
 
-// 🖋️ Fonts
+import { signedIn } from "@/auth";
+import { unauthorized } from "next/navigation";
+
+import { cn } from "@/libs/tailwind";
 import { Bebas_Neue, Poppins, Inter } from "next/font/google";
+import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -39,26 +34,6 @@ export const metadata: Metadata = {
   description: "Tableau de bord pour Frustration",
 };
 
-// 🧱 Components
-const DevelopmentBadge =
-  process.env.NODE_ENV === "development" ? (
-    <Badge
-      variant="secondary"
-      className="absolute right-3 top-3 text-lg font-bold"
-    >
-      🚧 Dev mode 🚧
-    </Badge>
-  ) : null;
-
-const Header = () => (
-  <header className="flex h-fit w-full items-center justify-center bg-black py-2">
-    <Link href="/">
-      <h1 className="font-bebas text-7xl uppercase text-yellow">Dashboard</h1>
-    </Link>
-    {DevelopmentBadge}
-  </header>
-);
-
 const Main = ({ children }: { children: React.ReactNode }) => (
   <main className="flex flex-grow overflow-auto">{children}</main>
 );
@@ -72,11 +47,11 @@ type Props = Readonly<{
 }>;
 
 export default async function RootLayout({ children }: Props) {
+  const isSignedIn = await signedIn();
+  if (!isSignedIn) unauthorized();
+
   return (
-    <html
-      lang="fr"
-      className={`${inter.variable} ${bebasNeue.variable} ${poppins.variable}`}
-    >
+    <html lang="fr" className={`${inter.variable} ${bebasNeue.variable} ${poppins.variable}`}>
       <body
         className={cn(
           "flex h-screen flex-col font-inter antialiased",
@@ -84,7 +59,16 @@ export default async function RootLayout({ children }: Props) {
         )}
       >
         <Header />
-        <Main>{children}</Main>
+        <Main>
+          {isSignedIn ? (
+            <>
+              <Sidenav />
+              <div className="flex h-full grow flex-col items-center gap-3 overflow-auto p-8">{children}</div>
+            </>
+          ) : (
+            children
+          )}
+        </Main>
         <Toaster />
       </body>
     </html>

@@ -14,15 +14,9 @@ export enum TRANSACTION_SUBTYPES {
   SUBSCRIPTION_UPDATE = "update"
 }
 
-export interface Transaction {
-  id: string;
-  created: Date;
-  available: Date;
+export type Payment = {
+  date: Date;
   amount: number;
-  net: number;
-  stripe_source: string | null;
+  type: "donation" | "subscription" | "subscription_creation" | "subscription_update" | "other";
   source: string;
-  type: string;
-  subtype: "creation" | "update" | null;
-  status: string;
-}
+};

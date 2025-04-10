@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 // Define the paths that require authentication
-const protectedPaths = ["/dashboard"];
+const protectedPaths = ["/customers", "/events", "/videos", "/income"];
 
 export function middleware(req: NextRequest) {
   // const token = req.cookies.get("authToken"); // Replace with your actual token check logic
@@ -18,5 +18,3 @@ export function middleware(req: NextRequest) {
   // }
   return NextResponse.next();
 }
-
-//
