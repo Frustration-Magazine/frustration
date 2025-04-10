@@ -32,8 +32,9 @@
 }
 .content h3 {
   margin-bottom: 1.5rem;
+  line-height: 1.2;
   font-family: "Bakbak", sans-serif;
-  font-size: 2.25rem;
+  font-size: clamp(25px, 5vw, 40px);
   font-weight: bold;
   text-decoration: underline;
   text-decoration-color: var(--color);
