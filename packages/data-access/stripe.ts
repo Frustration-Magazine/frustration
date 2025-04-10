@@ -6,10 +6,7 @@ import { convertCountryInitials, prettifyName } from "@utils/strings";
 /* ------------------- */
 /*        STRIPE       */
 /* ------------------- */
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-06-20",
-  telemetry: false
-});
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export const { STRIPE_PRICE_SUBSCRIPTION_MINI, STRIPE_PRICE_SUBSCRIPTION_MEDIUM, STRIPE_PRICE_SUBSCRIPTION_MAXI } = process.env;
 

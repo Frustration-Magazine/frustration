@@ -39,7 +39,7 @@ const IncomePage = () => {
       <TabsList className="mx-auto mb-3 grid h-fit w-[400px] grid-cols-1 gap-2 bg-transparent">
         <Tab value="permanent">Global</Tab>
       </TabsList>
-      <TabsContent className="grow overflow-auto" value="permanent">
+      <TabsContent className="mx-auto grow overflow-auto" value="permanent">
         <Tabs defaultValue="all" className="flex h-full flex-col">
           <TabsList className="mx-auto mb-6 grid h-auto w-[600px] grid-cols-3">
             <PaymentsType value="all">Tout</PaymentsType>

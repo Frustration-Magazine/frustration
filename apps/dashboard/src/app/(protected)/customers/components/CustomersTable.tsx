@@ -1,14 +1,6 @@
 "use client";
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@ui/components/table";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@ui/components/table";
 import { Button } from "@/components/Button";
 import {
   ColumnDef,
@@ -39,7 +31,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
       );
     },
     cell: ({ row }) => {
-      const created = row.getValue("created") as unknown as Date;
+      const created = row.getValue("created") as Date;
       const formatted = created.toLocaleDateString("fr-FR", {
         year: "numeric",
         month: "numeric",
@@ -52,7 +44,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     accessorKey: "name",
     header: "Nom",
     cell: ({ row }) => {
-      const name = row.getValue("name") as unknown as string;
+      const name = row.getValue("name") as string;
       return <span className="font-medium">{name}</span>;
     },
   },
@@ -60,7 +52,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     accessorKey: "email",
     header: "Email",
     cell: ({ row }) => {
-      const email = row.getValue("email") as unknown as string;
+      const email = row.getValue("email") as string;
       return <a href={`mailto:${email}`}>{email}</a>;
     },
   },
@@ -79,7 +71,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
       );
     },
     cell: ({ row }) => {
-      const amountInEuro = row.getValue("amount") as unknown as number;
+      const amountInEuro = row.getValue("amount") as number;
       const formattedAmount = new Intl.NumberFormat("fr-FR", {
         style: "currency",
         currency: "EUR",
@@ -93,7 +85,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     accessorKey: "line1",
     header: "Adresse",
     cell: ({ row }) => {
-      const address = row.getValue("line1") as unknown as string;
+      const address = row.getValue("line1") as string;
       return address || DEFAULT_VALUE;
     },
   },
@@ -101,19 +93,15 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     accessorKey: "city",
     header: "Ville",
     cell: ({ row }) => {
-      const city = row.getValue("city") as unknown as string;
-      return (
-        <span className="capitalize">
-          {city ? city.toLowerCase() : DEFAULT_VALUE}
-        </span>
-      );
+      const city = row.getValue("city") as string;
+      return <span className="capitalize">{city ? city.toLowerCase() : DEFAULT_VALUE}</span>;
     },
   },
   {
     accessorKey: "state",
     header: "Région",
     cell: ({ row }) => {
-      const country = row.getValue("state") as unknown as string;
+      const country = row.getValue("state") as string;
       return country || DEFAULT_VALUE;
     },
   },
@@ -121,7 +109,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     accessorKey: "country",
     header: "Pays",
     cell: ({ row }) => {
-      const country = row.getValue("country") as unknown as string;
+      const country = row.getValue("country") as string;
       return country || DEFAULT_VALUE;
     },
   },
@@ -129,7 +117,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     accessorKey: "postal_code",
     header: "Code postal",
     cell: ({ row }) => {
-      const postalCode = row.getValue("postal_code") as unknown as string;
+      const postalCode = row.getValue("postal_code") as string;
       return postalCode || DEFAULT_VALUE;
     },
   },
@@ -153,8 +141,7 @@ export default function ({ customers }: { customers: Customer[] }) {
     },
   });
   // ❌ Early return if no customers loaded
-  if (customers.length === 0)
-    return <p>Aucun nouvel abonné sur cette période 😭</p>;
+  if (customers.length === 0) return <p>Aucun nouvel abonné sur cette période 😭</p>;
 
   return (
     <div className="self-stretch overflow-auto rounded-md bg-white px-6 py-2 shadow-lg">
@@ -168,10 +155,7 @@ export default function ({ customers }: { customers: Customer[] }) {
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-                      : (flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        ) as React.ReactNode)}
+                      : (flexRender(header.column.columnDef.header, header.getContext()) as any)}
                   </TableHead>
                 );
               })}
@@ -180,19 +164,9 @@ export default function ({ customers }: { customers: Customer[] }) {
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow
-              key={row.id}
-              data-state={row.getIsSelected() && "selected"}
-            >
+            <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
-                  {
-                    flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext(),
-                    ) as React.ReactNode
-                  }
-                </TableCell>
+                <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext()) as any}</TableCell>
               ))}
             </TableRow>
           ))}

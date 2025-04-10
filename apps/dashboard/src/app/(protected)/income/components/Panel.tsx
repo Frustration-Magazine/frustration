@@ -46,7 +46,7 @@ const Panel = ({ name, payments }: { name: string; payments: Payment[] }) => {
   const paymentsByMonth = aggregateByMonth(payments);
 
   return (
-    <Card className="min-w-[300px] flex-grow overflow-scroll border-none bg-black/90 text-white shadow-lg backdrop-blur-md">
+    <Card className="min-w-[300px] overflow-scroll border-none bg-black/90 text-white shadow-lg backdrop-blur-md">
       <CardHeader className="text-3xl font-semibold">
         <CardTitle>{name}</CardTitle>
       </CardHeader>
