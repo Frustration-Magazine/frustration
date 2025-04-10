@@ -1,16 +1,9 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/Card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/Card";
 import { IoMailOutline as MailIcon } from "react-icons/io5";
 import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
 import { type Event } from "../models/models";
 
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/libs/utils";
 
 const formatDate = (date: Date, displayHour: boolean) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -33,12 +26,7 @@ const formatDate = (date: Date, displayHour: boolean) => {
 
 function CardEvent({ event }: Readonly<{ event: Event }>) {
   return (
-    <Card
-      className={cn(
-        "relative left-0 overflow-hidden bg-white",
-        "first:after:content-none",
-      )}
-    >
+    <Card className={cn("relative left-0 overflow-hidden bg-white", "first:after:content-none")}>
       <div className="absolute h-full w-1 bg-[#FCCF00]" />
       <CardHeader>
         <CardTitle className="text-2xl first-letter:capitalize">

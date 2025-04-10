@@ -4,9 +4,8 @@ import Header from "./_components/Header";
 import { Toaster } from "@/components/Toaster";
 
 import { signedIn } from "@/auth";
-import { unauthorized } from "next/navigation";
 
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/libs/utils";
 import { Bebas_Neue, Poppins, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -48,7 +47,6 @@ type Props = Readonly<{
 
 export default async function RootLayout({ children }: Props) {
   const isSignedIn = await signedIn();
-  if (!isSignedIn) unauthorized();
 
   return (
     <html lang="fr" className={`${inter.variable} ${bebasNeue.variable} ${poppins.variable}`}>

@@ -1,30 +1,18 @@
 "use client";
 
-// 🔩 Base
 import React from "react";
 
-// 🖼️ Assets
 import { BiMailSend } from "react-icons/bi";
 
-// 🧱 Components
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/Form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/Form";
 
-// 🗒️ Form
 import { sendLink as serverAction } from "./_actions";
 import { schema, type Status } from "./_models";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-// 🪝 Hooks
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/useToast";
 
@@ -34,17 +22,11 @@ const initial: Status = {
 };
 
 export default function () {
-  // 🔼 State
-  const [state, sendLink, pending] = React.useActionState(
-    serverAction,
-    initial,
-  );
+  const [state, sendLink, pending] = React.useActionState(serverAction, initial);
 
-  // 🍞 Toast
   const { toast } = useToast();
   React.useEffect(() => {
-    if (state.success)
-      toast({ title: "✅ Succès", description: state.success });
+    if (state.success) toast({ title: "✅ Succès", description: state.success });
     if (state.error)
       toast({
         title: "Erreur",
@@ -71,11 +53,7 @@ export default function () {
         <FormItem>
           <FormLabel>Email</FormLabel>
           <FormControl>
-            <Input
-              placeholder="frustration.magazine@gmail.com"
-              disabled={pending}
-              {...field}
-            />
+            <Input placeholder="frustrationmagazine@gmail.com" disabled={pending} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -98,10 +76,7 @@ export default function () {
 
   return (
     <Form {...(form as any)}>
-      <form
-        className="group flex flex-col gap-[20px] bg-white p-5"
-        action={sendLink}
-      >
+      <form className="group flex flex-col gap-[20px] bg-white p-5" action={sendLink}>
         {Email}
         {Send}
       </form>

@@ -3,6 +3,8 @@ import { getPayments } from "./_actions";
 import Panel from "./components/Panel";
 import Chart from "./components/Chart";
 import { filterByTypes } from "./_utils";
+import { redirect } from "next/navigation";
+import { signedIn } from "@/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -26,10 +28,10 @@ const Tab = ({ value, children }: { value: string; children: string }) => (
   </TabsTrigger>
 );
 
-/* ************** */
-/*     🚀 UI      */
-/* ************** */
-const IncomePage = () => {
+async function Page() {
+  const isSignedIn = await signedIn();
+  if (!isSignedIn) redirect("/auth/signin");
+
   const donationsAndSubscriptions = filterByTypes(payments, ["subscription", "donation"]);
   const donations = filterByTypes(payments, ["donation"]);
   const subscriptions = filterByTypes(payments, ["subscription"]);
@@ -68,6 +70,6 @@ const IncomePage = () => {
       </TabsContent>
     </Tabs>
   );
-};
+}
 
-export default IncomePage;
+export default Page;
