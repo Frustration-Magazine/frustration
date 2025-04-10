@@ -8,8 +8,6 @@ import { signedIn } from "@/auth";
 
 export const dynamic = "force-dynamic";
 
-const payments = await getPayments();
-
 const PaymentsType = ({ value, children }: { value: string; children: string }) => (
   <TabsTrigger
     className="px-2 text-lg data-[state=active]:bg-gray-200 data-[state=active]:font-bold data-[state=active]:text-black"
@@ -32,6 +30,7 @@ async function Page() {
   const isSignedIn = await signedIn();
   if (!isSignedIn) redirect("/auth/signin");
 
+  const payments = await getPayments();
   const donationsAndSubscriptions = filterByTypes(payments, ["subscription", "donation"]);
   const donations = filterByTypes(payments, ["donation"]);
   const subscriptions = filterByTypes(payments, ["subscription"]);
