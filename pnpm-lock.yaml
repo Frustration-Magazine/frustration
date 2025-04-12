@@ -366,8 +366,8 @@ importers:
         specifier: ^6.6.0
         version: 6.6.0(prisma@6.6.0(typescript@5.8.3))(typescript@5.8.3)
       '@types/node':
-        specifier: ^22.14.0
-        version: 22.14.0
+        specifier: ^22.14.1
+        version: 22.14.1
       prisma:
         specifier: ^6.6.0
         version: 6.6.0(typescript@5.8.3)
@@ -490,14 +490,7 @@ importers:
         specifier: ^8.29.1
         version: 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
 
-  packages/utils:
-    dependencies:
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      tailwind-merge:
-        specifier: ^2.6.0
-        version: 2.6.0
+  packages/utils: {}
 
 packages:
 
@@ -6677,8 +6670,8 @@ snapshots:
 
   '@prisma/config@6.6.0':
     dependencies:
-      esbuild: 0.23.1
-      esbuild-register: 3.6.0(esbuild@0.23.1)
+      esbuild: 0.25.2
+      esbuild-register: 3.6.0(esbuild@0.25.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -8831,10 +8824,10 @@ snapshots:
       is-date-object: 1.1.0
       is-symbol: 1.1.1
 
-  esbuild-register@3.6.0(esbuild@0.23.1):
+  esbuild-register@3.6.0(esbuild@0.25.2):
     dependencies:
       debug: 4.4.0
-      esbuild: 0.23.1
+      esbuild: 0.25.2
     transitivePeerDependencies:
       - supports-color
 
@@ -11218,7 +11211,7 @@ snapshots:
 
   stripe@18.0.0:
     dependencies:
-      '@types/node': 22.14.0
+      '@types/node': 22.14.1
       qs: 6.14.0
 
   strnum@1.1.2: {}
