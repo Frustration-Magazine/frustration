@@ -1,5 +1,5 @@
 alias bcp='bc && git push origin'
-alias amd='git commit --amend --no-edit && git push origin -f'
+alias amd='git commit --amend --no-edit && git push origin --force-with-lease'
 alias mp='git stash -u && git switch main && git merge develop && git push origin && git switch - && git stash pop'
 alias st='git status'
 alias lg='git log --oneline'
