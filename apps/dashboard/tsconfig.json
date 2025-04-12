@@ -36,9 +36,6 @@
       "@data-access/prisma": [
         "../../packages/data-access/prisma/client"
       ],
-      "@ui/*": [
-        "../../packages/ui/*"
-      ],
       "@utils/*": [
         "../../packages/utils/*"
       ],

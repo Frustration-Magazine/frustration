@@ -42,7 +42,7 @@ export default function SubscriptionForm() {
       </div>
 
       <div className="mx-auto w-[500px] max-w-[90vw]">
-        <div className="!mb-10">
+        <div className="mb-10!">
           {/* 1️⃣ Formula */}
           <h3 className="mb-6 flex flex-col items-center justify-center text-center font-montserrat text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left">
             <span className="max-lg:text-3xl">1️⃣</span>

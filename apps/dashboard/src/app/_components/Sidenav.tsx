@@ -1,17 +1,16 @@
 "use client";
 
-import { type ReactNode, Fragment } from "react";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { cn } from "@/utils/style";
+import { type ReactNode, Fragment } from "react";
 
 import { FaCreditCard } from "react-icons/fa";
-import { IoIosPeople } from "react-icons/io";
 import { FaYoutube } from "react-icons/fa6";
-import { RiLogoutBoxLine } from "react-icons/ri";
+import { IoIosPeople } from "react-icons/io";
 import { MdEvent as CalendarIcon } from "react-icons/md";
+import { RiLogoutBoxLine } from "react-icons/ri";
 
-import { Separator } from "@/components/Separator";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,8 +20,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/AlertDialog";
-import { Button } from "@/components/Button";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 interface Link {
   label: string;
@@ -96,7 +96,7 @@ const Sidenav = () => {
 
   return (
     <aside className="flex w-60 shrink-0 flex-col items-center justify-between bg-black pb-4">
-      <ul className="w-full space-y-2 px-3 text-yellow">
+      <ul className="text-yellow w-full space-y-2 px-3">
         {LINKS.map(({ label, icon, href, key }) => {
           return (
             <Fragment key={key}>
@@ -104,7 +104,7 @@ const Sidenav = () => {
                 <Link
                   href={href}
                   className={cn(
-                    "flex items-center gap-4 whitespace-nowrap rounded-md px-5 py-2 font-poppins text-lg transition duration-500",
+                    "font-poppins flex items-center gap-4 rounded-md px-5 py-2 text-lg whitespace-nowrap transition duration-500",
                     href === currentPath && "bg-yellow-hover",
                   )}
                 >

@@ -1,12 +1,12 @@
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
-import Sidenav from "./_components/Sidenav";
 import Header from "./_components/Header";
-import { Toaster } from "@/components/Toaster";
+import Sidenav from "./_components/Sidenav";
 
 import { signedIn } from "@/auth";
 
-import { cn } from "@/libs/utils";
-import { Bebas_Neue, Poppins, Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Bebas_Neue, Inter, Poppins } from "next/font/google";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -27,14 +27,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// 💽 Data
 export const metadata: Metadata = {
   title: "Frustration — Dashboard",
   description: "Tableau de bord pour Frustration",
 };
 
 const Main = ({ children }: { children: React.ReactNode }) => (
-  <main className="flex flex-grow overflow-auto">{children}</main>
+  <main className="flex grow overflow-auto">{children}</main>
 );
 
 /* ======================= */
@@ -52,7 +51,7 @@ export default async function RootLayout({ children }: Props) {
     <html lang="fr" className={`${inter.variable} ${bebasNeue.variable} ${poppins.variable}`}>
       <body
         className={cn(
-          "flex h-screen flex-col font-inter antialiased",
+          "font-inter flex h-screen flex-col antialiased",
           "bg-yellow bg-[url('/static/background.svg')] bg-cover bg-fixed",
         )}
       >

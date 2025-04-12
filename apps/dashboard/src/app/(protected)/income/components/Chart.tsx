@@ -1,13 +1,11 @@
 "use client";
 
-// 📊 Charts
-import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@ui/components/chart";
-import { Area, AreaChart, XAxis, Legend } from "recharts";
-
-// 🔧 Libs
-import { inEuros /* debounce */ } from "../_utils";
+import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Area, AreaChart, Legend, XAxis } from "recharts";
+import { capitalizeFirst } from "@utils/strings";
 import { formatExplicitMonth } from "@utils/dates";
 import { cn } from "@utils/tailwind";
+import { inEuros, debounce } from "../_utils";
 
 const chartConfig = {
   income: {
@@ -15,7 +13,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const Chart = ({ payments /* setHighlightedMonth */ }: { payments: any[] /* setHighlightedMonth: any */ }) => {
+export const Chart = ({ payments, setHighlighted }: { payments: any[]; setHighlighted: any }) => {
   let chartData = [];
 
   chartData = payments.map(({ date, amount, source }) => ({
@@ -34,26 +32,26 @@ const Chart = ({ payments /* setHighlightedMonth */ }: { payments: any[] /* setH
     return acc;
   }, []);
 
-  // function handleMouseMove() {
-  //   const RECHARTS_ACTIVE_DOT_CIRCLE_SELECTOR = ".recharts-active-dot circle";
-  //   const RECHARTS_DOT_CIRCLE_SELECTOR = ".recharts-area-dots circle";
+  function handleMouseMove() {
+    const RECHARTS_ACTIVE_DOT_CIRCLE_SELECTOR = ".recharts-active-dot circle";
+    const RECHARTS_DOT_CIRCLE_SELECTOR = ".recharts-area-dots circle";
 
-  //   const activeDot = document.querySelector(RECHARTS_ACTIVE_DOT_CIRCLE_SELECTOR);
-  //   if (!activeDot) setHighlightedMonth(-1);
-  //   if (activeDot) {
-  //     const activeDotPositionX = activeDot?.getAttribute("cx");
-  //     if (activeDotPositionX) {
-  //       const dots = Array.from(document.querySelectorAll(RECHARTS_DOT_CIRCLE_SELECTOR)).toReversed();
-  //       const dotsPositionX = dots.map((dot) => dot.getAttribute("cx"));
-  //       const indexMonth = dotsPositionX.findIndex((dotX) => dotX === activeDotPositionX);
-  //       setHighlightedMonth(indexMonth);
-  //     }
-  //   }
-  // }
+    const activeDot = document.querySelector(RECHARTS_ACTIVE_DOT_CIRCLE_SELECTOR);
+    if (!activeDot) setHighlighted(-1);
+    if (activeDot) {
+      const activeDotPositionX = activeDot?.getAttribute("cx");
+      if (activeDotPositionX) {
+        const dots = Array.from(document.querySelectorAll(RECHARTS_DOT_CIRCLE_SELECTOR)).toReversed();
+        const dotsPositionX = dots.map((dot) => dot.getAttribute("cx"));
+        const indexMonth = dotsPositionX.findIndex((dotX) => dotX === activeDotPositionX);
+        setHighlighted(indexMonth);
+      }
+    }
+  }
 
-  // function resetHighlightedMonth() {
-  //   setHighlightedMonth(-1);
-  // }
+  function resetHighlighted() {
+    setHighlighted(-1);
+  }
 
   /* ************** */
   /*     🚀 UI      */
@@ -63,15 +61,15 @@ const Chart = ({ payments /* setHighlightedMonth */ }: { payments: any[] /* setH
     <ChartContainer
       config={chartConfig}
       className={cn(
-        "relative max-h-full rounded-md bg-black/5 p-6 backdrop-blur-md",
+        "relative max-h-full w-0 grow rounded-md bg-black/5 p-6 backdrop-blur-md",
         "[&_.recharts-cartesian-axis-tick_text]:fill-primary [&_.recharts-cartesian-axis-tick_text]:font-bold [&_.recharts-cartesian-axis-tick_text]:opacity-70",
       )}
     >
       <AreaChart
         accessibilityLayer
         data={chartData}
-        // onMouseMove={debounce(handleMouseMove, 10)}
-        // onMouseLeave={resetHighlightedMonth}
+        onMouseMove={debounce(handleMouseMove, 10)}
+        onMouseLeave={resetHighlighted}
       >
         <defs>
           <linearGradient id="stripeGradient" x1="0" x2="0" y1="0" y2="1">
@@ -99,7 +97,7 @@ const Chart = ({ payments /* setHighlightedMonth */ }: { payments: any[] /* setH
             <ChartTooltipContent
               valueFormatter={inEuros}
               xValue="month"
-              formatterXValue={(value) => formatExplicitMonth(value, "long")}
+              formatterXValue={(value: any) => formatExplicitMonth(value, "long")}
               labelKey="income"
             />
           }
@@ -122,11 +120,9 @@ const Chart = ({ payments /* setHighlightedMonth */ }: { payments: any[] /* setH
             paddingTop: "60px",
             fontWeight: "bold",
           }}
-          formatter={(value) => value.charAt(0).toUpperCase() + value.slice(1)}
+          formatter={capitalizeFirst}
         />
       </AreaChart>
     </ChartContainer>
   );
 };
-
-export default Chart;

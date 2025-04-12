@@ -1,9 +1,9 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/Card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { IoMailOutline as MailIcon } from "react-icons/io5";
 import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
 import { type Event } from "../models/models";
 
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 
 const formatDate = (date: Date, displayHour: boolean) => {
   const options: Intl.DateTimeFormatOptions = {

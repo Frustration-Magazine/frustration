@@ -8,13 +8,13 @@ import {
   // CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/Card";
+} from "@/components/ui/card";
 import CardEvent from "./CardEvent";
 
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/Form";
-import { Button } from "@/components/Button";
-import { DatePicker } from "@/components/DatePicker";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { DatePicker } from "@/components/ui/date-picker";
 // import { Input } from "@/components/Input";
 
 // 🗒️ Form
@@ -62,10 +62,7 @@ function EventEditor({ events }: Readonly<{ events: ReadonlyArray<Event> }>) {
 
   const EventForm = (
     <Form {...form}>
-      <form
-        className="flex flex-col items-center gap-5"
-        onSubmit={form.handleSubmit(submit)}
-      >
+      <form className="flex flex-col items-center gap-5" onSubmit={form.handleSubmit(submit)}>
         <FormField
           control={form.control}
           name="date"

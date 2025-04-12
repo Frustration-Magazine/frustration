@@ -29,7 +29,7 @@ const NoResults = (
 const Title = ({ children: title }: { readonly children: string }) => (
   <h3
     className={cn(
-      "font-bakbak font-bold !leading-[1]",
+      "font-bakbak font-bold leading-none!",
       "text-2xl",
       "md:text-3xl",
     )}>

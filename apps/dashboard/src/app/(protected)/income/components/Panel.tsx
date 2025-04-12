@@ -1,46 +1,44 @@
 "use client";
 import { Fragment } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/Card";
-import { Separator } from "@/components/Separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import NoData from "./NoData";
 
 import { type Payment } from "@data-access/models/transactions";
 import { aggregateByMonth, diffInPercent, inEuros } from "../_utils";
-import { cn } from "@/utils/style";
+import { cn } from "@/lib/utils";
 
 const Entry = ({
   name,
   total,
   evolution,
-  // highlighted,
+  highlighted,
 }: {
   name: string;
   total: number;
   evolution: string | null;
-  // highlighted: boolean;
+  highlighted: boolean;
 }) => {
   return (
-    <div key={String(total)} className={cn("rounded-md p-2" /* highlighted && "bg-white text-black" */)}>
+    <div key={String(total)} className={cn("rounded-md p-2", highlighted && "bg-white text-black")}>
       <h3 className="text-xl font-semibold capitalize">{name} </h3>
       <p className="flex justify-between">
         <span>{inEuros(total)}</span>
-        {evolution ? <span className="ml-3 text-muted-foreground">{evolution}</span> : null}
+        {evolution ? <span className="text-muted-foreground ml-3">{evolution}</span> : null}
       </p>
     </div>
   );
 };
 
 const YearSeparator = ({ index, year }: { index: number; year: number }) => (
-  <div className={cn("w-[40%] px-2", index !== 0 && "!mt-8")}>
+  <div className={cn("w-[40%] px-2", index !== 0 && "mt-8!")}>
     <Separator className="mb-1.5 bg-white/30" />
     <span className="text-white/70"> {year}</span>
   </div>
 );
 
-const Panel = ({ name, payments }: { name: string; payments: Payment[] }) => {
-  // const [highlightedMonth, setHighlightedMonth] = useState<number>(-1);
-
+export const Panel = ({ name, payments, highlighted }: { name: string; payments: Payment[]; highlighted: number }) => {
   if (payments.length === 0) return <NoData />;
 
   const paymentsByMonth = aggregateByMonth(payments);
@@ -62,13 +60,12 @@ const Panel = ({ name, payments }: { name: string; payments: Payment[] }) => {
             evolution = diffInPercent(prevAmount, amount);
           }
 
-          // const highlighted = index === highlightedMonth;
           const month = date.toLocaleDateString("fr-FR", { month: "long" });
 
           return (
             <Fragment key={date.getTime()}>
               {needsSeparator && <YearSeparator index={index} year={prevPayment.date.getFullYear()} />}
-              <Entry name={month} total={amount} evolution={evolution} />
+              <Entry name={month} total={amount} evolution={evolution} highlighted={highlighted === index} />
             </Fragment>
           );
         })}
@@ -76,5 +73,3 @@ const Panel = ({ name, payments }: { name: string; payments: Payment[] }) => {
     </Card>
   );
 };
-
-export default Panel;

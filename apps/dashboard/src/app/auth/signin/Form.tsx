@@ -4,9 +4,9 @@ import React from "react";
 
 import { BiMailSend } from "react-icons/bi";
 
-import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/Form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 import { sendLink as serverAction } from "./_actions";
 import { schema, type Status } from "./_models";

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { fetchCustomers, fetchActiveCustomers } from "../_actions";
 import { Customer } from "@data-access/stripe";
+import { useEffect, useState } from "react";
+import { fetchActiveCustomers, fetchCustomers } from "../_actions";
 
 const firstDayLastMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 const now = new Date();

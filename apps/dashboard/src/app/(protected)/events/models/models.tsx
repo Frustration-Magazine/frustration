@@ -26,7 +26,7 @@ export const EventFormSchema = z.object({
   place: z.string({
     required_error: "Veuillez renseigner un lieu précis",
   }),
-  contact: z.string().optional(),
-  displayContact: z.boolean().default(false),
-  displayEvent: z.boolean().default(true),
+  contact: z.string(),
+  displayContact: z.boolean(),
+  displayEvent: z.boolean(),
 });

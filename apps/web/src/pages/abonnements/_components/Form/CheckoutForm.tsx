@@ -293,7 +293,7 @@ export default function StripeForm({
       {/* 💬 Error or success message */}
       {errorMessage && (
         <div
-          className="mb-4 flex gap-2 rounded bg-purple px-4 py-2 text-white"
+          className="mb-4 flex gap-2 rounded-sm bg-purple px-4 py-2 text-white"
           id="payment-message">
           <MessageCircleWarning className="shrink-0" />
           <div>

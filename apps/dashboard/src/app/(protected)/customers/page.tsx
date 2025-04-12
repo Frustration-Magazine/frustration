@@ -1,6 +1,6 @@
 import { signedIn } from "@/app/auth/auth";
-import Client from "./_client";
 import { redirect } from "next/navigation";
+import Client from "./_client";
 
 async function Page() {
   const isSignedIn = await signedIn();

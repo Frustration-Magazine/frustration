@@ -1,10 +1,7 @@
 "use client";
 
-// 🔩 Base
-import React from "react";
-
-// 🧱 Components
-import { Button } from "@/components/Button";
+import { Loader } from "@/components/loaders/loader";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -12,23 +9,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@ui/components/dialog";
-import { Input } from "@ui/components/input";
-import SuperBallsLoader from "@/ui/loaders/loader-super-balls";
-
-import VideoPreview from "./VideoPreview";
-
-// 🔧 Libs
-import {
-  YoutubeResourceType,
-  getYoutubeResourceId,
-} from "@data-access/youtube";
-
-// 🌍 i18n
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { YoutubeResourceType, getYoutubeResourceId } from "@data-access/youtube";
+import React from "react";
 import { typesTranslations } from "../_models";
-
-// 🪝 Hooks
 import useVideos from "../hooks/useVideos";
+import VideoPreview from "./VideoPreview";
 
 type Props = {
   readonly type: YoutubeResourceType;
@@ -36,11 +23,7 @@ type Props = {
   readonly texts: Record<string, any>;
 };
 
-export default function VideosCard({
-  type,
-  title,
-  texts,
-}: Props): React.ReactNode {
+export default function VideosCard({ type, title, texts }: Props): React.ReactNode {
   const {
     searchTerm,
     setSearchTerm,
@@ -79,10 +62,7 @@ export default function VideosCard({
   /* Search */
   /* ====== */
   const Search = (
-    <form
-      className="flex w-full items-center space-x-2"
-      onSubmit={handleSearch}
-    >
+    <form className="flex w-full items-center space-x-2" onSubmit={handleSearch}>
       <Input
         type="text"
         placeholder={texts?.placeholder}
@@ -105,7 +85,7 @@ export default function VideosCard({
         </DialogHeader>
         {Search}
         {loadingSuggestions ? (
-          <SuperBallsLoader className="mx-auto my-12" />
+          <Loader className="mx-auto my-12" />
         ) : (
           suggestions.map((suggestion: any) => (
             <VideoPreview
@@ -127,7 +107,7 @@ export default function VideosCard({
 
   /* Loader */
   /* ====== */
-  const LoaderVideosList = <SuperBallsLoader className="mx-auto my-12" />;
+  const LoaderVideosList = <Loader className="mx-auto my-12" />;
 
   /* No videos */
   /* ========= */

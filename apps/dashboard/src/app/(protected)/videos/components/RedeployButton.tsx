@@ -4,7 +4,7 @@
 import React from "react";
 
 // 🧱 Components
-import { Button } from "@/components/Button";
+import { Button } from "@/components/ui/button";
 
 // 🪝 Hooks
 import { useToast } from "@/hooks/useToast";
@@ -61,12 +61,7 @@ export default function RedeployButton() {
   if (!isProduction) return null;
 
   return (
-    <Button
-      size="xl"
-      disabled={loading}
-      className="flex gap-2 py-4"
-      onClick={handleClick}
-    >
+    <Button size="xl" disabled={loading} className="flex gap-2 py-4" onClick={handleClick}>
       {loading ? <TbLoaderQuarter className="animate-spin" /> : <ImUpload />}
       {loading ? "Demande de redéploiement" : "Mettre à jour le site"}
     </Button>

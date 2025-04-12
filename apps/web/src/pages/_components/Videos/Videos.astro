@@ -55,22 +55,22 @@ const { data: records }: { data: any[] } = await readRecords({
             <div
               class={cn(
                 "splide__arrows",
-                "[&>button>svg]:!h-[35px] [&>button>svg]:!w-[15px] [&>button]:!h-[40px] [&>button]:!w-[40px]",
-                "[&>button>svg]:sm:!h-[45px] [&>button>svg]:sm:!w-[20px] [&>button]:sm:!h-[55px] [&>button]:sm:!w-[55px]",
-                "[&>button>svg]:lg:!h-[70px] [&>button>svg]:lg:!w-[30px] [&>button]:lg:!h-[80px] [&>button]:lg:!w-[80px]",
+                "[&>button>svg]:h-[35px]! [&>button>svg]:w-[15px]! [&>button]:h-[40px]! [&>button]:w-[40px]!",
+                "sm:[&>button>svg]:h-[45px]! sm:[&>button>svg]:w-[20px]! sm:[&>button]:h-[55px]! sm:[&>button]:w-[55px]!",
+                "lg:[&>button>svg]:h-[70px]! lg:[&>button>svg]:w-[30px]! lg:[&>button]:h-[80px]! lg:[&>button]:w-[80px]!",
                 records.length < 2 && "hidden",
               )}>
               <button class="splide__arrow splide__arrow--prev">
                 <ChevronLeft
                   color="#FFF200"
-                  className="!scale-125"
+                  className="scale-125!"
                   size={60}
                 />
               </button>
               <button class="splide__arrow splide__arrow--next">
                 <ChevronRight
                   color="#FFF200"
-                  className="!scale-125"
+                  className="scale-125!"
                   size={60}
                 />
               </button>

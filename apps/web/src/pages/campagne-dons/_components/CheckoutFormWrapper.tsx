@@ -146,7 +146,7 @@ const Form = () => {
           <label
             htmlFor={`amount-${amount}`}
             key={`amount-${amount}`}
-            className="has-[:checked]:text-frustration-yellow inline-block w-1/2 cursor-pointer rounded-sm border px-6 py-4 text-center font-bold hover:bg-gray-100 has-[:checked]:bg-black">
+            className="has-checked:text-frustration-yellow inline-block w-1/2 cursor-pointer rounded-xs border px-6 py-4 text-center font-bold hover:bg-gray-100 has-checked:bg-black">
             <input
               type="radio"
               className="button-amount hidden"
@@ -170,7 +170,7 @@ const Form = () => {
         {/* 🍡 CUSTOM */}
         <label
           htmlFor="amount-custom"
-          className="has-[:checked]:text-frustration-yellow mx-auto mt-4 block w-full cursor-pointer rounded-sm border px-6 py-4 text-center text-lg font-bold hover:bg-gray-100 has-[:checked]:bg-black">
+          className="has-checked:text-frustration-yellow mx-auto mt-4 block w-full cursor-pointer rounded-xs border px-6 py-4 text-center text-lg font-bold hover:bg-gray-100 has-checked:bg-black">
           <input
             type="radio"
             name="amount"
@@ -238,7 +238,7 @@ const Form = () => {
             className="my-4 flex cursor-pointer flex-col items-center gap-2 font-bold leading-tight hover:underline md:flex-row"
             onClick={() => setSelectedFrequency(FREQUENCY.RECURRING)}>
             <TbBulb size={36} />
-            <span className="flex-shrink text-center md:text-left">
+            <span className="shrink text-center md:text-left">
               Passez à un don mensuel pour recevoir des contreparties en échange{" "}
               <small>🎁 </small>
             </span>

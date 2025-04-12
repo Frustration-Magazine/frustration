@@ -21,9 +21,6 @@
       "@data-access/*": [
         "../../packages/data-access/*"
       ],
-      "@ui/*": [
-        "../../packages/ui/*"
-      ],
       "@utils/*": [
         "../../packages/utils/*"
       ],
