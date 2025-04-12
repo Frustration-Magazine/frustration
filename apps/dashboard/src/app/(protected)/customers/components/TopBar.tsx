@@ -1,14 +1,9 @@
 "use client";
 
-// 🧱 Components
-import DownloadButton from "./DownloadButton";
-
-// 🖼️ Assets
+import { Customer } from "@data-access/stripe";
 import { FaPeopleGroup as PeopleIcon } from "react-icons/fa6";
 import { RiChatFollowUpFill as ChatIcon } from "react-icons/ri";
-
-// 🗿 Models
-import { Customer } from "@data-access/stripe";
+import DownloadButton from "./DownloadButton";
 
 const BottomBar = ({
   customers,

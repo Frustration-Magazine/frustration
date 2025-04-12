@@ -69,7 +69,7 @@ function MoreArticles() {
               <div>
                 <h5
                   className={cn(
-                    "font-bakbak font-bold !leading-none",
+                    "font-bakbak font-bold leading-none!",
                     "mb-2 text-xl",
                     "sm:mb-2 sm:text-2xl",
                   )}>

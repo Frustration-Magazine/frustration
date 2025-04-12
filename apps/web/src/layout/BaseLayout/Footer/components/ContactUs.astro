@@ -1,5 +1,5 @@
 ---
-import { HiOutlineMailOpen } from "react-icons/hi";
+import { HiOutlineMailOpen as MailIcon } from "react-icons/hi";
 import { cn } from "@/libs/tailwind";
 import H5 from "./H5.astro";
 ---
@@ -8,8 +8,9 @@ import H5 from "./H5.astro";
   <H5> Nous contacter </H5>
   <p
     class={cn(
-      "mb-2 w-full mt-2 max-w-[400px] font-open-sans leading-none mx-auto",
-      "text-sm sm:mx-0",
+      "text-sm mb-2 w-full mt-2 max-w-[400px] font-open-sans",
+      "mx-auto",
+      "sm:mx-0",
     )}>
     Une question à nous poser ? Une information à nous communiquer ? Un article
     à nous proposer ?
@@ -22,7 +23,7 @@ import H5 from "./H5.astro";
       "text-sm justify-center",
       "sm:text-base sm:justify-start",
     )}>
-    <HiOutlineMailOpen />
+    <MailIcon />
     redaction@frustrationmagazine.fr
   </a>
 </div>

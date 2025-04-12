@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/libs/tailwind";
-import { Button } from "@ui/components/button";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   readonly gradient?: string;
@@ -14,22 +14,22 @@ function GradientButton({ gradient, id, children }: Props) {
       variant="ghost"
       data-button={id}
       className={cn(
-        "group !relative mt-auto inline-flex h-11 w-[80%] overflow-hidden rounded-none p-[3px] ring-offset-black will-change-transform",
+        "group relative! mt-auto inline-flex h-11 w-[80%] overflow-hidden rounded-none p-[3px] ring-offset-black will-change-transform",
       )}>
       <div
         className={cn(
-          "absolute inset-[-1000%] animate-spin bg-gradient-conic blur [animation-duration:5s]",
+          "absolute inset-[-1000%] animate-spin bg-conic blur-sm [animation-duration:5s]",
           gradient,
         )}
       />
       <div
         className={cn(
-          "inline-flex h-full w-full cursor-pointer items-center justify-center px-8 py-1 font-bakbak text-2xl font-medium",
-          "bg-gradient-to-t from-neutral-50 to-white text-neutral-950 backdrop-blur-3xl",
+          "font-bakbak inline-flex h-full w-full cursor-pointer items-center justify-center px-8 py-1 text-2xl font-medium",
+          "bg-linear-to-t from-neutral-50 to-white text-neutral-950 backdrop-blur-3xl",
         )}>
         <span
           className={cn(
-            "bg-gradient-to-tr bg-clip-text text-transparent transition-transform duration-100 ease-in-out",
+            "bg-linear-to-tr bg-clip-text text-transparent transition-transform duration-100 ease-in-out",
             gradient,
           )}>
           {children}

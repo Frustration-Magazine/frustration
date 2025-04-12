@@ -8,7 +8,7 @@ const backgroundUrl = `url(${Banner2025Background.src})`;
 <a
   href="abonnements"
   id="banner"
-  class="banner-container">
+  class="banner-container bg-[url('/img/banner_bg_2025.jpg')] bg-repeat-round bg-cover">
   <Image
     src={Banner2025}
     width="500"
@@ -19,7 +19,5 @@ const backgroundUrl = `url(${Banner2025Background.src})`;
 <style define:vars={{ backgroundUrl }}>
   .banner-container {
     background-image: var(--backgroundUrl);
-    background-repeat: round;
-    background-size: cover;
   }
 </style>

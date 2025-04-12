@@ -7,7 +7,7 @@ import React from "react";
 import { createYoutubeUrlFromIdAndType } from "@data-access/youtube";
 
 // 🧱 Components
-import { Button } from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,13 +17,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@ui/components/alert-dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@ui/components/tooltip";
+} from "@/components/ui/alert-dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 // 🗿 Models
 import { type YoutubeResourceType } from "@data-access/youtube";
@@ -93,7 +88,7 @@ export default function ({
   /* Title */
   /* ===== */
   const Title = (
-    <h6 className="text-md mb-1 font-bold leading-tight hover:underline">
+    <h6 className="text-md mb-1 leading-tight font-bold hover:underline">
       <a href={createYoutubeUrlFromIdAndType(type, id)} target="_blank">
         {title}
       </a>
@@ -103,10 +98,7 @@ export default function ({
   /* Description */
   /* =========== */
   const Description = (
-    <p
-      className="overflow-hidden whitespace-break-spaces text-sm text-gray-600"
-      style={{ overflowWrap: "anywhere" }}
-    >
+    <p className="overflow-hidden text-sm whitespace-break-spaces text-gray-600" style={{ overflowWrap: "anywhere" }}>
       {description}
     </p>
   );
@@ -118,7 +110,7 @@ export default function ({
       src={thumbnail}
       alt={title}
       {...getThumbnailSizes(type)}
-      className="h-full w-auto flex-shrink-0 self-start rounded-md"
+      className="h-full w-auto shrink-0 self-start rounded-md"
     />
   );
 
@@ -135,9 +127,7 @@ export default function ({
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-[700px]">
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {texts?.[iconType]?.alertDialogTitle}
-          </AlertDialogTitle>
+          <AlertDialogTitle>{texts?.[iconType]?.alertDialogTitle}</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Annuler</AlertDialogCancel>

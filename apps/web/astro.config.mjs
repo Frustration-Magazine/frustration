@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 
 const { BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN } = loadEnv(
   process.env.NODE_ENV,
@@ -9,7 +10,6 @@ const { BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN } = loadEnv(
 
 import vercel from "@astrojs/vercel";
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
 
 import sitemap from "@astrojs/sitemap";
 
@@ -25,7 +25,11 @@ export default defineConfig({
     webAnalytics: { enabled: true },
   }),
 
-  integrations: [react(), tailwind(), sitemap()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
+
+  integrations: [react(), sitemap()],
   image: {
     domains: [BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN],
   },

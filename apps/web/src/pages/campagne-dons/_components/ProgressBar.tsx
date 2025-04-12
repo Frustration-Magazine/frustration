@@ -45,13 +45,13 @@ const ProgressBar = React.forwardRef<
         className={`h-full w-full flex-1 ${background} relative transition-all`}
         style={{ transform: `translateX(-${100 - (counter || 0)}%)` }}>
         <div
-          className="absolute top-1.5 h-[25%] w-[20%] translate-x-1/2 rounded-full bg-white blur-sm"
+          className="absolute top-1.5 h-[25%] w-[20%] translate-x-1/2 rounded-full bg-white blur-xs"
           style={{
             right: `${(counter || 0) / 2}%`,
             width: `${counter / 4}%`,
           }}></div>
       </ProgressPrimitive.Indicator>
-      <div className="absolute left-0 top-0 aspect-[4/1] h-full animate-slideProgress rounded-full bg-white blur-xl"></div>
+      <div className="absolute left-0 top-0 aspect-4/1 h-full animate-slideProgress rounded-full bg-white blur-xl"></div>
       <div
         className={cn(
           "absolute top-1/2 -translate-y-1/2 text-2xl font-bold text-black",

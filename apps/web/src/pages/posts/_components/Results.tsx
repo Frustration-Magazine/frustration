@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/libs/tailwind";
-import { Button } from "@ui/components/button";
+import { Button } from "@/components/ui/button";
 import { CgArrowTopRight } from "react-icons/cg";
 
 type Props = {
@@ -29,7 +29,7 @@ const NoResults = (
 const Title = ({ children: title }: { readonly children: string }) => (
   <h3
     className={cn(
-      "font-bakbak font-bold !leading-[1]",
+      "font-bakbak leading-none! font-bold",
       "text-2xl",
       "md:text-3xl",
     )}>
@@ -44,7 +44,7 @@ const Excerpt = ({ children: excerpt }: { children: string }) => (
 );
 
 const Read = () => (
-  <Button className="flex items-center gap-1 rounded-none font-bakbak text-lg uppercase">
+  <Button className="font-bakbak flex items-center gap-1 rounded-none text-lg uppercase">
     <span>Lire</span>
     <CgArrowTopRight size={20} />
   </Button>
@@ -128,7 +128,7 @@ function Results({
       {pageInfo.hasNextPage ? (
         <Button
           className={cn(
-            "text-frustration-yellow hover:text-frustration-yellow mt-12 box-content bg-black px-5 py-2 font-bebas text-2xl hover:bg-black",
+            "text-frustration-yellow hover:text-frustration-yellow font-bebas mt-12 box-content bg-black px-5 py-2 text-2xl hover:bg-black",
             "md:px-6 md:py-3 md:text-3xl",
           )}
           onClick={handleMoreArticles}

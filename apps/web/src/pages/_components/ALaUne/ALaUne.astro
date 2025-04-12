@@ -1,8 +1,7 @@
 ---
-// 🧱 Components
+import { cn } from "@/libs/tailwind";
 import SectionTitle from "../SectionTitle.astro";
 import Card from "./Card.astro";
-import { cn } from "@/libs/tailwind";
 
 const { posts } = Astro.props;
 ---
@@ -32,7 +31,7 @@ const { posts } = Astro.props;
     href="/posts"
     class={cn(
       "relative mx-auto mt-[5vh] w-fit block overflow-hidden rounded-[20px]",
-      "before:absolute before:h-full before:w-full before:animate-disco before:bg-[conic-gradient(#faf7c2,#FFF200,#898106)] before:blur before:scale-x-[10] before:scale-y-[6]",
+      "before:absolute before:h-full before:w-full before:animate-disco before:bg-[conic-gradient(#faf7c2,#FFF200,#898106)] before:blur-sm before:scale-x-10 before:scale-y-6",
     )}>
     <span
       class={cn(

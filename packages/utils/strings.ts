@@ -45,6 +45,16 @@ export function prettifyName(uglyName: string): string {
 }
 
 /* ----------------- */
+/* Capitalize first */
+/* ----------------- */
+/*
+  Input : "frustration magazine"
+  Output : "Frustration Magazine"
+*/
+export function capitalizeFirst(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 /* Format currency € */
 /* ----------------- */
 /*

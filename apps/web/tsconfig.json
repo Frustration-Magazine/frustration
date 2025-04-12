@@ -18,20 +18,17 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@/*": [
+        "src/*"
+      ],
       "@data-access/*": [
         "../../packages/data-access/*"
-      ],
-      "@ui/*": [
-        "../../packages/ui/*"
       ],
       "@utils/*": [
         "../../packages/utils/*"
       ],
       "@data-access/prisma": [
         "../../packages/data-access/prisma/client"
-      ],
-      "@/*": [
-        "src/*"
       ],
     },
   },

@@ -1,14 +1,7 @@
 "use client";
 
-// 🔩 Base
-import React from "react";
-
-// 🔧 Utils
 import { explicitDate } from "@utils/dates";
-
-/* =============== */
-/*       UI        */
-/* =============== */
+import React from "react";
 
 export default function ({
   rangeDate,

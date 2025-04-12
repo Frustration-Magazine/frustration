@@ -4,11 +4,11 @@ import { cn } from "@/libs/tailwind";
 ---
 
 <BaseLayout {...Astro.props}>
-  <div class="bg-white flex-grow relative">
+  <div class="bg-white grow relative">
     <slot name="header" />
     <div
       class={cn(
-        "grid grid-cols-[1fr_min(75ch,_93vw)_1fr]",
+        "grid grid-cols-[1fr_min(75ch,93vw)_1fr]",
         "py-8",
         "md:py-10",
         "xl:py-16",

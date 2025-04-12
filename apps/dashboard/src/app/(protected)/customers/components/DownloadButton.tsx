@@ -1,15 +1,10 @@
 "use client";
 
-// 🧱 Components
-import { Button } from "@/components/Button";
-import { IoIosDownload } from "react-icons/io";
-
-// 🔧 Libs
-import { createCSVinURL, downloadFileFromUrl } from "@utils/files";
-import { explicitDate } from "@utils/dates";
-
-// 🗿 Models
+import { Button } from "@/components/ui/button";
 import { Customer } from "@data-access/stripe";
+import { explicitDate } from "@utils/dates";
+import { createCSVinURL, downloadFileFromUrl } from "@utils/files";
+import { IoIosDownload } from "react-icons/io";
 
 export interface FileHeader {
   name: string;
@@ -88,11 +83,7 @@ export default function ({
   };
 
   return (
-    <Button
-      onClick={handleDownloadCustomersList}
-      className="flex items-center gap-2 rounded-md"
-      variant="inverted"
-    >
+    <Button onClick={handleDownloadCustomersList} className="flex items-center gap-2 rounded-md" variant="inverted">
       <IoIosDownload size={17} />
       <span> Télécharger </span>
     </Button>

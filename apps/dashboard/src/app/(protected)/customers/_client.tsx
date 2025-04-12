@@ -1,10 +1,10 @@
 "use client";
 
-import { DatePickerWithRange as DatePicker } from "@ui/components/date-range-picker";
-import Header from "./components/Header";
-import CustomersTable from "./components/CustomersTable";
-import TopBar from "./components/TopBar";
+import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import Loader from "../../loading";
+import CustomersTable from "./components/CustomersTable";
+import Header from "./components/Header";
+import TopBar from "./components/TopBar";
 import useCustomers from "./hooks/useCustomers";
 
 const NoData = (
@@ -25,13 +25,13 @@ function Client() {
   return (
     <>
       <Header rangeDate={rangeDate} />
-      <DatePicker date={rangeDate} setDate={setRangeDate} />
+      <DatePickerWithRange date={rangeDate} setDate={setRangeDate} />
       {loadingCustomers ? (
         <Loader />
       ) : (
-        <div className="flex min-w-[1100px] max-w-[1600px] flex-grow flex-col space-y-3">
+        <div className="flex max-w-[1600px] min-w-[1100px] grow flex-col space-y-3">
           <TopBar customers={customers} activeCustomers={activeCustomers} rangeDate={rangeDate} />
-          <div className="h-[1px] flex-grow overflow-auto">
+          <div className="h-[1px] grow overflow-auto">
             {customers.length === 0 ? NoData : <CustomersTable customers={customers} />}
           </div>
         </div>
