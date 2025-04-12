@@ -10,7 +10,7 @@ import { actions } from "astro:actions";
 import { MessageCircleWarning } from "lucide-react";
 import { type StripePaymentElementOptions } from "@stripe/stripe-js";
 import { cn } from "@/libs/tailwind";
-import CircleLoader from "@ui/components/loaders/loader-circle";
+import LoaderCircle from "@/components/loaders/loader-circle";
 import { RainbowButton } from "./RainbowButton";
 
 // 💰 Stripe
@@ -267,7 +267,7 @@ export default function StripeForm({
       className="mb-12">
       {/* 2️⃣ CONTACT INFO */}
       <h3
-        className={`mb-6 flex flex-col items-center justify-center text-center font-montserrat text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
+        className={`font-montserrat mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
         <span className="max-lg:text-3xl">2️⃣</span>
         <span>Vos informations de contact</span>
       </h3>
@@ -277,7 +277,7 @@ export default function StripeForm({
       <div className="my-2"></div>
       <AddressElement options={{ mode: "shipping" }} />
       <h3
-        className={`mb-6 mt-10 flex flex-col items-center justify-center text-center font-montserrat text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
+        className={`font-montserrat mb-6 mt-10 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
         <span className="max-lg:text-3xl">3️⃣</span>
         <span>Vos informations de paiement</span>
       </h3>
@@ -293,7 +293,7 @@ export default function StripeForm({
       {/* 💬 Error or success message */}
       {errorMessage && (
         <div
-          className="mb-4 flex gap-2 rounded-sm bg-purple px-4 py-2 text-white"
+          className="bg-purple mb-4 flex gap-2 rounded-sm px-4 py-2 text-white"
           id="payment-message">
           <MessageCircleWarning className="shrink-0" />
           <div>
@@ -321,7 +321,7 @@ export default function StripeForm({
           type="submit"
           id="submit">
           {isLoading ? (
-            <CircleLoader color="#FFF200" />
+            <LoaderCircle color="#FFF200" />
           ) : (
             <span className="text-frustration-yellow text-xl font-bold lg:text-2xl">
               💝 Soutenir Frustration

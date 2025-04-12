@@ -1,4 +1,3 @@
-import React from "react";
 import { IoIosMail as MailIcon } from "react-icons/io";
 import { cn } from "@/libs/tailwind";
 
@@ -13,7 +12,7 @@ function MailButton({ className }: Props) {
       type="button"
       title="Nous contacter"
       className={cn(
-        "rounded-full bg-frustration-yellow p-2 text-black opacity-0 transition-opacity duration-1000",
+        "bg-frustration-yellow rounded-full p-2 text-black opacity-0 transition-opacity duration-1000",
         className,
       )}
       aria-label="Nous contacter">

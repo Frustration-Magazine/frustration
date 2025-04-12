@@ -2,7 +2,7 @@ import "@splidejs/splide/css";
 import Splide from "@splidejs/splide";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 
-document.addEventListener("astro:page-load", () => {
+document.addEventListener("DOMContentLoaded", () => {
   new Splide(".splide-interviews", {
     type: "loop",
     drag: "free",

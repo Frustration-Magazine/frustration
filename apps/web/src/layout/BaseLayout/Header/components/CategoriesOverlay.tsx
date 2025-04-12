@@ -31,7 +31,7 @@ function CategoriesOverlay({ categories }: Props) {
     <button
       type="button"
       title="Recherche"
-      className={cn("w-4", "md:w-5", "xl:w-6")}
+      className={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
       onClick={() => setOpened(true)}
       aria-label="Recherche">
       <HiOutlineMenuAlt3 size="100%" />
@@ -43,7 +43,7 @@ function CategoriesOverlay({ categories }: Props) {
       type="button"
       title="Fermer"
       className={cn(
-        "absolute right-5 top-5 opacity-0 transition-opacity duration-1000",
+        "absolute top-5 right-5 cursor-pointer opacity-0 transition-opacity duration-1000",
         opened && "opacity-100",
       )}
       onClick={() => setOpened(false)}
@@ -57,13 +57,13 @@ function CategoriesOverlay({ categories }: Props) {
       {OpenButton}
       <div
         className={cn(
-          "absolute left-0 top-0 grid h-0 w-screen items-center overflow-hidden bg-black transition-all duration-1000",
+          "absolute top-0 left-0 grid h-0 w-screen items-center overflow-hidden bg-black transition-all duration-1000",
           opened && "h-screen",
         )}>
         {CloseButton}
         <div
           className={cn(
-            "fixed bottom-5 right-5 hidden gap-4",
+            "fixed right-5 bottom-5 hidden gap-4",
             opened && "flex",
           )}>
           <AgendaButton className={cn(opened && "opacity-100")} />
@@ -71,7 +71,7 @@ function CategoriesOverlay({ categories }: Props) {
         </div>
         <ul
           className={cn(
-            "scrollbar-track-yellow scrollbar-thumb-yellow flex h-full flex-col overflow-y-scroll py-[15dvh] text-center font-bakbak uppercase scrollbar",
+            "scrollbar-track-yellow scrollbar-thumb-yellow font-bakbak scrollbar flex h-full flex-col overflow-y-scroll py-[15dvh] text-center uppercase",
             "gap-2 text-xl",
             "sm:gap-3 sm:text-2xl",
             "md:gap-3 md:text-3xl",

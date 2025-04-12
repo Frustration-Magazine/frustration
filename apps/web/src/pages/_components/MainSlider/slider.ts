@@ -1,7 +1,7 @@
 import Splide from "@splidejs/splide";
 import "@splidejs/splide/css";
 
-document.addEventListener("astro:page-load", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const header = document.querySelector("body > header") as HTMLElement;
   const banner = document.querySelector("body #banner") as HTMLElement;
   const carrousel = document.querySelector(
@@ -25,6 +25,5 @@ document.addEventListener("astro:page-load", () => {
     perPage: 1,
     height: `${carrouselHeight}px`,
   });
-
   splide.mount();
 });

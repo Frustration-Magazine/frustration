@@ -287,7 +287,7 @@ const { data: records }: { data: any[] } = await readRecords({
     });
   }
 
-  document.addEventListener("astro:page-load", () => {
+  document.addEventListener("DOMContentLoaded", () => {
     const splideVideos = new Splide(".splide-videos", {
       heightRatio: 0.5625,
       width: "1200px",

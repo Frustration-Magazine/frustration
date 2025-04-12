@@ -4,7 +4,7 @@ import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } f
 import { Area, AreaChart, Legend, XAxis } from "recharts";
 import { capitalizeFirst } from "@utils/strings";
 import { formatExplicitMonth } from "@utils/dates";
-import { cn } from "@utils/tailwind";
+import { cn } from "@/lib/utils";
 import { inEuros, debounce } from "../_utils";
 
 const chartConfig = {

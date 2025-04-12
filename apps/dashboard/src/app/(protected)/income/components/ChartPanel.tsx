@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { type Payment } from "@data-access/models/transactions";
-import { cn } from "@utils/tailwind";
 import { Chart } from "./Chart";
 import { Panel } from "./Panel";
 

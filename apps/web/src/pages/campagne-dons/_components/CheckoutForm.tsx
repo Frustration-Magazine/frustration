@@ -1,17 +1,16 @@
-import React from "react";
 import {
-  PaymentElement,
   AddressElement,
   LinkAuthenticationElement,
-  useStripe,
+  PaymentElement,
   useElements,
+  useStripe,
 } from "@stripe/react-stripe-js";
 import { type StripePaymentElementOptions } from "@stripe/stripe-js";
 import { actions } from "astro:actions";
+import React from "react";
 
 // 🧱 Components
-import { FREQUENCY } from "../_models";
-import CircleLoader from "@ui/components/loaders/loader-circle";
+import CircleLoader from "@/components/loaders/loader-circle";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,8 +20,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@ui/components/alert-dialog";
-import { Button } from "@ui/components/button";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { FREQUENCY } from "../_models";
 import { RainbowButton } from "./RainbowButton";
 
 // 🔧 Utils
@@ -293,7 +293,7 @@ const CheckoutForm = ({
       className="mt-16 w-full">
       {/* ====================================================================== */}
       {/* 1️⃣ CONTACT INFO */}
-      <h3 className="mb-6 flex flex-col items-center justify-center text-center font-montserrat text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left">
+      <h3 className="font-montserrat mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left">
         <span className="max-lg:text-3xl">1️⃣</span>
         <span>Vos informations de contact</span>
       </h3>
@@ -310,7 +310,7 @@ const CheckoutForm = ({
       ) : null}
       {/* ====================================================================== */}
       {/* 2️⃣ PAYMENT */}
-      <h3 className="mb-6 mt-10 flex flex-col items-center justify-center text-center font-montserrat text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left">
+      <h3 className="font-montserrat mb-6 mt-10 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left">
         <span className="max-lg:text-3xl">2️⃣</span>
         <span>Vos informations de paiement</span>
       </h3>
@@ -324,7 +324,7 @@ const CheckoutForm = ({
       {/* 💬 Error or success message */}
       {errorMessage && (
         <div
-          className="mb-4 flex gap-2 rounded-sm bg-purple px-4 py-2 text-white"
+          className="bg-purple mb-4 flex gap-2 rounded-sm px-4 py-2 text-white"
           id="payment-message">
           <MessageCircleWarning className="shrink-0" />
           <div>
