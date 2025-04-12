@@ -4,11 +4,7 @@ const YELLOW_FRUSTRATION = "#FFF200";
 const YELLOW_HOVER_FRUSTRATION = "#191a00";
 
 const config: Config = {
-  content: [
-    "./src/app/**/*.{js,ts,tsx}",
-    // 👇 required so components imported from @/ui work with tailwind classes
-    "../../packages/ui/components/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/app/**/*.{js,ts,tsx}"],
   theme: {
     container: {
       center: true,
@@ -86,6 +82,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  // plugins: [require("tailwindcss-animate")],
 };
 export default config;
