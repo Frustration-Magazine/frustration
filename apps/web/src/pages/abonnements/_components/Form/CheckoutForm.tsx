@@ -9,7 +9,7 @@ import {
 import { actions } from "astro:actions";
 import { MessageCircleWarning } from "lucide-react";
 import { type StripePaymentElementOptions } from "@stripe/stripe-js";
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/lib/utils";
 import LoaderCircle from "@/components/loaders/loader-circle";
 import { RainbowButton } from "./RainbowButton";
 
@@ -277,7 +277,7 @@ export default function StripeForm({
       <div className="my-2"></div>
       <AddressElement options={{ mode: "shipping" }} />
       <h3
-        className={`font-montserrat mb-6 mt-10 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
+        className={`font-montserrat mt-10 mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
         <span className="max-lg:text-3xl">3️⃣</span>
         <span>Vos informations de paiement</span>
       </h3>

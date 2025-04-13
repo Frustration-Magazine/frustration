@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 interface Props {

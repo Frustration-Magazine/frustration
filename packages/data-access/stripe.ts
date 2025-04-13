@@ -1,7 +1,7 @@
 import Stripe from "stripe";
-import { type Payment } from "./models/transactions";
-import { convertUTCtoDate, truncateDateToDay, explicitDate, areSameMonth, truncateMonth } from "@utils/dates";
-import { convertCountryInitials, prettifyName } from "@utils/strings";
+import { type Payment } from "./_models";
+import { convertUTCtoDate, truncateDateToDay, explicitDate, areSameMonth, truncateMonth } from "utils";
+import { convertCountryInitials, prettifyName } from "utils";
 
 /* ------------------- */
 /*        STRIPE       */

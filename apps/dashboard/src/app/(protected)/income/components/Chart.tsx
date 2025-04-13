@@ -2,8 +2,8 @@
 
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Area, AreaChart, Legend, XAxis } from "recharts";
-import { capitalizeFirst } from "@utils/strings";
-import { formatExplicitMonth } from "@utils/dates";
+import { capitalizeFirst } from "utils/";
+import { formatExplicitMonth } from "utils/";
 import { cn } from "@/lib/utils";
 import { inEuros, debounce } from "../_utils";
 

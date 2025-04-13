@@ -1,12 +1,10 @@
 {
-  "name": "@/utils",
+  "name": "utils",
   "version": "1.0.0",
   "description": "",
+  "main": "./index.ts",
   "scripts": {},
   "keywords": [],
   "author": "Thibaut Izard <thibaut.izard@gmail.com>",
-  "license": "ISC",
-  "exports": {
-    "./*": "./*.ts"
-  }
+  "license": "ISC"
 }

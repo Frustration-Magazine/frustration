@@ -1,7 +1,7 @@
 "use server";
 
 import { signIn } from "@/auth";
-import { prisma } from "@data-access/prisma";
+import { prisma } from "data-access/prisma";
 import { schema, type Status } from "./_models";
 
 // 💬 Form status
@@ -47,10 +47,7 @@ function parse(data: FormData) {
 /*   📨 SEND MAGIC LINK     */
 /* ------------------------ */
 
-export async function sendLink(
-  currentState: Status,
-  formData: FormData,
-): Promise<Status> {
+export async function sendLink(currentState: Status, formData: FormData): Promise<Status> {
   // 🔎
   const { success, data: { email } = {} } = parse(formData);
 

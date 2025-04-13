@@ -1,15 +1,3 @@
-import {
-  AddressElement,
-  LinkAuthenticationElement,
-  PaymentElement,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
-import { type StripePaymentElementOptions } from "@stripe/stripe-js";
-import { actions } from "astro:actions";
-import React from "react";
-
-// 🧱 Components
 import CircleLoader from "@/components/loaders/loader-circle";
 import {
   AlertDialog,
@@ -22,12 +10,20 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import {
+  AddressElement,
+  LinkAuthenticationElement,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import { type StripePaymentElementOptions } from "@stripe/stripe-js";
+import { actions } from "astro:actions";
+import { MessageCircleWarning } from "lucide-react";
+import React from "react";
 import { FREQUENCY } from "../_models";
 import { RainbowButton } from "./RainbowButton";
-
-// 🔧 Utils
-import { cn } from "@/libs/tailwind";
-import { MessageCircleWarning } from "lucide-react";
 
 const paymentElementOptions: StripePaymentElementOptions = {
   layout: "tabs",
@@ -266,7 +262,7 @@ const CheckoutForm = ({
         formData.append("firstName", firstName);
         formData.append("lastName", lastName);
 
-        actions.addSubscriber(formData);
+        actions.addSubscriberToNewsletter(formData);
       }
 
       const { error } = await stripe.confirmPayment({
@@ -310,7 +306,7 @@ const CheckoutForm = ({
       ) : null}
       {/* ====================================================================== */}
       {/* 2️⃣ PAYMENT */}
-      <h3 className="font-montserrat mb-6 mt-10 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left">
+      <h3 className="font-montserrat mt-10 mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left">
         <span className="max-lg:text-3xl">2️⃣</span>
         <span>Vos informations de paiement</span>
       </h3>

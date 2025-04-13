@@ -15,8 +15,8 @@
     "vercel-build": "pnpm run vercel-prisma && eslint . && next build"
   },
   "dependencies": {
-    "@/data-access": "workspace:*",
-    "@/utils": "workspace:*",
+    "data-access": "workspace:*",
+    "utils": "workspace:*",
     "@auth/prisma-adapter": "^2.8.0",
     "@hookform/resolvers": "^5.0.1",
     "@next/env": "^15.3.0",

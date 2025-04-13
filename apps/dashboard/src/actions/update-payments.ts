@@ -1,8 +1,8 @@
 "use server";
 
-import { fetchStripePayments } from "@data-access/stripe";
-import { fetchHelloAssoPayments } from "@data-access/helloasso";
-import { prisma } from "@data-access/prisma";
+import { fetchStripePayments } from "data-access/stripe";
+import { fetchHelloAssoPayments } from "data-access/helloasso";
+import { prisma } from "data-access/prisma";
 
 export async function updatePayments(): Promise<void> {
   let stripePayments: any = [];

@@ -1,5 +1,5 @@
-import { type Payment } from "./models/transactions";
-import { areSameDay, areSameMonth, explicitDate, truncateMonth } from "@utils/dates";
+import { type Payment } from "./_models";
+import { areSameMonth, explicitDate, truncateMonth } from "utils";
 
 /* ----------------------- */
 /*     Authentication      */

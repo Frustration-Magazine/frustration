@@ -4,7 +4,7 @@
 import React from "react";
 
 // 🔧 Libs
-import { createYoutubeUrlFromIdAndType } from "@data-access/youtube";
+import { createYoutubeUrlFromIdAndType } from "data-access/youtube";
 
 // 🧱 Components
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ import {
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 // 🗿 Models
-import { type YoutubeResourceType } from "@data-access/youtube";
+import { type YoutubeResourceType } from "data-access/youtube";
 
 // 🖼️ Images
 import Image from "next/image";

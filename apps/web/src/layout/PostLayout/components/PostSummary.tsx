@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import { createIdAnchor } from "@utils/strings";
-import { cn } from "@/libs/tailwind";
+import { useState, useRef, useEffect } from "react";
+import { createIdAnchor } from "utils";
+import { cn } from "@/lib/utils";
 
 function PostSummary() {
   const [titles, setTitles] = useState<string[]>([]);
@@ -67,7 +67,7 @@ function PostSummary() {
       <h3
         onClick={() => window.scrollTo({ top: 0 })}
         className={cn(
-          "border-b-frustration-yellow mb-4 w-fit cursor-pointer border-b-[6px] font-bakbak",
+          "border-b-frustration-yellow font-bakbak mb-4 w-fit cursor-pointer border-b-[6px]",
           "text-2xl",
           "lg:text-3xl",
         )}>

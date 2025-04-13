@@ -1,7 +1,7 @@
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import * as React from "react";
 import { NumberTicker } from "./NumberTicker";
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/lib/utils";
 
 interface ProgressBarProps
   extends React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> {
@@ -51,7 +51,7 @@ const ProgressBar = React.forwardRef<
             width: `${counter / 4}%`,
           }}></div>
       </ProgressPrimitive.Indicator>
-      <div className="absolute left-0 top-0 aspect-4/1 h-full animate-slideProgress rounded-full bg-white blur-xl"></div>
+      <div className="animate-slideProgress absolute top-0 left-0 aspect-4/1 h-full rounded-full bg-white blur-xl"></div>
       <div
         className={cn(
           "absolute top-1/2 -translate-y-1/2 text-2xl font-bold text-black",

@@ -6,12 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
-import { IoMailOutline as MailIcon } from "react-icons/io5";
 import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
+import { IoMailOutline as MailIcon } from "react-icons/io5";
 import { type Event } from "../_models";
-
-import { cn } from "@/libs/tailwind";
 
 const formatDate = (date: Date, displayHour: boolean) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -37,7 +36,7 @@ const BookCoverBackground = ({ bookImage }: { bookImage: any }) => (
     className={cn(
       "absolute right-0 h-full",
       "scale-1 rotate-[15deg] opacity-10",
-      "sm:rotate-[25deg] sm:scale-[1.3] sm:opacity-20",
+      "sm:scale-[1.3] sm:rotate-[25deg] sm:opacity-20",
     )}>
     {bookImage}
   </div>

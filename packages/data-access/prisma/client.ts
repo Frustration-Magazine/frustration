@@ -1,5 +1,4 @@
-import { PrismaClient, Prisma } from "@prisma/client";
-export { Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
@@ -25,7 +24,7 @@ export async function readRecords({ table, where, orderBy, take, success }: { ta
   } catch (e) {
     // ❌ Error | P202
     console.error("Error while reading records", e);
-    const readableError = e?.constructor.name === Prisma.PrismaClientKnownRequestError.name ? (e as any)?.message : "Une erreur inconnue s'est produite";
+    const readableError = (e as any)?.message ?? "Une erreur inconnue s'est produite";
     status.error = readableError;
   } finally {
     return { data, status };
@@ -49,7 +48,7 @@ export async function createRecord({ table, data, success }: { table: string; da
   } catch (e) {
     // ❌ Error | P202
     console.error("Error while creating a new record", e);
-    const readableError = e?.constructor.name === Prisma.PrismaClientKnownRequestError.name ? (e as any)?.message : "Une erreur inconnue s'est produite";
+    const readableError = (e as any)?.message ?? "Une erreur inconnue s'est produite";
     status.error = readableError;
   } finally {
     return status;
@@ -76,7 +75,7 @@ export async function deleteRecord({ table, id, success }: { table: string; id: 
   } catch (e) {
     // ❌ Error | P202
     console.error("Error while deleting an existing record", e);
-    const readableError = e?.constructor.name === Prisma.PrismaClientKnownRequestError.name ? (e as any)?.message : "Une erreur inconnue s'est produite";
+    const readableError = (e as any)?.message ?? "Une erreur inconnue s'est produite";
     status.error = readableError;
   } finally {
     return status;

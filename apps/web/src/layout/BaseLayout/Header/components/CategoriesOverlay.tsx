@@ -6,7 +6,7 @@ import React from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
 
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/lib/utils";
 
 const CATEGORIES_TO_FILTER_OUT = [
   "chronique-de-nos-coeurs-mouvementes",

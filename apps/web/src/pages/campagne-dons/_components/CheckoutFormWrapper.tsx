@@ -1,32 +1,21 @@
-// 🔩 Base
-import React from "react";
+import { formatCurrency } from "utils";
 import { styled } from "@mui/material/styles";
-
-// 🎨 Styles
-import "./styles.css";
-
-// 🖼️ Assets
-import { TbBulb } from "react-icons/tb";
-
-// 🔧 Utils
-import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
-import { formatCurrency } from "@utils/strings";
-
-// 🧱 Components
-import { Elements } from "@stripe/react-stripe-js";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
-import CheckoutForm from "./CheckoutForm";
-
-// 💽 Data
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
+import { TbBulb } from "react-icons/tb";
 import {
+  DONATION_AMOUNTS,
+  DONATION_FREQUENCIES,
   FREQUENCY,
   GIFTS,
-  DONATION_FREQUENCIES,
-  DONATION_AMOUNTS,
 } from "../_models";
+import CheckoutForm from "./CheckoutForm";
+import "./styles.css";
+import { useState, useEffect } from "react";
 
 // 🎨 Styles
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
@@ -62,16 +51,15 @@ const Form = () => {
     initialIsCustom = true;
 
   // 🔼 State
-  const [selectedFrequency, setSelectedFrequency] =
-    React.useState(defaultFrequency);
+  const [selectedFrequency, setSelectedFrequency] = useState(defaultFrequency);
 
-  const [{ selectedAmount, isCustom }, setSelectedAmount] = React.useState({
+  const [{ selectedAmount, isCustom }, setSelectedAmount] = useState({
     selectedAmount: defaultAmount,
     isCustom: initialIsCustom,
   });
 
   // 🔄 Effect
-  React.useEffect(() => {
+  useEffect(() => {
     const scrollToHash = () => {
       const { hash } = window.location; // Get the current hash from the URL
       if (hash) {
@@ -88,7 +76,7 @@ const Form = () => {
 
   /* 📨 Newsletter */
   /* ------------- */
-  const [wantsNewsletter, setWantsNewsletter] = React.useState(true);
+  const [wantsNewsletter, setWantsNewsletter] = useState(true);
 
   /* 🎁 Gifts */
   /* -------- */
@@ -159,7 +147,7 @@ const Form = () => {
             <span className="relative">
               {formatCurrency({ amount: amount / 100, decimals: false })}
               {selectedFrequency === FREQUENCY.RECURRING && gifts.length > 0 ? (
-                <small className="absolute -right-1 top-0 -translate-y-3/4 translate-x-full">
+                <small className="absolute top-0 -right-1 translate-x-full -translate-y-3/4">
                   🎁{gifts.length > 1 ? ` x${gifts.length}` : ""}
                 </small>
               ) : null}
@@ -235,7 +223,7 @@ const Form = () => {
         )}
         {selectedFrequency === FREQUENCY.ONETIME && selectedAmount >= 900 && (
           <p
-            className="my-4 flex cursor-pointer flex-col items-center gap-2 font-bold leading-tight hover:underline md:flex-row"
+            className="my-4 flex cursor-pointer flex-col items-center gap-2 leading-tight font-bold hover:underline md:flex-row"
             onClick={() => setSelectedFrequency(FREQUENCY.RECURRING)}>
             <TbBulb size={36} />
             <span className="shrink text-center md:text-left">
@@ -248,7 +236,7 @@ const Form = () => {
         {/* 🎁 GIFTS */}
         {selectedFrequency === FREQUENCY.RECURRING && gifts.length > 0 && (
           <div>
-            <h5 className="mb-2 mt-5 flex gap-2 text-xl font-bold">
+            <h5 className="mt-5 mb-2 flex gap-2 text-xl font-bold">
               <span>🎁 </span>
               <span>
                 Pour vous remercier de votre soutien, nous vous enverrons :{" "}
@@ -280,7 +268,7 @@ const Form = () => {
             onChange={() => setWantsNewsletter(!wantsNewsletter)}
             id="newsletter"
           />
-          <span className="text-pretty leading-none">
+          <span className="leading-none text-pretty">
             <span className="text-sm">
               Je souhaite recevoir la newsletter de{" "}
             </span>
@@ -295,7 +283,7 @@ const Form = () => {
         options={options as any}
         stripe={stripePromise}>
         <CheckoutForm
-          frequency={selectedFrequency}
+          frequency={selectedFrequency as FREQUENCY}
           setFrequency={setSelectedFrequency}
           amount={selectedAmount}
           hasGifts={hasGifts}

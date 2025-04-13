@@ -30,15 +30,6 @@
       "@/auth": [
         "./src/app/auth/auth.ts"
       ],
-      "@data-access/*": [
-        "../../packages/data-access/*"
-      ],
-      "@data-access/prisma": [
-        "../../packages/data-access/prisma/client"
-      ],
-      "@utils/*": [
-        "../../packages/utils/*"
-      ],
     }
   },
   "include": [

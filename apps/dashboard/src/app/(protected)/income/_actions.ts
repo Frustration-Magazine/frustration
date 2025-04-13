@@ -1,5 +1,5 @@
 "use server";
-import { prisma } from "@data-access/prisma";
+import { prisma } from "data-access/prisma";
 
 export async function getPayments() {
   const firstDayOfCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);

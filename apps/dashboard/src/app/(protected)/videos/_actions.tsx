@@ -7,10 +7,10 @@ import {
   YoutubeResourceType,
   YOUTUBE_VIDEO_URL_REGEX,
   YOUTUBE_PLAYLIST_URL_REGEX,
-} from "@data-access/youtube";
+} from "data-access/youtube";
 
 // 💽 Database
-import { prisma, createRecord, deleteRecord } from "@data-access/prisma";
+import { prisma, createRecord, deleteRecord } from "data-access/prisma";
 
 // 🌍 i18n
 import { typesTranslations } from "./_models";
@@ -19,9 +19,7 @@ import { typesTranslations } from "./_models";
 /* Fetch youtube suggestions   */
 /* --------------------------- */
 
-export async function fetchSuggestions(
-  params: Record<string, any>,
-): Promise<any> {
+export async function fetchSuggestions(params: Record<string, any>): Promise<any> {
   // 🥘 Prepare
   const isVideoUrl = YOUTUBE_VIDEO_URL_REGEX.test(params.q);
   const isPlaylistUrl = YOUTUBE_PLAYLIST_URL_REGEX.test(params.q);
@@ -66,18 +64,14 @@ export async function fetchSuggestions(
     }
     case "playlist": {
       // Get playlist with search param or thanks to its id in URL if playlist URL was passed
-      const { items, nextPageToken = null } = isPlaylistUrl
-        ? { items: [playlist] }
-        : await fetchYoutube({ params });
+      const { items, nextPageToken = null } = isPlaylistUrl ? { items: [playlist] } : await fetchYoutube({ params });
       suggestions = items;
       token = nextPageToken;
       break;
     }
     case "video": {
       // Get video with search param or thanks to its id in URL if video URL was passed
-      const { items, nextPageToken = null } = isVideoUrl
-        ? { items: [video] }
-        : await fetchYoutube({ params });
+      const { items, nextPageToken = null } = isVideoUrl ? { items: [video] } : await fetchYoutube({ params });
       suggestions = items;
       token = nextPageToken;
 
@@ -92,10 +86,7 @@ export async function fetchSuggestions(
 /* Fetch youtube resources by id and type */
 /* -------------------------------------- */
 
-export async function fetchYoutubeByIdsAndType(
-  ids: string[],
-  type: YoutubeResourceType,
-): Promise<any> {
+export async function fetchYoutubeByIdsAndType(ids: string[], type: YoutubeResourceType): Promise<any> {
   // 🥘 Prepare
   // Necessay to concatenate ids for the fetch
   const concatenatedIds = ids.join(",");
@@ -195,9 +186,7 @@ async function upsertYoutubeChannel(youtubeChannel: any, mediaId: string) {
 
 /* Read video (by type)  */
 /* --------------------- */
-export async function readMediaByType(
-  type: YoutubeResourceType = "video",
-): Promise<any> {
+export async function readMediaByType(type: YoutubeResourceType = "video"): Promise<any> {
   // 🔁 📀 Fetch
   let table = `media_${type}` as any;
 
@@ -218,13 +207,7 @@ export async function readMediaByType(
 /* Add video */
 /* --------- */
 
-export async function createMediaRecord({
-  type,
-  id,
-}: {
-  type: YoutubeResourceType;
-  id: string;
-}): Promise<any> {
+export async function createMediaRecord({ type, id }: { type: YoutubeResourceType; id: string }): Promise<any> {
   // 🔁 📀 Add
   const status = await createRecord({
     table: "media",
@@ -243,13 +226,7 @@ export async function createMediaRecord({
 /* Remove video */
 /* ------------ */
 
-export async function deleteMediaRecord({
-  id,
-  type,
-}: {
-  id: string;
-  type: YoutubeResourceType;
-}): Promise<any> {
+export async function deleteMediaRecord({ id, type }: { id: string; type: YoutubeResourceType }): Promise<any> {
   // 🔁 📀 Remove
   const status = deleteRecord({
     table: "media",
@@ -264,13 +241,7 @@ export async function deleteMediaRecord({
 /* Fetch and update media records */
 /* ------------------------------ */
 
-export async function insertOrUpdateMediaRecord({
-  type,
-  id,
-}: {
-  type: YoutubeResourceType;
-  id: string;
-}): Promise<any> {
+export async function insertOrUpdateMediaRecord({ type, id }: { type: YoutubeResourceType; id: string }): Promise<any> {
   // 1. Video
   if (type === "video") {
     const { items } = await fetchYoutube({
@@ -279,9 +250,7 @@ export async function insertOrUpdateMediaRecord({
         id,
       },
     });
-    items.forEach(
-      async (youtubeVideo: any) => await upsertYoutubeVideo(youtubeVideo, id),
-    );
+    items.forEach(async (youtubeVideo: any) => await upsertYoutubeVideo(youtubeVideo, id));
   }
   // 2. Playlist
   if (type === "playlist") {
@@ -312,10 +281,7 @@ export async function insertOrUpdateMediaRecord({
             playlistTitle: youtubePlaylist.snippet.title,
           },
         }));
-        youtubeVideos.forEach(
-          async (youtubeVideo: any) =>
-            await upsertYoutubeVideo(youtubeVideo, id),
-        );
+        youtubeVideos.forEach(async (youtubeVideo: any) => await upsertYoutubeVideo(youtubeVideo, id));
       }
     });
   }
@@ -354,10 +320,7 @@ export async function insertOrUpdateMediaRecord({
         });
 
         // 🔁 📺 Upsert each first X videos of each channel in media_video
-        newYoutubeVideos.forEach(
-          async (youtubeVideo: any) =>
-            await upsertYoutubeVideo(youtubeVideo, id),
-        );
+        newYoutubeVideos.forEach(async (youtubeVideo: any) => await upsertYoutubeVideo(youtubeVideo, id));
       }
     });
   }
@@ -369,9 +332,7 @@ export async function refreshMediasInDatabase() {
   console.info("🔄 Refreshing medias in database...");
   const medias = await prisma.media.findMany();
   await prisma.media_video.deleteMany();
-  medias.forEach(
-    async ({ type, id }) => await insertOrUpdateMediaRecord({ type, id }),
-  );
+  medias.forEach(async ({ type, id }) => await insertOrUpdateMediaRecord({ type, id }));
 }
 
 /* ------------------------ */
@@ -392,15 +353,13 @@ export async function redeploy() {
 
   // ❌ Early return | Not redeploying in development
   if (process.env.NODE_ENV !== "production") {
-    status.error =
-      "Le redéploiement n'est pas possible en environnement de développement";
+    status.error = "Le redéploiement n'est pas possible en environnement de développement";
     return status;
   }
 
   // ❌ Early return | No deploy hook found
   if (!process.env.VERCEL_DEPLOY_HOOK) {
-    status.error =
-      "Aucun hook de déploiement trouvé parmi les variables d'environnement";
+    status.error = "Aucun hook de déploiement trouvé parmi les variables d'environnement";
     return status;
   }
 
@@ -409,9 +368,7 @@ export async function redeploy() {
       method: "POST",
     });
     if (response.ok) status.success = "🚀 Redéploiement du site...";
-    if (!response.ok)
-      status.error =
-        "❌ Une erreur est survenue lors de la tentative de redéploiement";
+    if (!response.ok) status.error = "❌ Une erreur est survenue lors de la tentative de redéploiement";
   } catch (e) {
     status.error = `❌ Error while fetching with git hook`;
     console.error(e);

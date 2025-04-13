@@ -1,10 +1,5 @@
-// 🔩 Base
 import { useState } from "react";
-
-// 🔧 Libs
 import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
-
-// 🧱 Components
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 
@@ -33,7 +28,7 @@ export default function SubscriptionForm() {
     <div className="mx-auto mt-32">
       {/* 🔠 Titres */}
       <div className="mb-10">
-        <h3 className="text-pretty text-center font-bakbak text-4xl font-bold uppercase sm:text-5xl md:text-5xl lg:text-6xl">
+        <h3 className="font-bakbak text-center text-4xl font-bold text-pretty uppercase sm:text-5xl md:text-5xl lg:text-6xl">
           S'abonner à Frustration
         </h3>
         <h5 className="text-center text-lg text-zinc-500 lg:text-2xl">
@@ -44,7 +39,7 @@ export default function SubscriptionForm() {
       <div className="mx-auto w-[500px] max-w-[90vw]">
         <div className="mb-10!">
           {/* 1️⃣ Formula */}
-          <h3 className="mb-6 flex flex-col items-center justify-center text-center font-montserrat text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left">
+          <h3 className="font-montserrat mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left">
             <span className="max-lg:text-3xl">1️⃣</span>
             <span>Votre formule et vos cadeaux</span>
           </h3>

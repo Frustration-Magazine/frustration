@@ -1,4 +1,4 @@
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/lib/utils";
 import { Marquee } from "./Marquee";
 
 const ReviewCard = ({

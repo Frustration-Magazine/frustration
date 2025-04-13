@@ -1,9 +1,9 @@
 ---
-import PageLayout from "@/layout/PageLayout/PageLayout.astro";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/libs/tailwind";
+import PageLayout from "@/layout/PageLayout/PageLayout.astro";
+import { cn } from "@/lib/utils";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -21,7 +21,6 @@ const SUCCESS_STATUS = {
 let status = null;
 
 if (Astro.request.method === "POST") {
-  // ❌ Early return if the api key is not set
   if (!process.env.RESEND_API_KEY) {
     console.warn("🔎 Missing api key to add subscriber");
     status = ERROR_STATUS;
@@ -37,9 +36,11 @@ if (Astro.request.method === "POST") {
     hour12: false,
     timeZone: "Europe/Paris",
   };
-
   const now = new Date();
-  const formattedDate = now.toLocaleString("fr-FR", dateOptions);
+  const formattedDate = now.toLocaleString(
+    "fr-FR",
+    dateOptions as Intl.DateTimeFormatOptions,
+  );
 
   try {
     const data = await Astro.request.formData();

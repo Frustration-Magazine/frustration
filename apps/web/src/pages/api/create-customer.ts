@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { stripe } from "@data-access/stripe";
-import { generateResponseError } from "@/utils";
+import { stripe } from "data-access/stripe";
+import { generateResponseError } from "utils";
 
 export const prerender = false;
 

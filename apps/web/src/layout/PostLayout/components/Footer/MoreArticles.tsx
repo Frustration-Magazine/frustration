@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-// 🐝 Wordpress API
-import { fetchLinkPreview } from "@/libs/wordpress";
-import { cn } from "@/libs/tailwind";
+import { useEffect, useState } from "react";
+import { fetchLinkPreview } from "@/lib/wordpress";
+import { cn } from "@/lib/utils";
 import LogoSquare from "../../assets/logo_square.png";
 
 const EMBED_INTERNAL_LINK_SELECTOR =
@@ -47,7 +46,7 @@ function MoreArticles() {
   return (
     <div>
       <h3
-        className="mb-6 font-bakbak text-4xl underline decoration-[#FCCF00] decoration-[10px] underline-offset-[-5px]"
+        className="font-bakbak mb-6 text-4xl underline decoration-[#FCCF00] decoration-[10px] underline-offset-[-5px]"
         style={{ textDecorationSkipInk: "none" }}>
         Plus d'articles
       </h3>
@@ -69,7 +68,7 @@ function MoreArticles() {
               <div>
                 <h5
                   className={cn(
-                    "font-bakbak font-bold leading-none!",
+                    "font-bakbak leading-none! font-bold",
                     "mb-2 text-xl",
                     "sm:mb-2 sm:text-2xl",
                   )}>

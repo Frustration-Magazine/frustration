@@ -1,6 +1,6 @@
 "use server";
 
-import { Customer, fetchStripeNewCustomers } from "@data-access/stripe";
+import { Customer, fetchStripeNewCustomers } from "data-access/stripe";
 
 export async function fetchCustomers({ from, to }: { from: Date; to: Date }): Promise<Customer[]> {
   const newSubscriptions = await fetchStripeNewCustomers({ from, to });

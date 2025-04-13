@@ -1,5 +1,5 @@
 import React from "react";
-import { readRecords } from "@data-access/prisma";
+import { readRecords } from "data-access/prisma";
 import { type Event } from "./models/models";
 import EventEditor from "./components/EventEditor";
 import { redirect } from "next/navigation";

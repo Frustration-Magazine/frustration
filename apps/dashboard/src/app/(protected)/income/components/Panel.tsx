@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import NoData from "./NoData";
 
-import { type Payment } from "@data-access/models/transactions";
+import { type Payment } from "data-access/_models";
 import { aggregateByMonth, diffInPercent, inEuros } from "../_utils";
 import { cn } from "@/lib/utils";
 
