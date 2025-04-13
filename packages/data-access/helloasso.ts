@@ -113,6 +113,7 @@ export async function fetchHelloAssoPayments({ from } = { from: START_DATE_STRIN
     const existingPayment = acc.find(({ date, type }) => areSameMonth(date, payment.date) && type === payment.type);
     if (existingPayment) {
       existingPayment.amount += payment.amount;
+      existingPayment.customers += 1;
     } else {
       acc.push({
         ...payment,
@@ -140,6 +141,7 @@ function formatHelloAssoPayments({ date, amount, items }: HelloAssoPayment): Pay
     date: new Date(date),
     amount: Math.round(amount / 100),
     source: "helloasso",
-    type: transactionType
+    type: transactionType,
+    customers: 1
   };
 }

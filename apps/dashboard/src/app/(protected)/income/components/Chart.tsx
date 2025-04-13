@@ -15,19 +15,20 @@ const chartConfig = {
 
 export const Chart = ({ payments, setHighlighted }: { payments: any[]; setHighlighted: any }) => {
   let chartData = [];
-
-  chartData = payments.map(({ date, amount, source }) => ({
+  chartData = payments.map(({ date, amount, source, customers }) => ({
     month: date.toISOString(),
     amount,
     source,
+    customers,
   }));
 
-  chartData = chartData.toReversed().reduce((acc: any, { month, amount, source }) => {
+  chartData = chartData.toReversed().reduce((acc: any, { month, amount, source, customers }) => {
     const existingEntry: any = acc.find((entry: any) => entry.month === month);
     if (existingEntry) {
       existingEntry[source] = existingEntry[source] ? existingEntry[source] + amount : amount;
+      existingEntry.customers = existingEntry.customers ? existingEntry.customers + customers : customers;
     } else {
-      acc.push({ month, [source]: amount });
+      acc.push({ month, [source]: amount, customers });
     }
     return acc;
   }, []);
@@ -80,6 +81,10 @@ export const Chart = ({ payments, setHighlighted }: { payments: any[]; setHighli
             <stop offset="0%" stopColor="#56c679" stopOpacity={1} />
             <stop offset="100%" stopColor="#8dd9a5" stopOpacity={0} />
           </linearGradient>
+          <linearGradient id="tipeeeGradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#C00000" stopOpacity={1} />
+            <stop offset="100%" stopColor="#FF7F7F" stopOpacity={0} />
+          </linearGradient>
         </defs>
         <XAxis
           dataKey="month"
@@ -112,6 +117,7 @@ export const Chart = ({ payments, setHighlighted }: { payments: any[]; setHighli
           dot={{ fill: "transparent", strokeWidth: 0 }}
         />
         <Area dataKey="helloasso" type="monotone" fill="url(#helloassoGradient)" stroke="#359d55" radius={4} />
+        <Area dataKey="tipeee" type="monotone" fill="url(#tipeeeGradient)" stroke="#C00000" radius={4} />
         <Legend
           iconType="plainline"
           iconSize={18}

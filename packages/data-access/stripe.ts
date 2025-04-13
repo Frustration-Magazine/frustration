@@ -59,6 +59,7 @@ export async function fetchStripePayments({ afterTimestamp } = { afterTimestamp:
     const existingPayment = acc.find(({ date, type }) => areSameMonth(date, payment.date) && type === payment.type);
     if (existingPayment) {
       existingPayment.amount += payment.amount;
+      existingPayment.customers += 1;
     } else {
       acc.push({
         ...payment,
@@ -121,7 +122,8 @@ export function formatStripePayments({ description, net, created }: any): Paymen
     date: truncateDateToDay(convertUTCtoDate(created)),
     amount: Math.round(net / 100),
     source: "stripe",
-    type: transactionType
+    type: transactionType,
+    customers: 1
   };
 }
 

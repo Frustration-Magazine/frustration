@@ -2,9 +2,11 @@
 
 import { fetchStripePayments } from "data-access/stripe";
 import { fetchHelloAssoPayments } from "data-access/helloasso";
+import { fetchTipeeeTotal } from "data-access/tipeee";
 import { prisma } from "data-access/prisma";
 
 export async function updatePayments(): Promise<void> {
+  let tipeeePayments: any = [];
   let stripePayments: any = [];
   let helloassoPayments: any = [];
   const now = new Date();
@@ -22,6 +24,17 @@ export async function updatePayments(): Promise<void> {
   const convertDateToTimestamp = (date: Date) => Math.floor(date.getTime() / 1000);
 
   try {
+    const { amount, customers } = await fetchTipeeeTotal();
+    tipeeePayments = [
+      {
+        date: firstDayOfCurrentMonth,
+        amount,
+        customers,
+        source: "tipeee",
+        type: "subscription",
+      },
+    ];
+
     stripePayments = await fetchStripePayments({
       afterTimestamp: convertDateToTimestamp(oneYearAgo),
     });
@@ -34,13 +47,19 @@ export async function updatePayments(): Promise<void> {
     return;
   }
 
-  let payments = [...stripePayments, ...helloassoPayments];
+  let payments = [...stripePayments, ...helloassoPayments, ...tipeeePayments];
 
   // 1️⃣ Delete old payments for selected period
   /* ------------------------------------------ */
-  console.info("Deleting old payments...");
+  console.info("Deleting old payments stripe and helloasso...");
   try {
-    await prisma.payments.deleteMany({});
+    await prisma.payments.deleteMany({
+      where: {
+        source: {
+          in: ["stripe", "helloasso"],
+        },
+      },
+    });
   } catch (error) {
     console.error("Failed to delete old payments", error);
   }

@@ -79,10 +79,11 @@ model Authenticator {
 // **************
 
 model payments {
-  date   DateTime
-  amount Float
-  source PaymentSource
-  type   PaymentType
+  date      DateTime
+  amount    Float
+  customers Int           @default(0)
+  source    PaymentSource
+  type      PaymentType
 
   @@unique([date, source, type])
 }

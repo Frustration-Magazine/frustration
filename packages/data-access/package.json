@@ -16,10 +16,11 @@
   "author": "Thibaut Izard <thibaut.izard@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "utils": "workspace:*",
     "@stripe/stripe-js": "^7.0.0",
+    "puppeteer": "^24.6.1",
     "resend": "^4.2.0",
-    "stripe": "^18.0.0"
+    "stripe": "^18.0.0",
+    "utils": "workspace:*"
   },
   "devDependencies": {
     "@prisma/client": "^6.6.0",
