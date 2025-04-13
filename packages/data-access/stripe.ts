@@ -6,7 +6,11 @@ import { convertCountryInitials, prettifyName } from "utils";
 /* ------------------- */
 /*        STRIPE       */
 /* ------------------- */
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+// Please check https://docs.stripe.com/changelog/basil/2025-03-31/adds-new-parent-field-to-invoicing-objects for stripe api upgrades and use correct api version
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2024-06-20" as any,
+  telemetry: false
+});
 
 export const { STRIPE_PRICE_SUBSCRIPTION_MINI, STRIPE_PRICE_SUBSCRIPTION_MEDIUM, STRIPE_PRICE_SUBSCRIPTION_MAXI } = process.env;
 
