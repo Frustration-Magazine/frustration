@@ -15,8 +15,6 @@
     "vercel-build": "pnpm run vercel-prisma && eslint . && next build"
   },
   "dependencies": {
-    "data-access": "workspace:*",
-    "utils": "workspace:*",
     "@auth/prisma-adapter": "^2.8.0",
     "@hookform/resolvers": "^5.0.1",
     "@next/env": "^15.3.0",
@@ -37,6 +35,7 @@
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
+    "data-access": "workspace:*",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "lucide-react": "^0.487.0",
@@ -44,13 +43,14 @@
     "next-auth": "5.0.0-beta.25",
     "puppeteer": "^24.6.1",
     "react": "^19.1.0",
-    "react-day-picker": "9.6.6",
+    "react-day-picker": "8.10.1",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.55.0",
     "react-icons": "^5.5.0",
     "recharts": "^2.15.2",
     "tailwind-merge": "^3.2.0",
     "tailwindcss-animate": "^1.0.7",
+    "utils": "workspace:*",
     "zod": "^3.24.2"
   },
   "devDependencies": {
