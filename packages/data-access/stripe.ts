@@ -292,13 +292,9 @@ export async function fetchStripeNewCustomers(
     const sliceCustomersId = customersId.slice(i, i + 99);
     const sliceCustomers = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.customers.retrieve(customerId)));
     customers = [...customers, ...sliceCustomers];
-    console.log("wait to avoid rate limit...");
-    await wait(100);
     let slicePaymentMethods = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.paymentMethods.list({ customer: customerId })));
     slicePaymentMethods = slicePaymentMethods.map((paymentMethod: any) => paymentMethod?.data.at(0));
     paymentMethods = [...paymentMethods, ...slicePaymentMethods];
-    console.log("wait to avoid rate limit...");
-    await wait(100);
   }
 
   subscriptions_f.forEach((subscription) => {

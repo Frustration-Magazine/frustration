@@ -12,7 +12,7 @@ const PaymentsType = ({ value, children }: { value: string; children: string }) 
   <TabsTrigger
     className={cn(
       "cursor-pointer px-2 text-lg text-white",
-      "data-[state=active]:bg-gray-200 data-[state=active]:font-bold data-[state=active]:text-black",
+      "data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:text-black",
     )}
     value={value}
   >

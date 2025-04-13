@@ -56,7 +56,7 @@ export const Panel = ({ name, payments, highlighted }: { name: string; payments:
 
           if (prevPayment) {
             const { date: prevDate, amount: prevAmount } = prevPayment;
-            needsSeparator = index === 0 || date.getFullYear() !== prevDate.getFullYear();
+            needsSeparator = date.getFullYear() !== prevDate.getFullYear();
             evolution = diffInPercent(prevAmount, amount);
           }
 
@@ -64,8 +64,9 @@ export const Panel = ({ name, payments, highlighted }: { name: string; payments:
 
           return (
             <Fragment key={date.getTime()}>
-              {needsSeparator && <YearSeparator index={index} year={prevPayment.date.getFullYear()} />}
+              {index === 0 && <YearSeparator index={index} year={date.getFullYear()} />}
               <Entry name={month} total={amount} evolution={evolution} highlighted={highlighted === index} />
+              {needsSeparator && <YearSeparator index={index} year={prevPayment.date.getFullYear()} />}
             </Fragment>
           );
         })}
