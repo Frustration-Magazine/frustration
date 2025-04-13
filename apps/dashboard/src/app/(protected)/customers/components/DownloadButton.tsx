@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Customer } from "@data-access/stripe";
-import { explicitDate } from "@utils/dates";
-import { createCSVinURL, downloadFileFromUrl } from "@utils/files";
+import { Customer } from "data-access/stripe";
+import { explicitDate } from "utils";
+import { createCSVinURL, downloadFileFromUrl } from "utils";
 import { IoIosDownload } from "react-icons/io";
 
 export interface FileHeader {

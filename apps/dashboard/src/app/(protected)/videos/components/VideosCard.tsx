@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { YoutubeResourceType, getYoutubeResourceId } from "@data-access/youtube";
+import { YoutubeResourceType, getYoutubeResourceId } from "data-access/youtube";
 import React from "react";
 import { typesTranslations } from "../_models";
 import useVideos from "../hooks/useVideos";

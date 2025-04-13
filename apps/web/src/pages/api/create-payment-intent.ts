@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { stripe } from "@data-access/stripe";
+import { stripe } from "data-access/stripe";
 
 export const prerender = false;
 

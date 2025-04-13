@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "@data-access/prisma";
+import { prisma } from "data-access/prisma";
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 

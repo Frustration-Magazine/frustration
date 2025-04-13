@@ -10,7 +10,7 @@
     "lib": [
       "es2023",
       "dom"
-    ], // include other libraries as needed
+    ],
     "plugins": [
       {
         "name": "@astrojs/ts-plugin",
@@ -20,15 +20,6 @@
     "paths": {
       "@/*": [
         "src/*"
-      ],
-      "@data-access/*": [
-        "../../packages/data-access/*"
-      ],
-      "@utils/*": [
-        "../../packages/utils/*"
-      ],
-      "@data-access/prisma": [
-        "../../packages/data-access/prisma/client"
       ],
     },
   },

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { cn } from "@/libs/tailwind";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { CgArrowTopRight } from "react-icons/cg";
 
 type Props = {

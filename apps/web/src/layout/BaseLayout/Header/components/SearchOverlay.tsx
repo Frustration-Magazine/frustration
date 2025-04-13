@@ -6,7 +6,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import AgendaButton from "./AgendaButton";
 import MailButton from "./MailButton";
 
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/lib/utils";
 
 function SearchOverlay() {
   const [search, setSearch] = React.useState("");

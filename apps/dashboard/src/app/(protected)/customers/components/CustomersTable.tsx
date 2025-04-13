@@ -11,7 +11,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { Customer } from "@data-access/stripe";
+import { Customer } from "data-access/stripe";
 
 const DEFAULT_VALUE = "-";
 

@@ -1,4 +1,4 @@
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/lib/utils";
 
 type Props = {
   readonly className?: string;
@@ -9,7 +9,7 @@ function H3({ className, children }: Props) {
   return (
     <h3
       className={cn(
-        "mb-2 text-balance font-bold",
+        "mb-2 font-bold text-balance",
         "text-xl",
         "sm:text-2xl",
         "lg:text-3xl",

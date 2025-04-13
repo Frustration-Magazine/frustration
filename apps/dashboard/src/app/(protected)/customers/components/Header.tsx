@@ -1,6 +1,6 @@
 "use client";
 
-import { explicitDate } from "@utils/dates";
+import { explicitDate } from "utils/";
 import React from "react";
 
 export default function ({

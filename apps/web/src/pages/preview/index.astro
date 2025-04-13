@@ -1,6 +1,6 @@
 ---
 import PostLayout from "@/layout/PostLayout/PostLayout.astro";
-import { fetchDraftByPostId } from "@/libs/wordpress";
+import { fetchDraftByPostId } from "@/lib/wordpress";
 export const prerender = false;
 
 const wp_session = Astro.url.searchParams.get("wp_session");

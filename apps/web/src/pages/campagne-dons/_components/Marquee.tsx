@@ -1,4 +1,4 @@
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/lib/utils";
 
 interface MarqueeProps {
   className?: string;
@@ -23,7 +23,7 @@ export function Marquee({
     <div
       {...props}
       className={cn(
-        "group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]",
+        "group flex [gap:var(--gap)] overflow-hidden p-2 [--duration:40s] [--gap:1rem]",
         {
           "flex-row": !vertical,
           "flex-col": vertical,

@@ -1,4 +1,4 @@
-import { fetchRSSItems } from "@/libs/wordpress";
+import { fetchRSSItems } from "@/lib/wordpress";
 import rss from "@astrojs/rss";
 
 export async function GET(context) {

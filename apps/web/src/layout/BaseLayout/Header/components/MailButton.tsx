@@ -1,5 +1,5 @@
 import { IoIosMail as MailIcon } from "react-icons/io";
-import { cn } from "@/libs/tailwind";
+import { cn } from "@/lib/utils";
 
 type Props = {
   readonly className: string;

@@ -16,7 +16,8 @@
     "vercel-build": "pnpm run vercel-prisma && eslint . && astro build"
   },
   "dependencies": {
-    "@/data-access": "workspace:*",
+    "data-access": "workspace:*",
+    "utils": "workspace:*",
     "@astrojs/react": "^4.2.3",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.3.0",

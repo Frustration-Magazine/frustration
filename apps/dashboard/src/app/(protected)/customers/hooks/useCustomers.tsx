@@ -1,4 +1,4 @@
-import { Customer } from "@data-access/stripe";
+import { Customer } from "data-access/stripe";
 import { useEffect, useState } from "react";
 import { fetchActiveCustomers, fetchCustomers } from "../_actions";
 

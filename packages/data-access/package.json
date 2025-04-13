@@ -1,9 +1,8 @@
 {
-  "name": "@/data-access",
+  "name": "data-access",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "prisma generate",
     "dev": "prisma generate && infisical run -- prisma db pull",
     "migrate": "infisical run -- pnpx prisma migrate dev",
@@ -17,7 +16,7 @@
   "author": "Thibaut Izard <thibaut.izard@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@/utils": "workspace:*",
+    "utils": "workspace:*",
     "@stripe/stripe-js": "^7.0.0",
     "resend": "^4.2.0",
     "stripe": "^18.0.0"
@@ -28,7 +27,7 @@
     "prisma": "^6.6.0"
   },
   "exports": {
-    "./*": "./*.ts",
-    "./prisma": "./prisma/client.ts"
+    "./prisma": "./prisma/client.ts",
+    "./*": "./*.ts"
   }
 }

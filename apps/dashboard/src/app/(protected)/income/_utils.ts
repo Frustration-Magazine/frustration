@@ -1,4 +1,4 @@
-import { type Payment } from "@data-access/models/transactions";
+import { type Payment } from "data-access/_models";
 
 /* ----------------------- */
 /* Convert number in euros */

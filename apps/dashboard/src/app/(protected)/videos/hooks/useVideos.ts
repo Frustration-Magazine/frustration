@@ -13,10 +13,7 @@ import {
 } from "../_actions";
 
 // 🔧 Libs
-import {
-  YoutubeResourceType,
-  getYoutubeResourceId,
-} from "@data-access/youtube";
+import { YoutubeResourceType, getYoutubeResourceId } from "data-access/youtube";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -30,8 +27,7 @@ const useVideos = ({ type }: Props) => {
 
   /* Suggestions */
   const [suggestions, setSuggestions] = React.useState<any>([]);
-  const [loadingSuggestions, setLoadingSuggestions] =
-    React.useState<boolean>(false);
+  const [loadingSuggestions, setLoadingSuggestions] = React.useState<boolean>(false);
 
   /* Medias */
   const [medias, setMedias] = React.useState<any>([]);
@@ -46,21 +42,13 @@ const useVideos = ({ type }: Props) => {
   }, []);
 
   // 📀 Add media
-  const handleAddMedia = async ({
-    type,
-    id,
-  }: {
-    type: YoutubeResourceType;
-    id: string;
-  }) => {
+  const handleAddMedia = async ({ type, id }: { type: YoutubeResourceType; id: string }) => {
     const status = await createMediaRecord({ type, id });
 
     // ✅ Resource created !
     if (status.success) {
       // 1️⃣ Add saved suggestion to listed resources
-      let suggestionToAdd = suggestions.find(
-        (suggestion: any) => getYoutubeResourceId(suggestion) === id,
-      );
+      let suggestionToAdd = suggestions.find((suggestion: any) => getYoutubeResourceId(suggestion) === id);
 
       suggestionToAdd = {
         id: suggestionToAdd.id,
@@ -76,11 +64,7 @@ const useVideos = ({ type }: Props) => {
       if (!isProduction) await refreshMediasInDatabase();
 
       // 2️⃣ Remove suggestion from current suggestions list
-      setSuggestions(
-        suggestions.filter(
-          (suggestion: any) => getYoutubeResourceId(suggestion) !== id,
-        ),
-      );
+      setSuggestions(suggestions.filter((suggestion: any) => getYoutubeResourceId(suggestion) !== id));
     }
   };
 
@@ -118,10 +102,7 @@ const useVideos = ({ type }: Props) => {
       });
 
       const tempSuggestions = suggestions.filter(
-        (suggestion: any) =>
-          !medias.find(
-            (media: any) => media.id === getYoutubeResourceId(suggestion),
-          ),
+        (suggestion: any) => !medias.find((media: any) => media.id === getYoutubeResourceId(suggestion)),
       );
 
       newSuggestions.push(...tempSuggestions);

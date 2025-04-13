@@ -2,7 +2,7 @@ import * as React from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-const ToggleButtons = ({ donationType, setDonationType }) => {
+const ToggleButtons = () => {
   const [alignment, setAlignment] = React.useState<string | null>("left");
 
   const handleAlignment = (
