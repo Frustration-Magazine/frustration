@@ -1,13 +1,21 @@
 ---
 import ArrowButtonIcon from "./ArrowButtonIcon.svg?raw";
+import { cn } from "@/lib/utils";
 ---
 
 <div
-  class="splide__arrows [&>button>svg]:fill-frustration-yellow! lg:[&>button>svg]:h-[50px]! lg:[&>button>svg]:w-[30px]! [&>button]:top-[90%]! lg:[&>button]:top-[92%]! lg:[&>button]:h-[70px]! lg:[&>button]:w-[70px]! xl:[&>button]:top-[50%]!">
-  <button class="splide__arrow splide__arrow--prev left-12!">
+  class={cn(
+    "splide__arrows",
+    "[&>button>svg]:fill-frustration-yellow! [&>button]:top-[90%]! [&>button]:size-[70px]!",
+    "lg:[&>button]:top-[92%]! lg:[&>button]:size-[90px]! lg:[&>button>svg]:h-[50px]! lg:[&>button>svg]:w-[30px]! ",
+    "xl:[&>button]:top-[50%]!",
+  )}>
+  <button
+    class="splide__arrow splide__arrow--prev left-12! bg-black! opacity-100!">
     <Fragment set:html={ArrowButtonIcon} />
   </button>
-  <button class="splide__arrow splide__arrow--next right-12!">
+  <button
+    class="splide__arrow splide__arrow--next right-12! bg-black! opacity-100!">
     <Fragment set:html={ArrowButtonIcon} />
   </button>
 </div>
