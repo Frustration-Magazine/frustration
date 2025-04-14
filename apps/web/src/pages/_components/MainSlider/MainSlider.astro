@@ -11,6 +11,9 @@ const { posts } = Astro.props;
       {posts.map((post: any) => <Slide {...post} />)}
     </ul>
   </div>
+  <div class="splide__progress bottom-0 absolute w-full">
+    <div class="splide__progress__bar h-3! bg-frustration-yellow!"></div>
+  </div>
 </div>
 <style is:global>
   .splide-main-carrousel .splide__arrow {
@@ -22,5 +25,33 @@ const { posts } = Astro.props;
 </style>
 
 <script>
-  import "./slider";
+  import Splide from "@splidejs/splide";
+  import "@splidejs/splide/css";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const header = document.querySelector("body > header") as HTMLElement;
+    const banner = document.querySelector("body #banner") as HTMLElement;
+    const carrousel = document.querySelector(
+      ".splide-main-carrousel",
+    ) as HTMLElement;
+
+    const headerHeight = header?.getBoundingClientRect().height;
+    const bannerHeight = banner?.getBoundingClientRect().height;
+    const carrouselHeight =
+      window.innerHeight - (headerHeight ?? 0) - (bannerHeight ?? 0);
+    carrousel.style.height = `${carrouselHeight}px`;
+
+    const splide = new Splide(".splide-main-carrousel", {
+      type: "loop",
+      pagination: false,
+      width: "100%",
+      autoplay: true,
+      speed: 1000,
+      rewind: true,
+      rewindSpeed: 1000,
+      perPage: 1,
+      height: `${carrouselHeight}px`,
+    });
+    splide.mount();
+  });
 </script>
