@@ -12,9 +12,9 @@
     "apps/*",
     "packages/*"
   ],
+  "packageManager": "pnpm@10.8.1",
   "dependencies": {
-    "@prisma/client": "^5.22.0",
-    "prisma": "^5.22.0"
-  },
-  "packageManager": "pnpm@9.14.4+sha1.64b6e81e79630419b675c555ef3b65607cfd6315"
+    "@prisma/client": "^6.6.0",
+    "prisma": "^6.6.0"
+  }
 }

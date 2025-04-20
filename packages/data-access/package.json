@@ -16,9 +16,9 @@
   "author": "Thibaut Izard <thibaut.izard@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@stripe/stripe-js": "^7.0.0",
+    "@stripe/stripe-js": "^7.1.0",
     "puppeteer": "^24.6.1",
-    "resend": "^4.2.0",
+    "resend": "^4.3.0",
     "stripe": "^18.0.0",
     "utils": "workspace:*"
   },
