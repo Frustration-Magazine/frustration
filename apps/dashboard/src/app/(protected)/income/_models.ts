@@ -5,7 +5,7 @@ export type TabTransactions = {
 };
 
 export const TABS_TRANSACTIONS: TabTransactions[] = [
-  { id: "tt_1", name: "Global", transactionType: "all" },
-  { id: "tt_2", name: "Abonnements", transactionType: "subscription" },
-  { id: "tt_3", name: "Dons", transactionType: "donation" },
+  { id: "global", name: "Global", transactionType: "all" },
+  { id: "subscriptions", name: "Abonnements", transactionType: "subscription" },
+  { id: "donations", name: "Dons", transactionType: "donation" },
 ];

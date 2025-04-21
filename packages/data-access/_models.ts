@@ -1,7 +1,10 @@
+export type PaymentSource = "stripe" | "helloasso" | "tipeee";
+export type PaymentType = "donation" | "subscription" | "subscription_creation" | "subscription_update" | "other";
+
 export type Payment = {
   date: Date;
   amount: number;
   customers: number;
-  type: "donation" | "subscription" | "subscription_creation" | "subscription_update" | "other";
-  source: string;
+  type: PaymentType;
+  source: PaymentSource;
 };

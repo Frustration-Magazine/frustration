@@ -6,6 +6,20 @@ import { capitalizeFirst } from "utils/";
 import { formatExplicitMonth } from "utils/";
 import { cn } from "@/lib/utils";
 import { inEuros, debounce } from "../_utils";
+import type { Payment, PaymentSource } from "data-access/_models";
+import type { Dispatch, SetStateAction } from "react";
+
+type PaymentChart = Omit<Payment, "date" | "type"> & {
+  month: string;
+};
+
+type ChartData = {
+  month: string;
+  customers: number;
+  stripe?: number;
+  helloasso?: number;
+  tipeee?: number;
+};
 
 const chartConfig = {
   income: {
@@ -13,29 +27,47 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export const Chart = ({ payments, setHighlighted }: { payments: any[]; setHighlighted: any }) => {
-  let chartData = [];
-  chartData = payments.map(({ date, amount, source, customers }) => ({
+const GRADIENTS = new Map([
+  ["stripe", ["#827cf8", "#b5b2fb"]],
+  ["helloasso", ["#56c679", "#8dd9a5"]],
+  ["tipeee", ["#C00000", "#FF7F7F"]],
+]);
+
+/* ************** */
+/* |||||||||||||| */
+/* ************** */
+
+export const Chart = ({
+  payments,
+  setHighlighted,
+}: {
+  payments: Payment[];
+  setHighlighted: Dispatch<SetStateAction<number>>;
+}) => {
+  let paymentsChart: PaymentChart[] = [];
+  paymentsChart = payments.map(({ date, amount, source, customers }) => ({
     month: date.toISOString(),
     amount,
     source,
     customers,
   }));
 
-  chartData = chartData.toReversed().reduce((acc: any, { month, amount, source, customers }) => {
-    const existingEntry: any = acc.find((entry: any) => entry.month === month);
-    if (existingEntry) {
-      existingEntry[source] = existingEntry[source] ? existingEntry[source] + amount : amount;
-      existingEntry.customers = existingEntry.customers ? existingEntry.customers + customers : customers;
-    } else {
-      acc.push({ month, [source]: amount, customers });
-    }
-    return acc;
-  }, []);
+  const chartData: ChartData[] = paymentsChart
+    .toReversed()
+    .reduce((acc: ChartData[], { month, amount, source, customers }) => {
+      const existingEntry: ChartData | undefined = acc.find((entry: ChartData) => entry.month === month);
+      if (existingEntry) {
+        existingEntry[source] = existingEntry[source] ? existingEntry[source] + amount : amount;
+        existingEntry.customers = existingEntry.customers ? existingEntry.customers + customers : customers;
+      } else {
+        acc.push({ month, [source]: amount, customers });
+      }
+      return acc;
+    }, []);
 
   function handleMouseMove() {
-    const RECHARTS_ACTIVE_DOT_CIRCLE_SELECTOR = ".recharts-active-dot circle";
     const RECHARTS_DOT_CIRCLE_SELECTOR = ".recharts-area-dots circle";
+    const RECHARTS_ACTIVE_DOT_CIRCLE_SELECTOR = ".recharts-active-dot circle";
 
     const activeDot = document.querySelector(RECHARTS_ACTIVE_DOT_CIRCLE_SELECTOR);
     if (!activeDot) setHighlighted(-1);
@@ -54,16 +86,14 @@ export const Chart = ({ payments, setHighlighted }: { payments: any[]; setHighli
     setHighlighted(-1);
   }
 
-  /* ************** */
-  /*     🚀 UI      */
-  /* ************** */
-
   return (
     <ChartContainer
       config={chartConfig}
       className={cn(
         "relative max-h-full w-0 grow rounded-md bg-black/5 p-6 backdrop-blur-md",
-        "[&_.recharts-cartesian-axis-tick_text]:fill-primary [&_.recharts-cartesian-axis-tick_text]:font-bold [&_.recharts-cartesian-axis-tick_text]:opacity-70",
+        "[&_.recharts-cartesian-axis-tick_text]:fill-primary",
+        "[&_.recharts-cartesian-axis-tick_text]:font-bold",
+        "[&_.recharts-cartesian-axis-tick_text]:opacity-70",
       )}
     >
       <AreaChart
@@ -74,16 +104,16 @@ export const Chart = ({ payments, setHighlighted }: { payments: any[]; setHighli
       >
         <defs>
           <linearGradient id="stripeGradient" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#827cf8" stopOpacity={1} />
-            <stop offset="100%" stopColor="#b5b2fb" stopOpacity={0} />
+            <stop offset="0%" stopColor={GRADIENTS.get("stripe")?.[0]} stopOpacity={1} />
+            <stop offset="100%" stopColor={GRADIENTS.get("stripe")?.[1]} stopOpacity={0} />
           </linearGradient>
           <linearGradient id="helloassoGradient" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#56c679" stopOpacity={1} />
-            <stop offset="100%" stopColor="#8dd9a5" stopOpacity={0} />
+            <stop offset="0%" stopColor={GRADIENTS.get("helloasso")?.[0]} stopOpacity={1} />
+            <stop offset="100%" stopColor={GRADIENTS.get("helloasso")?.[1]} stopOpacity={0} />
           </linearGradient>
           <linearGradient id="tipeeeGradient" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#C00000" stopOpacity={1} />
-            <stop offset="100%" stopColor="#FF7F7F" stopOpacity={0} />
+            <stop offset="0%" stopColor={GRADIENTS.get("tipeee")?.[0]} stopOpacity={1} />
+            <stop offset="100%" stopColor={GRADIENTS.get("tipeee")?.[1]} stopOpacity={0} />
           </linearGradient>
         </defs>
         <XAxis
@@ -102,7 +132,7 @@ export const Chart = ({ payments, setHighlighted }: { payments: any[]; setHighli
             <ChartTooltipContent
               valueFormatter={inEuros}
               xValue="month"
-              formatterXValue={(value: any) => formatExplicitMonth(value, "long")}
+              formatterXValue={(value: string) => formatExplicitMonth(value, "long")}
               labelKey="income"
             />
           }
