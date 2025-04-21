@@ -1,7 +1,7 @@
 ---
 interface Props {
   title: string;
-  author: any;
+  author: { node: { firstName: string; lastName: string } };
   description: string;
   ogImageUrl: string;
   width?: number;

@@ -30,7 +30,10 @@ const {
 const featuredImage = Astro.props?.featuredImage?.node;
 const ogImage = featuredImage?.sourceUrl ?? coverImage ?? DEFAULT_IMAGE;
 
-let width, height, mimeType;
+let width: number | undefined;
+let height: number | undefined;
+let mimeType: string | undefined;
+
 if (featuredImage?.mediaDetails) {
   width = featuredImage?.mediaDetails?.width;
   height = featuredImage?.mediaDetails?.height;
@@ -41,7 +44,7 @@ if (featuredImage?.mediaDetails) {
 <!doctype html>
 <html
   lang="fr"
-  class="bg-black">
+  class="bg-black scrollbar scrollbar-thumb-frustration-yellow scrollbar-track-black">
   <Head
     title={title}
     author={author}
