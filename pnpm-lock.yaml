@@ -153,6 +153,9 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.11
         version: 0.6.11(prettier@3.5.3)
+      tailwind-scrollbar:
+        specifier: ^4.0.2
+        version: 4.0.2(react@19.1.0)(tailwindcss@4.1.4)
       tailwindcss:
         specifier: ^4.1.4
         version: 4.1.4

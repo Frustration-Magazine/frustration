@@ -139,7 +139,7 @@ export default function VideosCard({ type, title, texts }: Props): React.ReactNo
   return (
     <div
       key={type}
-      className="max-h-full space-y-5 self-start overflow-auto rounded-md bg-white p-6 text-center shadow-md"
+      className="scrollbar-thin scrollbar-track-white scrollbar-thumb-black max-h-full space-y-5 self-start overflow-auto rounded-md bg-white p-6 text-center shadow-md"
     >
       <div>
         {Title}

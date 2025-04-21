@@ -48,7 +48,10 @@ export default async function RootLayout({ children }: Props) {
   const isSignedIn = await signedIn();
 
   return (
-    <html lang="fr" className={`${inter.variable} ${bebasNeue.variable} ${poppins.variable}`}>
+    <html
+      lang="fr"
+      className={`${inter.variable} ${bebasNeue.variable} ${poppins.variable} scrollbar-thumb-yellow scrollbar-track-black`}
+    >
       <body
         className={cn(
           "font-inter flex h-screen flex-col antialiased",

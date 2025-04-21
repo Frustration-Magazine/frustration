@@ -1,7 +1,8 @@
 "use client";
+"use client";
 
-import { useState } from "react";
 import { type Payment } from "data-access/_models";
+import { useState } from "react";
 import { Chart } from "./Chart";
 import { Panel } from "./Panel";
 
