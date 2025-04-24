@@ -224,7 +224,6 @@ export interface Customer {
   postal_code: string;
   city: string;
   country: string;
-  state: string;
 }
 
 const firstDayOfCurrentYear = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
@@ -277,8 +276,7 @@ export async function fetchStripeNewCustomers(
       line1: (subscription.metadata.line1 || subscription.metadata.adresse) ?? "",
       city: (subscription.metadata.city || subscription.metadata.ville) ?? "",
       postal_code: (subscription.metadata.postal_code || subscription.metadata.code_postal) ?? "",
-      country: (subscription.metadata.country || subscription.metadata.pays) ?? "",
-      state: subscription.metadata.state ?? ""
+      country: (subscription.metadata.country || subscription.metadata.pays) ?? ""
     };
   });
 
@@ -308,7 +306,6 @@ export async function fetchStripeNewCustomers(
     subscription.line1 = customer?.address?.line1 ?? subscription.line1;
     subscription.city = customer?.address?.city ?? subscription.city;
     subscription.postal_code = customer?.address?.postal_code ?? subscription.postal_code;
-    subscription.state = customer?.address?.state ?? subscription.state;
   });
 
   return subscriptions_f;

@@ -45,7 +45,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     header: "Nom",
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
-      return <span className="font-medium">{name}</span>;
+      return <a href={`https://dashboard.stripe.com/customers/${row?.original?.customerId}`} target="_blank" className="font-medium">{name}</a>;
     },
   },
   {
@@ -95,14 +95,6 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     cell: ({ row }) => {
       const city = row.getValue("city") as string;
       return <span className="capitalize">{city ? city.toLowerCase() : DEFAULT_VALUE}</span>;
-    },
-  },
-  {
-    accessorKey: "state",
-    header: "Région",
-    cell: ({ row }) => {
-      const country = row.getValue("state") as string;
-      return country || DEFAULT_VALUE;
     },
   },
   {

@@ -45,8 +45,6 @@ export function prettifyName(uglyName: string): string {
 }
 
 /* ----------------- */
-/* Capitalize first */
-/* ----------------- */
 /*
   Input : "frustration magazine"
   Output : "Frustration Magazine"
