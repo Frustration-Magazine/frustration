@@ -301,9 +301,14 @@ export async function fetchStripeNewCustomers(
     const customer = customers.find((customer: any) => customer.id === subscription.customerId);
     const paymentMethod = paymentMethods.find((paymentMethod: any) => paymentMethod.customer === subscription.customerId);
 
+    // ❗ Customers informations should take precedence over subscription informations (because it's more accurate and updated)
     subscription.name = customer?.name ? prettifyName(customer.name) : "";
     subscription.email = customer?.email;
-    subscription.country = convertCountryInitials(subscription.country || paymentMethod?.card?.country);
+    subscription.country = convertCountryInitials(customer?.address?.country || subscription.country || paymentMethod?.card?.country);
+    subscription.line1 = customer?.address?.line1 ?? subscription.line1;
+    subscription.city = customer?.address?.city ?? subscription.city;
+    subscription.postal_code = customer?.address?.postal_code ?? subscription.postal_code;
+    subscription.state = customer?.address?.state ?? subscription.state;
   });
 
   return subscriptions_f;
