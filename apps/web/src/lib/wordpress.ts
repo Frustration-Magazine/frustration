@@ -5,7 +5,7 @@ export async function fetchPostBySlug({ slug }: any) {
           title(format: RENDERED)
           slug
           date
-          author { node { name userId slug description } }
+          author { node { name userId slug description avatar { url } } }
           categories { nodes { slug name parent { node { name } } } }
           content(format: RENDERED)
           featuredImage {
@@ -31,7 +31,7 @@ export async function fetchDraftByPostId({ post_id, wp_session }: any) {
    query fetchDraftByPostId {
         post(id: "${post_id}", idType: DATABASE_ID) {
           title(format: RENDERED)
-          author { node { name userId slug } }
+          author { node { name userId slug avatar { url } } }
           categories { nodes { slug name parent { node { name } } } }
           content(format: RENDERED)
           featuredImage {
@@ -59,7 +59,7 @@ export async function fetchLastPosts({ first = 6 }: any) {
             title(format: RENDERED)
             slug
             date
-            author { node { name userId } }
+            author { node { name userId avatar { url } } }
             categories { nodes { slug name parent { node { name } } } }
             excerpt(format: RENDERED)
             featuredImage {

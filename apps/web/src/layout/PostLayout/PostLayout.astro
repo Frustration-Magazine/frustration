@@ -19,29 +19,12 @@ import MoreArticles from "./components/Footer/MoreArticles";
 const {
   title,
   author: {
-    node: { userId, name, slug, description: role },
+    node: author,
   },
   categories: { nodes: categories },
   date,
 } = Astro.props;
 const featuredImage = Astro.props?.featuredImage?.node;
-
-const authors = await getCollection("authors");
-const DEFAULT = await getEntry("authors", "default");
-let AUTHOR = authors.find(({ data: { id } }) => id === userId)?.data;
-
-let author;
-// Use only wordpress informations
-if (!author) {
-  author = {
-    ...AUTHOR,
-    role: role ? role : AUTHOR?.role,
-    id: userId,
-    name,
-    picture: (AUTHOR ? AUTHOR?.picture : DEFAULT?.data.picture) as any,
-    slug,
-  };
-}
 ---
 
 <PageLayout {...Astro.props}>
@@ -53,7 +36,7 @@ if (!author) {
         <Fragment set:html={title} />
       </Title>
       <Metadata
-        author={{ ...author, slug }}
+        author={author}
         date={date}
         categories={categories}
       />
@@ -66,7 +49,7 @@ if (!author) {
     </section>
 
     <!-- Footer -->
-    <CardAuthor author={{ ...author, slug }} />
+    <CardAuthor author={author} />
     <Banner />
     <MoreArticles client:idle />
   </article>
