@@ -38,8 +38,8 @@ const linkStyle = "text-blue underline";
           d’accès, de rectification et de suppression des données vous concernant.
           Pour exercer ce droit, veuillez nous contacter à l'adresse suivante <a
             class={linkStyle}
-            href="mailto:redaction@frustrationmagazine.fr"
-            >redaction@frustrationmagazine.fr</a
+            href={`mailto:${import.meta.env.MAIL_FROM}`}
+            >{import.meta.env.MAIL_FROM}</a
           >
         </p>
       </div>
@@ -63,8 +63,8 @@ const linkStyle = "text-blue underline";
           <b>Contact</b>
           <a
             class={linkStyle}
-            href="mailto:redaction@frustrationmagazine.fr"
-            >redaction@frustrationmagazine.fr</a
+            href={`mailto:${import.meta.env.MAIL_FROM}`}
+            >{import.meta.env.MAIL_FROM}</a
           >
         </p>
         <p>

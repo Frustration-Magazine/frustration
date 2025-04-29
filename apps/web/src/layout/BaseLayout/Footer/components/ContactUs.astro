@@ -17,13 +17,13 @@ import H5 from "./H5.astro";
     <b>N'hésitez pas à nous contacter !</b>
   </p>
   <a
-    href="mailto:redaction@frustrationmagazine.fr"
+    href={`mailto:${import.meta.env.MAIL_FROM}`}
     class={cn(
       "w-full font-open-sans leading-tight underline flex gap-1 font-bold items-center",
       "text-sm justify-center",
       "sm:text-base sm:justify-start",
     )}>
     <MailIcon />
-    redaction@frustrationmagazine.fr
+    {import.meta.env.MAIL_FROM}
   </a>
 </div>

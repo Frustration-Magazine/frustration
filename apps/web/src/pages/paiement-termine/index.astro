@@ -8,7 +8,6 @@ const hasGifts = searchParams.has("has_gifts");
 export const prerender = false;
 
 const SITE_URL = "/";
-const MAIL = "redaction@frustrationmagazine.fr";
 ---
 
 <script>
@@ -26,9 +25,8 @@ const MAIL = "redaction@frustrationmagazine.fr";
     {
       mode === "payment" ? (
         <>
-          <p class="mb-3 text-pretty">
-            Votre don de soutien a bien été reçu ! 🎉 Nous avons hâte de vous
-            partager tous les projets que nous vous préparons pour 2025 !
+          <p class="mb-3">
+            Votre don de soutien a bien été reçu ! 🎉
           </p>
           <p class="mb-3">
             N'hésitez pas à{" "}
@@ -36,8 +34,8 @@ const MAIL = "redaction@frustrationmagazine.fr";
               nous contacter à{" "}
               <a
                 class="text-blue underline"
-                href={`mailto:${MAIL}`}>
-                {MAIL}
+                href={`mailto:${import.meta.env.MAIL_FROM}`}>
+                {import.meta.env.MAIL_FROM}
               </a>
             </b>
             si vous avez des questions.
@@ -67,8 +65,8 @@ const MAIL = "redaction@frustrationmagazine.fr";
                   nous contacter à{" "}
                   <a
                     class="text-blue underline"
-                    href={`mailto:${MAIL}`}>
-                    {MAIL}
+                    href={`mailto:${import.meta.env.MAIL_FROM}`}>
+                    {import.meta.env.MAIL_FROM}
                   </a>
                 </b>
                 si vous avez des questions ou besoin d'effectuer une
@@ -82,8 +80,8 @@ const MAIL = "redaction@frustrationmagazine.fr";
                 nous contacter à{" "}
                 <a
                   class="text-blue underline"
-                  href={`mailto:${MAIL}`}>
-                  {MAIL}
+                  href={`mailto:${import.meta.env.MAIL_FROM}`}>
+                  {import.meta.env.MAIL_FROM}
                 </a>
               </b>
               si vous avez des questions.

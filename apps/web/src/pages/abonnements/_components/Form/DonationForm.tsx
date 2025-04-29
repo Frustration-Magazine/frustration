@@ -217,8 +217,8 @@ export default function StripeForm() {
               contacter à{" "}
               <a
                 className="text-lightBlue-300 underline"
-                href="mailto:redaction@frustrationmagazine.fr">
-                redaction@frustrationmagazine.fr
+                href={`mailto:${import.meta.env.MAIL_FROM}`}>
+                {import.meta.env.MAIL_FROM}
               </a>
             </span>
           </div>

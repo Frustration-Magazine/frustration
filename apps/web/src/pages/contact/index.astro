@@ -64,8 +64,8 @@ if (Astro.request.method === "POST") {
       status = INVALID_CAPTCHA_STATUS;
     } else {
       await resend.emails.send({
-        from: "redaction@frustrationmagazine.fr",
-        to: ["redaction@frustrationmagazine.fr"],
+        from: import.meta.env.MAIL_FROM,
+        to: [import.meta.env.MAIL_FROM],
         subject: `Formulaire de contact - ${email}`,
         html: `
         <h3>Demande envoyée par : ${email} le ${formattedDate}</h3>
@@ -143,9 +143,9 @@ export const prerender = false;
               😔 Une erreur est survenue. Veuillez réessayer ou nous contacter
               directement à l'adresse{" "}
               <a
-                href="redaction@frustrationmagazine.fr"
+                href={`mailto:${import.meta.env.MAIL_FROM}`}
                 class="underline font-bold">
-                redaction@frustrationmagazine.fr
+                {import.meta.env.MAIL_FROM}
               </a>{" "}
               si le problème persiste.
             </p>

@@ -210,12 +210,12 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
         class="underline text-blue"
         href="https://billing.stripe.com/p/login/14kdTMeda0rk9gc9AA"
         target="_blank"
-        >en cliquant à cette adresse</a
-      > et en utilisant l'adresse renseignée lors de votre souscription. En cas de
+        >en vous rendant à cette adresse</a
+      > et en utilisant l'adresse email renseignée lors de votre souscription. En cas de
       difficulté ou pour toute autre question, contactez-nous à <a
         class="underline text-blue"
-        href="mailto:redaction@frustrationmagazine.fr"
-        >redaction@frustrationmagazine.fr.</a
+        href={`mailto:${import.meta.env.MAIL_FROM}`}
+        >{import.meta.env.MAIL_FROM}.</a
       >
     </p>
 
