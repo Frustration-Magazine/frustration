@@ -23,9 +23,9 @@
     "utils": "workspace:*"
   },
   "devDependencies": {
-    "@prisma/client": "^6.6.0",
-    "@types/node": "^22.15.0",
-    "prisma": "^6.6.0"
+    "@prisma/client": "^6.7.0",
+    "@types/node": "^22.15.3",
+    "prisma": "^6.7.0"
   },
   "exports": {
     "./prisma": "./prisma/client.ts",
