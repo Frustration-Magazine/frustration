@@ -35,44 +35,46 @@ export async function updatePayments(): Promise<void> {
       },
     ];
 
-    stripePayments = await fetchStripePayments({
-      afterTimestamp: convertDateToTimestamp(oneYearAgo),
-    });
+    console.log("tipeeePayments", tipeeePayments);
 
-    helloassoPayments = await fetchHelloAssoPayments({
-      from: oneYearAgo.toISOString(),
-    });
+    // stripePayments = await fetchStripePayments({
+    //   afterTimestamp: convertDateToTimestamp(oneYearAgo),
+    // });
+
+    // helloassoPayments = await fetchHelloAssoPayments({
+    //   from: oneYearAgo.toISOString(),
+    // });
   } catch (error) {
     console.error("Error while fetching payments :", error);
     return;
   }
 
-  let payments = [...stripePayments, ...helloassoPayments, ...tipeeePayments];
+  // let payments = [...stripePayments, ...helloassoPayments, ...tipeeePayments];
 
   // 1️⃣ Delete old payments for selected period
   /* ------------------------------------------ */
-  console.info("Deleting old payments stripe and helloasso...");
-  try {
-    await prisma.payments.deleteMany({
-      where: {
-        source: {
-          in: ["stripe", "helloasso"],
-        },
-      },
-    });
-  } catch (error) {
-    console.error("Failed to delete old payments", error);
-  }
+  // console.info("Deleting old payments stripe and helloasso...");
+  // try {
+  //   await prisma.payments.deleteMany({
+  //     where: {
+  //       source: {
+  //         in: ["stripe", "helloasso"],
+  //       },
+  //     },
+  //   });
+  // } catch (error) {
+  //   console.error("Failed to delete old payments", error);
+  // }
 
-  // 2️⃣ Insert unique payments
-  /* ------------------------- */
-  console.info("Inserting new payments...");
-  try {
-    await prisma.payments.createMany({
-      data: payments,
-    });
-    console.info(`${payments.length} transaction(s) inserted.`);
-  } catch (error) {
-    console.error("Failed to insert new payments", error);
-  }
+  // // 2️⃣ Insert unique payments
+  // /* ------------------------- */
+  // console.info("Inserting new payments...");
+  // try {
+  //   await prisma.payments.createMany({
+  //     data: payments,
+  //   });
+  //   console.info(`${payments.length} transaction(s) inserted.`);
+  // } catch (error) {
+  //   console.error("Failed to insert new payments", error);
+  // }
 }
