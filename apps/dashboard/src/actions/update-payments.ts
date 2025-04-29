@@ -2,7 +2,7 @@
 
 import { fetchStripePayments } from "data-access/stripe";
 import { fetchHelloAssoPayments } from "data-access/helloasso";
-import { fetchTipeeeTotal } from "data-access/tipeee";
+// import { fetchTipeeeTotal } from "data-access/tipeee";
 import { prisma } from "data-access/prisma";
 
 export async function updatePayments(): Promise<void> {
@@ -24,16 +24,17 @@ export async function updatePayments(): Promise<void> {
   const convertDateToTimestamp = (date: Date) => Math.floor(date.getTime() / 1000);
 
   try {
-    const { amount, customers } = await fetchTipeeeTotal();
-    tipeeePayments = [
-      {
-        date: firstDayOfCurrentMonth,
-        amount,
-        customers,
-        source: "tipeee",
-        type: "subscription",
-      },
-    ];
+    // Puppeter is hard to execute on Vercel
+    // const { amount, customers } = await fetchTipeeeTotal();
+    // tipeeePayments = [
+    //   {
+    //     date: firstDayOfCurrentMonth,
+    //     amount,
+    //     customers,
+    //     source: "tipeee",
+    //     type: "subscription",
+    //   },
+    // ];
 
     stripePayments = await fetchStripePayments({
       afterTimestamp: convertDateToTimestamp(oneYearAgo),
@@ -47,7 +48,7 @@ export async function updatePayments(): Promise<void> {
     return;
   }
 
-  let payments = [...stripePayments, ...helloassoPayments, ...tipeeePayments];
+  let payments = [...stripePayments, ...helloassoPayments /* ...tipeeePayments */];
 
   // 1️⃣ Delete old payments for selected period
   /* ------------------------------------------ */
