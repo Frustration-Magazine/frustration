@@ -1,6 +1,8 @@
 ---
 import SubscriptionCard from "./_components/Description/SubscriptionCard.astro";
-import CheckoutFormWrapper from "./_components/Form/CheckoutFormWrapper";
+import SubscriptionFormWrapper from "./_components/Form/SubscriptionFormWrapper";
+import DonationFormWrapper from "./_components/Form/DonationFormWrapper";
+import H2 from "@/components/H2";
 
 import { Image } from "astro:assets";
 import Tipeee from "./_assets/tipeee.webp";
@@ -22,18 +24,12 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
   coverImage={coverImage}>
   <article slot="content">
     <!-- 🅰️ Titles -->
-    <h2
-      class={cn(
-        "text-4xl mb-2 text-pretty text-center font-bold uppercase font-bakbak",
-        "sm:text-5xl",
-        "sm:text-5xl md:zs-8",
-        "lg:text-7xl",
-      )}>
+    <H2>
       Frustration a besoin de vous !
-    </h2>
+    </H2>
     <h3
       class={cn(
-        "text-pretty text-center font-light uppercase font-bakbak",
+        "text-pretty text-center font-light uppercase font-bakbak -mt-6",
         "text-2xl",
         "lg:text-4xl",
       )}>
@@ -66,7 +62,7 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
       </p>
 
       <p>Voici plus précisément à quoi sera consacré ce budget :</p>
-      <ul class="list-disc space-y-2">
+      <ul class="list-disc space-y-2 pl-2">
         <li>
           Salarier une équipe de trois personnes à temps plein afin d’avoir une
           vraie continuité de publications tout en assurant des bonnes
@@ -203,9 +199,9 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
         reviews={reviews}
       /> -->
 
-    <!-- 📝 💰 FORM 💰 -->
+    <!-- 📝 💰 FORMS 💰 -->
     <div class={cn("mt-6 mb-6", "md:mt-12 md:mb-12")}>
-      <CheckoutFormWrapper client:load />
+      <SubscriptionFormWrapper client:load />
     </div>
 
     <p class="mt-16 bg-green-100 text-green-600 font-semibold p-4">
@@ -222,5 +218,11 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
         >redaction@frustrationmagazine.fr.</a
       >
     </p>
+
+    <div class={cn("mt-6 mb-6", "md:mt-12 md:mb-12")}>
+      <DonationFormWrapper client:load />
+    </div>
+
+
   </article>
 </PageLayout>

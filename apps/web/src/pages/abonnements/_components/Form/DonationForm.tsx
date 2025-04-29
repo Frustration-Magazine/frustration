@@ -12,14 +12,17 @@ import { type StripePaymentElementOptions } from "@stripe/stripe-js";
 import { cn } from "@/lib/utils";
 import LoaderCircle from "@/components/loaders/loader-circle";
 import { RainbowButton } from "./RainbowButton";
+import { Slider } from "@/components/ui/slider"
 
 // 💰 Stripe
 const paymentElementOptions: StripePaymentElementOptions = {
   layout: "tabs",
-  paymentMethodOrder: ["card", "sepa_debit", "paypal"],
+  business: { name: "Frustration Magazine" },
+  paymentMethodOrder: ["card", "paypal"],
+
 };
 
-const { MODE, SITE, PUBLIC_STRIPE_PRODUCT_SUBSCRIPTION } = import.meta.env;
+const { MODE, SITE } = import.meta.env;
 
 // 🔄 Redirection
 
@@ -33,33 +36,25 @@ const REDIRECT_URL_BASE =
 
 const CREATE_CUSTOMER_ENDPOINT = "/api/create-customer";
 const CREATE_PAYMENT_INTENT_ENDPOINT = "/api/create-payment-intent";
-const UPDATE_PAYMENT_INTENT_ENDPOINT = "/api/update-payment-intent";
-const CREATE_SUBSCRIPTION_ENDPOINT = "/api/create-subscription";
 
 // ============== //
 //      UI 🚀     //
 // ============== //
 
-// 🗿 Props
 type Props = {
-  readonly frequency: "onetime" | "recurring";
   readonly amount: number;
-  readonly hasGifts?: boolean;
 };
 
-export default function StripeForm({
-  frequency = "recurring",
-  amount = 900,
-  hasGifts = true,
-}: Props) {
+export default function StripeForm() {
   // 🪝 Hooks
   const stripe = useStripe();
   const elements = useElements();
 
   // 🔼 State
+  const [selectedAmount, setSelectedAmount] = useState(5000);
   const [email, setEmail] = useState("");
+  const [addToNewsletter, setAddToNewsletter] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  // const [message, setMessage] = useState<string | null>(null);
 
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
@@ -81,166 +76,64 @@ export default function StripeForm({
 
     let clientSecret;
 
-    /* ---------------- */
-    /* ONE TIME PAYMENT */
-    /* ---------------- */
-    // 🔴 FEATURE FLAG: disabled for now
-    // if (frequency === "onetime") {
-    //   let customer;
-
-    //   // 1️⃣ Customer
-    //   if (email) {
-    //     const resCustomerCreation = await fetch(CREATE_CUSTOMER_ENDPOINT, {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify({
-    //         email,
-    //         metadata: {
-    //           campaign: CAMPAIGN_TAG,
-    //         },
-    //       }),
-    //     }).then((res) => res.json());
-
-    //     if (resCustomerCreation?.customer)
-    //       customer = resCustomerCreation.customer;
-    //   }
-
-    //   // 2️⃣ Payment intent
-    //   let paymentIntent;
-    //   if (customer) {
-    //     const resPaymentIntentCreation = await fetch(
-    //       CREATE_PAYMENT_INTENT_ENDPOINT,
-    //       {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({
-    //           customer: customer.id,
-    //           amount,
-    //           receipt_email: customer.email,
-    //           currency: "eur",
-    //           metadata: {
-    //             hasGifts,
-    //             campaign: CAMPAIGN_TAG,
-    //           },
-    //           description: `${amount / 100}€`,
-    //         }),
-    //       },
-    //     ).then((res) => res.json());
-
-    //     if (resPaymentIntentCreation?.paymentIntent) {
-    //       paymentIntent = resPaymentIntentCreation.paymentIntent;
-    //       clientSecret = paymentIntent.client_secret;
-    //     }
-    //   }
-    // }
-
-    /* ---------------- */
-    /*   SUBSCRIPTION   */
-    /* ---------------- */
-    if (frequency === "recurring") {
       let customer;
-      let address = {};
-      let name = null;
-      const addressElement = elements.getElement("address");
-      if (addressElement) {
-        await addressElement.getValue().then(({ value }) => {
-          address = value.address;
-          name = value.name;
-        });
-      } else {
-        console.error("No address element found");
-      }
 
-      // 1️⃣ Create customer
+      // 1️⃣ Customer
       if (email) {
         const resCustomerCreation = await fetch(CREATE_CUSTOMER_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            ...(name ? { name } : {}),
-            ...(address ? { address } : {}),
             email,
             metadata: {
               campaign: CAMPAIGN_TAG,
             },
           }),
         }).then((res) => res.json());
+
         if (resCustomerCreation?.customer)
-          customer = { ...resCustomerCreation.customer };
+          customer = resCustomerCreation.customer;
       }
 
-      // 2️⃣ Subscription
-      let subscription;
+      // 2️⃣ Payment intent
+      let paymentIntent;
       if (customer) {
-        const resSubscriptionCreation = await fetch(
-          CREATE_SUBSCRIPTION_ENDPOINT,
+        const resPaymentIntentCreation = await fetch(
+          CREATE_PAYMENT_INTENT_ENDPOINT,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              customerId: customer.id,
-              customerAddress: customer.address,
-              productId: PUBLIC_STRIPE_PRODUCT_SUBSCRIPTION,
-              amount,
-              nickname: `Abonnement de soutien à Frustation Magazine de ${amount / 100}€/mois`,
+              customer: customer.id,
+              amount: selectedAmount,
+              receipt_email: customer.email,
+              currency: "eur",
               metadata: {
                 campaign: CAMPAIGN_TAG,
               },
+              description: `Don unique de ${selectedAmount / 100}€`,
             }),
           },
         ).then((res) => res.json());
 
-        // 3️⃣ Payment intent
-        if (resSubscriptionCreation?.subscription) {
-          subscription = resSubscriptionCreation.subscription;
-          const paymentIntent = subscription?.latest_invoice?.payment_intent;
-          const resUpdatedPaymentIntent = await fetch(
-            UPDATE_PAYMENT_INTENT_ENDPOINT,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                paymentIntentId: paymentIntent.id,
-                paymentIntentUpdatedInformations: {
-                  receipt_email: customer.email,
-                  metadata: {
-                    campaign: CAMPAIGN_TAG,
-                  },
-                },
-              }),
-            },
-          ).then((res) => res.json());
-          if (resUpdatedPaymentIntent?.paymentIntent) {
-            const {
-              paymentIntent: { client_secret },
-            } = resUpdatedPaymentIntent;
-            clientSecret = client_secret;
-          }
+        if (resPaymentIntentCreation?.paymentIntent) {
+          paymentIntent = resPaymentIntentCreation.paymentIntent;
+          clientSecret = paymentIntent.client_secret;
         }
       }
-    }
+
+    /* ---------------- */
+    /*   SUBSCRIPTION   */
+    /* ---------------- */
 
     // 3️⃣ Try to confirm payment and redirect if that the case or handle error
     if (clientSecret) {
-      const mode = frequency === "onetime" ? "payment" : "subscription";
+      const mode = "payment";
 
-      const return_url = `${REDIRECT_URL_BASE}?mode=${mode}&status=success${hasGifts ? "&has_gifts" : ""}`;
+      const return_url = `${REDIRECT_URL_BASE}?mode=${mode}`;
 
-      let firstName = "";
-      let lastName = "";
-      const addressElement = elements.getElement("address");
-      if (addressElement) {
-        const { name } = await addressElement
-          .getValue()
-          .then(({ value }) => value);
-        firstName = name;
-      }
       const formData = new FormData();
       formData.append("email", email);
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
-
-      actions.addSubscriberToNewsletter(formData);
 
       const { error } = await stripe.confirmPayment({
         elements,
@@ -255,7 +148,12 @@ export default function StripeForm({
       } else {
         setErrorMessage("Une erreur inattendue est survenue.");
       }
+
+      if(!error && addToNewsletter) {
+        actions.addSubscriberToNewsletter(formData);
+      }
     }
+
 
     setIsLoading(false);
   };
@@ -265,17 +163,33 @@ export default function StripeForm({
       id="payment-form"
       onSubmit={handleSubmit}
       className="mb-12">
+      {/* 1️⃣ AMOUNT */}
+      <h3
+        className={`font-montserrat mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
+        <span className="max-lg:text-3xl">1️⃣</span>
+        <span>Votre don</span>
+      </h3>
+      <div className="flex items-center font-bakbak justify-center gap-2 mb-4 text-4xl">
+        {selectedAmount / 100}€
+      </div>
+       <Slider
+          min={5}
+          max={250}
+          step={5}
+          value={[selectedAmount / 100]}
+          onValueChange={(value) => setSelectedAmount(value[0] * 100)}
+          className={cn("w-[80%] mb-12 mx-auto")}
+        />
       {/* 2️⃣ CONTACT INFO */}
       <h3
         className={`font-montserrat mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
         <span className="max-lg:text-3xl">2️⃣</span>
-        <span>Vos informations de contact</span>
+        <span>Votre mail pour votre reçu</span>
       </h3>
       <LinkAuthenticationElement
         onChange={({ value: { email } }) => setEmail(email)}
       />
       <div className="my-2"></div>
-      <AddressElement options={{ mode: "shipping" }} />
       <h3
         className={`font-montserrat mt-10 mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
         <span className="max-lg:text-3xl">3️⃣</span>
@@ -311,6 +225,7 @@ export default function StripeForm({
         </div>
       )}
 
+
       {/* ====================================================================== */}
 
       {/* ⬛ VALIDATION */}
@@ -323,8 +238,13 @@ export default function StripeForm({
           {isLoading ? (
             <LoaderCircle color="#FFF200" />
           ) : (
-            <span className="text-frustration-yellow text-xl font-bold lg:text-2xl">
-              💝 Soutenir Frustration
+            <span className="text-frustration-yellow text-xl font-bold lg:text-2xl flex gap-3">
+              <span>
+                💸
+              </span>
+              <span>
+                Faire un don à Frustration
+              </span>
             </span>
           )}
         </RainbowButton>

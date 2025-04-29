@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
+import SubscriptionForm from "./SubscriptionForm";
 
 import FormulaCard from "./FormulaCard";
 
@@ -22,7 +22,7 @@ const options: StripeElementsOptions = {
 /* ==================================================== */
 /* ==================================================== */
 
-export default function SubscriptionForm() {
+export default function Subscription() {
   const [selectedAmount, setSelectedAmount] = useState(900);
   return (
     <div className="mx-auto mt-32">
@@ -78,7 +78,7 @@ export default function SubscriptionForm() {
         <Elements
           options={options as any}
           stripe={stripePromise}>
-          <CheckoutForm
+          <SubscriptionForm
             amount={selectedAmount}
             frequency="recurring"
           />

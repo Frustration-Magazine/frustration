@@ -3,8 +3,9 @@
 @plugin '@tailwindcss/typography';
 @plugin '@tailwindcss/aspect-ratio';
 @plugin 'tailwind-scrollbar';
+@import "tailwindcss";
 
-@theme {
+ @theme {
   --color-*: initial;
   --color-inherit: inherit;
   --color-current: currentColor;
