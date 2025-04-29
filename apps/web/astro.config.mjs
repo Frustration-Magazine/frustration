@@ -27,6 +27,10 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      // Only use this for local development
+      // allowedHosts: ["test.frustrationmagazine.com"],
+    },
   },
 
   integrations: [react(), sitemap()],
