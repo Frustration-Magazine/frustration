@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Check } from "lucide-react";
-import { type Formula } from "../../_models";
+import { type Formula } from "../_models";
 
 const FormulaCard = ({
   id,

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import DonationForm from "./DonationForm";
@@ -23,7 +22,7 @@ const options: StripeElementsOptions = {
 
 export default function Subscription() {
   return (
-    <div className="mx-auto mt-32">
+    <div id="donation-form" className="mx-auto mt-32">
       {/* 🔠 Titres */}
       <div className="mb-10">
         <h3 className={cn(

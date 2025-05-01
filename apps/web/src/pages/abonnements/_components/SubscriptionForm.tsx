@@ -209,7 +209,6 @@ export default function StripeForm({
 
   return (
     <form
-      id="payment-form"
       onSubmit={handleSubmit}
       className="mb-12">
       {/* 2️⃣ CONTACT INFO */}
