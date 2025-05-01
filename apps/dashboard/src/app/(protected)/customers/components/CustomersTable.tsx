@@ -136,7 +136,7 @@ export default function ({ customers }: { customers: Customer[] }) {
   if (customers.length === 0) return <p>Aucun nouvel abonné sur cette période 😭</p>;
 
   return (
-    <div className="self-stretch overflow-auto rounded-md bg-white px-6 py-2 shadow-lg h-full">
+    <div className="self-stretch overflow-auto rounded-md bg-white px-6 py-2 shadow-lg max-h-full">
       <Table className="h-full">
         <TableCaption>Abonnés récents</TableCaption>
         <TableHeader className="sticky top-0 bg-white">

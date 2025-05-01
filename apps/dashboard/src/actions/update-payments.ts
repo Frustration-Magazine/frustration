@@ -6,7 +6,7 @@ import { fetchHelloAssoPayments } from "data-access/helloasso";
 import { prisma } from "data-access/prisma";
 
 export async function updatePayments(): Promise<void> {
-  let tipeeePayments: any = [];
+  // let tipeeePayments: any = [];
   let stripePayments: any = [];
   let helloassoPayments: any = [];
   const now = new Date();
@@ -24,7 +24,8 @@ export async function updatePayments(): Promise<void> {
   const convertDateToTimestamp = (date: Date) => Math.floor(date.getTime() / 1000);
 
   try {
-    // Puppeter is hard to execute on Vercel
+    // Puppeter is hard to execute on Vercel right now 😔
+    // Please report any new tipeeee value with a SQL command such as INSERT INTO payments (date, amount, source, type, customers) VALUES ('2025-02-01 00:00:00', 18, 'tipeee', 'subscription', 2)
     // const { amount, customers } = await fetchTipeeeTotal();
     // tipeeePayments = [
     //   {
