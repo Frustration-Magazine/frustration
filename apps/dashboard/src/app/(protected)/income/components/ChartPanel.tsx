@@ -4,8 +4,11 @@ import { useState } from "react";
 import type { Payment } from "data-access/_models";
 import { Chart } from "./Chart";
 import { Panel } from "./Panel";
+import NoData from "./NoData";
 
 export const ChartPanel = ({ payments }: { payments: Payment[] }) => {
+  if (payments.length === 0) return <NoData />;
+
   const [highlighted, setHighlighted] = useState<number>(-1);
   return (
     <section className="flex h-full gap-6">

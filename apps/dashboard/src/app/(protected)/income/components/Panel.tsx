@@ -3,7 +3,6 @@ import { Fragment } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import NoData from "./NoData";
 
 import type { Payment } from "data-access/_models";
 import { aggregateByMonth, diffInPercent, inEuros } from "../_utils";
@@ -39,7 +38,6 @@ const YearSeparator = ({ index, year }: { index: number; year: number }) => (
 );
 
 export const Panel = ({ name, payments, highlighted }: { name: string; payments: Payment[]; highlighted: number }) => {
-  if (payments.length === 0) return <NoData />;
 
   const paymentsByMonth = aggregateByMonth(payments);
 
