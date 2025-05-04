@@ -1,5 +1,8 @@
 "use server";
 
+import { type Event, EventFormSchema } from "../models/models";
+import { updateRecord } from "data-access/prisma";
+
 type State = {
   success: string | null;
   error: string | null;
@@ -10,24 +13,11 @@ const ERROR = {
   error: "Il y a une erreur",
 };
 
-import { EventFormSchema } from "../models/models";
-
-/* **************** */
-/* Update dashboard */
-/* **************** */
-export async function updateEvent(prevState: State, data: FormData): Promise<State> {
-  const formData = Object.fromEntries(data);
-  const parsed = EventFormSchema.safeParse(formData);
-
+export async function updateEvent(data: Event): Promise<State> {
+  const parsed = EventFormSchema.safeParse(data);
   if (!parsed.success) return ERROR;
 
   let result = null;
-  // result = await updateBalance();
-  // if (result.error) return result;
-  // result = await updatePayments({ updateMethod: parsed.data.method });
-  result = {
-    success: null,
-    error: null,
-  };
+  result = await updateRecord({ table: "events", data, success: "L'événement a été modifié avec succès!" });
   return result;
 }

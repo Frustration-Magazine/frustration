@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export type Event = {
-  id: number;
+  id?: number;
   date: Date;
   displayHour: boolean;
   description: string;
@@ -13,20 +13,39 @@ export type Event = {
 };
 
 export const EventFormSchema = z.object({
-  date: z.date().refine((date) => !isNaN(date.getTime()), {
-    message: "Invalid date",
+  id: z.number().optional(),
+  date: z
+    .date({
+      required_error: "Une date est requise",
+    })
+    .refine((date) => !isNaN(date.getTime()), {
+      message: "Date invalide",
+    }),
+  displayHour: z.boolean({
+    required_error: "Veuillez indiquer si l'heure doit être affichée",
   }),
-  displayHour: z.boolean(),
-  description: z.string({
-    required_error: "Une description de l'événement est attendue",
+  description: z
+    .string({
+      required_error: "Une description de l'événement est attendue",
+    })
+    .min(1),
+  city: z
+    .string({
+      required_error: "Veuillez renseigner une ville",
+    })
+    .min(1),
+  place: z
+    .string({
+      required_error: "Veuillez renseigner un lieu précis",
+    })
+    .min(1),
+  contact: z.string().email({
+    message: "Veuillez renseigner un email valide",
   }),
-  city: z.string({
-    required_error: "Veuillez renseigner une ville",
+  displayContact: z.boolean({
+    required_error: "Veuillez indiquer si le contact doit être affiché",
   }),
-  place: z.string({
-    required_error: "Veuillez renseigner un lieu précis",
+  displayEvent: z.boolean({
+    required_error: "Veuillez indiquer si l'événement doit être affiché",
   }),
-  contact: z.string(),
-  displayContact: z.boolean(),
-  displayEvent: z.boolean(),
 });
