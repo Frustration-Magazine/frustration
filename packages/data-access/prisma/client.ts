@@ -41,13 +41,38 @@ export async function createRecord({ table, data, success }: { table: string; da
     error: null
   };
 
+  let result = null;
   // 🔁 Insert
   try {
-    await (prisma as any)[table].create({ data });
+    result = await (prisma as any)[table].create({ data });
     status.success = success;
   } catch (e) {
     // ❌ Error | P202
     console.error("Error while creating a new record", e);
+    const readableError = (e as any)?.message ?? "Une erreur inconnue s'est produite";
+    status.error = readableError;
+  } finally {
+    return { status, result };
+  }
+}
+
+/* ------ */
+/* UPDATE */
+/* ------ */
+
+export async function updateRecord({ table, data, success }: { table: string; data: any; success: any }): Promise<any> {
+  let status = {
+    success: null,
+    error: null
+  };
+
+  // 🔁 Insert
+  try {
+    await (prisma as any)[table].update({ where: { id: data.id }, data });
+    status.success = success;
+  } catch (e) {
+    // ❌ Error | P202
+    console.error("Error while updating a new record", e);
     const readableError = (e as any)?.message ?? "Une erreur inconnue s'est produite";
     status.error = readableError;
   } finally {
@@ -58,7 +83,7 @@ export async function createRecord({ table, data, success }: { table: string; da
 /* ------ */
 /* DELETE */
 /* ------ */
-export async function deleteRecord({ table, id, success }: { table: string; id: string; success: any }): Promise<any> {
+export async function deleteRecord({ table, id, success }: { table: string; id: string | number; success: any }): Promise<any> {
   let status = {
     success: null,
     error: null

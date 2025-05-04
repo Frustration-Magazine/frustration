@@ -132,6 +132,34 @@ export function explicitDate(date: Date): string {
 }
 
 /* ------------- */
+/* Format date */
+/* ------------- */
+/*
+  Input : date: Date, displayHour: boolean
+  Output : 18 août 2024
+*/
+export function formatDateHour(date: Date, displayHour: boolean) {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    ...(displayHour
+      ? {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: false
+        }
+      : null)
+  };
+
+  let formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(date);
+  formattedDate = formattedDate.replace(":", "h");
+  formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+
+  return formattedDate;
+}
+
+/* ------------- */
 /* Truncate date */
 /* ------------- */
 /*

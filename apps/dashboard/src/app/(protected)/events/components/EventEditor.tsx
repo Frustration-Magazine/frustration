@@ -1,104 +1,198 @@
 "use client";
 
-import React from "react";
-import {
-  Card,
-  CardContent,
-  // CardDescription,
-  // CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import React, { useState } from "react";
 import CardEvent from "./CardEvent";
 
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Form, FormField } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { DatePicker } from "@/components/ui/date-picker";
-// import { Input } from "@/components/Input";
+import { cn } from "@/lib/utils";
 
-// 🗒️ Form
-// import { updateDashboard } from "../_actions";
-// import { FormUpdateSchema } from "../_models";
-import { toFormData } from "utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-// 🪝 Hooks
 import { useForm } from "react-hook-form";
-import { useFormToast } from "@/hooks/useFormToast";
-import { useFormLoader } from "@/hooks/useFormLoader";
-import { useFormAction } from "@/hooks/useFormAction";
+import { DatePicker } from "@/components/ui/date-picker";
 
 import { type Event, EventFormSchema } from "../models/models";
-import { updateEvent } from "../actions/updateEvent";
+import { DialogClose, DialogFooter } from "@/components/ui/dialog";
+import { createEvent } from "../actions/createEvent";
+import { Plus } from "lucide-react";
+import { Dialog, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DialogContent } from "@/components/ui/dialog";
+import { DialogTrigger } from "@/components/ui/dialog";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/text-area";
 
 const now = new Date();
 
-function EventEditor({ events }: Readonly<{ events: ReadonlyArray<Event> }>) {
-  const [formState, formAction] = useFormAction(updateEvent, true);
-  const [loading, setLoading] = useFormLoader(formState);
-  useFormToast(formState);
+const DEFAULT_EVENT = {
+  date: now,
+  displayHour: true,
+  description: "",
+  city: "",
+  place: "",
+  contact: "",
+  displayContact: true,
+  displayEvent: true,
+};
 
-  type EventFormType = z.infer<typeof EventFormSchema>;
+type EventFormType = z.infer<typeof EventFormSchema>;
+
+function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray<Event> }>) {
+  const [events, setEvents] = useState<ReadonlyArray<Event>>(initialEvents);
+  const [isOpen, setIsOpen] = useState(false);
+
   const form = useForm<EventFormType>({
     resolver: zodResolver(EventFormSchema),
-    defaultValues: {
-      date: now,
-      displayHour: true,
-      description: "",
-      city: "",
-      place: "",
-      contact: "",
-      displayContact: false,
-      displayEvent: true,
-    },
+    defaultValues: { ...DEFAULT_EVENT },
   });
 
-  const submit = (data: EventFormType) => {
-    const formData = toFormData(data);
-    // formAction(formData);
-    // setLoading(true);
-  };
+  async function onSubmit(data: EventFormType) {
+    const { success, result } = await createEvent(data);
 
-  const EventForm = (
-    <Form {...form}>
-      <form className="flex flex-col items-center gap-5" onSubmit={form.handleSubmit(submit)}>
-        <FormField
-          control={form.control}
-          name="date"
-          render={({ field }) => (
-            <div className="flex items-center gap-3">
-              <FormItem className="space-y-0">
-                <DatePicker />
-              </FormItem>
+    if (success && result) {
+      setEvents((prevEvents) => {
+        const newEvents = [...prevEvents, result].sort((a, b) => a.date.getTime() - b.date.getTime());
+        return newEvents;
+      });
+      form.reset(data);
+      setIsOpen(false);
+    }
+  }
+
+  form.watch();
+  const { displayEvent } = form.getValues();
+
+  const AddButton = (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <div className="sticky top-0 flex cursor-pointer flex-wrap items-center gap-2 opacity-50 transition-opacity hover:opacity-100">
+          <div className="flex w-full justify-center">
+            <Button className="bg-black hover:bg-black">
+              <span className="text-yellow">Ajouter un événement</span>
+            </Button>
+          </div>
+          <hr className="grow border-2 border-black" />
+          <button className="text-yellow cursor-pointer rounded-full bg-black p-2">
+            <Plus size={26} />
+          </button>
+          <hr className="grow border-2 border-black" />
+        </div>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Ajouter un événement</DialogTitle>
+          <DialogDescription>Cliquez sur enregistrer lorsque vous avez terminé.</DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form className={cn("w-[650px] space-y-8")} onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              control={form.control}
+              name="displayEvent"
+              render={({ field }) => (
+                <div className={cn("mx-auto mt-2 mb-8 flex items-center justify-center gap-2")}>
+                  <Switch
+                    id="displayEvent"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    name="displayEvent"
+                  />
+                  <Label htmlFor="displayEvent" className="text-base">
+                    Afficher l'événement sur le site
+                  </Label>
+                </div>
+              )}
+            />
+            <div className="flex items-center gap-4">
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <div className={cn(!displayEvent && "opacity-50")}>
+                    <Label htmlFor="date">Date</Label>
+                    <DatePicker value={field.value} onChange={field.onChange} className="flex" name="date" />
+                  </div>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <div className={cn(!displayEvent && "opacity-50")}>
+                    <Label htmlFor="city">Ville</Label>
+                    <Input {...field} />
+                  </div>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="place"
+                render={({ field }) => (
+                  <div className={cn(!displayEvent && "opacity-50")}>
+                    <Label htmlFor="place">Lieu</Label>
+                    <Input {...field} />
+                  </div>
+                )}
+              />
             </div>
-          )}
-        />
-        <Button
-          // disabled={loading}
-          className="font-bold"
-          variant="default"
-          type="submit"
-        >
-          {/* {loading ? (
-            <TfiReload className="mr-2 animate-spin direction-reverse" />
-          ) : null} */}
-          <span>Mettre à jour l'événement</span>
-        </Button>
-      </form>
-    </Form>
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <div className={cn(!displayEvent && "opacity-50")}>
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea {...field} className="max-h-[7lh]" />
+                </div>
+              )}
+            />
+            <div className="flex items-center gap-4">
+              <FormField
+                control={form.control}
+                name="contact"
+                render={({ field }) => (
+                  <div className={cn("grow", !displayEvent && "opacity-50")}>
+                    <Label htmlFor="contact">Email de contact</Label>
+                    <Input type="email" {...field} />
+                  </div>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="displayContact"
+                render={({ field }) => (
+                  <div className={cn("mt-5 flex cursor-pointer items-center gap-1.5", !displayEvent && "opacity-50")}>
+                    <Checkbox
+                      id="displayContact"
+                      name="displayContact"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <Label htmlFor="displayContact">Afficher l'email de contact</Label>
+                  </div>
+                )}
+              />
+            </div>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Annuler</Button>
+              </DialogClose>
+              <Button type="submit" disabled={!form.formState.isValid}>
+                Enregistrer
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 
   return (
-    <div className="grid h-full w-full grid-cols-[600px_auto] gap-8">
-      <Card className="min-w-[300px] overflow-scroll border-none bg-black/90 text-white shadow-lg backdrop-blur-md">
-        <CardHeader className="text-3xl font-semibold">
-          <CardTitle>Gestionnaire d'événements</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-1 px-4">{EventForm}</CardContent>
-      </Card>
-
-      <div className="space-y-6 overflow-auto">
+    <div className="flex h-full w-full flex-col overflow-auto">
+      {AddButton}
+      <div className="scrollbar-none mx-auto space-y-6 overflow-auto mask-t-from-95% mask-b-from-95% py-12">
         {events.map((event) => (
           <CardEvent key={event.id} event={event} />
         ))}

@@ -1,5 +1,7 @@
 @import "tailwindcss";
+
 @plugin 'tailwind-scrollbar';
+@plugin '@tailwindcss/typography';
 
 @theme {
   --color-yellow: #fff200;
