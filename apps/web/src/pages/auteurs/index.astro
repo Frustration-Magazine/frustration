@@ -1,0 +1,50 @@
+---
+import H2 from "@/components/H2";
+import PageLayout from "@/layout/PageLayout/PageLayout.astro";
+import { fetchAuthorsByIds } from "@/lib/wordpress";
+import AuthorsGrid from "@/pages/_components/Auteurs/AuthorsGrid.astro";
+import H3 from "@/components/H3";
+
+type Author = {
+  databaseId: number;
+};
+
+const REDACTION_IDS = [
+  "72", // "Nicolas Framont"
+  "67", // "Rob Grams"
+  "69", // "Guillaume Étievant"
+  "76", // "Farton Bink"
+];
+
+const CONTRIBUTORS_IDS = [
+  "79", // "Clément Sénéchal"
+  "86", // "Juliette Collet"
+  "85", // "Selim Derkaoui"
+  "71", // Camille Lizop
+  "85", // Selim Derkaoui
+];
+
+const allAuthors = await fetchAuthorsByIds({
+  ids: [...REDACTION_IDS, ...CONTRIBUTORS_IDS],
+});
+
+const authorsRedaction = allAuthors.filter((author: Author) =>
+  REDACTION_IDS.includes(String(author.databaseId))
+);
+
+const authorsContributors = allAuthors.filter((author: Author) =>
+  CONTRIBUTORS_IDS.includes(String(author.databaseId))
+);
+---
+
+<PageLayout title="Auteurs">
+  <article slot="content">
+    <H2>Auteurs</H2>
+
+    <H3 className="text-center mb-10">Rédaction</H3>
+    <AuthorsGrid authors={authorsRedaction} className="mb-10" />
+
+    <H3 className="text-center mb-10">Contributeurs réguliers</H3>
+    <AuthorsGrid authors={authorsContributors} />
+  </article>
+</PageLayout>

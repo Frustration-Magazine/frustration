@@ -24,9 +24,9 @@ function CategoriesOverlay({ categories }: Props) {
   );
 
   const sortedStandaloneCategories = standaloneCategories
-            .filter(
-              (category) => !CATEGORIES_TO_FILTER_OUT.includes(category.slug),
-            )
+    .filter(
+      (category) => !CATEGORIES_TO_FILTER_OUT.includes(category.slug),
+    )
 
   sortedStandaloneCategories.sort((a, b) => b.count - a.count)
 
@@ -107,6 +107,12 @@ function CategoriesOverlay({ categories }: Props) {
                 {category.name}
               </a>
             ))}
+            <a
+              className="mb-1"
+              href={`/auteurs`}
+              >
+              Qui sommes-nous ?
+            </a>
         </ul>
       </div>
     </>
