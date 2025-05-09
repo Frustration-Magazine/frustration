@@ -1,30 +1,23 @@
 {
  "redirects": [
     {
-      "source": "/abonnement",
+      "source": "/(campagne-dons|campagne-abonnements|abonnement)",
       "destination": "/abonnements",
       "permanent": true
     },
-    {
-      "source": "/campagne-abonnements",
-      "destination": "/abonnements",
-      "permanent": true
-    },
-    {
-      "source": "/campagne-dons",
-      "destination": "/abonnements",
-      "permanent": true
-    },
-    {
-      "source": "/campagne-de-dons",
-      "destination": "/abonnements",
-      "permanent": true
-    },
-
     {
       "source": "/chere-frustration",
       "destination": "/contact",
       "permanent": true
+    },
+    {
+      "source": "/(feed|rss|feed/rss)",
+      "destination": "/feed.xml",
+      "permanent": true
+    },
+    {
+      "source": "/(dev|dev-1)/?",
+      "destination": "/"
     }
   ]
 }
