@@ -1,17 +1,20 @@
 ---
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
-import { GrArticle } from "react-icons/gr";
-
+import { GrArticle as ArticleIcon } from "react-icons/gr";
+import BackgroundCard from './background.avif'
 const { author } = Astro.props;
 ---
 
-<div
+<a
   class={cn(
-    "shadow-md bg-card-author rounded-xl text-white",
+    "shadow-md block bg-cover bg-bottom rounded-xl text-white",
     "p-3 my-3",
     "sm:p-6 sm:my-5 ",
-  )}>
+  )}
+  href={`/posts?author=${author.slug}`}
+  style={`background-image: url(${BackgroundCard.src})`}
+  >
   <div class={cn("flex items-center", "gap-4", "sm:gap-6")}>
     <div class={cn("shrink-0 size-11", "sm:size-14", "lg:size-16")}>
       <Image
@@ -30,25 +33,29 @@ const { author } = Astro.props;
       </h5>
       {
         author.description ? (
-          <h6 class={cn("font-bebas leading-none!", "text-lg", "sm:text-xl")}>
+          <h6 class={cn(
+            "font-bebas leading-none!",
+            "text-lg",
+            "sm:text-xl"
+            )}>
             {author.description}
           </h6>
         ) : null
       }
       {
         (
-          <a
+          <div
             class={cn(
               "mt-1 font-open-sans font-semibold flex items-center gap-1.5",
               "text-xs",
               "sm:text-sm ",
-            )}
-            href={`/posts?author=${author.slug}`}>
-            <GrArticle />
+            )}>
+
+            <ArticleIcon />
             <span> Tous les articles </span>
-          </a>
+          </div>
         )
       }
     </div>
   </div>
-</div>
+</a>

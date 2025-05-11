@@ -346,8 +346,6 @@
     var(--conic-position, from 45deg),
     var(--tw-gradient-stops)
   );
-  --background-image-card-author:
-    url('/textures/wall-4-light.png'), linear-gradient(#8955e0, #8955e0);
 
   --animate-sliding: sliding 60s linear infinite;
   --animate-sliding-reverse: slidingReverse 60s linear infinite;
