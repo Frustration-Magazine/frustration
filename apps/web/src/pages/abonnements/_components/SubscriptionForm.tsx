@@ -135,17 +135,17 @@ export default function StripeForm({
           },
         ).then((res) => res.json());
 
-        // 3️⃣ Payment intent
+        // 3️⃣ Payment intent to update
         if (resSubscriptionCreation?.subscription) {
           subscription = resSubscriptionCreation.subscription;
-          const paymentIntent = subscription?.latest_invoice?.payment_intent;
+          const paymentIntentForSubscription = subscription?.latest_invoice?.payment_intent;
           const resUpdatedPaymentIntent = await fetch(
             UPDATE_PAYMENT_INTENT_ENDPOINT,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                paymentIntentId: paymentIntent.id,
+                paymentIntentId: paymentIntentForSubscription.id,
                 paymentIntentUpdatedInformations: {
                   receipt_email: customer.email,
                   metadata: {
@@ -170,6 +170,7 @@ export default function StripeForm({
 
       const return_url = `${REDIRECT_URL_BASE}?mode=${mode}&status=success${hasGifts ? "&has_gifts" : ""}`;
 
+      // 📨 Gather customer data for newsletter
       let firstName = "";
       let lastName = "";
       const addressElement = elements.getElement("address");
