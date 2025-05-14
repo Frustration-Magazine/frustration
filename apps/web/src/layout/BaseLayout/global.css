@@ -327,6 +327,7 @@
   --color-color-rainbow-5: hsl(var(--color-rainbow-5));
 
   --font-*: initial;
+  --font-martel: Martel;
   --font-montserrat: Montserrat;
   --font-roboto: Roboto;
   --font-bebas: Bebas Neue;

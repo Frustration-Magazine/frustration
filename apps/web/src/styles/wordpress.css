@@ -1,5 +1,6 @@
+
+
 .content {
-  --font-size: 1.125rem;
   --line-height: 1.7;
 
   --yellow: #fff200;
@@ -48,7 +49,7 @@
 /* Links */
 .content a {
   text-decoration: underline;
-  text-decoration-thickness: 3px;
+  text-decoration-thickness: 2.5px;
   text-decoration-color: var(--alternate-yellow);
   text-underline-offset: 2px;
 }
@@ -56,7 +57,7 @@
 /* Paragraphs */
 .content p {
   margin-bottom: 15px;
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: "Martel", "Open Sans", Arial, sans-serif;
   font-size: var(--font-size);
   font-weight: 400;
 }
@@ -75,9 +76,11 @@
 }
 
 .content blockquote p {
+  font-family: "Open Sans", serif;
   font-weight: 600;
   font-size: 20px;
 }
+
 .content strong {
   font-weight: 900;
 }

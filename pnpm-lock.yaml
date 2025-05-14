@@ -204,6 +204,9 @@ importers:
       '@fontsource/bebas-neue':
         specifier: ^5.2.5
         version: 5.2.5
+      '@fontsource/martel':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@fontsource/montserrat':
         specifier: ^5.2.5
         version: 5.2.5
@@ -811,6 +814,12 @@ packages:
 
   '@fontsource/bebas-neue@5.2.5':
     resolution: {integrity: sha512-9hZCl9BpuwrIPRgprS17WRHMRyqprFKxNEDOl98en9XzikR8GGXpeiLaKf5HpNm1NKnVo/EowTjcgcgrvW3h0w==}
+
+  '@fontsource/martel@5.2.5':
+    resolution: {integrity: sha512-C0W+Vf/xgBYRMMQRrBZIz71MCzJX3nnA7tQSsDgvi+te8tVBkDkQGoNZxJsGip2KmMB/LUYCKCAp1055SJlU/A==}
+
+  '@fontsource/merriweather@5.2.7':
+    resolution: {integrity: sha512-ryOP1w5L0bZCFm1YoITndy18N+4Z07sJFkWEl9XxCAbqx88gkUO/F/vjPMw4Uup20w6plDD5w6xmsRiAI3+1NA==}
 
   '@fontsource/montserrat@5.2.5':
     resolution: {integrity: sha512-/OA+bdg1yqUArDUnEeCqDwgTDiIpvED56TxYskje8UKpsvjl/0A9eNod7IcdHz6/Osi70vo7briRO3la8/u+5Q==}
@@ -5104,6 +5113,10 @@ snapshots:
   '@fontsource/bakbak-one@5.2.5': {}
 
   '@fontsource/bebas-neue@5.2.5': {}
+
+  '@fontsource/martel@5.2.5': {}
+
+  '@fontsource/merriweather@5.2.7': {}
 
   '@fontsource/montserrat@5.2.5': {}
 
