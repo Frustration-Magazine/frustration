@@ -291,6 +291,9 @@ importers:
       data-access:
         specifier: workspace:*
         version: link:../../packages/data-access
+      eslint:
+        specifier: ^9.25.1
+        version: 9.25.1(jiti@2.4.2)
       framer-motion:
         specifier: ^12.9.2
         version: 12.9.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -817,9 +820,6 @@ packages:
 
   '@fontsource/martel@5.2.5':
     resolution: {integrity: sha512-C0W+Vf/xgBYRMMQRrBZIz71MCzJX3nnA7tQSsDgvi+te8tVBkDkQGoNZxJsGip2KmMB/LUYCKCAp1055SJlU/A==}
-
-  '@fontsource/merriweather@5.2.7':
-    resolution: {integrity: sha512-ryOP1w5L0bZCFm1YoITndy18N+4Z07sJFkWEl9XxCAbqx88gkUO/F/vjPMw4Uup20w6plDD5w6xmsRiAI3+1NA==}
 
   '@fontsource/montserrat@5.2.5':
     resolution: {integrity: sha512-/OA+bdg1yqUArDUnEeCqDwgTDiIpvED56TxYskje8UKpsvjl/0A9eNod7IcdHz6/Osi70vo7briRO3la8/u+5Q==}
@@ -5115,8 +5115,6 @@ snapshots:
   '@fontsource/bebas-neue@5.2.5': {}
 
   '@fontsource/martel@5.2.5': {}
-
-  '@fontsource/merriweather@5.2.7': {}
 
   '@fontsource/montserrat@5.2.5': {}
 

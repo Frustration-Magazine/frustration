@@ -55,6 +55,7 @@
     "clsx": "^2.1.1",
     "daisyui": "^5.0.28",
     "data-access": "workspace:*",
+    "eslint": "^9.25.1",
     "framer-motion": "^12.9.2",
     "lucide-react": "^0.503.0",
     "puppeteer": "^24.7.2",

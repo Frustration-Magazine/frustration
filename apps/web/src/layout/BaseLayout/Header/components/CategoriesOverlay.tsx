@@ -23,6 +23,13 @@ function CategoriesOverlay({ categories }: Props) {
     (category) => !category.parent && category.children.nodes.length === 0,
   );
 
+  const sortedStandaloneCategories = standaloneCategories
+            .filter(
+              (category) => !CATEGORIES_TO_FILTER_OUT.includes(category.slug),
+            )
+
+  sortedStandaloneCategories.sort((a, b) => b.count - a.count)
+
   const categoriesWithChildren = categories.filter(
     (category) => category.children.nodes.length > 0,
   );
@@ -91,11 +98,7 @@ function CategoriesOverlay({ categories }: Props) {
               </ul>
             </details>
           ))}
-          {standaloneCategories
-            .filter(
-              (category) => !CATEGORIES_TO_FILTER_OUT.includes(category.slug),
-            )
-            .toSorted((a, b) => b.count - a.count)
+          {sortedStandaloneCategories
             .map((category) => (
               <a
                 className="mb-1"

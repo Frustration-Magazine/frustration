@@ -24,8 +24,8 @@ const { posts } = Astro.props;
     const banner = document.querySelector("body #banner") as HTMLElement;
     const carrousel = document.querySelector(".splide") as HTMLElement;
 
-    const headerHeight = header?.getBoundingClientRect().height;
-    const bannerHeight = banner?.getBoundingClientRect().height;
+    const headerHeight = header ? header?.getBoundingClientRect().height : 0;
+    const bannerHeight = banner ? banner?.getBoundingClientRect().height : 0;
     const carrouselHeight =
       window.innerHeight - (headerHeight ?? 0) - (bannerHeight ?? 0);
     carrousel.style.height = `${carrouselHeight}px`;

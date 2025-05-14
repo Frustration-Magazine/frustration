@@ -64,9 +64,9 @@ class PostCard extends HTMLElement {
       }
     }
 
-    if (document.body.clientWidth > 768) {
-      postCardWrapper?.addEventListener("mousemove", handleMouseMove);
-      postCardWrapper?.addEventListener("mouseout", handleMouseOut);
+    if (document.body.clientWidth > 768 && postCardWrapper) {
+      postCardWrapper.addEventListener("mousemove", handleMouseMove);
+      postCardWrapper.addEventListener("mouseout", handleMouseOut);
     }
   }
 }

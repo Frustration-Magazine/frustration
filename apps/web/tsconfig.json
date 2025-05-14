@@ -8,7 +8,7 @@
     "target": "es2015",
     "moduleResolution": "node",
     "lib": [
-      "es2023",
+      "es2015",
       "dom"
     ],
     "plugins": [

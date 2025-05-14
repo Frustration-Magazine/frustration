@@ -14,7 +14,7 @@ const mapToLinks = (embedArticles: any) =>
   Array.from(embedArticles)
     .map((node: any) => {
       const REGEX_HTTPS = /^https?:\/\/frustrationmagazine.fr/;
-      const potentialLink = node?.textContent.trim();
+      const potentialLink = node && node.textContent && node.textContent.trim();
       if (!potentialLink || !REGEX_HTTPS.test(potentialLink)) return null;
       return potentialLink.replace(REGEX_HTTPS, "");
     })
@@ -36,7 +36,8 @@ function MoreArticles() {
     Promise.all(linksPreviewPromises).then((values) => {
       setLinkPreviews(values);
       embedArticles.forEach((node) => {
-        if (node?.textContent?.match("frustrationmagazine.fr")) node.remove();
+        const isFrustrationLink = node && node.textContent && node.textContent.match("frustrationmagazine.fr")
+        if (isFrustrationLink) node.remove();
       });
     });
   }, []);
