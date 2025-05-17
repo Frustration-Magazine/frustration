@@ -6,7 +6,7 @@ import { TiWarning as WarningIcon } from "react-icons/ti";
 import { useState } from "react";
 import { formatExplicitMonth } from "utils";
 import { Button } from "@/components/ui/button";
-
+import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   Dialog,
@@ -34,13 +34,13 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
     const customers = formData.get("customers");
     const date = new Date(formData.get("date") as string);
 
-    const res = await updateTipeee({
+    const { success } = await updateTipeee({
       amount: Number(amount),
       customers: Number(customers),
       date,
     });
 
-    if (res.success) {
+    if (success) {
       router.refresh();
       setMonths(months.filter((month) => month.getTime() !== date.getTime()));
     }
@@ -78,26 +78,55 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
         </DialogHeader>
         <DialogDescription className="mb-6 space-y-4">
           {/* Mois */}
-          {months.map((date) => (
-            <form key={date.getTime()} onSubmit={handleUpdateTipeee} className="rounded-md border p-4">
+          {months.toReversed().map((date, index) => (
+            <form
+              key={date.getTime()}
+              onSubmit={handleUpdateTipeee}
+              className={cn("rounded-md border p-4", index > 0 && "opacity-50")}
+            >
               <div className="mb-2 text-lg font-semibold text-black">{formatExplicitMonth(date, "long")}</div>
               <div className="flex gap-x-4">
                 <Label htmlFor="amount" className="flex grow flex-col gap-y-2">
                   <span>Montant total</span>
-                  <Input id="amount" name="amount" type="number" min={0} max={1000000} defaultValue={0} />
+                  <Input
+                    id="amount"
+                    disabled={index > 0}
+                    name="amount"
+                    type="number"
+                    min={0}
+                    max={1000000}
+                    defaultValue={0}
+                  />
                 </Label>
                 <Label htmlFor="customers" className="flex grow flex-col gap-y-2">
                   <span>Total d'abonnés</span>
-                  <Input id="customers" name="customers" type="number" min={0} max={1000000} defaultValue={0} />
+                  <Input
+                    id="customers"
+                    disabled={index > 0}
+                    name="customers"
+                    type="number"
+                    min={0}
+                    max={1000000}
+                    defaultValue={0}
+                  />
                 </Label>
                 <Label htmlFor="date" className="hidden grow flex-col gap-y-2">
                   <span>Date</span>
-                  <Input readOnly id="date" name="date" type="date" value={date.toISOString().split("T")[0]} />
+                  <Input
+                    readOnly
+                    id="date"
+                    disabled={index > 0}
+                    name="date"
+                    type="date"
+                    value={date.toISOString().split("T")[0]}
+                  />
                 </Label>
               </div>
-              <Button className="mt-5 ml-auto block" type="submit">
-                Mettre à jour
-              </Button>
+              {index === 0 && (
+                <Button className="mt-5 ml-auto block" type="submit">
+                  Mettre à jour
+                </Button>
+              )}
             </form>
           ))}
         </DialogDescription>
