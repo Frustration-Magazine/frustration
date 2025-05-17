@@ -107,6 +107,31 @@ export async function fetchRSSItems({ first = 6 }: any) {
   return posts;
 }
 
+export async function fetchAuthorsByIds({ ids }: { ids: string[] }) {
+  const query = `
+   query fetchAuthorsByIds {
+        users(where: { include: [${ids.join(',')}] }) {
+          nodes {
+            databaseId
+            name
+            slug
+            description
+            avatar {
+              url
+            }
+          }
+        }
+    }`;
+
+  let {
+    data: {
+      users: { nodes: authors },
+    },
+  } = await fetchWordpress({ query });
+
+  return authors;
+}
+
 export async function fetchInterviews({ first = 6 }: any) {
   const query = `
    query fetchInterviews {
