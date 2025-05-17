@@ -44,7 +44,6 @@ const useVideos = ({ type }: Props) => {
   // 📀 Add media
   const handleAddMedia = async ({ type, id }: { type: YoutubeResourceType; id: string }) => {
     const status = await createMediaRecord({ type, id });
-    console.log("handleAddMedia", status);
     // ✅ Resource created !
     if (status.success) {
       // 1️⃣ Add saved suggestion to listed resources

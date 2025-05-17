@@ -104,7 +104,6 @@ export async function fetchYoutubeByIdsAndType(ids: string[], type: YoutubeResou
 }
 
 async function upsertYoutubeVideo(youtubeVideo: any, mediaId: string) {
-  console.log("upsertYoutubeVideo", youtubeVideo);
   const res = await prisma.media_video.upsert({
     where: {
       id: youtubeVideo.id,
@@ -133,8 +132,6 @@ async function upsertYoutubeVideo(youtubeVideo: any, mediaId: string) {
       mediaId,
     },
   });
-
-  console.log("upsertYoutubeVideo", res);
 }
 
 async function upsertYoutubePlaylist(youtubePlaylist: any, mediaId: string) {

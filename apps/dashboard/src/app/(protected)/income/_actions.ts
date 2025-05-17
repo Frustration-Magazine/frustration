@@ -18,9 +18,6 @@ export async function getPayments() {
 }
 
 export async function updateTipeee({ amount, customers, date }: { amount: number; customers: number; date: Date }) {
-  console.log("amount", amount);
-  console.log("customers", customers);
-  console.log("date", date);
   try {
     await prisma.payments.create({
       data: {
