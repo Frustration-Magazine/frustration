@@ -14,7 +14,7 @@
   ],
   "packageManager": "pnpm@10.11.0",
   "dependencies": {
-    "@prisma/client": "^6.7.0",
-    "prisma": "^6.7.0"
+    "@prisma/client": "^6.8.2",
+    "prisma": "^6.8.2"
   }
 }
