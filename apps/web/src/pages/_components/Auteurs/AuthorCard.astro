@@ -1,0 +1,30 @@
+---
+interface Props {
+  name: string;
+  slug: string;
+  description: string;
+  avatarUrl: string;
+}
+
+const { name, slug, description, avatarUrl } = Astro.props;
+---
+
+<li class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200">
+  <a 
+    href={`/posts?author=${slug}`} 
+    class="h-full p-6 flex items-center gap-6"
+    title={`Voir tous les articles de ${name}`}
+  >
+    <img
+      src={avatarUrl}
+      alt={`Avatar de ${name}`}
+      class="size-24 rounded-full object-cover"
+    />
+
+    <div class="flex flex-col h-full gap-1">
+      <h2 class="text-2xl font-semibold font-bebas">{name}</h2>
+      <p class="text-gray-600 line-clamp-3 font-open-sans">{description}</p>
+      <p class="text-gray-400 hover:text-gray-600 text-sm font-open-sans mt-auto">Voir tous les articles</p>
+    </div>
+  </a>
+</li>
