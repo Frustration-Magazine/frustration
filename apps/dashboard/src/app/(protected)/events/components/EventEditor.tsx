@@ -132,9 +132,17 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                 control={form.control}
                 name="date"
                 render={({ field }) => (
-                  <div className={cn("grow", !displayEvent && "opacity-50")}>
+                  <div className={cn("basis-1/2", !displayEvent && "opacity-50")}>
                     <Label htmlFor="date">Date</Label>
-                    <DatePicker value={field.value} onChange={field.onChange} className="flex w-full" name="date" />
+                    <DatePicker
+                      value={field.value}
+                      onChange={(newDate) => {
+                        newDate?.setHours(19, 0, 0, 0);
+                        field.onChange(newDate);
+                      }}
+                      className="flex w-full"
+                      name="date"
+                    />
                   </div>
                 )}
               />
@@ -142,7 +150,7 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                 control={form.control}
                 name="date"
                 render={({ field }) => (
-                  <div className="grow">
+                  <div className="basis-1/2">
                     <Label htmlFor="hour">Heure</Label>
                     <div className="flex items-center gap-2">
                       <Select
@@ -195,7 +203,7 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                 control={form.control}
                 name="city"
                 render={({ field }) => (
-                  <div className={cn("grow", !displayEvent && "opacity-50")}>
+                  <div className={cn("basis-1/2", !displayEvent && "opacity-50")}>
                     <Label htmlFor="city">Ville</Label>
                     <Input {...field} />
                   </div>
@@ -205,7 +213,7 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                 control={form.control}
                 name="place"
                 render={({ field }) => (
-                  <div className={cn("grow", !displayEvent && "opacity-50")}>
+                  <div className={cn("basis-1/2", !displayEvent && "opacity-50")}>
                     <Label htmlFor="place">Lieu</Label>
                     <Input {...field} />
                   </div>
