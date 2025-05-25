@@ -25,8 +25,14 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/text-area";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { getHours, getMinutes } from "../utils";
+
+const hours = getHours();
+const minutes = getMinutes();
 
 const now = new Date();
+now.setHours(19, 0, 0, 0);
 
 const DEFAULT_EVENT = {
   date: now,
@@ -111,17 +117,70 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                 control={form.control}
                 name="date"
                 render={({ field }) => (
-                  <div className={cn(!displayEvent && "opacity-50")}>
+                  <div className={cn("grow", !displayEvent && "opacity-50")}>
                     <Label htmlFor="date">Date</Label>
-                    <DatePicker value={field.value} onChange={field.onChange} className="flex" name="date" />
+                    <DatePicker value={field.value} onChange={field.onChange} className="flex w-full" name="date" />
                   </div>
                 )}
               />
               <FormField
                 control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <div className="grow">
+                    <Label htmlFor="hour">Heure</Label>
+                    <div className="flex items-center gap-2">
+                      <Select
+                        value={field.value.getHours().toString()}
+                        onValueChange={(hours) => {
+                          const newDate = new Date(field.value);
+                          const hoursNumber = Number(hours.replace(/[^0-9]/g, ""));
+                          newDate.setHours(hoursNumber);
+                          field.onChange(newDate);
+                        }}
+                      >
+                        <SelectTrigger className="cursor-pointer">
+                          <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {hours.map((hour) => (
+                            <SelectItem key={hour} value={hour.toString()}>
+                              {hour}h
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Select
+                        value={field.value.getMinutes().toString().padStart(2, "0")}
+                        onValueChange={(minutes) => {
+                          const newDate = new Date(field.value);
+                          const minutesNumber = Number(minutes.replace(/[^0-9]/g, ""));
+                          newDate.setMinutes(minutesNumber);
+                          field.onChange(newDate);
+                        }}
+                      >
+                        <SelectTrigger className="cursor-pointer">
+                          <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {minutes.map((minute) => (
+                            <SelectItem key={minute} value={minute.toString()}>
+                              {minute}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                )}
+              />
+            </div>
+            <div className="flex w-full items-center gap-4">
+              <FormField
+                control={form.control}
                 name="city"
                 render={({ field }) => (
-                  <div className={cn(!displayEvent && "opacity-50")}>
+                  <div className={cn("grow", !displayEvent && "opacity-50")}>
                     <Label htmlFor="city">Ville</Label>
                     <Input {...field} />
                   </div>
@@ -131,7 +190,7 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                 control={form.control}
                 name="place"
                 render={({ field }) => (
-                  <div className={cn(!displayEvent && "opacity-50")}>
+                  <div className={cn("grow", !displayEvent && "opacity-50")}>
                     <Label htmlFor="place">Lieu</Label>
                     <Input {...field} />
                   </div>

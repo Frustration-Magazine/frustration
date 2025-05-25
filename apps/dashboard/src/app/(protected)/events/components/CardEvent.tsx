@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { IoMailOutline as MailIcon } from "react-icons/io5";
 import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
-import { Trash, PenIcon } from "lucide-react";
+import { Trash, PenIcon, EyeIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import {
@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -41,6 +42,14 @@ import { updateEvent } from "../actions/updateEvent";
 import { deleteEvent } from "../actions/deleteEvent";
 import { formatDateHour } from "utils";
 import { useState } from "react";
+import {
+  convertHourToNumber,
+  convertHourToString,
+  convertMinuteToNumber,
+  convertMinuteToString,
+  getHours,
+  getMinutes,
+} from "../utils";
 
 type EventFormType = z.infer<typeof EventFormSchema>;
 
@@ -76,18 +85,21 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
 
   if (!event) return null;
 
+  const hours = getHours();
+  const minutes = getMinutes();
+
   const EditButton = (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
-              <button className="cursor-pointer rounded-md bg-black/5 p-2 text-black/70">
+              <button className="cursor-pointer rounded-md bg-black p-2 text-white">
                 <PenIcon size={16} />
               </button>
             </DialogTrigger>
           </TooltipTrigger>
-          <TooltipContent>
+          <TooltipContent className="bg-black text-white">
             <p>Modifier</p>
           </TooltipContent>
         </Tooltip>
@@ -99,39 +111,75 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
         </DialogHeader>
         <Form {...form}>
           <form className={cn("w-[650px] space-y-8")} onSubmit={form.handleSubmit(onSubmitUpdate)}>
-            <FormField
-              control={form.control}
-              name="displayEvent"
-              render={({ field }) => (
-                <div className={cn("mx-auto mt-2 mb-8 flex items-center justify-center gap-2")}>
-                  <Switch
-                    id="displayEvent"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    name="displayEvent"
-                  />
-                  <Label htmlFor="displayEvent" className="text-base">
-                    Afficher l'événement sur le site
-                  </Label>
-                </div>
-              )}
-            />
             <div className="flex items-center gap-4">
               <FormField
                 control={form.control}
                 name="date"
                 render={({ field }) => (
-                  <div className={cn(!displayEvent && "opacity-50")}>
+                  <div className="grow">
                     <Label htmlFor="date">Date</Label>
-                    <DatePicker value={field.value} onChange={field.onChange} className="flex" name="date" />
+                    <DatePicker value={field.value} onChange={field.onChange} className="flex w-full" name="date" />
                   </div>
                 )}
               />
               <FormField
                 control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <div className="grow">
+                    <Label htmlFor="hour">Heure</Label>
+                    <div className="flex items-center gap-2">
+                      <Select
+                        value={convertHourToString(field.value.getHours())}
+                        onValueChange={(hours) => {
+                          const newDate = new Date(field.value);
+                          const hoursNumber = convertHourToNumber(hours);
+                          newDate.setHours(hoursNumber);
+                          field.onChange(newDate);
+                        }}
+                      >
+                        <SelectTrigger className="cursor-pointer">
+                          <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {hours.map((hour) => (
+                            <SelectItem key={hour} value={convertHourToString(hour)}>
+                              {hour}h
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Select
+                        value={convertMinuteToString(field.value.getMinutes())}
+                        onValueChange={(minutes) => {
+                          const newDate = new Date(field.value);
+                          const minutesNumber = convertMinuteToNumber(minutes);
+                          newDate.setMinutes(minutesNumber);
+                          field.onChange(newDate);
+                        }}
+                      >
+                        <SelectTrigger className="cursor-pointer">
+                          <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {minutes.map((minute) => (
+                            <SelectItem key={minute} value={convertMinuteToString(minute)}>
+                              {minute}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                )}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <FormField
+                control={form.control}
                 name="city"
                 render={({ field }) => (
-                  <div className={cn(!displayEvent && "opacity-50")}>
+                  <div className="grow">
                     <Label htmlFor="city">Ville</Label>
                     <Input {...field} />
                   </div>
@@ -141,7 +189,7 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
                 control={form.control}
                 name="place"
                 render={({ field }) => (
-                  <div className={cn(!displayEvent && "opacity-50")}>
+                  <div className="grow">
                     <Label htmlFor="place">Lieu</Label>
                     <Input {...field} />
                   </div>
@@ -152,7 +200,7 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
               control={form.control}
               name="description"
               render={({ field }) => (
-                <div className={cn(!displayEvent && "opacity-50")}>
+                <div>
                   <Label htmlFor="description">Description</Label>
                   <Textarea {...field} className="max-h-[7lh]" />
                 </div>
@@ -163,7 +211,7 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
                 control={form.control}
                 name="contact"
                 render={({ field }) => (
-                  <div className={cn("grow", !displayEvent && "opacity-50")}>
+                  <div className="grow">
                     <Label htmlFor="contact">Email de contact</Label>
                     <Input type="email" {...field} />
                   </div>
@@ -173,14 +221,14 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
                 control={form.control}
                 name="displayContact"
                 render={({ field }) => (
-                  <div className={cn("mt-5 flex cursor-pointer items-center gap-1.5", !displayEvent && "opacity-50")}>
+                  <div className="mt-5 flex cursor-pointer items-center gap-1.5">
                     <Checkbox
                       id="displayContact"
                       name="displayContact"
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
-                    <Label htmlFor="displayContact">Afficher l'email de contact</Label>
+                    <Label htmlFor="displayContact">Afficher publiquement l'email de contact</Label>
                   </div>
                 )}
               />
@@ -203,12 +251,12 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
         <Tooltip>
           <TooltipTrigger asChild>
             <AlertDialogTrigger asChild>
-              <button className="cursor-pointer rounded-md bg-red-100 p-2 text-red-500">
+              <button className="cursor-pointer rounded-md bg-red-500 p-2 text-white">
                 <Trash size={16} />
               </button>
             </AlertDialogTrigger>
           </TooltipTrigger>
-          <TooltipContent>
+          <TooltipContent className="bg-black text-white">
             <p>Supprimer</p>
           </TooltipContent>
         </Tooltip>
@@ -248,13 +296,29 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
         </CardTitle>
       </CardHeader>
       <CardContent>{description}</CardContent>
-      <CardFooter className="flex items-center justify-between gap-1 text-sm">
-        <i> Entrée libre</i>
-        <div className="flex items-center gap-1">
-          <MailIcon />
-          <a href={`mailto:${contact}`} className="underline">
-            {contact}
-          </a>
+      <CardFooter className="block text-sm">
+        <div className="flex w-full items-center justify-between gap-1">
+          <i> Entrée libre</i>
+          <div className="flex items-center gap-1">
+            <MailIcon />
+            <a href={`mailto:${contact}`} className="underline">
+              {contact}
+            </a>
+          </div>
+        </div>
+        <div className="mt-4 flex items-center gap-1.5">
+          <FormField
+            control={form.control}
+            name="displayEvent"
+            render={({ field }) => (
+              <div className={cn("flex items-center justify-center gap-2")}>
+                <Switch id="displayEvent" checked={field.value} onCheckedChange={field.onChange} name="displayEvent" />
+                <Label htmlFor="displayEvent" className="text-base">
+                  Afficher l'événement sur le site
+                </Label>
+              </div>
+            )}
+          />
         </div>
       </CardFooter>
     </Card>

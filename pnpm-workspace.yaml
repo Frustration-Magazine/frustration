@@ -1,3 +1,11 @@
 packages:
-  - "apps/**"
-  - "packages/**"
+  - apps/**
+  - packages/**
+ignoredBuiltDependencies:
+  - puppeteer
+onlyBuiltDependencies:
+  - '@prisma/client'
+  - '@prisma/engines'
+  - esbuild
+  - prisma
+  - sharp

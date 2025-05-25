@@ -17,7 +17,7 @@ async function Page() {
       },
     },
     orderBy: { date: "desc" },
-    success: "Events read!",
+    success: "Events read !",
   });
 
   return <EventEditor events={events} />;
