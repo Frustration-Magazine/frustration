@@ -4,7 +4,7 @@ import { updateTipeee } from "../_actions";
 import { ExternalLink } from "lucide-react";
 import { TiWarning as WarningIcon } from "react-icons/ti";
 import { useState } from "react";
-import { formatExplicitMonth } from "utils";
+import { formatExplicitMonth, convertDateForDateInput } from "utils";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -21,11 +21,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonths: Date[] }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [months, setMonths] = useState<Date[]>(missingTipeeeMonths);
-  const router = useRouter();
 
-  if (isOpen && months.length === 0) setIsOpen(false);
+  const shouldClose = isOpen && months.length === 0;
+  if (shouldClose) setIsOpen(false);
 
   const handleUpdateTipeee = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,7 +43,8 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
 
     if (success) {
       router.refresh();
-      setMonths(months.filter((month) => month.getTime() !== date.getTime()));
+      const remainingMonths = months.filter((month) => month.getTime() !== date.getTime());
+      setMonths(remainingMonths);
     }
   };
 
@@ -78,69 +80,63 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
         </DialogHeader>
         <DialogDescription className="mb-6 space-y-4">
           {/* Mois */}
-          {months.toReversed().map((date, index) => (
-            <form
-              key={date.getTime()}
-              onSubmit={handleUpdateTipeee}
-              className={cn("rounded-md border p-4", index > 0 && "opacity-50")}
-            >
-              <div className="mb-2 text-lg font-semibold text-black">{formatExplicitMonth(date, "long")}</div>
-              <div className="flex gap-x-4">
-                <Label htmlFor="amount" className="flex grow flex-col gap-y-2">
-                  <span>Montant total</span>
-                  <Input
-                    id="amount"
-                    disabled={index > 0}
-                    name="amount"
-                    type="number"
-                    min={0}
-                    max={1000000}
-                    defaultValue={0}
-                  />
-                </Label>
-                <Label htmlFor="customers" className="flex grow flex-col gap-y-2">
-                  <span>Total d'abonnés</span>
-                  <Input
-                    id="customers"
-                    disabled={index > 0}
-                    name="customers"
-                    type="number"
-                    min={0}
-                    max={1000000}
-                    defaultValue={0}
-                  />
-                </Label>
-                <Label htmlFor="date" className="hidden grow flex-col gap-y-2">
-                  <span>Date</span>
-                  <Input
-                    readOnly
-                    id="date"
-                    disabled={index > 0}
-                    name="date"
-                    type="date"
-                    value={date.toISOString().split("T")[0]}
-                  />
-                </Label>
-              </div>
-              {index === 0 && (
-                <Button className="mt-5 ml-auto block" type="submit">
-                  Mettre à jour
-                </Button>
-              )}
-            </form>
-          ))}
+          {months.toReversed().map((date, index) => {
+            const shouldBeDisabled = index > 0;
+            return (
+              <form
+                key={date.getTime()}
+                onSubmit={handleUpdateTipeee}
+                className={cn("rounded-md border p-4", shouldBeDisabled && "opacity-50")}
+              >
+                <div className="mb-2 text-lg font-semibold text-black">{formatExplicitMonth(date, "long")}</div>
+                <div className="flex gap-x-4">
+                  <Label htmlFor="amount" className="flex grow flex-col gap-y-2">
+                    <span>Montant total</span>
+                    <Input
+                      id="amount"
+                      disabled={shouldBeDisabled}
+                      name="amount"
+                      type="number"
+                      min={0}
+                      max={1000000}
+                      defaultValue={0}
+                    />
+                  </Label>
+                  <Label htmlFor="customers" className="flex grow flex-col gap-y-2">
+                    <span>Total d'abonnés</span>
+                    <Input
+                      id="customers"
+                      disabled={shouldBeDisabled}
+                      name="customers"
+                      type="number"
+                      min={0}
+                      max={1000000}
+                      defaultValue={0}
+                    />
+                  </Label>
+                  <Label htmlFor="date" className="hidden grow flex-col gap-y-2">
+                    <span>Date</span>
+                    <Input
+                      readOnly
+                      id="date"
+                      disabled={shouldBeDisabled}
+                      name="date"
+                      type="date"
+                      value={convertDateForDateInput(date)}
+                    />
+                  </Label>
+                </div>
+                {!shouldBeDisabled && (
+                  <Button className="mt-5 ml-auto block" type="submit">
+                    Mettre à jour
+                  </Button>
+                )}
+              </form>
+            );
+          })}
         </DialogDescription>
         <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => {
-              if (months.length !== missingTipeeeMonths.length) {
-                router.refresh();
-              } else {
-                setIsOpen(false);
-              }
-            }}
-          >
+          <Button variant="outline" onClick={() => setIsOpen(false)}>
             Fermer
           </Button>
         </DialogFooter>

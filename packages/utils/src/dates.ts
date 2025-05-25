@@ -206,3 +206,11 @@ export function areSameMonth(date1: Date, date2: Date): boolean {
 export function truncateMonth(date: Date) {
   return new Date(date.getFullYear(), date.getMonth());
 }
+
+/* --------------------------- */
+/* Convert date for date input */
+/* --------------------------- */
+
+export function convertDateForDateInput(date: Date) {
+  return date.toISOString().split("T")[0];
+}
