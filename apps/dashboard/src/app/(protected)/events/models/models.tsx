@@ -7,8 +7,8 @@ export type Event = {
   description: string;
   city: string;
   place: string;
-  contact: string;
-  displayContact: boolean;
+  contact?: string;
+  displayContact?: boolean;
   displayEvent: boolean;
 };
 
@@ -39,7 +39,7 @@ export const EventFormSchema = z.object({
       required_error: "Veuillez renseigner un lieu précis",
     })
     .min(1),
-  contact: z.string().email({
+  contact: z.string().refine((val) => val === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
     message: "Veuillez renseigner un email valide",
   }),
   displayContact: z.boolean({

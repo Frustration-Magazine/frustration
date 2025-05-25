@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardEvent from "./CardEvent";
 
 import { z } from "zod";
@@ -26,7 +26,14 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/text-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getHours, getMinutes } from "../utils";
+import {
+  convertHourToNumber,
+  convertHourToString,
+  convertMinuteToNumber,
+  convertMinuteToString,
+  getHours,
+  getMinutes,
+} from "../utils";
 
 const hours = getHours();
 const minutes = getMinutes();
@@ -70,6 +77,14 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
   }
 
   form.watch();
+
+  // Reset form if closed
+  useEffect(() => {
+    if (!isOpen) {
+      form.reset(DEFAULT_EVENT);
+    }
+  }, [isOpen, form]);
+
   const { displayEvent } = form.getValues();
 
   const AddButton = (
@@ -134,7 +149,7 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                         value={field.value.getHours().toString()}
                         onValueChange={(hours) => {
                           const newDate = new Date(field.value);
-                          const hoursNumber = Number(hours.replace(/[^0-9]/g, ""));
+                          const hoursNumber = convertHourToNumber(hours);
                           newDate.setHours(hoursNumber);
                           field.onChange(newDate);
                         }}
@@ -144,8 +159,8 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                         </SelectTrigger>
                         <SelectContent>
                           {hours.map((hour) => (
-                            <SelectItem key={hour} value={hour.toString()}>
-                              {hour}h
+                            <SelectItem key={hour} value={convertHourToString(hour)}>
+                              {convertHourToString(hour)}h
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -154,7 +169,7 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                         value={field.value.getMinutes().toString().padStart(2, "0")}
                         onValueChange={(minutes) => {
                           const newDate = new Date(field.value);
-                          const minutesNumber = Number(minutes.replace(/[^0-9]/g, ""));
+                          const minutesNumber = convertMinuteToNumber(minutes);
                           newDate.setMinutes(minutesNumber);
                           field.onChange(newDate);
                         }}
@@ -164,8 +179,8 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                         </SelectTrigger>
                         <SelectContent>
                           {minutes.map((minute) => (
-                            <SelectItem key={minute} value={minute.toString()}>
-                              {minute}
+                            <SelectItem key={minute} value={convertMinuteToString(minute)}>
+                              {convertMinuteToString(minute)}
                             </SelectItem>
                           ))}
                         </SelectContent>
