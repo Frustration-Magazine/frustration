@@ -82,7 +82,7 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
 
   form.watch("displayEvent");
   const { date, displayHour, city, place, description, contact, displayEvent } = form.getValues();
-
+  console.log("date", date);
   if (!event) return null;
 
   const hours = getHours();
@@ -256,7 +256,7 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
               </button>
             </AlertDialogTrigger>
           </TooltipTrigger>
-          <TooltipContent className="bg-black text-white">
+          <TooltipContent className="bg-red-500 text-white">
             <p>Supprimer</p>
           </TooltipContent>
         </Tooltip>

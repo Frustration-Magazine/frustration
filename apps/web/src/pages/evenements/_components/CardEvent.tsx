@@ -13,11 +13,12 @@ import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
 import { IoMailOutline as MailIcon } from "react-icons/io5";
 import { type Event } from "../_models";
 
-const formatDate = (date: Date, displayHour: boolean) => {
+const formatDate = (date: Date, displayHour: boolean, timezone: string = "Europe/Paris") => {
   const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
     day: "numeric",
     month: "long",
+    timeZone: timezone,
     ...(displayHour
       ? {
           hour: "numeric",

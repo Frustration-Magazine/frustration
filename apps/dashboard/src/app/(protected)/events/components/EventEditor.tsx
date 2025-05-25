@@ -78,7 +78,7 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
         <div className="sticky top-0 flex cursor-pointer flex-wrap items-center gap-2 opacity-50 transition-opacity hover:opacity-100">
           <div className="flex w-full justify-center">
             <Button className="bg-black hover:bg-black">
-              <span className="text-yellow">Ajouter un événement</span>
+              <span className="text-yellow">Ajouter un événement à venir</span>
             </Button>
           </div>
           <hr className="grow border-2 border-black" />
@@ -90,7 +90,7 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Ajouter un événement</DialogTitle>
+          <DialogTitle>Ajouter un événement à venir</DialogTitle>
           <DialogDescription>Cliquez sur enregistrer lorsque vous avez terminé.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
