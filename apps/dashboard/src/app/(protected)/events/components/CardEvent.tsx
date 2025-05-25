@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { IoMailOutline as MailIcon } from "react-icons/io5";
 import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
-import { Trash, PenIcon, EyeIcon } from "lucide-react";
+import { Trash, PenIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import {
@@ -41,7 +41,7 @@ import { Switch } from "@/components/ui/switch";
 import { updateEvent } from "../actions/updateEvent";
 import { deleteEvent } from "../actions/deleteEvent";
 import { formatDateHour } from "utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   convertHourToNumber,
   convertHourToString,
@@ -82,7 +82,11 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
 
   form.watch("displayEvent");
   const { date, displayHour, city, place, description, contact, displayEvent } = form.getValues();
-  console.log("date", date);
+
+  useEffect(() => {
+    onSubmitUpdate({ ...form.getValues(), displayEvent });
+  }, [displayEvent]);
+
   if (!event) return null;
 
   const hours = getHours();
@@ -221,14 +225,16 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
                 control={form.control}
                 name="displayContact"
                 render={({ field }) => (
-                  <div className="mt-5 flex cursor-pointer items-center gap-1.5">
+                  <div className="mt-5 flex items-center gap-1.5">
                     <Checkbox
                       id="displayContact"
                       name="displayContact"
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
-                    <Label htmlFor="displayContact">Afficher publiquement l'email de contact</Label>
+                    <Label htmlFor="displayContact" className="cursor-pointer">
+                      Afficher publiquement l'email de contact
+                    </Label>
                   </div>
                 )}
               />
@@ -311,7 +317,7 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
             control={form.control}
             name="displayEvent"
             render={({ field }) => (
-              <div className={cn("flex items-center justify-center gap-2")}>
+              <div className={cn("flex cursor-pointer items-center justify-center gap-2")}>
                 <Switch id="displayEvent" checked={field.value} onCheckedChange={field.onChange} name="displayEvent" />
                 <Label htmlFor="displayEvent" className="text-base">
                   Afficher l'événement sur le site
