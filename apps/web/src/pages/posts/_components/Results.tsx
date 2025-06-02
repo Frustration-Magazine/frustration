@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getSearchPostsQuery } from "@/lib/wordpress";
 import { useState } from "react";
 import { CgArrowTopRight } from "react-icons/cg";
 
@@ -45,9 +46,7 @@ const Title = ({ children: title }: { readonly children: string }) => (
 );
 
 const Excerpt = ({ children: excerpt }: { children: string }) => (
-  <p
-    className="text-justify"
-    dangerouslySetInnerHTML={{ __html: excerpt }}></p>
+  <p dangerouslySetInnerHTML={{ __html: excerpt }}></p>
 );
 
 const Read = () => (
@@ -77,25 +76,12 @@ function Results({
 
   const handleMoreArticles = async () => {
     setLoadingPosts(true);
-    const query = `
-     query fetchSearchPosts {
-      posts(
-        first: 6
-        ${pageInfo?.endCursor ? `after: "${pageInfo.endCursor}"` : ""}
-        where: { search: "${term}", ${category ? `categoryName: "${category}",` : ""} ${author ? `authorName:"${author}",` : ""} orderby: { field: DATE, order: DESC } }
-      ) {
-        nodes {
-          title(format: RENDERED)
-          slug
-          excerpt(format: RENDERED)
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-      }
-    }
-    `;
+    const query = getSearchPostsQuery({
+      term,
+      category,
+      author,
+      after: pageInfo?.endCursor,
+    });
 
     try {
       const res = await fetch(PUBLIC_WORDPRESS_GRAPHQL_API, {

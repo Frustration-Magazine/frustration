@@ -145,50 +145,54 @@ export async function fetchInterviews({ first = 6 }: any) {
   return interviews;
 }
 
-export async function fetchSearchPosts({ term, category, author, after }: any) {
-  const query = `
+export function getSearchPostsQuery({ term, category, author, after }: any) {
+  return `
     query fetchSearchPosts {
-      posts(
-        first: 6
-        ${after ? `after: "${after}"` : ""}
-        where: { search: "${term}", ${category ? `categoryName:"${category}",` : ""} ${author ? `authorName:"${author}",` : ""} orderby: { field: DATE, order: DESC } }
-      ) {
-        nodes {
-          title(format: RENDERED)
-          slug
-          date
-          categories {
-            nodes {
-              name
-              id
-              parent {
-                node {
-                  name
+        posts(
+          first: 6
+          ${after ? `after: "${after}"` : ""}
+          where: { search: "${term}", ${category ? `categoryName:"${category}",` : ""} ${author ? `authorName:"${author}",` : ""} orderby: { field: DATE, order: DESC } }
+        ) {
+          nodes {
+            title(format: RENDERED)
+            slug
+            date
+            categories {
+              nodes {
+                name
+                id
+                parent {
+                  node {
+                    name
+                  }
                 }
               }
             }
-          }
-          featuredImage {
-            node {
-              title(format: RENDERED)
-              altText
-              sourceUrl
+            featuredImage {
+              node {
+                title(format: RENDERED)
+                altText
+                sourceUrl
+              }
+            }
+            excerpt(format: RENDERED)
+            author {
+              node {
+                name
+              }
             }
           }
-          excerpt(format: RENDERED)
-          author {
-            node {
-              name
-            }
+          pageInfo {
+            endCursor
+            hasNextPage
           }
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
         }
       }
-    }
   `;
+}
+
+export async function fetchSearchPosts({ term, category, author, after }: any) {
+  const query = getSearchPostsQuery({ term, category, author, after });
 
   let {
     data: {
