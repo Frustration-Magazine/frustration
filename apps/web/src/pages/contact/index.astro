@@ -25,6 +25,8 @@ const SUCCESS_STATUS = {
 };
 
 let status = null;
+let email = "";
+let message = "";
 
 if (Astro.request.method === "POST") {
   if (!process.env.RESEND_API_KEY) {
@@ -55,10 +57,9 @@ if (Astro.request.method === "POST") {
 
   try {
     const data = await Astro.request.formData();
-    const email = data.get("email");
-    const message = data.get("message");
-
     const hcaptchaResponse = data.get("h-captcha-response");
+    email = data.get("email")?.toString() ?? "";
+    message = data.get("message")?.toString() ?? "";
 
     if (!hcaptchaResponse) {
       status = INVALID_CAPTCHA_STATUS;
@@ -75,6 +76,8 @@ if (Astro.request.method === "POST") {
       });
 
       status = SUCCESS_STATUS;
+      email = "";
+      message = "";
     }
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
@@ -125,6 +128,7 @@ export const prerender = false;
         placeholder="Votre email de contact"
         name="email"
         id="email"
+        defaultValue={email}
         required
       />
       <Textarea
@@ -134,6 +138,7 @@ export const prerender = false;
         minLength={10}
         maxLength={5000}
         id="message"
+        defaultValue={message}
         required
       />
       {
