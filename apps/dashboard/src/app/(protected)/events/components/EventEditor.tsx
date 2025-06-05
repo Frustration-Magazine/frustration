@@ -90,17 +90,15 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
   const AddButton = (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <div className="sticky top-0 flex cursor-pointer flex-wrap items-center gap-2 opacity-50 transition-opacity hover:opacity-100">
+        <div className="sticky top-0 flex cursor-pointer flex-wrap items-center gap-2">
           <div className="flex w-full justify-center">
-            <Button className="bg-black hover:bg-black">
+            <Button size="xl" className="bg-black hover:bg-black">
               <span className="text-yellow">Ajouter un événement à venir</span>
             </Button>
           </div>
-          <hr className="grow border-2 border-black" />
-          <button className="text-yellow cursor-pointer rounded-full bg-black p-2">
+          <button className="text-yellow mx-auto block cursor-pointer rounded-full bg-black p-2">
             <Plus size={26} />
           </button>
-          <hr className="grow border-2 border-black" />
         </div>
       </DialogTrigger>
       <DialogContent>
