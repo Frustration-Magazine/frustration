@@ -1,0 +1,32 @@
+---
+import { cn } from "@/lib/utils";
+import AuthorCard from "@/pages/_components/Auteurs/AuthorCard.astro";
+
+interface Props {
+  authors: Author[];
+  className?: string;
+}
+
+type Author = {
+  databaseId: number;
+  name: string;
+  slug: string;
+  description: string;
+  avatar: {
+    url: string;
+  };
+};
+
+const { authors, className } = Astro.props;
+---
+
+<ul class={cn("grid grid-cols-1 sm:grid-cols-2 gap-8", className)}>
+  {authors.map((author: Author) => (
+    <AuthorCard
+      name={author.name}
+      slug={author.slug}
+      description={author.description}
+      avatarUrl={author.avatar.url}
+    />
+  ))}
+</ul>
