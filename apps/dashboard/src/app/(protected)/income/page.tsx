@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { signedIn } from "@/auth";
 import { cn } from "@/lib/utils";
 import { ChartPanel } from "./components/ChartPanel";
-
 export const dynamic = "force-dynamic";
 
 const PaymentsType = ({ value, children }: { value: string; children: string }) => (
@@ -40,15 +39,15 @@ async function Page() {
       </TabsList>
       {/* All */}
       <TabsContent className="grow overflow-auto" value="all">
-        <ChartPanel payments={donationsAndSubscriptions} />
+        <ChartPanel payments={donationsAndSubscriptions} type="all" />
       </TabsContent>
       {/* Subscriptions */}
       <TabsContent className="grow overflow-auto" value="subscriptions">
-        <ChartPanel payments={subscriptions} />
+        <ChartPanel payments={subscriptions} type="subscriptions" />
       </TabsContent>
       {/* Donations */}
       <TabsContent className="grow overflow-auto" value="donations">
-        <ChartPanel payments={donations} />
+        <ChartPanel payments={donations} type="donations" />
       </TabsContent>
     </Tabs>
   );

@@ -67,26 +67,31 @@ const findMissingTipeeeMonths = (payments: Payment[]): Date[] => {
   return missingTipeeeMonths;
 };
 
-export const Panel = ({ name, payments, highlighted }: { name: string; payments: Payment[]; highlighted: number }) => {
+export const Panel = ({ type, payments, highlighted }: { type: string; payments: Payment[]; highlighted: number }) => {
   const paymentsByMonth = aggregateByMonth(payments);
   const missingTipeeeMonths = findMissingTipeeeMonths(payments);
 
+  const title = type === "all" ? "Tout" : 
+                type === "subscriptions" ? "Abonnements" : 
+                type === "donations" ? "Dons" : "Tout";
   return (
     <Card className="scrollbar-none min-w-[300px] overflow-scroll border-none bg-black/90 text-white shadow-lg backdrop-blur-md">
       {missingTipeeeMonths.length > 0 && <UpdateTipeeeDialog missingTipeeeMonths={missingTipeeeMonths} />}
       <CardHeader className="text-3xl font-semibold">
-        <CardTitle>{name}</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-1 px-4">
-        {paymentsByMonth.map(({ date, amount }, index) => {
+        {paymentsByMonth.map(({ date, amount, customers }, index) => {
           const prevPayment = paymentsByMonth[index + 1];
           let needsSeparator = false;
-          let evolution = null;
+          let evolutionAmount = null;
+          let evolutionCustomers = null;
 
           if (prevPayment) {
-            const { date: prevDate, amount: prevAmount } = prevPayment;
+            const { date: prevDate, amount: prevAmount, customers: prevCustomers } = prevPayment;
             needsSeparator = date.getFullYear() !== prevDate.getFullYear();
-            evolution = diffInPercent(prevAmount, amount);
+            evolutionAmount = diffInPercent(prevAmount, amount);
+            evolutionCustomers = diffInPercent(prevCustomers, customers);
           }
 
           const monthFormatted = date.toLocaleDateString("fr-FR", { month: "long" });
@@ -105,10 +110,14 @@ export const Panel = ({ name, payments, highlighted }: { name: string; payments:
                 className={cn("rounded-md p-2", highlighted === index && "bg-white text-black")}
               >
                 <h3 className="text-xl font-semibold capitalize">{monthFormatted} </h3>
-                <div className="flex justify-between">
-                  <span>{inEuros(amount)}</span>
-                  {evolution ? <span className="text-muted-foreground ml-3">{evolution}</span> : null}
+                <div className="flex text-sm justify-between">
+                  <span>💸 {inEuros(amount)}</span>
+                  {evolutionAmount ? <span className="text-muted-foreground ml-3">{evolutionAmount}</span> : null}
                 </div>
+                {type === 'subscriptions' && <div className="flex text-sm justify-between">
+                  <span>👥 {customers} abonnés</span>
+                  {evolutionCustomers ? <span className="text-muted-foreground ml-3">{evolutionCustomers}</span> : null}
+                </div>}
                 <div className="mt-1 flex gap-x-2">
                   {hasHelloasso && <img src={Helloasso.src} alt="Helloasso" className="h-4 w-4 rounded-md" />}
                   {hasStripe && <img src={Stripe.src} alt="Stripe" className="h-4 w-4 rounded-md" />}

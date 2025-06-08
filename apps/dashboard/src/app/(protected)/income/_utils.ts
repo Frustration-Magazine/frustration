@@ -17,14 +17,14 @@ export const inEuros = (number: number): string =>
 export const diffInPercent = (prev: number, current: number): string => {
   if (prev === 0) return "N/A";
   const percent = ((current - prev) / prev) * 100;
-  const roundedPercent = percent.toFixed(0);
+  const roundedPercent = Math.round(percent).toFixed(0);
 
   // Early return if the difference is near zero
   const isNearZero = roundedPercent === "0";
   if (isNearZero) return "- %";
 
   const sign = percent > 0 ? "+" : "";
-
+  
   // Return the percentage with its sign
   return `${sign}${roundedPercent}%`;
 };
@@ -53,15 +53,16 @@ export const filterByTypes = (payments: Payment[], paymentsTypes: PaymentType[])
 /* Aggregate by month */
 /* ------------------ */
 
-type PaymentByMonth = { date: Date; amount: number };
+type PaymentByMonth = { date: Date; amount: number, customers: number };
 
-export const aggregateByMonth = (payments: PaymentByMonth[]): PaymentByMonth[] => {
-  const aggregated = payments.reduce((acc: PaymentByMonth[], payment: PaymentByMonth) => {
+export const aggregateByMonth = (payments: Payment[]): PaymentByMonth[] => {
+  const aggregated = payments.reduce((acc: PaymentByMonth[], payment) => {
     const existingEntry = acc.find(({ date }) => date && date.getTime() === payment.date.getTime());
     if (existingEntry?.amount) {
       existingEntry.amount += payment.amount;
+      existingEntry.customers += payment.customers;
     } else {
-      acc.push({ date: payment.date, amount: payment.amount });
+      acc.push({ date: payment.date, amount: payment.amount, customers: payment.customers });
     }
     return acc;
   }, []);

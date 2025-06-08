@@ -3,7 +3,6 @@
   "commit_type": {
     "enable": true,
     "initial_value": "feat",
-    "max_items": "Infinity",
     "infer_type_from_branch": true,
     "append_emoji_to_label": true,
     "append_emoji_to_commit": true,
@@ -84,7 +83,6 @@
     "enable": true,
     "custom_scope": false,
     "initial_value": "dashboard",
-    "max_items": "Infinity",
     "options": [
       {
         "value": "web",
