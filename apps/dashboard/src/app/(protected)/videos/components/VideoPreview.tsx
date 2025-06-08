@@ -131,15 +131,13 @@ export default function ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Annuler</AlertDialogCancel>
-          <form action={() => iconAction({ type, id })}>
             {/* Force to place variant for button here, see issue here : https://github.com/shadcn-ui/ui/issues/1115 */}
-            <AlertDialogAction asChild variant={iconClass as any}>
-              <Button type="submit" className="flex gap-2">
+            <AlertDialogAction asChild variant={iconClass as any} onClick={() => iconAction({ type, id })}>
+              <Button type="button" className="flex gap-2">
                 {Icon && <Icon className="shrink-0" size={16} />}
                 {texts?.[iconType].alertDialogAction}
               </Button>
             </AlertDialogAction>
-          </form>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

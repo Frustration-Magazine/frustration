@@ -78,7 +78,7 @@ export default function VideosCard({ type, title, texts }: Props): React.ReactNo
   const AddDialog = (
     <Dialog>
       <DialogTrigger asChild>{Add}</DialogTrigger>
-      <DialogContent className="max-w-[1000px]">
+      <DialogContent className="max-w-[1000px] w-[90vw]">
         <DialogHeader className="space-y-0">
           <DialogTitle>{texts?.dialogTitle}</DialogTitle>
           <DialogDescription>{texts?.dialogDescription}</DialogDescription>
