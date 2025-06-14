@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getSearchPostsQuery } from "@/lib/wordpress";
 import { useState } from "react";
 import { CgArrowTopRight } from "react-icons/cg";
 
@@ -15,6 +16,13 @@ type Post = {
   readonly title: string;
   readonly excerpt: string;
   readonly slug: string;
+  readonly featuredImage: {
+    readonly node: {
+      readonly title: string;
+      readonly sourceUrl: string;
+      readonly altText: string;
+    };
+  };
 };
 
 const { PUBLIC_WORDPRESS_GRAPHQL_API } = import.meta.env;
@@ -38,13 +46,11 @@ const Title = ({ children: title }: { readonly children: string }) => (
 );
 
 const Excerpt = ({ children: excerpt }: { children: string }) => (
-  <p
-    className="mt-4"
-    dangerouslySetInnerHTML={{ __html: excerpt }}></p>
+  <p dangerouslySetInnerHTML={{ __html: excerpt }}></p>
 );
 
 const Read = () => (
-  <Button className="font-bakbak flex items-center gap-1 rounded-none text-lg uppercase">
+  <Button className="ml-auto mt-auto font-bakbak flex items-center gap-1 rounded-none text-lg uppercase">
     <span>Lire</span>
     <CgArrowTopRight size={20} />
   </Button>
@@ -70,25 +76,12 @@ function Results({
 
   const handleMoreArticles = async () => {
     setLoadingPosts(true);
-    const query = `
-     query fetchSearchPosts {
-      posts(
-        first: 6
-        ${pageInfo?.endCursor ? `after: "${pageInfo.endCursor}"` : ""}
-        where: { search: "${term}", ${category ? `categoryName: "${category}",` : ""} ${author ? `authorName:"${author}",` : ""} orderby: { field: DATE, order: DESC } }
-      ) {
-        nodes {
-          title(format: RENDERED)
-          slug
-          excerpt(format: RENDERED)
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-      }
-    }
-    `;
+    const query = getSearchPostsQuery({
+      term,
+      category,
+      author,
+      after: pageInfo?.endCursor,
+    });
 
     try {
       const res = await fetch(PUBLIC_WORDPRESS_GRAPHQL_API, {
@@ -115,16 +108,29 @@ function Results({
 
   return (
     <div className="flex flex-col items-center gap-8">
-      {posts.map(({ title, excerpt, slug }: Post) => (
+      {posts.map(({ title, excerpt, slug, featuredImage }: Post) => (
         <a
           href={`/${slug}`}
           key={slug}
-          className="space-y-3 border p-6 shadow-md">
+          className="w-full space-y-4 border p-4 shadow-md md:p-6"
+        >
           <Title>{title}</Title>
-          <Excerpt>{excerpt}</Excerpt>
-          <Read />
+          <div className="flex flex-col gap-4 md:flex-row md:gap-6">
+            {featuredImage && (
+              <img
+                className="h-[200px] w-full object-cover md:h-auto md:w-[300px]"
+                src={featuredImage?.node?.sourceUrl}
+                alt={featuredImage?.node?.altText}
+              />
+            )}
+            <div className="flex flex-col gap-4">
+              <Excerpt>{excerpt}</Excerpt>
+              <Read />
+            </div>
+          </div>
         </a>
       ))}
+
       {pageInfo.hasNextPage ? (
         <Button
           className={cn(
@@ -133,7 +139,9 @@ function Results({
           )}
           onClick={handleMoreArticles}
           type="button">
-          {loadingPosts ? "Chargement..." : "Voir plus d'articles"}
+          {loadingPosts
+            ? "Chargement..."
+            : `Voir plus ${category && category === "videos" ? "de vidéos" : "d'articles"}`}
         </Button>
       ) : null}
     </div>
