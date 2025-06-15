@@ -59,6 +59,7 @@
     "eslint": "^9.27.0",
     "framer-motion": "^12.12.2",
     "lucide-react": "^0.511.0",
+    "motion": "^12.18.1",
     "postcss": "^8.5.3",
     "postcss-import": "^16.1.0",
     "postcss-preset-env": "^10.1.6",
