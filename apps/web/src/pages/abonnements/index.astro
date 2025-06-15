@@ -55,8 +55,8 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
         précaire, qui n’est pas viable sur le moyen terme, notamment du fait de
         l’augmentation très importante de notre lectorat en peu de temps, nous
         avons besoin de vous. Nous lançons donc cette campagne <b
-          >pour atteindre 2 000 abonné.e.s</b
-        >, c’est-à-dire 2 000 personnes qui, en donnant chaque mois 5, 9 ou 15€
+          >pour atteindre 1 500 abonné.e.s</b
+        >, c’est-à-dire 1 500 personnes qui, en donnant chaque mois 5, 9 ou 15€
         permettent à tout le monde l’accès à un média 100% gratuit et sans
         publicité, libre de ses convictions et de son ton.
       </p>
@@ -93,7 +93,7 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
       <p>
         Avec votre aide, vos relais, vos mots de soutiens, vos messages sur les
         réseaux sociaux, nous espérons atteindre cet objectif : <b
-          >2 000 abonnés pour permettre à Frustration de continuer et d’aller
+          >1 500 abonnés pour permettre à Frustration de continuer et d’aller
           plus loin !</b
         >
       </p>
@@ -176,7 +176,7 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
 
     <a
       class="mt-24 mb-8 block text-center"
-      href="https://fr.tipeee.com/frustration-magazine"
+      href={import.meta.env.TIPEEE_URL}
       target="_blank">
       <h5
         class={cn(
@@ -208,7 +208,7 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
       💡 Vous pouvez à tout moment modifier, mettre à jour ou résilier votre
       abonnement sur notre portail abonnés <a
         class="underline text-blue"
-        href="https://billing.stripe.com/p/login/14kdTMeda0rk9gc9AA"
+        href={import.meta.env.STRIPE_PORTAL_CLIENT}
         target="_blank"
         >en vous rendant à cette adresse</a
       > et en utilisant l'adresse email renseignée lors de votre souscription. En cas de
