@@ -56,6 +56,52 @@ export async function createRecord({ table, data, success }: { table: string; da
   }
 }
 
+export async function createManyRecords({ table, data, success }: { table: string; data: any; success: any }): Promise<any> {
+  let status = {
+    success: null,
+    error: null
+  };
+
+  let result = null;
+  // 🔁 Insert
+  try {
+    result = await (prisma as any)[table].createMany({ data, skipDuplicates: true });
+    status.success = success;
+  } catch (e) {
+    // ❌ Error | P202
+    console.error("Error while creating a new record", e);
+    const readableError = (e as any)?.message ?? "Une erreur inconnue s'est produite";
+    status.error = readableError;
+  } finally {
+    return { status, result };
+  }
+}
+
+/* ------ */
+/* UPSERT */
+/* ------ */
+
+export async function upsertRecord({ table, data, success }: { table: string; data: any; success: any }): Promise<any> {
+  let status = {
+    success: null,
+    error: null
+  };
+
+  let result = null;
+  // 🔁 Insert
+  try {
+    result = await (prisma as any)[table].upsert({ where: { id: data.id }, update: data, create: data });
+    status.success = success;
+  } catch (e) {
+    // ❌ Error | P202
+    console.error("Error while creating a new record", e);
+    const readableError = (e as any)?.message ?? "Une erreur inconnue s'est produite";
+    status.error = readableError;
+  } finally {
+    return { status, result };
+  }
+}
+
 /* ------ */
 /* UPDATE */
 /* ------ */

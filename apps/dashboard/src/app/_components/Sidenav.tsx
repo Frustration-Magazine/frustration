@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type ReactNode, Fragment } from "react";
 
-import { FaCreditCard } from "react-icons/fa";
+import { FaCreditCard, FaUser } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa6";
 import { IoIosPeople } from "react-icons/io";
 import { MdEvent as CalendarIcon } from "react-icons/md";
@@ -55,6 +55,12 @@ const LINKS: Link[] = [
     icon: <FaYoutube />,
     href: "/videos",
     key: "videos",
+  },
+  {
+    label: "Auteurs",
+    icon: <FaUser />,
+    href: "/authors",
+    key: "authors",
   },
 ];
 
