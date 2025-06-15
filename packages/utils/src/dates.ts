@@ -131,6 +131,14 @@ export function explicitDate(date: Date): string {
   return explicitDate;
 }
 
+/* ---------------------------- */
+/* Get first day of the month   */
+/* ---------------------------- */
+
+export function getFirstDayOfTheMonth(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+
 /* ------------- */
 /* Format date */
 /* ------------- */
