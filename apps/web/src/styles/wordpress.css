@@ -29,6 +29,7 @@
   line-height: 120%;
   text-transform: uppercase;
   font-family: "Bebas Neue", sans-serif;
+  text-wrap: pretty;
   padding: 12px 15px 10px 15px;
   margin-top: 45px;
   margin-bottom: 25px;
@@ -40,6 +41,7 @@
   font-family: "Bakbak", sans-serif;
   font-size: clamp(25px, 5vw, 40px);
   font-weight: bold;
+  text-wrap: pretty;
   text-decoration: underline;
   text-decoration-color: var(--alternate-yellow);
   text-underline-offset: -5px;
