@@ -22,7 +22,7 @@ const Sparkle: React.FC<Sparkle> = ({ id, x, y, color, delay, scale }) => {
       className="pointer-events-none absolute"
       initial={{ opacity: 0, left: x, top: y }}
       animate={{
-        opacity: [0, 1  , 0],
+        opacity: [0, 1, 0],
         scale: [0, scale, 0],
         rotate: [75, 120, 150],
       }}

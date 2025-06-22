@@ -106,3 +106,26 @@ export async function deleteRecord({ table, id, success }: { table: string; id: 
     return status;
   }
 }
+
+/* ------ */
+/* AGGREGATE */
+/* ------ */
+
+export async function aggregateRecords({ table, dataToAggregate, where, success }: { table: string; dataToAggregate: any; where: any; success: any }): Promise<any> {
+  let status = {
+    success: null,
+    error: null
+  };
+  let result = null;
+  // 🔁 Insert
+  try {
+    result = await (prisma as any)[table].aggregate({ where, _sum: dataToAggregate });
+    status.success = success;
+  } catch (e) {
+    // ❌ Error | P202
+    console.error("Error while aggregating records", e);
+  }
+  finally {
+    return { status, result };
+  }
+}

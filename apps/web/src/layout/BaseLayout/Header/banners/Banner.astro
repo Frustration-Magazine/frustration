@@ -4,7 +4,7 @@ import Banner2025Background from "./assets/banner_bg_2025.jpg";
 import { cn } from "@/lib/utils";
 const backgroundUrl = `url(${Banner2025Background.src})`;
 import { getFirstDayOfTheMonth } from "utils";
-import { prisma } from "data-access/prisma";
+import { aggregateRecords } from "data-access/prisma";
 import { SparklesText } from "@/components/magicui/sparkles-text";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { TextAnimate } from "@/components/magicui/text-animate";
@@ -17,8 +17,9 @@ const firstDayOfCurrentMonth = getFirstDayOfTheMonth(new Date());
 const firstDayOfPrevMonth = getFirstDayOfTheMonth(prevMonth);
 
 const SUBSCRIBERS_TARGET = 1500;
-const { _sum: { customers: subscribersLastMonth } } = await prisma.payments.aggregate({
-  _sum: {
+const { result: { _sum: { customers: subscribersLastMonth } } } = await aggregateRecords({
+  table: "payments",
+  dataToAggregate: {
     customers: true,
   },
   where: {
@@ -30,7 +31,23 @@ const { _sum: { customers: subscribersLastMonth } } = await prisma.payments.aggr
       lt: firstDayOfCurrentMonth,
     },
   },
+  success: true,
 });
+
+// await prisma.payments.aggregate({
+//   _sum: {
+//     customers: true,
+//   },
+//   where: {
+//     type: {
+//       in: ["subscription", "subscription_creation", "subscription_update"],
+//     },
+//     date: {
+//       gte: firstDayOfPrevMonth,
+//       lt: firstDayOfCurrentMonth,
+//     },
+//   },
+// });
 const PERCENTAGE_SUBSCRIBERS = subscribersLastMonth ? Math.round((subscribersLastMonth / SUBSCRIBERS_TARGET) * 100) : null;
 ---
 
