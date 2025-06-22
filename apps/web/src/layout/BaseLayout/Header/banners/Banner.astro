@@ -10,29 +10,43 @@ import { NumberTicker } from "@/components/magicui/number-ticker";
 import { TextAnimate } from "@/components/magicui/text-animate";
 import Frustrarenard from './assets/frustrarenard.avif'
 import Fist from './assets/fist.svg'
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 const prevMonth = new Date(new Date().setMonth(new Date().getMonth() - 1))
 const firstDayOfCurrentMonth = getFirstDayOfTheMonth(new Date());
 const firstDayOfPrevMonth = getFirstDayOfTheMonth(prevMonth);
 
 const SUBSCRIBERS_TARGET = 1500;
-const { result: { _sum: { customers: subscribersLastMonth } } } = await aggregateRecords({
-  table: "payments",
-  dataToAggregate: {
-    customers: true,
-  },
-  where: {
-    type: {
-      in: ["subscription", "subscription_creation", "subscription_update"],
+
+// 🔒 Gestion d'erreur pour éviter qu'une erreur de DB ne casse la page
+let subscribersLastMonth: number | null = null;
+let PERCENTAGE_SUBSCRIBERS: number | null = null;
+
+try {
+  const { result: { _sum: { customers: subscribers } } } = await aggregateRecords({
+    table: "payments",
+    dataToAggregate: {
+      customers: true,
     },
-    date: {
-      gte: firstDayOfPrevMonth,
-      lt: firstDayOfCurrentMonth,
+    where: {
+      type: {
+        in: ["subscription", "subscription_creation", "subscription_update"],
+      },
+      date: {
+        gte: firstDayOfPrevMonth,
+        lt: firstDayOfCurrentMonth,
+      },
     },
-  },
-  success: true,
-});
+    success: true,
+  });
+  
+  subscribersLastMonth = subscribers;
+  PERCENTAGE_SUBSCRIBERS = subscribersLastMonth ? Math.round((subscribersLastMonth / SUBSCRIBERS_TARGET) * 100) : null;
+} catch (error) {
+  console.warn("⚠️ Impossible de récupérer les données d'abonnés depuis la base de données:", error);
+  subscribersLastMonth = null;
+  PERCENTAGE_SUBSCRIBERS = null;
+}
 
 // await prisma.payments.aggregate({
 //   _sum: {
@@ -48,7 +62,6 @@ const { result: { _sum: { customers: subscribersLastMonth } } } = await aggregat
 //     },
 //   },
 // });
-const PERCENTAGE_SUBSCRIBERS = subscribersLastMonth ? Math.round((subscribersLastMonth / SUBSCRIBERS_TARGET) * 100) : null;
 ---
 
 { subscribersLastMonth ?<a
