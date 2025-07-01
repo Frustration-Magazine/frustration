@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { signedIn } from "@/auth";
 import { cn } from "@/lib/utils";
 import { ChartPanel } from "./components/ChartPanel";
+import { UpdateButton } from "./components/UpdateButton";
+
 export const dynamic = "force-dynamic";
 
 const PaymentsType = ({ value, children }: { value: string; children: string }) => (
@@ -36,6 +38,7 @@ async function Page() {
         <PaymentsType value="all">Tout</PaymentsType>
         <PaymentsType value="subscriptions">Abonnements</PaymentsType>
         <PaymentsType value="donations">Dons</PaymentsType>
+        <UpdateButton />
       </TabsList>
       {/* All */}
       <TabsContent className="grow overflow-auto" value="all">
