@@ -7,24 +7,19 @@ import AllArticles from "../AllArticles.astro";
 const { posts } = Astro.props;
 ---
 
-<style>
-  .wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(max(30%, 300px), 1fr));
-  }
-</style>
 <section
   class={cn(
-    "h-fit w-full m-auto mt-12 max-w-[2200px]",
-    "px-2 ",
-    "sm:px-4",
-    "md:mt-20",
-    "lg:mt-24",
-    "xl:mt-28",
+    "h-fit w-full m-auto max-w-[2200px]",
+    "mt-4 md:mt-10 lg:mt-12 xl:mt-24",
+    "px-2 sm:px-8",
   )}>
   <SectionTitle>À la une</SectionTitle>
+
   {/* Thumbnails */}
-  <div class="wrapper w-full gap-4">
+  <div class={cn(
+    "grid grid-cols-[repeat(auto-fit,minmax(max(30%,300px),1fr))]",
+    "w-full gap-4"
+    )}>
     {posts.map((post: any) => <Card {...post} />)}
   </div>
   <AllArticles label="Tous les articles" />

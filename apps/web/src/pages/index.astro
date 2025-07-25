@@ -26,9 +26,9 @@ const posts = await fetchLastPosts({ first: MAX_POSTS });
 <BaseLayout {...metadata}>
   <section class="block w-full overflow-hidden bg-home-first-section">
     <MainSlider posts={posts} />
-    <Videos />
-    <NewsletterBanner />
     <ALaUne posts={posts} />
+    <NewsletterBanner />
+    <Videos />
     <SeparationWave />
   </section>
   <section class="relative block w-full bg-black pb-12 sm:pb-20 pt-7">

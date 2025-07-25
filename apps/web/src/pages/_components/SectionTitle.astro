@@ -1,29 +1,18 @@
 ---
 import { cn } from "@/lib/utils";
 const { position = "left" } = Astro.props;
-
-// 🎨 Styles
-const text =
-  "font-bebas tracking-tighter text-white text-7xl sm:text-9xl md:text-[150px] xl:text-[180px] 2xl:text-[220px]";
-const sizes = "pb-1 pt-4 md:mb-10 md:pr-16 xl:mb-24";
-const beforeElement =
-  "before:absolute before:top-0 before:h-full before:w-screen before:bg-black before:content-['']";
 ---
 
 <h2
   class={cn(
-    "relative px-8 mb-8 w-fit select-none bg-black mix-blend-darken lg:mb-12 lg:pt-8 ",
-    text,
-    sizes,
-    beforeElement,
-    {
-      "before:translate-x-[-100%]": position === "left",
-      "ml-2": position === "left",
-
-      "before:translate-x-[100%]": position === "right",
-      "before:right-0": position === "right",
-      "ml-auto": position === "right",
-    },
+    /* container */ "relative px-16 mb-8 w-fit select-none bg-black mix-blend-darken",
+    /* text      */ "font-bebas tracking-tighter text-white text-6xl sm:text-7xl md:text-8xl xl:text-9xl",
+    /* sizes     */ "pb-1 pt-4 md:mb-10 md:pr-16 lg:mb-12 lg:pt-8 xl:mb-24",
+    /* before    */ "before:absolute before:top-0 before:h-full before:w-screen before:bg-black before:content-['']",
+    
+    /* position  */
+    position === "left"  && { "before:translate-x-[-100%] ml-2": true },
+    position === "right" && { "before:translate-x-[100%] before:right-0 ml-auto": true },
   )}>
   <slot />
 </h2>
