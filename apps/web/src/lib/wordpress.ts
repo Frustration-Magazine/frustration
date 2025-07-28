@@ -1,3 +1,40 @@
+async function fetchWordpress({ query, variables = {} }: any) {
+  const PUBLIC_WORDPRESS_GRAPHQL_API = import.meta.env
+    .PUBLIC_WORDPRESS_GRAPHQL_API;
+
+  if (!PUBLIC_WORDPRESS_GRAPHQL_API) {
+    console.error("Missing PUBLIC_WORDPRESS_GRAPHQL_API env variable");
+    return;
+  }
+  const username = import.meta.env.WORDPRESS_APPLICATION_USERNAME;
+  const password = import.meta.env.WORDPRESS_APPLICATION_PASSWORD;
+
+  try {
+    const headers = {
+      "Content-Type": "application/json",
+      ...(username && password
+        ? { Authorization: "Basic " + btoa(`${username}:${password}`) }
+        : null),
+    };
+
+    const res = await fetch(PUBLIC_WORDPRESS_GRAPHQL_API, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ query, variables }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch wordpress API");
+    }
+
+    const json = await res.json();
+    if (json.errors) throw new Error("Failed to parse wordpress API response");
+    return json;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export async function fetchPostBySlug({ slug }: any) {
   const query = `
    query fetchPostBySlug {
@@ -170,13 +207,17 @@ export async function fetchInterviews({ first = 6 }: any) {
   return interviews;
 }
 
-export function getSearchPostsQuery({ term, category, author, after }: any) {
+export function getSearchPostsQuery({ term, categorySlug, author, after }: any) {
   return `
     query fetchSearchPosts {
+        ${categorySlug ?
+          `category(id: "${categorySlug}", idType: SLUG) {
+            name
+        }` : ""}
         posts(
           first: 6
           ${after ? `after: "${after}"` : ""}
-          where: { search: "${term}", ${category ? `categoryName:"${category}",` : ""} ${author ? `authorName:"${author}",` : ""} orderby: { field: DATE, order: DESC } }
+          where: { search: "${term}", ${categorySlug ? `categoryName:"${categorySlug}",` : ""} ${author ? `authorName:"${author}",` : ""} orderby: { field: DATE, order: DESC } }
         ) {
           nodes {
             title(format: RENDERED)
@@ -216,16 +257,17 @@ export function getSearchPostsQuery({ term, category, author, after }: any) {
   `;
 }
 
-export async function fetchSearchPosts({ term, category, author, after }: any) {
-  const query = getSearchPostsQuery({ term, category, author, after });
+export async function fetchSearchPosts({ term, categorySlug, author, after }: any) {
+  const query = getSearchPostsQuery({ term, categorySlug, author, after });
 
   let {
     data: {
       posts: { nodes: posts, pageInfo },
+      category: { name: categoryName } = { name: null },
     },
   } = await fetchWordpress({ query });
 
-  return { posts, pageInfo };
+  return { posts, pageInfo, categoryName };
 }
 
 export async function fetchLinkPreview(link: string) {
@@ -290,44 +332,4 @@ export async function fetchCategories() {
   } = await fetchWordpress({ query });
 
   return categories;
-}
-
-/* ========================================================= */
-/* ========================================================= */
-
-async function fetchWordpress({ query, variables = {} }: any) {
-  const PUBLIC_WORDPRESS_GRAPHQL_API = import.meta.env
-    .PUBLIC_WORDPRESS_GRAPHQL_API;
-
-  if (!PUBLIC_WORDPRESS_GRAPHQL_API) {
-    console.error("Missing PUBLIC_WORDPRESS_GRAPHQL_API env variable");
-    return;
-  }
-  const username = import.meta.env.WORDPRESS_APPLICATION_USERNAME;
-  const password = import.meta.env.WORDPRESS_APPLICATION_PASSWORD;
-
-  try {
-    const headers = {
-      "Content-Type": "application/json",
-      ...(username && password
-        ? { Authorization: "Basic " + btoa(`${username}:${password}`) }
-        : null),
-    };
-
-    const res = await fetch(PUBLIC_WORDPRESS_GRAPHQL_API, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ query, variables }),
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch wordpress API");
-    }
-
-    const json = await res.json();
-    if (json.errors) throw new Error("Failed to parse wordpress API response");
-    return json;
-  } catch (e) {
-    console.error(e);
-  }
 }

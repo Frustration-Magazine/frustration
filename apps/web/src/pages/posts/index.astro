@@ -8,24 +8,25 @@ const url = new URL(Astro.request.url);
 const searchParams = new URLSearchParams(url.searchParams);
 
 let term = "";
-let category = null;
+let categorySlug = null;
 let author = null;
+
 if (searchParams) {
   term = searchParams.get("term") ?? "";
-  category = searchParams.get("category") ?? null;
+  categorySlug = searchParams.get("category") ?? null;
   author = searchParams.get("author") ?? null;
 }
 
-const { posts, pageInfo } = await fetchSearchPosts({
+const { posts, pageInfo, categoryName } = await fetchSearchPosts({
   term,
-  category,
+  categorySlug,
   author,
 });
 
 // prettier-ignore
-const title = term     ? `Résultats pour "${term}"` :
-              category ? `Catégorie "${category.replaceAll('_', ' ')}"` :
-              author   ? `Tous les articles de ${author.replaceAll(/[^a-zA-Z]/g, ' ')}` :
+const title = term         ? `Résultats pour "${term}"` :
+              categorySlug ? `Catégorie "${categoryName}"` :
+              author       ? `Tous les articles de ${author.replace(/[^a-zA-Z]/g, ' ')}` :
               "Tous les articles";
 
 export const prerender = false;
@@ -39,7 +40,7 @@ export const prerender = false;
     <Results
       client:idle
       term={term}
-      category={category}
+      categorySlug={categorySlug}
       author={author}
       initialPosts={posts}
       initialPageInfo={pageInfo}

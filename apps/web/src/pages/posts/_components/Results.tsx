@@ -6,7 +6,7 @@ import { CgArrowTopRight } from "react-icons/cg";
 
 type Props = {
   readonly term: string;
-  readonly category: string | null;
+  readonly categorySlug: string | null;
   readonly author: string | null;
   readonly initialPosts: any;
   readonly initialPageInfo: any;
@@ -56,13 +56,9 @@ const Read = () => (
   </Button>
 );
 
-/* =============== */
-/* ||||||||||||||| */
-/* =============== */
-
 function Results({
   term,
-  category,
+  categorySlug,
   author,
   initialPosts,
   initialPageInfo,
@@ -78,7 +74,7 @@ function Results({
     setLoadingPosts(true);
     const query = getSearchPostsQuery({
       term,
-      category,
+      categorySlug,
       author,
       after: pageInfo?.endCursor,
     });
@@ -141,7 +137,7 @@ function Results({
           type="button">
           {loadingPosts
             ? "Chargement..."
-            : `Voir plus ${category && category === "videos" ? "de vidéos" : "d'articles"}`}
+            : `Voir plus ${categorySlug && categorySlug === "videos" ? "de vidéos" : "d'articles"}`}
         </Button>
       ) : null}
     </div>
