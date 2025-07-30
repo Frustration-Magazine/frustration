@@ -35,5 +35,5 @@ export default defineConfig({
   image: {
     domains: [BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN],
   },
-  plugins: ["prettier-plugin-astro"],
+  // plugins: ["prettier-plugin-astro"],
 });

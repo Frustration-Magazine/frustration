@@ -43,12 +43,12 @@
     "@stripe/stripe-js": "^7.3.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.1.7",
+    "@tailwindcss/vite": "^4.1.11",
     "@types/node": "^22.15.21",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "@vercel/analytics": "^1.5.0",
-    "astro": "^5.8.0",
+    "astro": "^5.12.5",
     "autoprefixer": "^10.4.21",
     "balloons-js": "^0.0.3",
     "class-variance-authority": "^0.7.1",
@@ -74,14 +74,12 @@
     "sharp": "^0.34.2",
     "stripe": "^18.1.1",
     "tailwind-merge": "^3.3.0",
-    "tailwindcss": "^4.1.7",
+    "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
     "utils": "workspace:*",
     "vite": "^6.3.5"
   },
   "devDependencies": {
-    "prettier": "^3.5.3",
-    "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwind-scrollbar": "^4.0.2"
   }
 }

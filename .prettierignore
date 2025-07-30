@@ -1,0 +1,33 @@
+# Dossiers de build et dépendances
+**/dist
+**/build
+**/node_modules
+**/.next
+
+# Fichiers de configuration et cache
+.vscode
+.vercel
+.env*
+
+# Fichiers générés
+**/package-lock.json
+**/yarn.lock
+pnpm-lock.yaml
+
+# Logs
+**/logs
+**/*.log
+
+# Fichiers temporaires
+**/.tmp
+**/.temp
+
+# Fichiers de migration Prisma
+packages/data-access/prisma/migrations/
+
+# Fichiers de couverture de tests
+**/coverage
+
+# Fichiers de cache
+**/.cache
+**/.parcel-cache

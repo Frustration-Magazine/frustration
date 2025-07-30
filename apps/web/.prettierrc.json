@@ -1,9 +1,0 @@
-{
-  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-astro"],
-  "bracketSpacing": true,
-  "bracketSameLine": true,
-  "arrowParens": "always",
-  "htmlWhitespaceSensitivity": "css",
-  "embeddedLanguageFormatting": "auto",
-  "singleAttributePerLine": true
-}

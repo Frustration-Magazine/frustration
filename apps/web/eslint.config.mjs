@@ -1,5 +1,5 @@
 export default [
- {
-    ignores: ['node_modules', ".astro", ".vercel"],
-}
+  {
+    ignores: ["node_modules", ".astro", ".vercel"],
+  },
 ];
