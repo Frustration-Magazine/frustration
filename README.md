@@ -49,7 +49,6 @@ pnpm run dev
 > By default, when applications run locally, they connect to testing or development services. This setup prevents corruption of the production database and allows the use of Stripe test cards for fake payments in the testing environment.
 > You may sometimes want to run your application locally while connecting it to the production database or live environment for Stripe. In that case, add `:prod` to the end of the development command, like this: `pnpm run dev:prod`.
 
-
 If you want to run it with production build :
 
 ```sh

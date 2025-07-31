@@ -24,14 +24,14 @@ const posts = await fetchLastPosts({ first: MAX_POSTS });
 ---
 
 <BaseLayout {...metadata}>
-  <section class="block w-full overflow-hidden bg-home-first-section">
+  <section class="bg-home-first-section block w-full overflow-hidden">
     <MainSlider posts={posts} />
     <ALaUne posts={posts} />
     <NewsletterBanner />
     <Videos />
     <SeparationWave />
   </section>
-  <section class="relative block w-full bg-black pb-12 sm:pb-20 pt-7">
+  <section class="relative block w-full bg-black pb-12 pt-7 sm:pb-20">
     <Interviews />
     <SeparationSpades />
   </section>

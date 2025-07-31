@@ -62,7 +62,17 @@ export function convertDifferenceOfDays(differenceInDays: number): string {
   Output : 2023-10-01T16:00:00.000Z
 */
 export function convertLocalDateToDateUTC(date: Date): Date {
-  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds()));
+  return new Date(
+    Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      date.getUTCHours(),
+      date.getUTCMinutes(),
+      date.getUTCSeconds(),
+      date.getUTCMilliseconds(),
+    ),
+  );
 }
 
 /* ------------------------------------ */
@@ -90,7 +100,7 @@ export const formatExplicitMonth = (value: string | Date, monthLength: "long" | 
   const date = !(value instanceof Date) ? new Date(value) : value;
   const explicitMonth = date.toLocaleDateString("fr-FR", {
     month: monthLength,
-    year: "numeric"
+    year: "numeric",
   });
   return explicitMonth.charAt(0).toUpperCase() + explicitMonth.slice(1);
 };
@@ -110,7 +120,7 @@ export const formatExplicitDay = (value: string | Date, dayLength: "long" | "sho
   const explicitDay = date.toLocaleDateString("fr-FR", {
     day: "numeric",
     month: dayLength,
-    year: "numeric"
+    year: "numeric",
   });
   return explicitDay.charAt(0).toUpperCase() + explicitDay.slice(1);
 };
@@ -126,7 +136,7 @@ export function explicitDate(date: Date): string {
   const explicitDate = date.toLocaleDateString("fr-FR", {
     day: "numeric",
     month: "long",
-    year: "numeric"
+    year: "numeric",
   });
   return explicitDate;
 }
@@ -155,9 +165,9 @@ export function formatDateHour(date: Date, displayHour: boolean) {
       ? {
           hour: "numeric",
           minute: "numeric",
-          hour12: false
+          hour12: false,
         }
-      : null)
+      : null),
   };
 
   let formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(date);
@@ -190,7 +200,11 @@ export function areSameDay(date1: Date, date2: Date): boolean {
   if (isNaN(date1.getTime()) || isNaN(date2.getTime())) {
     return false;
   }
-  return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
 }
 
 /* -------------- */

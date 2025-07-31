@@ -66,8 +66,7 @@ export const QUESTIONS = [
         points: 0,
       },
       {
-        description:
-          "Mon agenda est très chargé, veuillez vous adresser à mon assistante",
+        description: "Mon agenda est très chargé, veuillez vous adresser à mon assistante",
         value: "agenda-charge",
         points: 7,
       },
@@ -221,8 +220,7 @@ export const QUESTIONS = [
         points: 3,
       },
       {
-        description:
-          "Je pense qu'il faut que ça pète. Il faut tout reprendre à zéro !",
+        description: "Je pense qu'il faut que ça pète. Il faut tout reprendre à zéro !",
         value: "revolutionnaire",
         points: 0,
       },
@@ -254,8 +252,7 @@ export const QUESTIONS = [
         points: 2,
       },
       {
-        description:
-          "Vous avez un diplôme bac+5 obtenu à l'université publique",
+        description: "Vous avez un diplôme bac+5 obtenu à l'université publique",
         value: "bac-5-universite",
         points: 4,
       },
@@ -293,8 +290,7 @@ export const QUESTIONS = [
         points: 0,
       },
       {
-        description:
-          "Je suis locataire mais je possède une petite résidence secondaire",
+        description: "Je suis locataire mais je possède une petite résidence secondaire",
         value: "locataire-residence-secondaire",
         points: 2,
       },
@@ -358,8 +354,7 @@ export const QUESTIONS = [
         points: 6,
       },
       {
-        description:
-          "Je suis un.e geek : rideau tirés, tablette de Milka Oreo à portée de main,",
+        description: "Je suis un.e geek : rideau tirés, tablette de Milka Oreo à portée de main,",
         value: "geek",
         points: 0,
       },
@@ -376,8 +371,7 @@ export const QUESTIONS = [
     `,
     options: [
       {
-        description:
-          "“Carpe diem”, il faut vivre l’instant présent car on ne sait pas de quoi demain sera fait",
+        description: "“Carpe diem”, il faut vivre l’instant présent car on ne sait pas de quoi demain sera fait",
         value: "carpe-diem",
         points: 0,
       },
@@ -387,26 +381,22 @@ export const QUESTIONS = [
         points: 0,
       },
       {
-        description:
-          "Quand on veut on peut ! Le travail paie, il faut se bouger",
+        description: "Quand on veut on peut ! Le travail paie, il faut se bouger",
         value: "liberal",
         points: 3,
       },
       {
-        description:
-          "Pour une vie pleine de projets et de voyages, contre le petit confort de la routine",
+        description: "Pour une vie pleine de projets et de voyages, contre le petit confort de la routine",
         value: "projets",
         points: 3,
       },
       {
-        description:
-          "Il y a ceux qui créent des choses et ceux qui ne sont rien",
+        description: "Il y a ceux qui créent des choses et ceux qui ne sont rien",
         value: "macroniste",
         points: 4,
       },
       {
-        description:
-          "C'est l'hymne de nos campagnes, de nos rivières, de nos montagne, de la vie man, du monde animal",
+        description: "C'est l'hymne de nos campagnes, de nos rivières, de nos montagne, de la vie man, du monde animal",
         value: "babos",
         points: 1,
       },
@@ -438,8 +428,7 @@ export const QUESTIONS = [
     `,
     options: [
       {
-        description:
-          "Je consomme tous mes revenus entre le début et la fin du mois",
+        description: "Je consomme tous mes revenus entre le début et la fin du mois",
         value: "fauche",
         points: 0,
       },
@@ -455,8 +444,7 @@ export const QUESTIONS = [
         points: 4,
       },
       {
-        description:
-          "J’ai un patrimoine financier conséquent, de mon fait ou par héritage",
+        description: "J’ai un patrimoine financier conséquent, de mon fait ou par héritage",
         value: "rentier",
         points: 7,
       },

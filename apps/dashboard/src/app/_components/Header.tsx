@@ -4,7 +4,10 @@ import React from "react";
 
 const DevelopmentBadge =
   process.env.NODE_ENV === "development" ? (
-    <Badge variant="secondary" className="absolute top-3 right-3 text-lg font-bold">
+    <Badge
+      variant="secondary"
+      className="absolute right-3 top-3 text-lg font-bold"
+    >
       🚧 Dev mode 🚧
     </Badge>
   ) : null;

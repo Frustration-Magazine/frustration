@@ -5,7 +5,11 @@ import { areSameMonth, explicitDate, truncateMonth } from "utils";
 /*     Authentication      */
 /* ----------------------- */
 
-async function fetchHelloAssoToken({ endpoint_access_token }: { endpoint_access_token: string }): Promise<string | null> {
+async function fetchHelloAssoToken({
+  endpoint_access_token,
+}: {
+  endpoint_access_token: string;
+}): Promise<string | null> {
   console.info("🔁 Récupération d'un token HelloAsso");
   let accessToken = null;
 
@@ -17,15 +21,15 @@ async function fetchHelloAssoToken({ endpoint_access_token }: { endpoint_access_
   const params = new URLSearchParams({
     grant_type: "client_credentials",
     client_secret: process.env.HELLOASSO_CLIENT_SECRET,
-    client_id: process.env.HELLOASSO_CLIENT_ID
+    client_id: process.env.HELLOASSO_CLIENT_ID,
   });
 
   await fetch(endpoint_access_token, {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: params
+    body: params,
   })
     .then((response) => response.json())
     .then(({ access_token }) => {
@@ -52,7 +56,11 @@ export interface HelloAssoPayment {
 }
 
 export async function fetchHelloAssoPayments({ from } = { from: START_DATE_STRING }): Promise<any[]> {
-  if (!process.env.HELLOASSO_API_PAYMENTS || !process.env.HELLOASSO_API_TOKEN || !process.env.HELLOASSO_ORGANIZATION_SLUG) {
+  if (
+    !process.env.HELLOASSO_API_PAYMENTS ||
+    !process.env.HELLOASSO_API_TOKEN ||
+    !process.env.HELLOASSO_ORGANIZATION_SLUG
+  ) {
     console.error("❌ Missing HelloAsso API URL or slug");
     return [];
   }
@@ -73,11 +81,11 @@ export async function fetchHelloAssoPayments({ from } = { from: START_DATE_STRIN
     organizationSlug: process.env.HELLOASSO_ORGANIZATION_SLUG,
     from,
     to: endingDate.toISOString(),
-    pageSize
+    pageSize,
   });
 
   const access_token = await fetchHelloAssoToken({
-    endpoint_access_token: process.env.HELLOASSO_API_TOKEN
+    endpoint_access_token: process.env.HELLOASSO_API_TOKEN,
   });
 
   do {
@@ -88,10 +96,10 @@ export async function fetchHelloAssoPayments({ from } = { from: START_DATE_STRIN
     console.info("🔁 Récupération d'une page de paiements \r\n");
     const {
       data,
-      pagination: { continuationToken: newContinuationToken }
+      pagination: { continuationToken: newContinuationToken },
     } = await fetch(endpoint, {
       method: "GET",
-      headers: { Authorization: `Bearer ${access_token}` }
+      headers: { Authorization: `Bearer ${access_token}` },
     })
       .then((res) => res.json())
       .catch((error) => console.error(error));
@@ -117,7 +125,7 @@ export async function fetchHelloAssoPayments({ from } = { from: START_DATE_STRIN
     } else {
       acc.push({
         ...payment,
-        date: truncateMonth(payment.date)
+        date: truncateMonth(payment.date),
       });
     }
     return acc;
@@ -142,6 +150,6 @@ function formatHelloAssoPayments({ date, amount, items }: HelloAssoPayment): Pay
     amount: Math.round(amount / 100),
     source: "helloasso",
     type: transactionType,
-    customers: 1
+    customers: 1,
   };
 }

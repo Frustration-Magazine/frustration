@@ -33,9 +33,7 @@ export async function addSubscriberToNewsletter({
     return { success: true, message: null };
   } catch (error) {
     const errorMessage =
-      error instanceof Error
-        ? error.message
-        : "An error occurred while creating a new subscriber contact";
+      error instanceof Error ? error.message : "An error occurred while creating a new subscriber contact";
     console.error(errorMessage);
     return { success: false, message: errorMessage };
   }

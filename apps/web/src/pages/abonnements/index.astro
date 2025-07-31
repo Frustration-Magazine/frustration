@@ -21,81 +21,54 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
 
 <PageLayout
   title="S'abonner à Frustration Magazine"
-  coverImage={coverImage}>
+  coverImage={coverImage}
+>
   <article slot="content">
     <!-- 🅰️ Titles -->
-    <H2>
-      Frustration a besoin de vous !
-    </H2>
-    <h3
-      class={cn(
-        "text-pretty text-center font-light uppercase font-bakbak -mt-6",
-        "text-2xl",
-        "lg:text-4xl",
-      )}>
+    <H2> Frustration a besoin de vous ! </H2>
+    <h3 class={cn("text-pretty text-center font-light uppercase font-bakbak -mt-6", "text-2xl", "lg:text-4xl")}>
       Faites-nous grandir d'un coup 🌱
     </h3>
     <!-- 🔠 Text -->
     <article
-      class={cn(
-        "mt-8 md:mt-10 mx-auto w-[700px] max-w-[90vw] font-open-sans tracking-wide space-y-4",
-        "md:text-lg",
-      )}>
+      class={cn("mt-8 md:mt-10 mx-auto w-[700px] max-w-[90vw] font-open-sans tracking-wide space-y-4", "md:text-lg")}
+    >
       <p>
-        Frustration est un <b>média d’opinion, engagé et apartisan</b> : financés
-        à 100% par nos lectrices et lecteurs, nous ne percevons ni subventions ni
-        gros dons de millionaires. Nous ne touchons aucune recette publicitaire sur
-        nos contenus. Par ailleurs, notre média en ligne est<b>
-          entièrement gratuit et accessible à toutes et tous</b
-        >. Ces conditions nous semblent indispensables pour pouvoir défendre un
+        Frustration est un <b>média d’opinion, engagé et apartisan</b> : financés à 100% par nos lectrices et lecteurs, nous
+        ne percevons ni subventions ni gros dons de millionaires. Nous ne touchons aucune recette publicitaire sur nos contenus.
+        Par ailleurs, notre média en ligne est<b> entièrement gratuit et accessible à toutes et tous</b>. Ces conditions
+        nous semblent indispensables pour pouvoir défendre un
         <b>point de vue radical, anticapitaliste, féministe et antiraciste</b>.
       </p>
       <p>
-        Toutefois pour sortir d’un modèle encore très artisanal, très fragile et
-        précaire, qui n’est pas viable sur le moyen terme, notamment du fait de
-        l’augmentation très importante de notre lectorat en peu de temps, nous
-        avons besoin de vous. Nous lançons donc cette campagne <b
-          >pour atteindre 1 500 abonné.e.s</b
-        >, c’est-à-dire 1 500 personnes qui, en donnant chaque mois 5, 9 ou 15€
-        permettent à tout le monde l’accès à un média 100% gratuit et sans
-        publicité, libre de ses convictions et de son ton.
+        Toutefois pour sortir d’un modèle encore très artisanal, très fragile et précaire, qui n’est pas viable sur le
+        moyen terme, notamment du fait de l’augmentation très importante de notre lectorat en peu de temps, nous avons
+        besoin de vous. Nous lançons donc cette campagne <b>pour atteindre 1 500 abonné.e.s</b>, c’est-à-dire 1 500
+        personnes qui, en donnant chaque mois 5, 9 ou 15€ permettent à tout le monde l’accès à un média 100% gratuit et
+        sans publicité, libre de ses convictions et de son ton.
       </p>
 
       <p>Voici plus précisément à quoi sera consacré ce budget :</p>
       <ul class="list-disc space-y-2 pl-2">
         <li>
-          Salarier une équipe de trois personnes à temps plein afin d’avoir une
-          vraie continuité de publications tout en assurant des bonnes
-          conditions de travail ;
+          Salarier une équipe de trois personnes à temps plein afin d’avoir une vraie continuité de publications tout en
+          assurant des bonnes conditions de travail ;
         </li>
-        <li>
-          Le recours à davantage de chroniqueuses et chroniqueurs, ainsi qu’à
-          des piges journalistiques ;
-        </li>
+        <li>Le recours à davantage de chroniqueuses et chroniqueurs, ainsi qu’à des piges journalistiques ;</li>
         <li>La production beaucoup plus régulière de vidéos ;</li>
+        <li>L’organisation d’évènements libres d’accès dans plusieurs villes et villages de France et de Belgique ;</li>
+        <li>Un site optimisé capable de recevoir l’afflux de nouveaux et nouvelles internautes (+67% en un an) ;</li>
         <li>
-          L’organisation d’évènements libres d’accès dans plusieurs villes et
-          villages de France et de Belgique ;
-        </li>
-        <li>
-          Un site optimisé capable de recevoir l’afflux de nouveaux et nouvelles
-          internautes (+67% en un an) ;
-        </li>
-        <li>
-          Le recours à un prestataire spécialisé pour l’envoi des cadeaux aux
-          abonnés permettent une gestion plus fluide et efficace et des
-          réceptions plus rapides ;
+          Le recours à un prestataire spécialisé pour l’envoi des cadeaux aux abonnés permettent une gestion plus fluide
+          et efficace et des réceptions plus rapides ;
         </li>
         <li>Le recours à un cabinet comptable ;</li>
         <li>La co-édition du numéro annuel papier ;</li>
         <li>Les frais de notre plateforme ultra-sécurisée pour les dons ;</li>
       </ul>
       <p>
-        Avec votre aide, vos relais, vos mots de soutiens, vos messages sur les
-        réseaux sociaux, nous espérons atteindre cet objectif : <b
-          >1 500 abonnés pour permettre à Frustration de continuer et d’aller
-          plus loin !</b
-        >
+        Avec votre aide, vos relais, vos mots de soutiens, vos messages sur les réseaux sociaux, nous espérons atteindre
+        cet objectif : <b>1 500 abonnés pour permettre à Frustration de continuer et d’aller plus loin !</b>
       </p>
     </article>
     <h3
@@ -105,7 +78,8 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
         "sm:text-5xl sm:mb-6",
         "md:text-5xl md:mb-8",
         "lg:text-6xl lg:mb-20",
-      )}>
+      )}
+    >
       Nos formules de soutien
     </h3>
     <!-- 🃏 CARDS -->
@@ -114,7 +88,8 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
         "relative w-[1100px] max-w-[90vw] left-1/2 -translate-x-1/2 grid gap-6",
         "grid-cols-1",
         "lg:grid-cols-3",
-      )}>
+      )}
+    >
       <!-- 🤏 MINI -->
       <SubscriptionCard {...mini}>
         <p>
@@ -125,14 +100,15 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
       <!-- 💪 MEDIUM -->
       <SubscriptionCard
         {...medium}
-        additionalClass="lg:-translate-y-10">
+        additionalClass="lg:-translate-y-10"
+      >
         <p>
           ✊ Notre <b>newsletter</b> régulière
         </p>
         <p>
           🗞️ <b>Numéro papier 2025</b>
         </p>
-        <div class="w-full flex justify-center mt-auto">
+        <div class="mt-auto flex w-full justify-center">
           <Image
             class="drop-shadow-lg"
             width="110"
@@ -154,7 +130,7 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
         <p>
           📖 1 exemplaire de <b><i>Parasites</i></b>
         </p>
-        <div class="w-full mx-auto flex justify-center items-center gap-4">
+        <div class="mx-auto flex w-full items-center justify-center gap-4">
           <Image
             class="drop-shadow-lg"
             width="110"
@@ -175,15 +151,11 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
     </div>
 
     <a
-      class="mt-24 mb-8 block text-center"
+      class="mb-8 mt-24 block text-center"
       href={import.meta.env.TIPEEE_URL}
-      target="_blank">
-      <h5
-        class={cn(
-          "font-montserrat text-balance font-bold mb-4",
-          "text-2xl",
-          "md:text-3xl",
-        )}>
+      target="_blank"
+    >
+      <h5 class={cn("font-montserrat text-balance font-bold mb-4", "text-2xl", "md:text-3xl")}>
         Vous pouvez aussi nous soutenir sur notre Tipeee 😃 <br />
         👇
       </h5>
@@ -204,16 +176,15 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
       <SubscriptionFormWrapper client:load />
     </div>
 
-    <p class="mt-16 bg-green-100 text-green-600 font-semibold p-4">
-      💡 Vous pouvez à tout moment modifier, mettre à jour ou résilier votre
-      abonnement sur notre portail abonnés <a
-        class="underline text-blue"
+    <p class="mt-16 bg-green-100 p-4 font-semibold text-green-600">
+      💡 Vous pouvez à tout moment modifier, mettre à jour ou résilier votre abonnement sur notre portail abonnés <a
+        class="text-blue underline"
         href={import.meta.env.STRIPE_PORTAL_CLIENT}
         target="_blank"
         >en vous rendant à cette adresse</a
-      > et en utilisant l'adresse email renseignée lors de votre souscription. En cas de
-      difficulté ou pour toute autre question, contactez-nous à <a
-        class="underline text-blue"
+      > et en utilisant l'adresse email renseignée lors de votre souscription. En cas de difficulté ou pour toute autre question,
+      contactez-nous à <a
+        class="text-blue underline"
         href={`mailto:${import.meta.env.MAIL_FROM}`}
         >{import.meta.env.MAIL_FROM}.</a
       >
@@ -222,7 +193,5 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
     <div class={cn("mt-6 mb-6", "md:mt-12 md:mb-12")}>
       <DonationFormWrapper client:load />
     </div>
-
-
   </article>
 </PageLayout>

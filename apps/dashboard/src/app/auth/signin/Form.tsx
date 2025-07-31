@@ -53,7 +53,11 @@ export default function () {
         <FormItem>
           <FormLabel>Email</FormLabel>
           <FormControl>
-            <Input placeholder="frustrationmagazine@gmail.com" disabled={pending} {...field} />
+            <Input
+              placeholder="frustrationmagazine@gmail.com"
+              disabled={pending}
+              {...field}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -64,8 +68,15 @@ export default function () {
   /* 🆕 */
   /* -- */
   const Send = (
-    <Button disabled={pending} className="mx-auto w-fit" type="submit">
-      <BiMailSend size={17} className="mr-2" />
+    <Button
+      disabled={pending}
+      className="mx-auto w-fit"
+      type="submit"
+    >
+      <BiMailSend
+        size={17}
+        className="mr-2"
+      />
       Recevoir un lien de connexion
     </Button>
   );
@@ -76,7 +87,10 @@ export default function () {
 
   return (
     <Form {...(form as any)}>
-      <form className="group flex flex-col gap-[20px] bg-white p-5" action={sendLink}>
+      <form
+        className="group flex flex-col gap-[20px] bg-white p-5"
+        action={sendLink}
+      >
         {Email}
         {Send}
       </form>

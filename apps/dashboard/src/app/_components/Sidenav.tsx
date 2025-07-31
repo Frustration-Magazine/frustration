@@ -62,7 +62,10 @@ const SignOut = ({ action }: { action: () => void }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="secondary" className="flex items-center gap-2">
+        <Button
+          variant="secondary"
+          className="flex items-center gap-2"
+        >
           <RiLogoutBoxLine />
           <span>Se déconnecter</span>
         </Button>
@@ -104,7 +107,7 @@ const Sidenav = () => {
                 <Link
                   href={href}
                   className={cn(
-                    "font-poppins flex items-center gap-4 rounded-md px-5 py-2 text-lg whitespace-nowrap transition duration-500",
+                    "font-poppins flex items-center gap-4 whitespace-nowrap rounded-md px-5 py-2 text-lg transition duration-500",
                     href === currentPath && "bg-yellow-hover",
                   )}
                 >

@@ -28,16 +28,37 @@ const Entry = ({
   hasHelloasso: boolean;
 }) => {
   return (
-    <div key={String(total)} className={cn("rounded-md p-2", highlighted && "bg-white text-black")}>
+    <div
+      key={String(total)}
+      className={cn("rounded-md p-2", highlighted && "bg-white text-black")}
+    >
       <h3 className="text-xl font-semibold capitalize">{name} </h3>
       <div className="flex justify-between">
         <span>{inEuros(total)}</span>
         {evolution ? <span className="text-muted-foreground ml-3">{evolution}</span> : null}
       </div>
       <div className="mt-1 flex justify-between">
-        {hasStripe && <img src={Stripe.src} alt="Stripe" className="h-4 w-4" />}
-        {hasTipeee && <img src={Tipeee.src} alt="Tipeee" className="h-4 w-4" />}
-        {hasHelloasso && <img src={Helloasso.src} alt="Helloasso" className="h-4 w-4" />}
+        {hasStripe && (
+          <img
+            src={Stripe.src}
+            alt="Stripe"
+            className="h-4 w-4"
+          />
+        )}
+        {hasTipeee && (
+          <img
+            src={Tipeee.src}
+            alt="Tipeee"
+            className="h-4 w-4"
+          />
+        )}
+        {hasHelloasso && (
+          <img
+            src={Helloasso.src}
+            alt="Helloasso"
+            className="h-4 w-4"
+          />
+        )}
       </div>
     </div>
   );
@@ -71,9 +92,8 @@ export const Panel = ({ type, payments, highlighted }: { type: string; payments:
   const paymentsByMonth = aggregateByMonth(payments);
   const missingTipeeeMonths = findMissingTipeeeMonths(payments);
 
-  const title = type === "all" ? "Tout" : 
-                type === "subscriptions" ? "Abonnements" : 
-                type === "donations" ? "Dons" : "Tout";
+  const title =
+    type === "all" ? "Tout" : type === "subscriptions" ? "Abonnements" : type === "donations" ? "Dons" : "Tout";
   return (
     <Card className="scrollbar-none min-w-[300px] overflow-scroll border-none bg-black/90 text-white shadow-lg backdrop-blur-md">
       {missingTipeeeMonths.length > 0 && <UpdateTipeeeDialog missingTipeeeMonths={missingTipeeeMonths} />}
@@ -104,27 +124,59 @@ export const Panel = ({ type, payments, highlighted }: { type: string; payments:
 
           return (
             <Fragment key={date.getTime()}>
-              {index === 0 && <YearSeparator index={index} year={date.getFullYear()} />}
+              {index === 0 && (
+                <YearSeparator
+                  index={index}
+                  year={date.getFullYear()}
+                />
+              )}
               <div
                 key={String(amount)}
                 className={cn("rounded-md p-2", highlighted === index && "bg-white text-black")}
               >
                 <h3 className="text-xl font-semibold capitalize">{monthFormatted} </h3>
-                <div className="flex text-sm justify-between">
+                <div className="flex justify-between text-sm">
                   <span>💸 {inEuros(amount)}</span>
                   {evolutionAmount ? <span className="text-muted-foreground ml-3">{evolutionAmount}</span> : null}
                 </div>
-                {type === 'subscriptions' && <div className="flex text-sm justify-between">
-                  <span>👥 {customers} abonnés</span>
-                  {evolutionCustomers ? <span className="text-muted-foreground ml-3">{evolutionCustomers}</span> : null}
-                </div>}
+                {type === "subscriptions" && (
+                  <div className="flex justify-between text-sm">
+                    <span>👥 {customers} abonnés</span>
+                    {evolutionCustomers ? (
+                      <span className="text-muted-foreground ml-3">{evolutionCustomers}</span>
+                    ) : null}
+                  </div>
+                )}
                 <div className="mt-1 flex gap-x-2">
-                  {hasHelloasso && <img src={Helloasso.src} alt="Helloasso" className="h-4 w-4 rounded-md" />}
-                  {hasStripe && <img src={Stripe.src} alt="Stripe" className="h-4 w-4 rounded-md" />}
-                  {hasTipeee && <img src={Tipeee.src} alt="Tipeee" className="h-4 w-4 rounded-md" />}
+                  {hasHelloasso && (
+                    <img
+                      src={Helloasso.src}
+                      alt="Helloasso"
+                      className="h-4 w-4 rounded-md"
+                    />
+                  )}
+                  {hasStripe && (
+                    <img
+                      src={Stripe.src}
+                      alt="Stripe"
+                      className="h-4 w-4 rounded-md"
+                    />
+                  )}
+                  {hasTipeee && (
+                    <img
+                      src={Tipeee.src}
+                      alt="Tipeee"
+                      className="h-4 w-4 rounded-md"
+                    />
+                  )}
                 </div>
               </div>
-              {needsSeparator && <YearSeparator index={index} year={prevPayment.date.getFullYear()} />}
+              {needsSeparator && (
+                <YearSeparator
+                  index={index}
+                  year={prevPayment.date.getFullYear()}
+                />
+              )}
             </Fragment>
           );
         })}

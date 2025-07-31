@@ -22,15 +22,21 @@ const options: StripeElementsOptions = {
 
 export default function Subscription() {
   return (
-    <div id="donation-form" className="mx-auto mt-32">
+    <div
+      id="donation-form"
+      className="mx-auto mt-32"
+    >
       {/* 🔠 Titres */}
       <div className="mb-10">
-        <h3 className={cn(
-          "font-bakbak text-center font-bold text-balance uppercase",
-          "text-3xl ",
-          "sm:text-4xl",
-          "md:text-4xl",
-          "lg:text-5xl")}>
+        <h3
+          className={cn(
+            "font-bakbak text-balance text-center font-bold uppercase",
+            "text-3xl",
+            "sm:text-4xl",
+            "md:text-4xl",
+            "lg:text-5xl",
+          )}
+        >
           Hmm je préfère faire un don unique...
         </h3>
         <h5 className="text-center text-xl font-bold italic">C'est encore plus simple !</h5>
@@ -39,8 +45,9 @@ export default function Subscription() {
       <div className="mx-auto w-[500px] max-w-[90vw]">
         <Elements
           options={options as any}
-          stripe={stripePromise}>
-          <DonationForm/>
+          stripe={stripePromise}
+        >
+          <DonationForm />
         </Elements>
       </div>
     </div>

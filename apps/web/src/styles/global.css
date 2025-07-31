@@ -1,10 +1,10 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin '@tailwindcss/typography';
 @plugin '@tailwindcss/aspect-ratio';
 @plugin 'tailwind-scrollbar';
 
- @theme {
+@theme {
   --color-*: initial;
   --color-inherit: inherit;
   --color-current: currentColor;
@@ -337,16 +337,10 @@
 
   --breakpoint-xs: 425px;
 
-  --background-image-home-first-section:
-    url('/textures/home-stone-texture.png'), linear-gradient(#fff200, #fff200);
-  --background-image-yellow-with-tiles:
-    url('/textures/footer-spades-texture.png'),
-    linear-gradient(#fff200, #fff200);
+  --background-image-home-first-section: url("/textures/home-stone-texture.png"), linear-gradient(#fff200, #fff200);
+  --background-image-yellow-with-tiles: url("/textures/footer-spades-texture.png"), linear-gradient(#fff200, #fff200);
   --background-image-spades-separation: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 800 400" x="0px" y="0px" fill="black"><polygon points="400,400 800,33.299 0,33.299 "></polygon></svg>');
-  --background-image-gradient-conic: conic-gradient(
-    var(--conic-position, from 45deg),
-    var(--tw-gradient-stops)
-  );
+  --background-image-gradient-conic: conic-gradient(var(--conic-position, from 45deg), var(--tw-gradient-stops));
 
   --animate-sliding: sliding 60s linear infinite;
   --animate-sliding-reverse: slidingReverse 60s linear infinite;
@@ -358,9 +352,8 @@
   --animate-meteor: meteor 5s linear infinite;
   --animate-marquee: marquee var(--duration) linear infinite;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  --animate-background-gradient: background-gradient
-    var(--background-gradient-speed, 15s) cubic-bezier(0.445, 0.05, 0.55, 0.95)
-    infinite;
+  --animate-background-gradient: background-gradient var(--background-gradient-speed, 15s)
+    cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
 
   @keyframes sliding {
     0% {
@@ -456,28 +449,16 @@
       animation-delay: var(--background-gradient-delay, 0s);
     }
     20% {
-      transform: translate(
-        calc(100% * var(--tx-1, 1)),
-        calc(100% * var(--ty-1, 1))
-      );
+      transform: translate(calc(100% * var(--tx-1, 1)), calc(100% * var(--ty-1, 1)));
     }
     40% {
-      transform: translate(
-        calc(100% * var(--tx-2, -1)),
-        calc(100% * var(--ty-2, 1))
-      );
+      transform: translate(calc(100% * var(--tx-2, -1)), calc(100% * var(--ty-2, 1)));
     }
     60% {
-      transform: translate(
-        calc(100% * var(--tx-3, 1)),
-        calc(100% * var(--ty-3, -1))
-      );
+      transform: translate(calc(100% * var(--tx-3, 1)), calc(100% * var(--ty-3, -1)));
     }
     80% {
-      transform: translate(
-        calc(100% * var(--tx-4, -1)),
-        calc(100% * var(--ty-4, -1))
-      );
+      transform: translate(calc(100% * var(--tx-4, -1)), calc(100% * var(--ty-4, -1)));
     }
   }
 }

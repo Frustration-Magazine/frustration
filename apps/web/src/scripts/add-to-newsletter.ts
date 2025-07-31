@@ -10,13 +10,9 @@ export function addToNewsletter(form: HTMLFormElement) {
       console.error("Error while creating a new subscriber contact", error);
       return;
     }
-    const mailInput = form.querySelector(
-      "input[type=email]",
-    ) as HTMLInputElement;
+    const mailInput = form.querySelector("input[type=email]") as HTMLInputElement;
 
-    const submitButton = form.querySelector(
-      "button[type=submit]",
-    ) as HTMLButtonElement;
+    const submitButton = form.querySelector("button[type=submit]") as HTMLButtonElement;
 
     // Hide input
     mailInput.disabled = true;
@@ -25,8 +21,7 @@ export function addToNewsletter(form: HTMLFormElement) {
     // Change submit button style
     submitButton.disabled = true;
     submitButton.style.backgroundImage = "none";
-    submitButton.textContent =
-      "🎉 Vous êtes bien inscrit.e à notre newsletter !";
+    submitButton.textContent = "🎉 Vous êtes bien inscrit.e à notre newsletter !";
 
     // Reset form
     form.reset();

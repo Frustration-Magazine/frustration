@@ -26,10 +26,7 @@ const { MODE, SITE, PUBLIC_STRIPE_PRODUCT_SUBSCRIPTION } = import.meta.env;
 const CAMPAIGN_TAG = "regular";
 
 const SUCCESS_PAGE = "paiement-termine";
-const REDIRECT_URL_BASE =
-  MODE === "production"
-    ? `${SITE}/${SUCCESS_PAGE}`
-    : `http://localhost:4321/${SUCCESS_PAGE}`;
+const REDIRECT_URL_BASE = MODE === "production" ? `${SITE}/${SUCCESS_PAGE}` : `http://localhost:4321/${SUCCESS_PAGE}`;
 
 const CREATE_CUSTOMER_ENDPOINT = "/api/create-customer";
 const UPDATE_PAYMENT_INTENT_ENDPOINT = "/api/update-payment-intent";
@@ -46,10 +43,7 @@ type Props = {
   readonly hasGifts?: boolean;
 };
 
-export default function StripeForm({
-  amount = 900,
-  hasGifts = true,
-}: Props) {
+export default function StripeForm({ amount = 900, hasGifts = true }: Props) {
   // 🪝 Hooks
   const stripe = useStripe();
   const elements = useElements();
@@ -83,86 +77,79 @@ export default function StripeForm({
     /* ---------------- */
     /*   SUBSCRIPTION   */
     /* ---------------- */
-      let customer;
-      let address = {};
-      let name = null;
-      const addressElement = elements.getElement("address");
-      if (addressElement) {
-        await addressElement.getValue().then(({ value }) => {
-          address = value.address;
-          name = value.name;
-        });
-      } else {
-        console.error("No address element found");
-      }
+    let customer;
+    let address = {};
+    let name = null;
+    const addressElement = elements.getElement("address");
+    if (addressElement) {
+      await addressElement.getValue().then(({ value }) => {
+        address = value.address;
+        name = value.name;
+      });
+    } else {
+      console.error("No address element found");
+    }
 
-      // 1️⃣ Create customer
-      if (email) {
-        const resCustomerCreation = await fetch(CREATE_CUSTOMER_ENDPOINT, {
+    // 1️⃣ Create customer
+    if (email) {
+      const resCustomerCreation = await fetch(CREATE_CUSTOMER_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...(name ? { name } : {}),
+          ...(address ? { address } : {}),
+          email,
+          metadata: {
+            campaign: CAMPAIGN_TAG,
+          },
+        }),
+      }).then((res) => res.json());
+      if (resCustomerCreation?.customer) customer = { ...resCustomerCreation.customer };
+    }
+
+    // 2️⃣ Subscription
+    let subscription;
+    if (customer) {
+      const resSubscriptionCreation = await fetch(CREATE_SUBSCRIPTION_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerId: customer.id,
+          customerAddress: customer.address,
+          productId: PUBLIC_STRIPE_PRODUCT_SUBSCRIPTION,
+          amount,
+          nickname: `Abonnement de soutien à Frustation Magazine de ${amount / 100}€/mois`,
+          metadata: {
+            campaign: CAMPAIGN_TAG,
+          },
+        }),
+      }).then((res) => res.json());
+
+      // 3️⃣ Payment intent to update
+      if (resSubscriptionCreation?.subscription) {
+        subscription = resSubscriptionCreation.subscription;
+        const paymentIntentForSubscription = subscription?.latest_invoice?.payment_intent;
+        const resUpdatedPaymentIntent = await fetch(UPDATE_PAYMENT_INTENT_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            ...(name ? { name } : {}),
-            ...(address ? { address } : {}),
-            email,
-            metadata: {
-              campaign: CAMPAIGN_TAG,
-            },
-          }),
-        }).then((res) => res.json());
-        if (resCustomerCreation?.customer)
-          customer = { ...resCustomerCreation.customer };
-      }
-
-      // 2️⃣ Subscription
-      let subscription;
-      if (customer) {
-        const resSubscriptionCreation = await fetch(
-          CREATE_SUBSCRIPTION_ENDPOINT,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              customerId: customer.id,
-              customerAddress: customer.address,
-              productId: PUBLIC_STRIPE_PRODUCT_SUBSCRIPTION,
-              amount,
-              nickname: `Abonnement de soutien à Frustation Magazine de ${amount / 100}€/mois`,
+            paymentIntentId: paymentIntentForSubscription.id,
+            paymentIntentUpdatedInformations: {
+              receipt_email: customer.email,
               metadata: {
                 campaign: CAMPAIGN_TAG,
               },
-            }),
-          },
-        ).then((res) => res.json());
-
-        // 3️⃣ Payment intent to update
-        if (resSubscriptionCreation?.subscription) {
-          subscription = resSubscriptionCreation.subscription;
-          const paymentIntentForSubscription = subscription?.latest_invoice?.payment_intent;
-          const resUpdatedPaymentIntent = await fetch(
-            UPDATE_PAYMENT_INTENT_ENDPOINT,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                paymentIntentId: paymentIntentForSubscription.id,
-                paymentIntentUpdatedInformations: {
-                  receipt_email: customer.email,
-                  metadata: {
-                    campaign: CAMPAIGN_TAG,
-                  },
-                },
-              }),
             },
-          ).then((res) => res.json());
-          if (resUpdatedPaymentIntent?.paymentIntent) {
-            const {
-              paymentIntent: { client_secret },
-            } = resUpdatedPaymentIntent;
-            clientSecret = client_secret;
-          }
+          }),
+        }).then((res) => res.json());
+        if (resUpdatedPaymentIntent?.paymentIntent) {
+          const {
+            paymentIntent: { client_secret },
+          } = resUpdatedPaymentIntent;
+          clientSecret = client_secret;
         }
       }
+    }
 
     // 3️⃣ Try to confirm payment and redirect if that the case or handle error
     if (clientSecret) {
@@ -175,16 +162,13 @@ export default function StripeForm({
       let lastName = "";
       const addressElement = elements.getElement("address");
       if (addressElement) {
-        const { name } = await addressElement
-          .getValue()
-          .then(({ value }) => value);
+        const { name } = await addressElement.getValue().then(({ value }) => value);
         firstName = name;
       }
       const formData = new FormData();
       formData.append("email", email);
       formData.append("firstName", firstName);
       formData.append("lastName", lastName);
-
 
       const { error } = await stripe.confirmPayment({
         elements,
@@ -200,7 +184,7 @@ export default function StripeForm({
         setErrorMessage("Une erreur inattendue est survenue.");
       }
 
-      if(!error && addToNewsletter) {
+      if (!error && addToNewsletter) {
         actions.addSubscriberToNewsletter(formData);
       }
     }
@@ -211,20 +195,21 @@ export default function StripeForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="mb-12">
+      className="mb-12"
+    >
       {/* 2️⃣ CONTACT INFO */}
       <h3
-        className={`font-montserrat mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
+        className={`font-montserrat mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}
+      >
         <span className="max-lg:text-3xl">2️⃣</span>
         <span>Vos informations de contact</span>
       </h3>
-      <LinkAuthenticationElement
-        onChange={({ value: { email } }) => setEmail(email)}
-      />
+      <LinkAuthenticationElement onChange={({ value: { email } }) => setEmail(email)} />
       <div className="my-2"></div>
       <AddressElement options={{ mode: "shipping", display: { name: "split" } }} />
       <h3
-        className={`font-montserrat mt-10 mb-6 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}>
+        className={`font-montserrat mb-6 mt-10 flex flex-col items-center justify-center text-center text-2xl lg:flex-row lg:justify-start lg:gap-2 lg:text-left`}
+      >
         <span className="max-lg:text-3xl">3️⃣</span>
         <span>Vos informations de paiement</span>
       </h3>
@@ -241,16 +226,17 @@ export default function StripeForm({
       {errorMessage && (
         <div
           className="bg-purple mb-4 flex gap-2 rounded-sm px-4 py-2 text-white"
-          id="payment-message">
+          id="payment-message"
+        >
           <MessageCircleWarning className="shrink-0" />
           <div>
             <span>{errorMessage}</span>{" "}
             <span>
-              Veuillez réessayer et si l'erreur persiste n'hésitez pas à nous
-              contacter à{" "}
+              Veuillez réessayer et si l'erreur persiste n'hésitez pas à nous contacter à{" "}
               <a
                 className="text-lightBlue-300 underline"
-                href={`mailto:${import.meta.env.MAIL_FROM}`}>
+                href={`mailto:${import.meta.env.MAIL_FROM}`}
+              >
                 {import.meta.env.MAIL_FROM}
               </a>
             </span>
@@ -258,22 +244,19 @@ export default function StripeForm({
         </div>
       )}
 
-
       {/* ====================================================================== */}
 
       {/* ⬛ VALIDATION */}
-      <div
-        className={cn("mx-auto mt-10 w-fit", disableCheckout && "opacity-30")}>
+      <div className={cn("mx-auto mt-10 w-fit", disableCheckout && "opacity-30")}>
         <RainbowButton
           className="mx-auto rounded-md px-4 py-3 lg:py-4"
           type="submit"
-          id="submit">
+          id="submit"
+        >
           {isLoading ? (
             <LoaderCircle color="#FFF200" />
           ) : (
-            <span className="text-frustration-yellow text-xl font-bold lg:text-2xl">
-              💝 Soutenir Frustration
-            </span>
+            <span className="text-frustration-yellow text-xl font-bold lg:text-2xl">💝 Soutenir Frustration</span>
           )}
         </RainbowButton>
       </div>

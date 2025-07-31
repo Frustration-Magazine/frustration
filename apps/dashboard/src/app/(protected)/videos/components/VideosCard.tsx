@@ -62,7 +62,10 @@ export default function VideosCard({ type, title, texts }: Props): React.ReactNo
   /* Search */
   /* ====== */
   const Search = (
-    <form className="flex w-full items-center space-x-2" onSubmit={handleSearch}>
+    <form
+      className="flex w-full items-center space-x-2"
+      onSubmit={handleSearch}
+    >
       <Input
         type="text"
         placeholder={texts?.placeholder}
@@ -78,7 +81,7 @@ export default function VideosCard({ type, title, texts }: Props): React.ReactNo
   const AddDialog = (
     <Dialog>
       <DialogTrigger asChild>{Add}</DialogTrigger>
-      <DialogContent className="max-w-[1000px] w-[90vw]">
+      <DialogContent className="w-[90vw] max-w-[1000px]">
         <DialogHeader className="space-y-0">
           <DialogTitle>{texts?.dialogTitle}</DialogTitle>
           <DialogDescription>{texts?.dialogDescription}</DialogDescription>

@@ -88,8 +88,11 @@ export default function ({
   /* Title */
   /* ===== */
   const Title = (
-    <h6 className="text-md mb-1 leading-tight font-bold hover:underline">
-      <a href={createYoutubeUrlFromIdAndType(type, id)} target="_blank">
+    <h6 className="text-md mb-1 font-bold leading-tight hover:underline">
+      <a
+        href={createYoutubeUrlFromIdAndType(type, id)}
+        target="_blank"
+      >
         {title}
       </a>
     </h6>
@@ -98,7 +101,10 @@ export default function ({
   /* Description */
   /* =========== */
   const Description = (
-    <p className="overflow-hidden text-sm whitespace-break-spaces text-gray-600" style={{ overflowWrap: "anywhere" }}>
+    <p
+      className="overflow-hidden whitespace-break-spaces text-sm text-gray-600"
+      style={{ overflowWrap: "anywhere" }}
+    >
       {description}
     </p>
   );
@@ -120,7 +126,10 @@ export default function ({
         <TooltipTrigger asChild>
           {Icon && (
             <div className="shrink-0 self-center px-3">
-              <Icon className={`text-${iconClass}`} size={26} />
+              <Icon
+                className={`text-${iconClass}`}
+                size={26}
+              />
             </div>
           )}
         </TooltipTrigger>
@@ -131,13 +140,25 @@ export default function ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Annuler</AlertDialogCancel>
-            {/* Force to place variant for button here, see issue here : https://github.com/shadcn-ui/ui/issues/1115 */}
-            <AlertDialogAction asChild variant={iconClass as any} onClick={() => iconAction({ type, id })}>
-              <Button type="button" className="flex gap-2">
-                {Icon && <Icon className="shrink-0" size={16} />}
-                {texts?.[iconType].alertDialogAction}
-              </Button>
-            </AlertDialogAction>
+          {/* Force to place variant for button here, see issue here : https://github.com/shadcn-ui/ui/issues/1115 */}
+          <AlertDialogAction
+            asChild
+            variant={iconClass as any}
+            onClick={() => iconAction({ type, id })}
+          >
+            <Button
+              type="button"
+              className="flex gap-2"
+            >
+              {Icon && (
+                <Icon
+                  className="shrink-0"
+                  size={16}
+                />
+              )}
+              {texts?.[iconType].alertDialogAction}
+            </Button>
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

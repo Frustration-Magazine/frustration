@@ -5,9 +5,7 @@ import { cn } from "@/lib/utils";
 
 const {
   title,
-  author: {
-    node: author,
-  },
+  author: { node: author },
   featuredImage: { node: featuredImage },
   date,
   categories: { nodes: categories },
@@ -19,8 +17,7 @@ let mainCategories = categories.map(({ name, parent, slug }: any) =>
   parent ? { name: parent.node.name, slug } : { name, slug },
 );
 mainCategories = mainCategories.filter(
-  (obj: any, index: any, self: any) =>
-    index === self.findIndex((t: any) => t.name === obj.name),
+  (obj: any, index: any, self: any) => index === self.findIndex((t: any) => t.name === obj.name),
 );
 
 let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
@@ -32,15 +29,17 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
 
 <post-card
   class="group/container overflow-hidden"
-  style={{ perspective: "1200px" }}>
+  style={{ perspective: "1200px" }}
+>
   <a
     href={`/${slug}`}
     data-card
-    class="flex h-full cursor-pointer flex-col bg-black">
+    class="flex h-full cursor-pointer flex-col bg-black"
+  >
     <!-- 🖼️ Image -->
     <div class="h-[300px] overflow-hidden">
       <Image
-        class="w-full object-cover h-full"
+        class="h-full w-full object-cover"
         title={featuredImage.title}
         src={featuredImage.sourceUrl}
         alt={featuredImage.altText}
@@ -54,7 +53,8 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
       <header class="space-y-3">
         <!-- Title -->
         <h5
-          class="text-pretty uppercase xl:w-[70%] font-bakbak text-2xl xs:text-3xl leading-none! text-frustration-yellow">
+          class="font-bakbak xs:text-3xl leading-none! text-frustration-yellow text-pretty text-2xl uppercase xl:w-[70%]"
+        >
           {title}
         </h5>
         <!-- Categories -->
@@ -63,34 +63,36 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
             mainCategories.map((category: any) => (
               <span
                 class={cn(
-                  "bg-frustration-yellow text-black font-bakbak uppercase",
+                  "bg-frustration-yellow font-bakbak uppercase text-black",
                   "px-2 pt-[1.5px] text-xs",
                   "lg:text-sm",
-                )}>
+                )}
+              >
                 {category.name}
               </span>
             ))
           }
         </div>
         <!-- Author and date -->
-        <div
-          class="hidden text-xs md:text-sm lg:text-base xs:flex items-center gap-1 font-open-sans text-white">
-          {author ? <Fragment>
-            {
-              author.avatar.url ? (
-                <Image
-                  title={author.name}
-                  alt={author.name}
-                  width="100"
-                  height="100"
-                  src={author.avatar.url}
-                  class="mr-1 inline w-[15px] rounded-full"
-                />
-              ) : null
-            }
-            <span class="author">{author.name}</span>
-            <span>|</span>
-          </Fragment> : null}
+        <div class="xs:flex font-open-sans hidden items-center gap-1 text-xs text-white md:text-sm lg:text-base">
+          {
+            author ? (
+              <Fragment>
+                {author.avatar.url ? (
+                  <Image
+                    title={author.name}
+                    alt={author.name}
+                    width="100"
+                    height="100"
+                    src={author.avatar.url}
+                    class="mr-1 inline w-[15px] rounded-full"
+                  />
+                ) : null}
+                <span class="author">{author.name}</span>
+                <span>|</span>
+              </Fragment>
+            ) : null
+          }
           <FcCalendar />
           <date class="date">{DD_MM_YYYY}</date>
         </div>
@@ -100,9 +102,11 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
     <!-- ✨ Overlay -->
     <div
       data-overlay
-      class="overlay absolute h-full w-full opacity-0">
+      class="overlay absolute h-full w-full opacity-0"
+    >
       <div
-        class="absolute left-[-50%] top-[-50%] h-[200%] w-[200%] rounded-3xl bg-[radial-gradient(circle_at_50%,hsla(0,0%,100%,0.25),transparent_50%)]">
+        class="absolute left-[-50%] top-[-50%] h-[200%] w-[200%] rounded-3xl bg-[radial-gradient(circle_at_50%,hsla(0,0%,100%,0.25),transparent_50%)]"
+      >
       </div>
     </div>
   </a>
@@ -113,8 +117,7 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
     constructor() {
       super();
 
-      const postCardWrapper: HTMLElement | null =
-        this.querySelector("[data-card]");
+      const postCardWrapper: HTMLElement | null = this.querySelector("[data-card]");
       const overlay: HTMLElement | null = this.querySelector("[data-overlay]");
       const image: HTMLElement | null = this.querySelector("[data-thumbnail]");
 
@@ -125,18 +128,11 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
         }
       }
 
-      function handleMouseMove({
-        clientX,
-        clientY,
-      }: {
-        clientX: number;
-        clientY: number;
-      }) {
+      function handleMouseMove({ clientX, clientY }: { clientX: number; clientY: number }) {
         const rotationIntensity = 3;
         const overlayFactor = 2;
         if (postCardWrapper) {
-          const { left, top, width, height } =
-            postCardWrapper.getBoundingClientRect();
+          const { left, top, width, height } = postCardWrapper.getBoundingClientRect();
           const [x, y] = [clientX - left, clientY - top];
           postCardWrapper.style.transitionDuration = "0ms";
           postCardWrapper.style.transform = `rotateX(${-(y / (height / 2) - 1) * rotationIntensity}deg)
@@ -155,10 +151,7 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
             overlay.style.transform = `translate3d(${-((x * (100 / overlayFactor)) / width - 50 / overlayFactor)}%,
             ${-((y * (100 / overlayFactor)) / height - 50 / overlayFactor)}%,
             0)`;
-            overlay.style.opacity = String(
-              Math.abs(width / 2 - x) / width +
-                Math.abs(height / 2 - y) / height,
-            );
+            overlay.style.opacity = String(Math.abs(width / 2 - x) / width + Math.abs(height / 2 - y) / height);
           }
         }
       }

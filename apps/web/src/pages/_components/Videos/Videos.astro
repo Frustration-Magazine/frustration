@@ -60,7 +60,8 @@ const { data: records }: { data: any[] } = await readRecords({
                 "sm:[&>button>svg]:h-[45px]! sm:[&>button>svg]:w-[20px]! sm:[&>button]:h-[55px]! sm:[&>button]:w-[55px]!",
                 "lg:[&>button>svg]:h-[70px]! lg:[&>button>svg]:w-[30px]! lg:[&>button]:h-[80px]! lg:[&>button]:w-[80px]!",
                 records.length < 2 && "hidden",
-              )}>
+              )}
+            >
               <button class="splide__arrow splide__arrow--prev">
                 <ChevronRight
                   color="#FFF200"
@@ -83,7 +84,8 @@ const { data: records }: { data: any[] } = await readRecords({
                 <li
                   class="splide__slide"
                   data-id={video.id}
-                  data-splide-youtube={`https://www.youtube.com/watch?v=${video.id}`}>
+                  data-splide-youtube={`https://www.youtube.com/watch?v=${video.id}`}
+                >
                   <Image
                     src={video.thumbnailMaxResolution}
                     alt="Illustration vidéo"
@@ -95,8 +97,9 @@ const { data: records }: { data: any[] } = await readRecords({
                     target="_blank"
                     class={cn(
                       "max-md:hidden",
-                      "absolute z-10 bottom-2 flex items-center gap-2  bg-black text-white font-montserrat px-3 rounded-lg font-semibold py-1 right-2",
-                    )}>
+                      "font-montserrat absolute bottom-2 right-2 z-10 flex items-center gap-2 rounded-lg bg-black px-3 py-1 font-semibold text-white",
+                    )}
+                  >
                     <img
                       src="img/favicon_yt.png"
                       width="21"
@@ -117,7 +120,8 @@ const { data: records }: { data: any[] } = await readRecords({
                 <li
                   class="splide__slide rounded-lg"
                   data-id={video.id}
-                  data-splide-youtube={`https://www.youtube.com/watch?v=${video.id}`}>
+                  data-splide-youtube={`https://www.youtube.com/watch?v=${video.id}`}
+                >
                   <Image
                     src={video.thumbnailMaxResolution}
                     alt="Illustration vidéo"
@@ -130,7 +134,10 @@ const { data: records }: { data: any[] } = await readRecords({
           </div>
         </div>
       </div>
-      <AllArticles category="videos" label="Toutes les vidéos" />
+      <AllArticles
+        category="videos"
+        label="Toutes les vidéos"
+      />
     </Section>
   )
 }
@@ -174,13 +181,7 @@ const { data: records }: { data: any[] } = await readRecords({
   /* SPLIDE CUSTOMIZATION */
 
   .splide__track--nav {
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 10%,
-      black 90%,
-      transparent 100%
-    );
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
     cursor: auto;
     will-change: auto;
   }
@@ -262,10 +263,7 @@ const { data: records }: { data: any[] } = await readRecords({
     }
   }
 
-  .splide-videos-thumbnails
-    .splide__track--nav
-    .splide__list
-    > .splide__slide:not(.is-active) {
+  .splide-videos-thumbnails .splide__track--nav .splide__list > .splide__slide:not(.is-active) {
     opacity: 0.5;
   }
 </style>
@@ -277,9 +275,7 @@ const { data: records }: { data: any[] } = await readRecords({
   const ADDITIONAL_INFORMATIONS_SELECTOR = ".video-informations";
 
   function manageDisplayOfAdditionalInformations(index: number = 0): void {
-    const videoInformations = document.querySelectorAll(
-      ADDITIONAL_INFORMATIONS_SELECTOR,
-    ) as unknown as HTMLElement[];
+    const videoInformations = document.querySelectorAll(ADDITIONAL_INFORMATIONS_SELECTOR) as unknown as HTMLElement[];
     videoInformations.forEach((element, elementIndex) => {
       if (elementIndex === index) {
         element.style.display = "block";
@@ -332,8 +328,6 @@ const { data: records }: { data: any[] } = await readRecords({
     splideVideosThumbnails.mount();
 
     manageDisplayOfAdditionalInformations();
-    splideVideos.on("active", ({ index }) =>
-      manageDisplayOfAdditionalInformations(index),
-    );
+    splideVideos.on("active", ({ index }) => manageDisplayOfAdditionalInformations(index));
   });
 </script>

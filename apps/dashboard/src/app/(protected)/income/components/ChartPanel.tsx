@@ -12,8 +12,15 @@ export const ChartPanel = ({ payments, type }: { payments: Payment[]; type: stri
   const [highlighted, setHighlighted] = useState<number>(-1);
   return (
     <section className="flex h-full gap-6">
-      <Panel type={type} payments={payments} highlighted={highlighted} />
-      <Chart payments={payments} setHighlighted={setHighlighted} />
+      <Panel
+        type={type}
+        payments={payments}
+        highlighted={highlighted}
+      />
+      <Chart
+        payments={payments}
+        setHighlighted={setHighlighted}
+      />
     </section>
   );
 };

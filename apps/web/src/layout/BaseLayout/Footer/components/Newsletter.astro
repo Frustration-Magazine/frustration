@@ -6,24 +6,19 @@ import H5 from "./H5.astro";
 
 <div>
   <H5>
-    Nous suivre <span
-      class={cn("hidden", "xs:inline-block font-open-sans text-sm ml-0.5")}
+    Nous suivre <span class={cn("hidden", "xs:inline-block font-open-sans text-sm ml-0.5")}
       >(jusqu'à la révolution)</span
     >
   </H5>
-  <p
-    class={cn(
-      "mb-4 font-open-sans leading-tight",
-      "text-sm text-center",
-      "sm:text-base sm:text-left",
-    )}>
+  <p class={cn("mb-4 font-open-sans leading-tight", "text-sm text-center", "sm:text-base sm:text-left")}>
     Recevez régulièrement une sélection de nos derniers articles !
   </p>
   <form
     id="form-newsletter-banner"
-    class="flex flex-col gap-3 w-full max-w-[600px]">
+    class="flex w-full max-w-[600px] flex-col gap-3"
+  >
     <input
-      class="px-5 bg-white py-2"
+      class="bg-white px-5 py-2"
       required
       name="email"
       placeholder="Email"
@@ -37,16 +32,15 @@ import H5 from "./H5.astro";
         "bg-black py-2 font-open-sans justify-center font-bold text-frustration-yellow flex items-center gap-2",
         "text-base",
         "md:text-lg",
-      )}>
+      )}
+    >
       <TbSend />
       <span>S'inscrire à la newsletter</span>
     </button>
   </form>
   <script>
     import { addToNewsletter } from "@/scripts/add-to-newsletter";
-    const form = document.getElementById(
-      "form-newsletter-banner",
-    ) as HTMLFormElement;
+    const form = document.getElementById("form-newsletter-banner") as HTMLFormElement;
     if (form) addToNewsletter(form);
   </script>
 </div>

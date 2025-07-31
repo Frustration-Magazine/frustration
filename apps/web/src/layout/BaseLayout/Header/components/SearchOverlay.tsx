@@ -23,7 +23,8 @@ function SearchOverlay() {
       title="Recherche"
       className={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
       onClick={() => setOpened(true)}
-      aria-label="Rechercher sur le site de Frustration Magazine">
+      aria-label="Rechercher sur le site de Frustration Magazine"
+    >
       <FaMagnifyingGlass size="100%" />
     </button>
   );
@@ -33,11 +34,12 @@ function SearchOverlay() {
       type="button"
       title="Fermer"
       className={cn(
-        "absolute top-5 right-5 cursor-pointer opacity-0 transition-opacity duration-1000",
+        "absolute right-5 top-5 cursor-pointer opacity-0 transition-opacity duration-1000",
         opened && "opacity-100",
       )}
       onClick={() => setOpened(false)}
-      aria-label="Fermer la barre de recherche">
+      aria-label="Fermer la barre de recherche"
+    >
       <IoCloseSharp size="clamp(40px, 5vw, 72px)" />
     </button>
   );
@@ -65,7 +67,8 @@ function SearchOverlay() {
         "xl:px-6 xl:py-2 xl:text-3xl",
       )}
       type="submit"
-      disabled={!search}>
+      disabled={!search}
+    >
       Rechercher
     </button>
   );
@@ -75,24 +78,22 @@ function SearchOverlay() {
       {OpenButton}
       <div
         className={cn(
-          "absolute top-0 left-0 h-0 w-screen overflow-hidden bg-black transition-all duration-1000",
+          "absolute left-0 top-0 h-0 w-screen overflow-hidden bg-black transition-all duration-1000",
           opened && "h-screen",
-        )}>
+        )}
+      >
         {CloseButton}
         <form
           action={redirectPageResults}
           className={cn(
-            "absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 opacity-0 transition-opacity duration-1000",
+            "absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 opacity-0 transition-opacity duration-1000",
             opened && "opacity-100",
-          )}>
+          )}
+        >
           {SearchInput}
           {SearchButton}
         </form>
-        <div
-          className={cn(
-            "fixed right-5 bottom-5 hidden gap-4",
-            opened && "flex",
-          )}>
+        <div className={cn("fixed bottom-5 right-5 hidden gap-4", opened && "flex")}>
           <AgendaButton className={cn(opened && "opacity-100")} />
           <MailButton className={cn(opened && "opacity-100")} />
         </div>

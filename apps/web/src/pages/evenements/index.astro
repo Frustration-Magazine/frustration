@@ -11,8 +11,7 @@ import { Image } from "astro:assets";
 export const prerender = false;
 
 const TITLE = "Évenements";
-const DESCRIPTION =
-  "Liste des événements à venir autour de Frustration Magazine et Nicolas Framont";
+const DESCRIPTION = "Liste des événements à venir autour de Frustration Magazine et Nicolas Framont";
 
 const { data: events }: { data: Event[] } = await readRecords({
   table: "events",
@@ -21,50 +20,45 @@ const { data: events }: { data: Event[] } = await readRecords({
   success: "Events read!",
 });
 
-const displayedEvents = events.filter(
-  ({ date, displayEvent }) => displayEvent && date >= new Date(),
-);
+const displayedEvents = events.filter(({ date, displayEvent }) => displayEvent && date >= new Date());
 
 const thereAreEvents = displayedEvents.length > 0;
 ---
 
 <PageLayout
   title={TITLE}
-  description={DESCRIPTION}>
+  description={DESCRIPTION}
+>
   <article slot="content">
     <H2>Frustra'tour</H2>
-    <H3 className="text-center"
-      >Venez rencontrer l'équipe de Frustration Magazine lors de nos événements
-      publics !</H3
-    >
-    <section class="space-y-16 mt-12 relative">
+    <H3 className="text-center">Venez rencontrer l'équipe de Frustration Magazine lors de nos événements publics !</H3>
+    <section class="relative mt-12 space-y-16">
       {
         thereAreEvents ? (
           <>
             {displayedEvents.map((event, index) => (
               <div class="relative z-10">
-                <div class="absolute opacity-5 z-10" />
+                <div class="absolute z-10 opacity-5" />
                 <CardEvent {event}>
                   <Image
                     src={VousNeDetestez}
                     alt="Couverture de Vous ne détestez pas le lundi, vous détestez la domination au travail de Nicolas Framont"
                     width="200"
                     height="500"
-                    class="w-auto h-full"
+                    class="h-full w-auto"
                   />
                 </CardEvent>
                 {index > 0 && (
-                  <div class="absolute after-top-[-5px] after-left-1/2 after-transform top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-[#FCCF00] size-5 rounded-full" />
+                  <div class="after-top-[-5px] after-left-1/2 after-transform absolute left-1/2 top-0 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCCF00]" />
                 )}
               </div>
             ))}
-            <div class="absolute h-full w-2 top-0 mt-0! bg-[#FCCF00] left-1/2 -translate-x-1/2" />
+            <div class="mt-0! absolute left-1/2 top-0 h-full w-2 -translate-x-1/2 bg-[#FCCF00]" />
           </>
         ) : (
           <p class="text-center">
-            Aucun événement à venir pour l'instant, n'hésitez pas à nous suivre
-            sur nos réseaux sociaux pour ne rien rater de l'actualité de
-            Frustration Magazine 😁
+            Aucun événement à venir pour l'instant, n'hésitez pas à nous suivre sur nos réseaux sociaux pour ne rien
+            rater de l'actualité de Frustration Magazine 😁
           </p>
         )
       }

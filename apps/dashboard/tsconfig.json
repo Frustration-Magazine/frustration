@@ -2,11 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "es2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -24,12 +20,8 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/auth": [
-        "./src/app/auth/auth.ts"
-      ],
+      "@/*": ["./src/*"],
+      "@/auth": ["./src/app/auth/auth.ts"]
     }
   },
   "include": [
@@ -40,9 +32,7 @@
     "../../packages/utils/files.ts",
     "../../packages/data-access/helloasso.ts",
     "../../packages/data-access/models/transactions.ts",
-    "../../packages/data-access/stripe.ts",
+    "../../packages/data-access/stripe.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

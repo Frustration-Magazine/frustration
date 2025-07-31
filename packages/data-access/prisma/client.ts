@@ -10,10 +10,22 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 /*  READ  */
 /* ------ */
 
-export async function readRecords({ table, where, orderBy, take, success }: { table: string; where: any; take?: number; orderBy: any; success: any }): Promise<any> {
+export async function readRecords({
+  table,
+  where,
+  orderBy,
+  take,
+  success,
+}: {
+  table: string;
+  where: any;
+  take?: number;
+  orderBy: any;
+  success: any;
+}): Promise<any> {
   let status = {
     success: null,
-    error: null
+    error: null,
   };
   let data = [];
 
@@ -38,7 +50,7 @@ export async function readRecords({ table, where, orderBy, take, success }: { ta
 export async function createRecord({ table, data, success }: { table: string; data: any; success: any }): Promise<any> {
   let status = {
     success: null,
-    error: null
+    error: null,
   };
 
   let result = null;
@@ -63,7 +75,7 @@ export async function createRecord({ table, data, success }: { table: string; da
 export async function updateRecord({ table, data, success }: { table: string; data: any; success: any }): Promise<any> {
   let status = {
     success: null,
-    error: null
+    error: null,
   };
 
   // 🔁 Insert
@@ -83,18 +95,26 @@ export async function updateRecord({ table, data, success }: { table: string; da
 /* ------ */
 /* DELETE */
 /* ------ */
-export async function deleteRecord({ table, id, success }: { table: string; id: string | number; success: any }): Promise<any> {
+export async function deleteRecord({
+  table,
+  id,
+  success,
+}: {
+  table: string;
+  id: string | number;
+  success: any;
+}): Promise<any> {
   let status = {
     success: null,
-    error: null
+    error: null,
   };
 
   // 🔁 Insert
   try {
     await (prisma as any)[table].delete({
       where: {
-        id
-      }
+        id,
+      },
     });
     status.success = success;
   } catch (e) {
@@ -111,10 +131,20 @@ export async function deleteRecord({ table, id, success }: { table: string; id: 
 /* AGGREGATE */
 /* ------ */
 
-export async function aggregateRecords({ table, dataToAggregate, where, success }: { table: string; dataToAggregate: any; where: any; success: any }): Promise<any> {
+export async function aggregateRecords({
+  table,
+  dataToAggregate,
+  where,
+  success,
+}: {
+  table: string;
+  dataToAggregate: any;
+  where: any;
+  success: any;
+}): Promise<any> {
   let status = {
     success: null,
-    error: null
+    error: null,
   };
   let result = null;
   // 🔁 Insert
@@ -124,8 +154,7 @@ export async function aggregateRecords({ table, dataToAggregate, where, success 
   } catch (e) {
     // ❌ Error | P202
     console.error("Error while aggregating records", e);
-  }
-  finally {
+  } finally {
     return { status, result };
   }
 }

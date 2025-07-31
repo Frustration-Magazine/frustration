@@ -8,11 +8,11 @@ import { aggregateRecords } from "data-access/prisma";
 import { SparklesText } from "@/components/magicui/sparkles-text";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { TextAnimate } from "@/components/magicui/text-animate";
-import Frustrarenard from './assets/frustrarenard.avif'
-import Fist from './assets/fist.svg'
+import Frustrarenard from "./assets/frustrarenard.avif";
+import Fist from "./assets/fist.svg";
 import { motion } from "framer-motion";
 
-const prevMonth = new Date(new Date().setMonth(new Date().getMonth() - 1))
+const prevMonth = new Date(new Date().setMonth(new Date().getMonth() - 1));
 const firstDayOfCurrentMonth = getFirstDayOfTheMonth(new Date());
 const firstDayOfPrevMonth = getFirstDayOfTheMonth(prevMonth);
 
@@ -23,7 +23,11 @@ let subscribersLastMonth: number | null = null;
 let PERCENTAGE_SUBSCRIBERS: number | null = null;
 
 try {
-  const { result: { _sum: { customers: subscribers } } } = await aggregateRecords({
+  const {
+    result: {
+      _sum: { customers: subscribers },
+    },
+  } = await aggregateRecords({
     table: "payments",
     dataToAggregate: {
       customers: true,
@@ -39,7 +43,7 @@ try {
     },
     success: true,
   });
-  
+
   subscribersLastMonth = subscribers;
   PERCENTAGE_SUBSCRIBERS = subscribersLastMonth ? Math.round((subscribersLastMonth / SUBSCRIBERS_TARGET) * 100) : null;
 } catch (error) {
@@ -64,108 +68,150 @@ try {
 // });
 ---
 
-{ subscribersLastMonth ?<a
-  href="abonnements"
-  id="banner"
-  class="banner-container relative py-4 bg-[url('/img/banner_bg_2025.jpg')] bg-repeat-round bg-cover">
-  <!-- Gauge -->
-  <div class="flex flex-col items-center relative justify-center w-[400px] max-w-[90%] mx-auto">
-    {/* OBJECTIF */}
-    <div class={cn("font-bakbak relative text-black text-4xl font-bold flex gap-2", "text-3xl", "sm:text-4xl")}>
-      <span class={cn("absolute -left-[10px] text-3xl top-1/2 -translate-y-1/2 -translate-x-full", "hidden", "xs:block")}>
-        🚀 
-      </span>
-      <span>
-        OBJECTIF 
-      </span>
-      <SparklesText sparklesCount={3} colors={{ first: "#fff200", second: "#fccf00" }} client:load>1500</SparklesText>
-    </div>
-    {/* Déjà X abonnés ! */}
-    <div class="relative inline-block z-1 px-2">
-     <span 
-      class={cn("font-bakbak text-transparent absolute -z-1 text-2xl text-shadow-[1px_1px_2px_rgba(0,0,0,0.7)]", "text-xl", "sm:text-2xl")}>
-        Déjà <NumberTicker client:load startValue={subscribersLastMonth - 40} value={subscribersLastMonth} /> abonnés !
-      </span>
-     <span 
-      class={cn("font-bakbak text-2xl shadow-2xl ", "text-xl", "sm:text-2xl")}>
-        <span class="bg-gradient-to-r from-yellow-400 to-frustration-yellow bg-clip-text text-transparent">
-          Déjà 
-        </span>
-        <NumberTicker client:load startValue={subscribersLastMonth - 40} className="text-frustration-yellow" value={subscribersLastMonth} />  
-        <span class="bg-gradient-to-r from-frustration-yellow to-yellow-400 bg-clip-text text-transparent ">
-          abonnés !
-        </span>
-      </span>
-    </div>
-    {/* Gauge */}
-    <div class="relative w-full mb-3 max-w-[400px] mx-auto">
-     <div class="w-full shadow-lg mt-2 bg-yellow-100/50 rounded-full overflow-hidden shadow-inner">
-       <div
-         class={cn("h-6 rounded-full transition-all duration-2000 ease-out shimmer-bar relative", "h-5", "sm:h-6")}
-         style={{
-           width: `${PERCENTAGE_SUBSCRIBERS}%`,
-           background: `linear-gradient(90deg, #FFF200 0%, #FFE135 50%, #FFF200 100%)`,
-           boxShadow: `0 0 10px rgba(255, 242, 0, 0.5)`,
-         }}
-       ></div>
-        <Image
-        src={Frustrarenard}
-        class={cn("absolute -top-full right-[7%]", "w-[30px] -translate-y-[-7%]", "sm:w-[40px] sm:-translate-y-[0%] ")}
-        width="100"
-        alt="Frustration renard"
-      />
-     </div> 
-    </div>
-   {/* FIST */}
-   <motion.div client:load
-     initial={{ y: 50, opacity: 0 }}
-     animate={{ y: 20, opacity: 1 }}
-     transition={{ 
-       type: "spring",
-       stiffness: 100,
-       damping: 15,
-       delay: 0.5
-     }}
-     className="absolute bottom-0 left-0"
-   >
-     <Fist class={cn("w-[50px] h-[50px]", "w-[40px] h-[40px]", "sm:w-[50px] sm:h-[50px]")} />
-   </motion.div>
-   {/* INFORMATIONS  */}
-   <div>
-    <div class={cn("w-[250px] leading-tight text-center font-bold font-bakbak", "text-sm", "sm:text-base sm:w-[300px] ")}>
-      <TextAnimate once segmentClassName="text-shadow-[0.5px_0.5px_0px_yellow]" className="leading-tight" delay={0.5} duration={4} client:load text="Soutenez Frustration Magazine et recevez le dernier numéro ou l'un de nos livres en échange !"/>
-    </div>
-   </div>
-  </div> 
-</a> : null}
+{
+  subscribersLastMonth ? (
+    <a
+      href="abonnements"
+      id="banner"
+      class="banner-container relative bg-[url('/img/banner_bg_2025.jpg')] bg-cover bg-repeat-round py-4"
+    >
+      <div class="relative mx-auto flex w-[400px] max-w-[90%] flex-col items-center justify-center">
+        {/* OBJECTIF */}
+        <div class={cn("font-bakbak relative flex gap-2 text-4xl font-bold text-black", "text-3xl", "sm:text-4xl")}>
+          <span
+            class={cn(
+              "absolute -left-[10px] top-1/2 -translate-x-full -translate-y-1/2 text-3xl",
+              "hidden",
+              "xs:block",
+            )}
+          >
+            🚀
+          </span>
+          <span>OBJECTIF</span>
+          <SparklesText
+            sparklesCount={3}
+            colors={{ first: "#fff200", second: "#fccf00" }}
+            client:load
+          >
+            1500
+          </SparklesText>
+        </div>
+        {/* Déjà X abonnés ! */}
+        <div class="z-1 relative inline-block px-2">
+          <span
+            class={cn(
+              "font-bakbak -z-1 text-shadow-[1px_1px_2px_rgba(0,0,0,0.7)] absolute text-2xl text-transparent",
+              "text-xl",
+              "sm:text-2xl",
+            )}
+          >
+            Déjà{" "}
+            <NumberTicker
+              client:load
+              startValue={subscribersLastMonth - 40}
+              value={subscribersLastMonth}
+            />{" "}
+            abonnés !
+          </span>
+          <span class={cn("font-bakbak text-2xl shadow-2xl", "text-xl", "sm:text-2xl")}>
+            <span class="to-frustration-yellow bg-gradient-to-r from-yellow-400 bg-clip-text text-transparent">
+              Déjà
+            </span>
+            <NumberTicker
+              client:load
+              startValue={subscribersLastMonth - 40}
+              className="text-frustration-yellow"
+              value={subscribersLastMonth}
+            />
+            <span class="from-frustration-yellow bg-gradient-to-r to-yellow-400 bg-clip-text text-transparent">
+              abonnés !
+            </span>
+          </span>
+        </div>
+        {/* Gauge */}
+        <div class="relative mx-auto mb-3 w-full max-w-[400px]">
+          <div class="mt-2 w-full overflow-hidden rounded-full bg-yellow-100/50 shadow-lg">
+            <div
+              class={cn("duration-2000 shimmer-bar relative h-6 rounded-full transition-all ease-out", "h-5", "sm:h-6")}
+              style={{
+                width: `${PERCENTAGE_SUBSCRIBERS}%`,
+                background: `linear-gradient(90deg, #FFF200 0%, #FFE135 50%, #FFF200 100%)`,
+                boxShadow: `0 0 10px rgba(255, 242, 0, 0.5)`,
+              }}
+            />
+            <Image
+              src={Frustrarenard}
+              class={cn(
+                "absolute -top-full right-[7%]",
+                "w-[30px] -translate-y-[-7%]",
+                "sm:w-[40px] sm:-translate-y-[0%]",
+              )}
+              width="100"
+              alt="Frustration renard"
+            />
+          </div>
+        </div>
+        {/* FIST */}
+        <motion.div
+          client:load
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 20, opacity: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 15,
+            delay: 0.5,
+          }}
+          className="absolute bottom-0 left-0"
+        >
+          <Fist class={cn("h-[50px] w-[50px]", "h-[40px] w-[40px]", "sm:h-[50px] sm:w-[50px]")} />
+        </motion.div>
+        {/* INFORMATIONS  */}
+        <div>
+          <div
+            class={cn(
+              "font-bakbak w-[250px] text-center font-bold leading-tight",
+              "text-sm",
+              "sm:w-[300px] sm:text-base",
+            )}
+          >
+            <TextAnimate
+              once
+              segmentClassName="text-shadow-[0.5px_0.5px_0px_yellow]"
+              className="leading-tight"
+              delay={0.5}
+              duration={4}
+              client:load
+              text="Soutenez Frustration Magazine et recevez le dernier numéro ou l'un de nos livres en échange !"
+            />
+          </div>
+        </div>
+      </div>
+    </a>
+  ) : null
+}
 <style define:vars={{ backgroundUrl }}>
+  .banner-container {
+    background-image: var(--backgroundUrl);
+  }
 
-.banner-container {
-  background-image: var(--backgroundUrl);
-}
-
-.shimmer-bar::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.8),
-    transparent
-  );
-  animation: shimmer-slide 2s ease-in-out infinite;
-}
-
-@keyframes shimmer-slide {
-  0% {
+  .shimmer-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
     left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    animation: shimmer-slide 2s ease-in-out infinite;
   }
-  100% {
-    left: 150%;
+
+  @keyframes shimmer-slide {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 150%;
+    }
   }
-}
 </style>

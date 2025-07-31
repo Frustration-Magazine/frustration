@@ -1,8 +1,4 @@
-export const generateResponseError = ({
-  errorMessage,
-}: {
-  errorMessage: string;
-}) => {
+export const generateResponseError = ({ errorMessage }: { errorMessage: string }) => {
   return new Response(
     JSON.stringify({
       error: errorMessage,

@@ -3,8 +3,7 @@ import { fetchLinkPreview } from "@/lib/wordpress";
 import { cn } from "@/lib/utils";
 import LogoSquare from "../../assets/logo_square.png";
 
-const EMBED_INTERNAL_LINK_SELECTOR =
-  "figure.wp-block-embed:not(.is-type-video):has(.wp-block-embed__wrapper)";
+const EMBED_INTERNAL_LINK_SELECTOR = "figure.wp-block-embed:not(.is-type-video):has(.wp-block-embed__wrapper)";
 const scanEmbedInternalLinks = () => {
   let nodeList = document.querySelectorAll(EMBED_INTERNAL_LINK_SELECTOR);
   return nodeList;
@@ -36,7 +35,7 @@ function MoreArticles() {
     Promise.all(linksPreviewPromises).then((values) => {
       setLinkPreviews(values);
       embedArticles.forEach((node) => {
-        const isFrustrationLink = node && node.textContent && node.textContent.match("frustrationmagazine.fr")
+        const isFrustrationLink = node && node.textContent && node.textContent.match("frustrationmagazine.fr");
         if (isFrustrationLink) node.remove();
       });
     });
@@ -48,7 +47,8 @@ function MoreArticles() {
     <div>
       <h3
         className="font-bakbak mb-6 text-4xl underline decoration-[#FCCF00] decoration-[10px] underline-offset-[-5px]"
-        style={{ textDecorationSkipInk: "none" }}>
+        style={{ textDecorationSkipInk: "none" }}
+      >
         Plus d'articles
       </h3>
       <ul className="space-y-4">
@@ -60,19 +60,15 @@ function MoreArticles() {
                 "flex rounded-md border shadow-md",
                 "flex-col items-center gap-4 p-4",
                 "sm:flex-row sm:items-start sm:gap-6 sm:p-6",
-              )}>
+              )}
+            >
               <img
                 src={LogoSquare.src}
                 alt="Logo Square"
                 className={cn("h-12 w-12")}
               />
               <div>
-                <h5
-                  className={cn(
-                    "font-bakbak leading-none! font-bold",
-                    "mb-2 text-xl",
-                    "sm:mb-2 sm:text-2xl",
-                  )}>
+                <h5 className={cn("font-bakbak leading-none! font-bold", "mb-2 text-xl", "sm:mb-2 sm:text-2xl")}>
                   {linkPreview.title}
                 </h5>
                 <div

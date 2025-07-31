@@ -21,12 +21,14 @@ const { authors, className } = Astro.props;
 ---
 
 <ul class={cn("grid grid-cols-1 sm:grid-cols-2 gap-8", className)}>
-  {authors.map((author: Author) => (
-    <AuthorCard
-      name={author.name}
-      slug={author.slug}
-      description={author.description}
-      avatarUrl={author.avatar.url}
-    />
-  ))}
+  {
+    authors.map((author: Author) => (
+      <AuthorCard
+        name={author.name}
+        slug={author.slug}
+        description={author.description}
+        avatarUrl={author.avatar.url}
+      />
+    ))
+  }
 </ul>

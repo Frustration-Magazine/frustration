@@ -24,7 +24,7 @@ export const diffInPercent = (prev: number, current: number): string => {
   if (isNearZero) return "- %";
 
   const sign = percent > 0 ? "+" : "";
-  
+
   // Return the percentage with its sign
   return `${sign}${roundedPercent}%`;
 };
@@ -53,7 +53,7 @@ export const filterByTypes = (payments: Payment[], paymentsTypes: PaymentType[])
 /* Aggregate by month */
 /* ------------------ */
 
-type PaymentByMonth = { date: Date; amount: number, customers: number };
+type PaymentByMonth = { date: Date; amount: number; customers: number };
 
 export const aggregateByMonth = (payments: Payment[]): PaymentByMonth[] => {
   const aggregated = payments.reduce((acc: PaymentByMonth[], payment) => {

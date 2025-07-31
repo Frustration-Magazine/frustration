@@ -18,21 +18,27 @@ This is the Frustration Dashboard (as a part of monorepository Frustration), a w
 ### Installation
 
 1. Clone the repository:
-  ```bash
-  git clone https://github.com/yourusername/frustration-dashboard.git
-  ```
+
+```bash
+git clone https://github.com/yourusername/frustration-dashboard.git
+```
+
 2. Navigate to the project directory:
-  ```bash
-  cd frustration-dashboard
-  ```
+
+```bash
+cd frustration-dashboard
+```
+
 3. Install dependencies:
-  ```bash
-  pnpm install
-  ```
+
+```bash
+pnpm install
+```
 
 ### Running the Development Server
 
 Start the development server:
+
 ```bash
 pnpm run dev
 ```
@@ -42,6 +48,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### Building for Production
 
 To create an optimized production build:
+
 ```bash
 npm run build
 ```

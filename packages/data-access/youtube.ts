@@ -19,8 +19,10 @@ export function createYoutubeUrlFromIdAndType(type: string, id: string) {
 
 export type YoutubeResourceType = "channel" | "playlist" | "video" | "playlistItem";
 
-export const YOUTUBE_VIDEO_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-export const YOUTUBE_PLAYLIST_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]list=)|youtu\.be\/)([a-zA-Z0-9_-]{34})/;
+export const YOUTUBE_VIDEO_URL_REGEX =
+  /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+export const YOUTUBE_PLAYLIST_URL_REGEX =
+  /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]list=)|youtu\.be\/)([a-zA-Z0-9_-]{34})/;
 
 /* ------------ */
 /* 🐝 API Calls */
@@ -28,7 +30,13 @@ export const YOUTUBE_PLAYLIST_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?(?:youtube\
 
 /* Fetch youtube */
 /* ------------- */
-export async function fetchYoutube({ params, type }: { params: Record<string, any>; type?: YoutubeResourceType }): Promise<any> {
+export async function fetchYoutube({
+  params,
+  type,
+}: {
+  params: Record<string, any>;
+  type?: YoutubeResourceType;
+}): Promise<any> {
   // ❌ #1 Early return if no API key detected
   if (!process.env.GOOGLE_API_KEY) {
     console.warn("No API key for Google found.");
@@ -86,7 +94,7 @@ export async function fetchSuggestions(params: Record<string, any>): Promise<any
     case "channel": {
       // Get channel with search param or thanks to a video id if video URL that belongs to that channel was passed
       const { items } = await fetchYoutube({
-        params: isVideoUrl ? { id: video.snippet.channelId } : params
+        params: isVideoUrl ? { id: video.snippet.channelId } : params,
       });
       suggestions = items;
       break;

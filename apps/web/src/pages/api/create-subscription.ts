@@ -7,8 +7,7 @@ const { PUBLIC_STRIPE_PRODUCT_SUBSCRIPTION } = import.meta.env;
 
 // https://docs.stripe.com/payments/accept-a-payment-deferred?type=subscription
 export const POST: APIRoute = async ({ request }: { request: any }) => {
-  const { customerId, customerAddress, priceId, productId, amount, nickname } =
-    await request.json();
+  const { customerId, customerAddress, priceId, productId, amount, nickname } = await request.json();
 
   // 1️⃣ Create a price for a product if needed
   let price;
@@ -19,9 +18,7 @@ export const POST: APIRoute = async ({ request }: { request: any }) => {
         query: `active:'true' AND product:'${PUBLIC_STRIPE_PRODUCT_SUBSCRIPTION}'`,
       });
 
-      price = prices.data.find(
-        (price) => price.unit_amount === amount && price.currency === "eur",
-      );
+      price = prices.data.find((price) => price.unit_amount === amount && price.currency === "eur");
     } catch (error) {
       console.error("Error retrieving price for subscription:", error);
       generateResponseError({

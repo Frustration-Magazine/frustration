@@ -28,23 +28,22 @@ const allAuthors = await fetchAuthorsByIds({
   ids: [...REDACTION_IDS, ...CONTRIBUTORS_IDS],
 });
 
-const authorsRedaction = allAuthors.filter((author: Author) =>
-  REDACTION_IDS.includes(String(author.databaseId))
-);
+const authorsRedaction = allAuthors.filter((author: Author) => REDACTION_IDS.includes(String(author.databaseId)));
 
-const authorsContributors = allAuthors.filter((author: Author) =>
-  CONTRIBUTORS_IDS.includes(String(author.databaseId))
-);
+const authorsContributors = allAuthors.filter((author: Author) => CONTRIBUTORS_IDS.includes(String(author.databaseId)));
 ---
 
 <PageLayout title="Auteurs">
   <article slot="content">
     <H2>Auteurs</H2>
 
-    <H3 className="text-center mb-10">Rédaction</H3>
-    <AuthorsGrid authors={authorsRedaction} className="mb-10" />
+    <H3 className="mb-10 text-center">Rédaction</H3>
+    <AuthorsGrid
+      authors={authorsRedaction}
+      className="mb-10"
+    />
 
-    <H3 className="text-center mb-10">Contributeurs réguliers</H3>
+    <H3 className="mb-10 text-center">Contributeurs réguliers</H3>
     <AuthorsGrid authors={authorsContributors} />
   </article>
 </PageLayout>

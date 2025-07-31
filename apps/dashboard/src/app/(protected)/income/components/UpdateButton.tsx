@@ -14,11 +14,11 @@ export function UpdateButton() {
 
   const handleUpdate = async () => {
     setStatus("loading");
-    
+
     try {
       const result = await triggerUpdatePayments();
       setStatus(result.status);
-      
+
       if (result.status === "success") {
         toast({
           title: "Succès",
@@ -96,8 +96,8 @@ export function UpdateButton() {
   };
 
   return (
-    <Button 
-      className="absolute right-8 h-12" 
+    <Button
+      className="absolute right-8 h-12"
       variant={getButtonVariant()}
       onClick={handleUpdate}
       disabled={status === "loading"}
@@ -105,4 +105,4 @@ export function UpdateButton() {
       {getButtonContent()}
     </Button>
   );
-} 
+}

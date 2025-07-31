@@ -1,5 +1,5 @@
 {
-   "crons": [
+  "crons": [
     {
       "path": "/api/update-payments",
       "schedule": "0 5 1 * *"

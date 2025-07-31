@@ -18,23 +18,20 @@ const SITE_URL = "/";
 <PageLayout title="Merci pour votre soutien !">
   <article slot="content">
     <!-- 🅰️ Titles -->
-    <h2 class="font-bakbak text-balance text-center text-6xl font-bold mb-8">
-      Merci pour votre soutien !
-    </h2>
+    <h2 class="font-bakbak mb-8 text-balance text-center text-6xl font-bold">Merci pour votre soutien !</h2>
     <!-- 🔠 Content -->
     {
       mode === "payment" ? (
         <>
-          <p class="mb-3">
-            Votre don de soutien a bien été reçu ! 🎉
-          </p>
+          <p class="mb-3">Votre don de soutien a bien été reçu ! 🎉</p>
           <p class="mb-3">
             N'hésitez pas à{" "}
             <b>
               nous contacter à{" "}
               <a
                 class="text-blue underline"
-                href={`mailto:${import.meta.env.MAIL_FROM}`}>
+                href={`mailto:${import.meta.env.MAIL_FROM}`}
+              >
                 {import.meta.env.MAIL_FROM}
               </a>
             </b>
@@ -44,7 +41,8 @@ const SITE_URL = "/";
             En attendant, vous pouvez continuer{" "}
             <a
               class="text-blue underline"
-              href={SITE_URL}>
+              href={SITE_URL}
+            >
               à naviguer sur notre site
             </a>{" "}
             pour découvrir nos derniers articles et vidéos 😉
@@ -52,25 +50,22 @@ const SITE_URL = "/";
         </>
       ) : mode === "subscription" ? (
         <>
-          <p class="mb-5 text-2xl text-balance font-bold text-center">
-            Votre abonnement est bien activé ! 🎉
-          </p>
+          <p class="mb-5 text-balance text-center text-2xl font-bold">Votre abonnement est bien activé ! 🎉</p>
           {hasGifts ? (
             <>
               <p class="mb-3">
-                Vous recevrez d'ici quelques semaines vos <b>contreparties</b> à
-                l'adresse que vous avez renseignée lors de votre paiement.
-                N'hésitez pas à{" "}
+                Vous recevrez d'ici quelques semaines vos <b>contreparties</b> à l'adresse que vous avez renseignée lors
+                de votre paiement. N'hésitez pas à{" "}
                 <b>
                   nous contacter à{" "}
                   <a
                     class="text-blue underline"
-                    href={`mailto:${import.meta.env.MAIL_FROM}`}>
+                    href={`mailto:${import.meta.env.MAIL_FROM}`}
+                  >
                     {import.meta.env.MAIL_FROM}
                   </a>
                 </b>
-                si vous avez des questions ou besoin d'effectuer une
-                modification.
+                si vous avez des questions ou besoin d'effectuer une modification.
               </p>
             </>
           ) : (
@@ -80,7 +75,8 @@ const SITE_URL = "/";
                 nous contacter à{" "}
                 <a
                   class="text-blue underline"
-                  href={`mailto:${import.meta.env.MAIL_FROM}`}>
+                  href={`mailto:${import.meta.env.MAIL_FROM}`}
+                >
                   {import.meta.env.MAIL_FROM}
                 </a>
               </b>
@@ -91,7 +87,8 @@ const SITE_URL = "/";
             En attendant, vous pouvez continuer
             <a
               class="text-blue underline"
-              href={SITE_URL}>
+              href={SITE_URL}
+            >
               à naviguer sur notre site
             </a>{" "}
             pour découvrir nos derniers articles et vidéos 😉

@@ -4,23 +4,10 @@ import { cn } from "@/lib/utils";
 import AnimatedGradient from "./AnimatedGradient";
 import GradientButton from "./GradientButton";
 
-const {
-  id,
-  title,
-  subtitle,
-  numberOfGifts,
-  price,
-  colorsRange,
-  additionalClass,
-  gradient,
-} = Astro.props;
+const { id, title, subtitle, numberOfGifts, price, colorsRange, additionalClass, gradient } = Astro.props;
 ---
 
-<aside
-  class={cn(
-    "flex flex-col items-center shadow-xl pb-6 w-[450px] max-w-full mx-auto",
-    additionalClass,
-  )}>
+<aside class={cn("flex flex-col items-center shadow-xl pb-6 w-[450px] max-w-full mx-auto", additionalClass)}>
   <header class=`w-full relative text-white text-center px-4 py-4`>
     <AnimatedGradient
       client:load
@@ -29,19 +16,19 @@ const {
       colors={[...colorsRange, ...colorsRange, ...colorsRange]}
     />
     <div class="relative z-10">
-      <h5 class="font-bold font-bakbak text-4xl">{title}</h5>
-      <h6 class="text-lg leading-none font-medium">{subtitle}</h6>
+      <h5 class="font-bakbak text-4xl font-bold">{title}</h5>
+      <h6 class="text-lg font-medium leading-none">{subtitle}</h6>
     </div>
   </header>
-  <div class="flex flex-col items-center px-6 w-full grow">
+  <div class="flex w-full grow flex-col items-center px-6">
     <!-- Price 🤑 -->
-    <p class="price my-8 font-open-sans bg-clip-text">
+    <p class="price font-open-sans my-8 bg-clip-text">
       <span class="text-5xl font-bold">{price}€</span>
       <span>/mois</span>
     </p>
     <!-- 🎁 Gifts -->
-    <p class="mt-6 mb-12 text-5xl">{"🎁".repeat(numberOfGifts)}</p>
-    <div class="flex flex-col gap-6 self-start text-lg mb-10 grow w-full">
+    <p class="mb-12 mt-6 text-5xl">{"🎁".repeat(numberOfGifts)}</p>
+    <div class="mb-10 flex w-full grow flex-col gap-6 self-start text-lg">
       <slot />
     </div>
 
@@ -49,7 +36,8 @@ const {
     <GradientButton
       gradient={gradient}
       id={id}
-      client:load>
+      client:load
+    >
       Choisir
     </GradientButton>
   </div>
@@ -57,20 +45,14 @@ const {
 <script define:vars={{ id }}>
   const buttonEl = document.querySelector(`button[data-button=${id}]`);
   buttonEl.addEventListener("click", () => {
-    const formulaCardLabelEl = document.querySelector(
-      `[data-formula=${id}] label`,
-    );
+    const formulaCardLabelEl = document.querySelector(`[data-formula=${id}] label`);
     formulaCardLabelEl.scrollIntoView({ behavior: "smooth" });
     formulaCardLabelEl.click();
   });
 </script>
 <style define:vars={{ startColor: colorsRange[0], endColor: colorsRange[1] }}>
   :is(aside header, aside .price) {
-    background-image: linear-gradient(
-      45deg,
-      var(--startColor),
-      var(--endColor) 80%
-    );
+    background-image: linear-gradient(45deg, var(--startColor), var(--endColor) 80%);
   }
 
   aside button::before {
@@ -83,11 +65,7 @@ const {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -2;
-    background-image: linear-gradient(
-      45deg,
-      var(--startColor),
-      var(--endColor) 80%
-    );
+    background-image: linear-gradient(45deg, var(--startColor), var(--endColor) 80%);
   }
   aside button::after {
     content: "";

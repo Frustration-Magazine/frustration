@@ -9,7 +9,8 @@ const { width, src, reverse } = Astro.props;
   class={cn("cursor-pointer hover:[animation-play-state:paused]", {
     "animate-sliding": !reverse,
     "animate-sliding-reverse": reverse,
-  })}>
+  })}
+>
   <Image
     src={src}
     alt="Exemple de newsletter"

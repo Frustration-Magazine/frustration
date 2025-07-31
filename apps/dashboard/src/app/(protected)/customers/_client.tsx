@@ -25,12 +25,19 @@ function Client() {
   return (
     <>
       <Header rangeDate={rangeDate} />
-      <DatePickerWithRange date={rangeDate} setDate={setRangeDate} />
+      <DatePickerWithRange
+        date={rangeDate}
+        setDate={setRangeDate}
+      />
       {loadingCustomers ? (
         <Loader />
       ) : (
-        <div className="flex max-w-[1600px] min-w-[1100px] grow flex-col space-y-3">
-          <TopBar customers={customers} activeCustomers={activeCustomers} rangeDate={rangeDate} />
+        <div className="flex min-w-[1100px] max-w-[1600px] grow flex-col space-y-3">
+          <TopBar
+            customers={customers}
+            activeCustomers={activeCustomers}
+            rangeDate={rangeDate}
+          />
           <div className="h-[1px] grow overflow-auto">
             {customers.length === 0 ? NoData : <CustomersTable customers={customers} />}
           </div>

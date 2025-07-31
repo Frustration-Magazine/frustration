@@ -8,7 +8,7 @@ export default async function SignIn() {
 
   return (
     <div className="m-auto w-[90%] max-w-[500px] shadow-lg">
-      <header className="bg-black px-5 py-2 text-center font-bebas text-3xl uppercase text-yellow">
+      <header className="font-bebas text-yellow bg-black px-5 py-2 text-center text-3xl uppercase">
         Authentification
       </header>
       <Form />

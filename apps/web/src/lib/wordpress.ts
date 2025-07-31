@@ -1,6 +1,5 @@
 async function fetchWordpress({ query, variables = {} }: any) {
-  const PUBLIC_WORDPRESS_GRAPHQL_API = import.meta.env
-    .PUBLIC_WORDPRESS_GRAPHQL_API;
+  const PUBLIC_WORDPRESS_GRAPHQL_API = import.meta.env.PUBLIC_WORDPRESS_GRAPHQL_API;
 
   if (!PUBLIC_WORDPRESS_GRAPHQL_API) {
     console.error("Missing PUBLIC_WORDPRESS_GRAPHQL_API env variable");
@@ -12,9 +11,7 @@ async function fetchWordpress({ query, variables = {} }: any) {
   try {
     const headers = {
       "Content-Type": "application/json",
-      ...(username && password
-        ? { Authorization: "Basic " + btoa(`${username}:${password}`) }
-        : null),
+      ...(username && password ? { Authorization: "Basic " + btoa(`${username}:${password}`) } : null),
     };
 
     const res = await fetch(PUBLIC_WORDPRESS_GRAPHQL_API, {
@@ -147,7 +144,7 @@ export async function fetchRSSItems({ first = 6 }: any) {
 export async function fetchAuthorsByIds({ ids }: { ids: string[] }) {
   const query = `
    query fetchAuthorsByIds {
-        users(where: { include: [${ids.join(',')}] }) {
+        users(where: { include: [${ids.join(",")}] }) {
           nodes {
             databaseId
             name
@@ -195,14 +192,12 @@ export async function fetchInterviews({ first = 6 }: any) {
     },
   } = await fetchWordpress({ query });
 
-  interviews = interviews.map(
-    ({ title, link, slug, featuredImage: { node: image } }: any) => ({
-      title,
-      link,
-      slug,
-      image,
-    }),
-  );
+  interviews = interviews.map(({ title, link, slug, featuredImage: { node: image } }: any) => ({
+    title,
+    link,
+    slug,
+    image,
+  }));
 
   return interviews;
 }
@@ -210,10 +205,13 @@ export async function fetchInterviews({ first = 6 }: any) {
 export function getSearchPostsQuery({ term, categorySlug, author, after }: any) {
   return `
     query fetchSearchPosts {
-        ${categorySlug ?
-          `category(id: "${categorySlug}", idType: SLUG) {
+        ${
+          categorySlug
+            ? `category(id: "${categorySlug}", idType: SLUG) {
             name
-        }` : ""}
+        }`
+            : ""
+        }
         posts(
           first: 6
           ${after ? `after: "${after}"` : ""}

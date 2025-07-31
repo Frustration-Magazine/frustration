@@ -33,7 +33,10 @@ async function Page() {
   const subscriptions = filterByTypes(payments, ["subscription"]);
 
   return (
-    <Tabs defaultValue="all" className="flex h-full w-full flex-col">
+    <Tabs
+      defaultValue="all"
+      className="flex h-full w-full flex-col"
+    >
       <TabsList className="mx-auto mb-6 grid h-auto w-[600px] grid-cols-3 bg-black/90">
         <PaymentsType value="all">Tout</PaymentsType>
         <PaymentsType value="subscriptions">Abonnements</PaymentsType>
@@ -41,16 +44,34 @@ async function Page() {
         <UpdateButton />
       </TabsList>
       {/* All */}
-      <TabsContent className="grow overflow-auto" value="all">
-        <ChartPanel payments={donationsAndSubscriptions} type="all" />
+      <TabsContent
+        className="grow overflow-auto"
+        value="all"
+      >
+        <ChartPanel
+          payments={donationsAndSubscriptions}
+          type="all"
+        />
       </TabsContent>
       {/* Subscriptions */}
-      <TabsContent className="grow overflow-auto" value="subscriptions">
-        <ChartPanel payments={subscriptions} type="subscriptions" />
+      <TabsContent
+        className="grow overflow-auto"
+        value="subscriptions"
+      >
+        <ChartPanel
+          payments={subscriptions}
+          type="subscriptions"
+        />
       </TabsContent>
       {/* Donations */}
-      <TabsContent className="grow overflow-auto" value="donations">
-        <ChartPanel payments={donations} type="donations" />
+      <TabsContent
+        className="grow overflow-auto"
+        value="donations"
+      >
+        <ChartPanel
+          payments={donations}
+          type="donations"
+        />
       </TabsContent>
     </Tabs>
   );

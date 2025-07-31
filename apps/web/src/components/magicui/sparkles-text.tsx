@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { type CSSProperties, type  ReactElement, useEffect, useState } from "react";
+import { type CSSProperties, type ReactElement, useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -141,7 +141,10 @@ export const SparklesText: React.FC<SparklesTextProps> = ({
     >
       <span className="relative inline-block">
         {sparkles.map((sparkle) => (
-          <Sparkle key={sparkle.id} {...sparkle} />
+          <Sparkle
+            key={sparkle.id}
+            {...sparkle}
+          />
         ))}
         <strong>{children}</strong>
       </span>

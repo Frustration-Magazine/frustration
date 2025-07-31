@@ -19,15 +19,9 @@ import "@fontsource/roboto";
 import "../../styles/global.css";
 
 const DEFAULT_IMAGE = "/img/default.png";
-const DEFAULT_DESCRIPTION =
-  "Frustration Magazine, média indépendant et offensif qui relate la guerre des classes.";
+const DEFAULT_DESCRIPTION = "Frustration Magazine, média indépendant et offensif qui relate la guerre des classes.";
 
-const {
-  title,
-  description = DEFAULT_DESCRIPTION,
-  author,
-  coverImage,
-} = Astro.props;
+const { title, description = DEFAULT_DESCRIPTION, author, coverImage } = Astro.props;
 const featuredImage = Astro.props?.featuredImage?.node;
 const ogImage = featuredImage?.sourceUrl ?? coverImage ?? DEFAULT_IMAGE;
 
@@ -45,7 +39,8 @@ if (featuredImage?.mediaDetails) {
 <!doctype html>
 <html
   lang="fr"
-  class="bg-black scrollbar scrollbar-thumb-frustration-yellow scrollbar-track-black">
+  class="scrollbar scrollbar-thumb-frustration-yellow scrollbar-track-black bg-black"
+>
   <Head
     title={title}
     author={author}
@@ -56,9 +51,9 @@ if (featuredImage?.mediaDetails) {
     {...mimeType ? { mimeType } : null}
   />
   <title>Frustration Magazine - {title}</title>
-  <body class="min-h-screen bg-white flex flex-col">
+  <body class="flex min-h-screen flex-col bg-white">
     <Header transition:persist />
-    <main class="grow flex flex-col">
+    <main class="flex grow flex-col">
       <slot transition:animate={fade({ duration: "0.4s" })} />
     </main>
     <Footer transition:persist />

@@ -88,11 +88,17 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
   const { displayEvent } = form.getValues();
 
   const AddButton = (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
       <DialogTrigger asChild>
         <div className="sticky top-0 flex cursor-pointer flex-wrap items-center gap-2">
           <div className="flex w-full justify-center">
-            <Button size="xl" className="bg-black hover:bg-black">
+            <Button
+              size="xl"
+              className="bg-black hover:bg-black"
+            >
               <span className="text-yellow">Ajouter un événement à venir</span>
             </Button>
           </div>
@@ -107,19 +113,25 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
           <DialogDescription>Cliquez sur enregistrer lorsque vous avez terminé.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className={cn("w-[650px] space-y-8")} onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            className={cn("w-[650px] space-y-8")}
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <FormField
               control={form.control}
               name="displayEvent"
               render={({ field }) => (
-                <div className={cn("mx-auto mt-2 mb-8 flex items-center justify-center gap-2")}>
+                <div className={cn("mx-auto mb-8 mt-2 flex items-center justify-center gap-2")}>
                   <Switch
                     id="displayEvent"
                     checked={field.value}
                     onCheckedChange={field.onChange}
                     name="displayEvent"
                   />
-                  <Label htmlFor="displayEvent" className="text-base">
+                  <Label
+                    htmlFor="displayEvent"
+                    className="text-base"
+                  >
                     Afficher l'événement sur le site
                   </Label>
                 </div>
@@ -165,7 +177,10 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                         </SelectTrigger>
                         <SelectContent>
                           {hours.map((hour) => (
-                            <SelectItem key={hour} value={convertHourToString(hour)}>
+                            <SelectItem
+                              key={hour}
+                              value={convertHourToString(hour)}
+                            >
                               {convertHourToString(hour)}h
                             </SelectItem>
                           ))}
@@ -185,7 +200,10 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                         </SelectTrigger>
                         <SelectContent>
                           {minutes.map((minute) => (
-                            <SelectItem key={minute} value={convertMinuteToString(minute)}>
+                            <SelectItem
+                              key={minute}
+                              value={convertMinuteToString(minute)}
+                            >
                               {convertMinuteToString(minute)}
                             </SelectItem>
                           ))}
@@ -224,7 +242,10 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
               render={({ field }) => (
                 <div className={cn(!displayEvent && "opacity-50")}>
                   <Label htmlFor="description">Description</Label>
-                  <Textarea {...field} className="max-h-[7lh]" />
+                  <Textarea
+                    {...field}
+                    className="max-h-[7lh]"
+                  />
                 </div>
               )}
             />
@@ -235,7 +256,10 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
                 render={({ field }) => (
                   <div className={cn("grow", !displayEvent && "opacity-50")}>
                     <Label htmlFor="contact">Email de contact</Label>
-                    <Input type="email" {...field} />
+                    <Input
+                      type="email"
+                      {...field}
+                    />
                   </div>
                 )}
               />
@@ -259,7 +283,10 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
               <DialogClose asChild>
                 <Button variant="outline">Annuler</Button>
               </DialogClose>
-              <Button type="submit" disabled={!form.formState.isValid}>
+              <Button
+                type="submit"
+                disabled={!form.formState.isValid}
+              >
                 Enregistrer
               </Button>
             </DialogFooter>
@@ -272,9 +299,12 @@ function EventEditor({ events: initialEvents }: Readonly<{ events: ReadonlyArray
   return (
     <div className="flex h-full w-full flex-col overflow-auto">
       {AddButton}
-      <div className="scrollbar-none mx-auto space-y-6 overflow-auto mask-t-from-95% mask-b-from-95% py-12">
+      <div className="scrollbar-none mask-t-from-95% mask-b-from-95% mx-auto space-y-6 overflow-auto py-12">
         {events.map((event) => (
-          <CardEvent key={event.id} event={event} />
+          <CardEvent
+            key={event.id}
+            event={event}
+          />
         ))}
       </div>
     </div>

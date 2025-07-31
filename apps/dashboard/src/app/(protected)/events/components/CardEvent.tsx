@@ -93,7 +93,10 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
   const minutes = getMinutes();
 
   const EditButton = (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -114,7 +117,10 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
           <DialogDescription>Cliquez sur enregistrer lorsque vous avez terminé.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className={cn("w-[650px] space-y-8")} onSubmit={form.handleSubmit(onSubmitUpdate)}>
+          <form
+            className={cn("w-[650px] space-y-8")}
+            onSubmit={form.handleSubmit(onSubmitUpdate)}
+          >
             <div className="flex items-center gap-4">
               <FormField
                 control={form.control}
@@ -122,7 +128,12 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
                 render={({ field }) => (
                   <div className="grow">
                     <Label htmlFor="date">Date</Label>
-                    <DatePicker value={field.value} onChange={field.onChange} className="flex w-full" name="date" />
+                    <DatePicker
+                      value={field.value}
+                      onChange={field.onChange}
+                      className="flex w-full"
+                      name="date"
+                    />
                   </div>
                 )}
               />
@@ -147,7 +158,10 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
                         </SelectTrigger>
                         <SelectContent>
                           {hours.map((hour) => (
-                            <SelectItem key={hour} value={convertHourToString(hour)}>
+                            <SelectItem
+                              key={hour}
+                              value={convertHourToString(hour)}
+                            >
                               {hour}h
                             </SelectItem>
                           ))}
@@ -167,7 +181,10 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
                         </SelectTrigger>
                         <SelectContent>
                           {minutes.map((minute) => (
-                            <SelectItem key={minute} value={convertMinuteToString(minute)}>
+                            <SelectItem
+                              key={minute}
+                              value={convertMinuteToString(minute)}
+                            >
                               {minute}
                             </SelectItem>
                           ))}
@@ -206,7 +223,10 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
               render={({ field }) => (
                 <div>
                   <Label htmlFor="description">Description</Label>
-                  <Textarea {...field} className="max-h-[7lh]" />
+                  <Textarea
+                    {...field}
+                    className="max-h-[7lh]"
+                  />
                 </div>
               )}
             />
@@ -217,7 +237,10 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
                 render={({ field }) => (
                   <div className="grow">
                     <Label htmlFor="contact">Email de contact</Label>
-                    <Input type="email" {...field} />
+                    <Input
+                      type="email"
+                      {...field}
+                    />
                   </div>
                 )}
               />
@@ -232,7 +255,10 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
-                    <Label htmlFor="displayContact" className="cursor-pointer">
+                    <Label
+                      htmlFor="displayContact"
+                      className="cursor-pointer"
+                    >
                       Afficher publiquement l'email de contact
                     </Label>
                   </div>
@@ -273,7 +299,10 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Annuler</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-500 hover:bg-red-700" onClick={() => onSubmitDelete(event?.id)}>
+          <AlertDialogAction
+            className="bg-red-500 hover:bg-red-700"
+            onClick={() => onSubmitDelete(event?.id)}
+          >
             Supprimer
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -307,7 +336,10 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
           <i> Entrée libre</i>
           <div className="flex items-center gap-1">
             <MailIcon />
-            <a href={`mailto:${contact}`} className="underline">
+            <a
+              href={`mailto:${contact}`}
+              className="underline"
+            >
               {contact}
             </a>
           </div>
@@ -318,8 +350,16 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
             name="displayEvent"
             render={({ field }) => (
               <div className={cn("flex cursor-pointer items-center justify-center gap-2")}>
-                <Switch id="displayEvent" checked={field.value} onCheckedChange={field.onChange} name="displayEvent" />
-                <Label htmlFor="displayEvent" className="text-base">
+                <Switch
+                  id="displayEvent"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  name="displayEvent"
+                />
+                <Label
+                  htmlFor="displayEvent"
+                  className="text-base"
+                >
                   Afficher l'événement sur le site
                 </Label>
               </div>

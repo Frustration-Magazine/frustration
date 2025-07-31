@@ -5,11 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 
-const { BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN } = loadEnv(
-  process.env.NODE_ENV,
-  process.cwd(),
-  "",
-);
+const { BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
 /** @type {import("prettier").Config} */
 // https://astro.build/config

@@ -49,15 +49,22 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
-              <WarningIcon className="absolute top-5 right-5 size-8 cursor-pointer" />
+              <WarningIcon className="absolute right-5 top-5 size-8 cursor-pointer" />
             </DialogTrigger>
           </TooltipTrigger>
-          <TooltipContent side="left" align="start" className="max-w-[225px]">
+          <TooltipContent
+            side="left"
+            align="start"
+            className="max-w-[225px]"
+          >
             <div>Ho Ho... Il manque un ou plusieurs enregistrements Tipeee, cliquez ici pour mettre à jour ✨</div>
           </TooltipContent>
         </Tooltip>
@@ -90,7 +97,10 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
               >
                 <div className="mb-2 text-lg font-semibold text-black">{formatExplicitMonth(date, "long")}</div>
                 <div className="flex gap-x-4">
-                  <Label htmlFor="amount" className="flex grow flex-col gap-y-2">
+                  <Label
+                    htmlFor="amount"
+                    className="flex grow flex-col gap-y-2"
+                  >
                     <span>Montant total</span>
                     <Input
                       id="amount"
@@ -102,7 +112,10 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
                       defaultValue={0}
                     />
                   </Label>
-                  <Label htmlFor="customers" className="flex grow flex-col gap-y-2">
+                  <Label
+                    htmlFor="customers"
+                    className="flex grow flex-col gap-y-2"
+                  >
                     <span>Total d'abonnés</span>
                     <Input
                       id="customers"
@@ -114,7 +127,10 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
                       defaultValue={0}
                     />
                   </Label>
-                  <Label htmlFor="date" className="hidden grow flex-col gap-y-2">
+                  <Label
+                    htmlFor="date"
+                    className="hidden grow flex-col gap-y-2"
+                  >
                     <span>Date</span>
                     <Input
                       readOnly
@@ -127,7 +143,10 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
                   </Label>
                 </div>
                 {!shouldBeDisabled && (
-                  <Button className="mt-5 ml-auto block" type="submit">
+                  <Button
+                    className="ml-auto mt-5 block"
+                    type="submit"
+                  >
                     Mettre à jour
                   </Button>
                 )}
@@ -136,7 +155,10 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
           })}
         </DialogDescription>
         <DialogFooter>
-          <Button variant="outline" onClick={() => setIsOpen(false)}>
+          <Button
+            variant="outline"
+            onClick={() => setIsOpen(false)}
+          >
             Fermer
           </Button>
         </DialogFooter>

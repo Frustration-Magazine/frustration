@@ -35,34 +35,19 @@ const NoResults = (
 );
 
 const Title = ({ children: title }: { readonly children: string }) => (
-  <h3
-    className={cn(
-      "font-bakbak leading-none! font-bold",
-      "text-2xl",
-      "md:text-3xl",
-    )}>
-    {title}
-  </h3>
+  <h3 className={cn("font-bakbak leading-none! font-bold", "text-2xl", "md:text-3xl")}>{title}</h3>
 );
 
-const Excerpt = ({ children: excerpt }: { children: string }) => (
-  <p dangerouslySetInnerHTML={{ __html: excerpt }}></p>
-);
+const Excerpt = ({ children: excerpt }: { children: string }) => <p dangerouslySetInnerHTML={{ __html: excerpt }}></p>;
 
 const Read = () => (
-  <Button className="ml-auto mt-auto font-bakbak flex items-center gap-1 rounded-none text-lg uppercase">
+  <Button className="font-bakbak ml-auto mt-auto flex items-center gap-1 rounded-none text-lg uppercase">
     <span>Lire</span>
     <CgArrowTopRight size={20} />
   </Button>
 );
 
-function Results({
-  term,
-  categorySlug,
-  author,
-  initialPosts,
-  initialPageInfo,
-}: Props) {
+function Results({ term, categorySlug, author, initialPosts, initialPageInfo }: Props) {
   const [posts, setPosts] = useState(initialPosts);
   const [loadingPosts, setLoadingPosts] = useState(false);
   const [pageInfo, setPageInfo] = useState(initialPageInfo);
@@ -134,7 +119,8 @@ function Results({
             "md:px-6 md:py-3 md:text-3xl",
           )}
           onClick={handleMoreArticles}
-          type="button">
+          type="button"
+        >
           {loadingPosts
             ? "Chargement..."
             : `Voir plus ${categorySlug && categorySlug === "videos" ? "de vidéos" : "d'articles"}`}

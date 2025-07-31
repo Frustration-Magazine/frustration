@@ -11,22 +11,16 @@ function PostSummary() {
 
   // Intersection observer
   /* ******************** */
-  const intersectionObserverCallback = (
-    entries: IntersectionObserverEntry[],
-  ) => {
+  const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry: any) => {
       if (entry.isIntersecting && summaryRef.current) {
         const titleTarget = entry.target;
-        const titleSummaryTargeted = summaryRef.current.querySelector(
-          `[data-title="${titleTarget.id}"]`,
-        );
+        const titleSummaryTargeted = summaryRef.current.querySelector(`[data-title="${titleTarget.id}"]`);
 
         if (titleSummaryTargeted) {
           // Remove bold from all titles
           const allTitlesSummary = summaryRef.current.querySelectorAll("li a");
-          allTitlesSummary.forEach((titleSummary) =>
-            titleSummary.classList.remove("underline"),
-          );
+          allTitlesSummary.forEach((titleSummary) => titleSummary.classList.remove("underline"));
           // Add bold to the targeted title
           titleSummaryTargeted.classList.add("underline");
         }
@@ -40,13 +34,11 @@ function PostSummary() {
     // 1️⃣ We collect all titles from current post and set a unique id for each
     const titlesNodes = Array.from(document.querySelectorAll(TITLE_SELECTOR));
 
-    (titlesNodes as HTMLElement[]).forEach(
-      (title: HTMLElement, index: number) => {
-        const titleId = createIdAnchor(title.textContent as string);
-        title.id = titleId;
-        if (`#${titleId}` === window.location.hash) title.scrollIntoView();
-      },
-    );
+    (titlesNodes as HTMLElement[]).forEach((title: HTMLElement, index: number) => {
+      const titleId = createIdAnchor(title.textContent as string);
+      title.id = titleId;
+      if (`#${titleId}` === window.location.hash) title.scrollIntoView();
+    });
 
     // 2️⃣ We create an intersection observer for each title
     const observer = new IntersectionObserver(intersectionObserverCallback, {
@@ -70,7 +62,8 @@ function PostSummary() {
           "border-b-frustration-yellow font-bakbak mb-4 w-fit cursor-pointer border-b-[6px]",
           "text-2xl",
           "lg:text-3xl",
-        )}>
+        )}
+      >
         Sommaire
       </h3>
       <ul className="space-y-1">
@@ -79,11 +72,13 @@ function PostSummary() {
           return (
             <li
               key={titleId}
-              className={cn("overflow-hidden text-ellipsis whitespace-nowrap")}>
+              className={cn("overflow-hidden text-ellipsis whitespace-nowrap")}
+            >
               <a
                 title={title}
                 data-title={titleId}
-                href={`#${titleId}`}>
+                href={`#${titleId}`}
+              >
                 {title}
               </a>
             </li>

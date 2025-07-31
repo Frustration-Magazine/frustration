@@ -44,9 +44,9 @@ export async function triggerUpdatePayments(): Promise<{ status: UpdateStatus; m
     return { status: "success", message: "Paiements mis à jour avec succès" };
   } catch (error) {
     console.error("Error updating payments:", error);
-    return { 
-      status: "error", 
-      message: error instanceof Error ? error.message : "Erreur lors de la mise à jour des paiements" 
+    return {
+      status: "error",
+      message: error instanceof Error ? error.message : "Erreur lors de la mise à jour des paiements",
     };
   }
 }

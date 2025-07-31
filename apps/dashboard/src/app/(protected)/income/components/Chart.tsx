@@ -103,17 +103,59 @@ export const Chart = ({
         onMouseLeave={resetHighlighted}
       >
         <defs>
-          <linearGradient id="stripeGradient" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor={GRADIENTS.get("stripe")?.[0]} stopOpacity={1} />
-            <stop offset="100%" stopColor={GRADIENTS.get("stripe")?.[1]} stopOpacity={0} />
+          <linearGradient
+            id="stripeGradient"
+            x1="0"
+            x2="0"
+            y1="0"
+            y2="1"
+          >
+            <stop
+              offset="0%"
+              stopColor={GRADIENTS.get("stripe")?.[0]}
+              stopOpacity={1}
+            />
+            <stop
+              offset="100%"
+              stopColor={GRADIENTS.get("stripe")?.[1]}
+              stopOpacity={0}
+            />
           </linearGradient>
-          <linearGradient id="helloassoGradient" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor={GRADIENTS.get("helloasso")?.[0]} stopOpacity={1} />
-            <stop offset="100%" stopColor={GRADIENTS.get("helloasso")?.[1]} stopOpacity={0} />
+          <linearGradient
+            id="helloassoGradient"
+            x1="0"
+            x2="0"
+            y1="0"
+            y2="1"
+          >
+            <stop
+              offset="0%"
+              stopColor={GRADIENTS.get("helloasso")?.[0]}
+              stopOpacity={1}
+            />
+            <stop
+              offset="100%"
+              stopColor={GRADIENTS.get("helloasso")?.[1]}
+              stopOpacity={0}
+            />
           </linearGradient>
-          <linearGradient id="tipeeeGradient" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor={GRADIENTS.get("tipeee")?.[0]} stopOpacity={1} />
-            <stop offset="100%" stopColor={GRADIENTS.get("tipeee")?.[1]} stopOpacity={0} />
+          <linearGradient
+            id="tipeeeGradient"
+            x1="0"
+            x2="0"
+            y1="0"
+            y2="1"
+          >
+            <stop
+              offset="0%"
+              stopColor={GRADIENTS.get("tipeee")?.[0]}
+              stopOpacity={1}
+            />
+            <stop
+              offset="100%"
+              stopColor={GRADIENTS.get("tipeee")?.[1]}
+              stopOpacity={0}
+            />
           </linearGradient>
         </defs>
         <XAxis
@@ -146,8 +188,20 @@ export const Chart = ({
           // Import to keep this dot property so dots are painted but invisible and we can check position of active dot within it whenever we want
           dot={{ fill: "transparent", strokeWidth: 0 }}
         />
-        <Area dataKey="helloasso" type="monotone" fill="url(#helloassoGradient)" stroke="#359d55" radius={4} />
-        <Area dataKey="tipeee" type="monotone" fill="url(#tipeeeGradient)" stroke="#C00000" radius={4} />
+        <Area
+          dataKey="helloasso"
+          type="monotone"
+          fill="url(#helloassoGradient)"
+          stroke="#359d55"
+          radius={4}
+        />
+        <Area
+          dataKey="tipeee"
+          type="monotone"
+          fill="url(#tipeeeGradient)"
+          stroke="#C00000"
+          radius={4}
+        />
         <Legend
           iconType="plainline"
           iconSize={18}

@@ -3,19 +3,22 @@ import { cn } from "@/lib/utils";
 
 const { category = "", label } = Astro.props;
 ---
+
 <a
-	href={`/posts${category ? `?category=${category}` : ""}`}
-	class={cn(
-		"relative mx-auto mt-[5vh] w-fit block overflow-hidden rounded-[20px]",
-		//! TODO: fix animation broken since tailwind v4
-		"before:absolute before:h-full before:w-full before:animate-disco before:bg-[conic-gradient(#faf7c2,#FFF200,#898106)] before:blur-sm before:scale-x-10 before:scale-y-6",
-	)}>
-	<span
-		class={cn(
-			"relative m-1.5 block rounded-[13px] bg-black px-10 pb-3 pt-4 font-bebas  uppercase text-frustration-yellow ",
-			"text-4xl",
-			"md:text-5xl",
-		)}>
-		{label}
-	</span>
+  href={`/posts${category ? `?category=${category}` : ""}`}
+  class={cn(
+    "relative mx-auto mt-[5vh] w-fit block overflow-hidden rounded-[20px]",
+    //! TODO: fix animation broken since tailwind v4
+    "before:absolute before:h-full before:w-full before:animate-disco before:bg-[conic-gradient(#faf7c2,#FFF200,#898106)] before:blur-sm before:scale-x-10 before:scale-y-6",
+  )}
+>
+  <span
+    class={cn(
+      "relative m-1.5 block rounded-[13px] bg-black px-10 pb-3 pt-4 font-bebas  uppercase text-frustration-yellow ",
+      "text-4xl",
+      "md:text-5xl",
+    )}
+  >
+    {label}
+  </span>
 </a>

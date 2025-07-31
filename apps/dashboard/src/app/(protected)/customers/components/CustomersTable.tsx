@@ -45,7 +45,15 @@ const columnsCustomers: ColumnDef<Customer>[] = [
     header: "Nom",
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
-      return <a href={`https://dashboard.stripe.com/customers/${row?.original?.customerId}`} target="_blank" className="font-medium">{name}</a>;
+      return (
+        <a
+          href={`https://dashboard.stripe.com/customers/${row?.original?.customerId}`}
+          target="_blank"
+          className="font-medium"
+        >
+          {name}
+        </a>
+      );
     },
   },
   {
@@ -136,7 +144,7 @@ export default function ({ customers }: { customers: Customer[] }) {
   if (customers.length === 0) return <p>Aucun nouvel abonné sur cette période 😭</p>;
 
   return (
-    <div className="self-stretch overflow-auto rounded-md bg-white px-6 py-2 shadow-lg max-h-full">
+    <div className="max-h-full self-stretch overflow-auto rounded-md bg-white px-6 py-2 shadow-lg">
       <Table className="h-full">
         <TableCaption>Abonnés récents</TableCaption>
         <TableHeader className="sticky top-0 bg-white">
@@ -156,7 +164,10 @@ export default function ({ customers }: { customers: Customer[] }) {
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+            <TableRow
+              key={row.id}
+              data-state={row.getIsSelected() && "selected"}
+            >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext()) as any}</TableCell>
               ))}

@@ -83,7 +83,11 @@ export default function ({
   };
 
   return (
-    <Button onClick={handleDownloadCustomersList} className="flex items-center gap-2 rounded-md" variant="inverted">
+    <Button
+      onClick={handleDownloadCustomersList}
+      className="flex items-center gap-2 rounded-md"
+      variant="inverted"
+    >
       <IoIosDownload size={17} />
       <span> Télécharger </span>
     </Button>

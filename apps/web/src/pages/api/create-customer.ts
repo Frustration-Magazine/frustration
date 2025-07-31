@@ -23,10 +23,7 @@ export const POST: APIRoute = async ({ request }: { request: any }) => {
             ...customerInformations,
           });
         } catch (error) {
-          console.error(
-            "Error while updating already existing customer with new informations:",
-            error,
-          );
+          console.error("Error while updating already existing customer with new informations:", error);
         }
       }
     } catch (error) {

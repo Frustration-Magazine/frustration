@@ -18,9 +18,7 @@ import MoreArticles from "./components/Footer/MoreArticles";
 
 const {
   title,
-  author: {
-    node: author,
-  },
+  author: { node: author },
   categories: { nodes: categories },
   date,
 } = Astro.props;
@@ -57,12 +55,8 @@ const featuredImage = Astro.props?.featuredImage?.node;
   <!-- Summary -->
   <div
     slot="right"
-    class={cn(
-      "sticky top-[75px] mx-12",
-      "hidden",
-      "xl:max-w-[300px] xl:block",
-      "2xl:max-w-[600px] ",
-    )}>
+    class={cn("sticky top-[75px] mx-12", "hidden", "xl:max-w-[300px] xl:block", "2xl:max-w-[600px] ")}
+  >
     <PostSummary client:load />
   </div>
 </PageLayout>

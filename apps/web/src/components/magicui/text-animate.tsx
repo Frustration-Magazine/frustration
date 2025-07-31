@@ -99,10 +99,7 @@ const defaultItemVariants: Variants = {
   },
 };
 
-const defaultItemAnimationVariants: Record<
-  AnimationVariant,
-  { container: Variants; item: Variants }
-> = {
+const defaultItemAnimationVariants: Record<AnimationVariant, { container: Variants; item: Variants }> = {
   fadeIn: {
     container: defaultContainerVariants,
     item: {
@@ -298,7 +295,7 @@ const defaultItemAnimationVariants: Record<
 };
 
 const TextAnimateBase = ({
-  text="",
+  text = "",
   delay = 0,
   duration = 0.3,
   variants,

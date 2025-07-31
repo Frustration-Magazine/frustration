@@ -20,8 +20,7 @@ const ERROR_STATUS = {
 
 const SUCCESS_STATUS = {
   type: "success",
-  message:
-    "🙂 Votre message a bien été envoyé ! Nous tâcherons de vous répondre dans les plus brefs délais",
+  message: "🙂 Votre message a bien été envoyé ! Nous tâcherons de vous répondre dans les plus brefs délais",
 };
 
 let status = null;
@@ -50,10 +49,7 @@ if (Astro.request.method === "POST") {
     timeZone: "Europe/Paris",
   };
   const now = new Date();
-  const formattedDate = now.toLocaleString(
-    "fr-FR",
-    dateOptions as Intl.DateTimeFormatOptions,
-  );
+  const formattedDate = now.toLocaleString("fr-FR", dateOptions as Intl.DateTimeFormatOptions);
 
   try {
     const data = await Astro.request.formData();
@@ -98,31 +94,23 @@ export const prerender = false;
         "sm:mb-6 sm:text-5xl",
         "md:zs-8 md:mb-8 md:text-5xl",
         "lg:mb-10 lg:text-8xl",
-      )}>
+      )}
+    >
       Chère Frustration,
     </h2>
-    <div
-      class={cn(
-        "font-open-sans space-y-3 text-center",
-        "text-base space-y-1",
-        "sm:text-xl sm:space-y-2",
-      )}>
+    <div class={cn("font-open-sans space-y-3 text-center", "text-base space-y-1", "sm:text-xl sm:space-y-2")}>
       <p>Une réaction à chaud ?</p>
       <p>Une question qui vous turlupine ?</p>
       <p>Une idée d'article ou d'enquête ?</p>
     </div>
-    <p
-      class={cn(
-        "font-bold font-open-sans my-10 text-center",
-        "text-2xl",
-        "sm:text-3xl",
-      )}>
+    <p class={cn("font-bold font-open-sans my-10 text-center", "text-2xl", "sm:text-3xl")}>
       N'hésitez pas à nous écrire !
     </p>
     <form
       id="contact"
       method="POST"
-      class="flex flex-col gap-4 font-open-sans">
+      class="font-open-sans flex flex-col gap-4"
+    >
       <Input
         type="email"
         placeholder="Votre email de contact"
@@ -144,30 +132,39 @@ export const prerender = false;
       {
         status &&
           (status.type === ERROR_STATUS.type ? (
-            <p class="bg-red-200 text-red-700 p-4">
-              😔 Une erreur est survenue. Veuillez réessayer ou nous contacter
-              directement à l'adresse{" "}
+            <p class="bg-red-200 p-4 text-red-700">
+              😔 Une erreur est survenue. Veuillez réessayer ou nous contacter directement à l'adresse{" "}
               <a
                 href={`mailto:${import.meta.env.MAIL_FROM}`}
-                class="underline font-bold">
+                class="font-bold underline"
+              >
                 {import.meta.env.MAIL_FROM}
               </a>{" "}
               si le problème persiste.
             </p>
           ) : status.type === INVALID_CAPTCHA_STATUS.type ? (
-            <p class="bg-red-200 text-red-700 p-4">{status.message}</p>
+            <p class="bg-red-200 p-4 text-red-700">{status.message}</p>
           ) : status.type === SUCCESS_STATUS.type ? (
-            <p class="bg-green-200 text-green-700 p-4">{status.message}</p>
+            <p class="bg-green-200 p-4 text-green-700">{status.message}</p>
           ) : null)
       }
-      <div class="h-captcha mx-auto" data-sitekey={process.env.HCAPTCHA_SITE_KEY}></div>
+      <div
+        class="h-captcha mx-auto"
+        data-sitekey={process.env.HCAPTCHA_SITE_KEY}
+      >
+      </div>
       <Button
         type="submit"
-        className="text-xl font-bakbak w-fit px-8 bg-black hover:bg-black hover:text-frustration-yellow text-frustration-yellow py-6 mx-auto"
+        className="font-bakbak hover:text-frustration-yellow text-frustration-yellow mx-auto w-fit bg-black px-8 py-6 text-xl hover:bg-black"
         >Envoyer</Button
       >
     </form>
   </article>
 </PageLayout>
 
-<script src="https://js.hcaptcha.com/1/api.js" async defer is:inline></script>
+<script
+  src="https://js.hcaptcha.com/1/api.js"
+  async
+  defer
+  is:inline
+></script>

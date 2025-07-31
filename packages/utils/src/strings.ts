@@ -64,7 +64,7 @@ export function formatCurrency({ amount, decimals = true }: { amount: number; de
     style: "currency",
     currency: "EUR",
     minimumFractionDigits: decimals ? 2 : 0,
-    maximumFractionDigits: decimals ? 2 : 0
+    maximumFractionDigits: decimals ? 2 : 0,
   }).format(amount);
 }
 
@@ -88,7 +88,7 @@ export function convertCountryInitials(initials: string): string {
     ES: "Spain",
     IT: "Italy",
     LU: "Luxembourg",
-    CH: "Suisse"
+    CH: "Suisse",
   };
 
   return countries[initials?.toUpperCase()] || initials || "";

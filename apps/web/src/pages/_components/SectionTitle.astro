@@ -9,10 +9,11 @@ const { position = "left" } = Astro.props;
     /* text      */ "font-bebas tracking-tighter text-white text-6xl sm:text-7xl md:text-8xl xl:text-9xl",
     /* sizes     */ "pb-1 pt-4 md:mb-10 md:pr-16 lg:mb-12 lg:pt-8 xl:mb-24",
     /* before    */ "before:absolute before:top-0 before:h-full before:w-screen before:bg-black before:content-['']",
-    
+
     /* position  */
-    position === "left"  && { "before:translate-x-[-100%] ml-2": true },
+    position === "left" && { "before:translate-x-[-100%] ml-2": true },
     position === "right" && { "before:translate-x-[100%] before:right-0 ml-auto": true },
-  )}>
+  )}
+>
   <slot />
 </h2>

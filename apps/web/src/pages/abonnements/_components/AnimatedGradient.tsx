@@ -15,11 +15,7 @@ const randomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const AnimatedGradient: React.FC<AnimatedGradientProps> = ({
-  colors,
-  speed = 5,
-  blur = "light",
-}) => {
+const AnimatedGradient: React.FC<AnimatedGradientProps> = ({ colors, speed = 5, blur = "light" }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const dimensions = useDimensions(containerRef as any);
 
@@ -28,17 +24,13 @@ const AnimatedGradient: React.FC<AnimatedGradientProps> = ({
     [dimensions.width, dimensions.height],
   );
 
-  const blurClass =
-    blur === "light"
-      ? "blur-2xl"
-      : blur === "medium"
-        ? "blur-3xl"
-        : "blur-[100px]";
+  const blurClass = blur === "light" ? "blur-2xl" : blur === "medium" ? "blur-3xl" : "blur-[100px]";
 
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 overflow-hidden">
+      className="absolute inset-0 overflow-hidden"
+    >
       <div className={cn(`absolute inset-0`, blurClass)}>
         {colors.map((color, index) => (
           <svg
@@ -46,8 +38,8 @@ const AnimatedGradient: React.FC<AnimatedGradientProps> = ({
             className="animate-background-gradient absolute"
             style={
               {
-                top: `${Math.random() * 50}%`,
-                left: `${Math.random() * 50}%`,
+                "top": `${Math.random() * 50}%`,
+                "left": `${Math.random() * 50}%`,
                 "--background-gradient-speed": `${1 / speed}s`,
                 "--tx-1": Math.random() - 0.5,
                 "--ty-1": Math.random() - 0.5,
@@ -61,7 +53,8 @@ const AnimatedGradient: React.FC<AnimatedGradientProps> = ({
             }
             width={circleSize * randomInt(0.5, 1.5)}
             height={circleSize * randomInt(0.5, 1.5)}
-            viewBox="0 0 100 100">
+            viewBox="0 0 100 100"
+          >
             <circle
               cx="50"
               cy="50"

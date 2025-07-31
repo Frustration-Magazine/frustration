@@ -11,7 +11,7 @@ const { posts } = Astro.props;
       {posts.map((post: any) => <Slide {...post} />)}
     </ul>
   </div>
-  <div class="splide__progress bottom-0 absolute w-full">
+  <div class="splide__progress absolute bottom-0 w-full">
     <div class="splide__progress__bar h-3! bg-frustration-yellow!"></div>
   </div>
 </div>
@@ -26,8 +26,7 @@ const { posts } = Astro.props;
 
     const headerHeight = header ? header?.getBoundingClientRect().height : 0;
     const bannerHeight = banner ? banner?.getBoundingClientRect().height : 0;
-    const carrouselHeight =
-      window.innerHeight - (headerHeight ?? 0) - (bannerHeight ?? 0);
+    const carrouselHeight = window.innerHeight - (headerHeight ?? 0) - (bannerHeight ?? 0);
     carrousel.style.height = `${carrouselHeight}px`;
 
     const splide = new Splide(".splide", {

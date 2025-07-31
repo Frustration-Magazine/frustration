@@ -25,10 +25,13 @@ const options: StripeElementsOptions = {
 export default function Subscription() {
   const [selectedAmount, setSelectedAmount] = useState(900);
   return (
-    <div  id="subscription-form" className="mx-auto mt-32">
+    <div
+      id="subscription-form"
+      className="mx-auto mt-32"
+    >
       {/* 🔠 Titres */}
       <div className="mb-10">
-        <h3 className="font-bakbak text-center text-4xl font-bold text-pretty uppercase sm:text-5xl md:text-5xl lg:text-6xl">
+        <h3 className="font-bakbak text-pretty text-center text-4xl font-bold uppercase sm:text-5xl md:text-5xl lg:text-6xl">
           S'abonner à Frustration
         </h3>
         <h5 className="text-center text-lg text-zinc-500 lg:text-2xl">
@@ -64,11 +67,7 @@ export default function Subscription() {
               id="maxi"
               name="Maxi"
               amount={1500}
-              items={[
-                "✊ Newsletter",
-                "🗞️ Numéro papier 2025",
-                "📕 1 exemplaire de Parasites",
-              ]}
+              items={["✊ Newsletter", "🗞️ Numéro papier 2025", "📕 1 exemplaire de Parasites"]}
               selectedAmount={selectedAmount}
               select={() => setSelectedAmount(1500)}
             />
@@ -77,7 +76,8 @@ export default function Subscription() {
         {/* 2️⃣ 🗒️ Client informations and payment */}
         <Elements
           options={options as any}
-          stripe={stripePromise}>
+          stripe={stripePromise}
+        >
           <SubscriptionForm
             amount={selectedAmount}
             frequency="recurring"

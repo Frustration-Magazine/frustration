@@ -55,10 +55,7 @@ export function NumberTicker({
   return (
     <span
       ref={ref}
-      className={cn(
-        "inline-block tabular-nums",
-        className,
-      )}
+      className={cn("inline-block tabular-nums", className)}
       {...props}
     >
       {startValue}

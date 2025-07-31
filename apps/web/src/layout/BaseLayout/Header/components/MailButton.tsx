@@ -15,7 +15,8 @@ function MailButton({ className }: Props) {
         "bg-frustration-yellow rounded-full p-2 text-black opacity-0 transition-opacity duration-1000",
         className,
       )}
-      aria-label="Nous contacter">
+      aria-label="Nous contacter"
+    >
       <MailIcon size="clamp(30px, 2vw, 58px)" />
     </a>
   );

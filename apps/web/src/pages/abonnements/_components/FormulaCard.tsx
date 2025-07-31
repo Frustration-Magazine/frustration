@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import { type Formula } from "../_models";
 
@@ -25,7 +19,8 @@ const FormulaCard = ({
 }) => (
   <li
     data-formula={id}
-    className="transition-transform [&:has(input:checked)]:scale-105">
+    className="transition-transform [&:has(input:checked)]:scale-105"
+  >
     <input
       id={id}
       type="radio"
@@ -37,9 +32,10 @@ const FormulaCard = ({
     />
     <label
       htmlFor={id}
-      className="peer-checked peer-checked:text-frustration-yellow block cursor-pointer rounded-lg peer-checked:bg-black">
+      className="peer-checked peer-checked:text-frustration-yellow block cursor-pointer rounded-lg peer-checked:bg-black"
+    >
       <Card className="rounded-lg">
-        <CardHeader className="font-bakbak relative mt-4 mb-2 px-5 py-0 text-2xl uppercase">
+        <CardHeader className="font-bakbak relative mb-2 mt-4 px-5 py-0 text-2xl uppercase">
           <CardTitle className="font-normal!">{name}</CardTitle>
         </CardHeader>
         <CardContent className="space-between flex items-center px-5 py-0">
@@ -50,7 +46,7 @@ const FormulaCard = ({
           </ul>
           <Check className="check-card" />
         </CardContent>
-        <CardFooter className="mt-2 mb-4 px-5 py-0">
+        <CardFooter className="mb-4 mt-2 px-5 py-0">
           <p>
             <span className="mr-1.5 text-3xl font-bold">{amount / 100}€</span>
             <span className="text-sm">tous les mois</span>

@@ -30,7 +30,10 @@ const BottomBar = ({
         </div>
       ) : null}
       <div className="ml-auto">
-        <DownloadButton customers={customers} rangeDate={rangeDate} />
+        <DownloadButton
+          customers={customers}
+          rangeDate={rangeDate}
+        />
       </div>
     </div>
   );

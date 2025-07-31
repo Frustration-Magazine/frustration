@@ -7,23 +7,16 @@
     "jsxImportSource": "react",
     "target": "es2015",
     "moduleResolution": "bundler",
-    "lib": [
-      "es2015",
-      "dom"
-    ],
+    "lib": ["es2015", "dom"],
     "plugins": [
       {
-        "name": "@astrojs/ts-plugin",
-      },
+        "name": "@astrojs/ts-plugin"
+      }
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-    },
+      "@/*": ["src/*"]
+    }
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

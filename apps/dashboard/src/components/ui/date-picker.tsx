@@ -30,7 +30,10 @@ export function DatePicker({ value, min, onChange, className }: Props) {
           {value ? format(value, "PPP", { locale: fr }) : <span>Choisir une date</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent
+        className="w-auto p-0"
+        align="start"
+      >
         <Calendar
           mode="single"
           {...(min ? { min } : null)}

@@ -9,10 +9,11 @@ import { convertCountryInitials, prettifyName } from "utils";
 // Please check https://docs.stripe.com/changelog/basil/2025-03-31/adds-new-parent-field-to-invoicing-objects for stripe api upgrades and use correct api version
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2024-06-20" as any,
-  telemetry: false
+  telemetry: false,
 });
 
-export const { STRIPE_PRICE_SUBSCRIPTION_MINI, STRIPE_PRICE_SUBSCRIPTION_MEDIUM, STRIPE_PRICE_SUBSCRIPTION_MAXI } = process.env;
+export const { STRIPE_PRICE_SUBSCRIPTION_MINI, STRIPE_PRICE_SUBSCRIPTION_MEDIUM, STRIPE_PRICE_SUBSCRIPTION_MAXI } =
+  process.env;
 
 /* ================== */
 /*     Payments       */
@@ -34,7 +35,7 @@ export async function fetchStripePayments({ afterTimestamp } = { afterTimestamp:
       let listOptions: any = {
         limit,
         starting_after,
-        ...(afterTimestamp ? { created: { gte: afterTimestamp } } : null)
+        ...(afterTimestamp ? { created: { gte: afterTimestamp } } : null),
       };
 
       const { data, has_more } = await stripe.balanceTransactions.list(listOptions);
@@ -63,7 +64,7 @@ export async function fetchStripePayments({ afterTimestamp } = { afterTimestamp:
     } else {
       acc.push({
         ...payment,
-        date: truncateMonth(payment.date)
+        date: truncateMonth(payment.date),
       });
     }
     return acc;
@@ -108,7 +109,9 @@ function handleStripeError(error: any) {
   }
 }
 
-function getTransactionType(description: string): "donation" | "subscription_creation" | "subscription_update" | "other" {
+function getTransactionType(
+  description: string,
+): "donation" | "subscription_creation" | "subscription_update" | "other" {
   if (/^(Subscription creation)/.test(description)) return "subscription_creation";
   if (/^(Subscription update)/.test(description)) return "subscription_update";
   if (/(🙏 Faire un don)|(Montant libre)|(\d+€)/.test(description)) return "donation";
@@ -123,7 +126,7 @@ export function formatStripePayments({ description, net, created }: any): Paymen
     amount: Math.round(net / 100),
     source: "stripe",
     type: transactionType,
-    customers: 1
+    customers: 1,
   };
 }
 
@@ -143,8 +146,8 @@ interface StripePayment {
 export async function fetchActiveSubscriptions(
   { from, to } = {
     from: firstDayOfCurrentYear,
-    to: now
-  }
+    to: now,
+  },
 ) {
   let hasMore;
   let subscriptions: any[] = [];
@@ -156,9 +159,9 @@ export async function fetchActiveSubscriptions(
       limit: 100,
       created: {
         gte: convertDateTimestamp(from),
-        lt: convertDateTimestamp(to)
+        lt: convertDateTimestamp(to),
       },
-      starting_after: subscriptions.at(-1)?.id
+      starting_after: subscriptions.at(-1)?.id,
     });
     hasMore = has_more;
     const newSubscriptions = data.filter((subscription: any) => subscription.status === "active");
@@ -177,7 +180,7 @@ export async function fetchActiveSubscriptions(
       city: (subscription.metadata.city || subscription.metadata.ville) ?? "",
       postal_code: (subscription.metadata.postal_code || subscription.metadata.code_postal) ?? "",
       country: (subscription.metadata.country || subscription.metadata.pays) ?? "",
-      state: subscription.metadata.state ?? ""
+      state: subscription.metadata.state ?? "",
     };
   });
 
@@ -188,11 +191,15 @@ export async function fetchActiveSubscriptions(
 
   for (let i = 0; i < customersId.length; i += 100) {
     const sliceCustomersId = customersId.slice(i, i + 100);
-    const sliceCustomers = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.customers.retrieve(customerId)));
+    const sliceCustomers = await Promise.all(
+      sliceCustomersId.map((customerId: any) => stripe.customers.retrieve(customerId)),
+    );
     customers = [...customers, ...sliceCustomers];
     console.log("wait to avoid rate limit...");
     await wait(100);
-    let slicePaymentMethods = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.paymentMethods.list({ customer: customerId })));
+    let slicePaymentMethods = await Promise.all(
+      sliceCustomersId.map((customerId: any) => stripe.paymentMethods.list({ customer: customerId })),
+    );
     slicePaymentMethods = slicePaymentMethods.map((paymentMethod: any) => paymentMethod?.data.at(0));
     paymentMethods = [...paymentMethods, ...slicePaymentMethods];
     console.log("wait to avoid rate limit...");
@@ -200,7 +207,9 @@ export async function fetchActiveSubscriptions(
   }
   subscriptions_f.forEach((subscription) => {
     const customer = customers.find((customer: any) => customer.id === subscription.customerId);
-    const paymentMethod = paymentMethods.find((paymentMethod: any) => paymentMethod.customer === subscription.customerId);
+    const paymentMethod = paymentMethods.find(
+      (paymentMethod: any) => paymentMethod.customer === subscription.customerId,
+    );
 
     subscription.name = customer?.name;
     subscription.email = customer?.email;
@@ -238,8 +247,8 @@ function wait(ns: number) {
 export async function fetchStripeNewCustomers(
   { from, to } = {
     from: firstDayOfCurrentYear,
-    to: now
-  }
+    to: now,
+  },
 ) {
   let hasMore;
   let subscriptions: any[] = [];
@@ -253,10 +262,10 @@ export async function fetchStripeNewCustomers(
     const { data, has_more } = await stripe.subscriptions.list({
       created: {
         gte: convertDateTimestamp(from),
-        lte: convertDateTimestamp(to)
+        lte: convertDateTimestamp(to),
       },
       limit: 100,
-      starting_after: lastSubscription?.id
+      starting_after: lastSubscription?.id,
     });
     hasMore = has_more;
 
@@ -276,7 +285,7 @@ export async function fetchStripeNewCustomers(
       line1: (subscription.metadata.line1 || subscription.metadata.adresse) ?? "",
       city: (subscription.metadata.city || subscription.metadata.ville) ?? "",
       postal_code: (subscription.metadata.postal_code || subscription.metadata.code_postal) ?? "",
-      country: (subscription.metadata.country || subscription.metadata.pays) ?? ""
+      country: (subscription.metadata.country || subscription.metadata.pays) ?? "",
     };
   });
 
@@ -288,21 +297,29 @@ export async function fetchStripeNewCustomers(
   for (let i = 0; i < customersId.length; i += 100) {
     console.log("start fetching customers...");
     const sliceCustomersId = customersId.slice(i, i + 99);
-    const sliceCustomers = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.customers.retrieve(customerId)));
+    const sliceCustomers = await Promise.all(
+      sliceCustomersId.map((customerId: any) => stripe.customers.retrieve(customerId)),
+    );
     customers = [...customers, ...sliceCustomers];
-    let slicePaymentMethods = await Promise.all(sliceCustomersId.map((customerId: any) => stripe.paymentMethods.list({ customer: customerId })));
+    let slicePaymentMethods = await Promise.all(
+      sliceCustomersId.map((customerId: any) => stripe.paymentMethods.list({ customer: customerId })),
+    );
     slicePaymentMethods = slicePaymentMethods.map((paymentMethod: any) => paymentMethod?.data.at(0));
     paymentMethods = [...paymentMethods, ...slicePaymentMethods];
   }
 
   subscriptions_f.forEach((subscription) => {
     const customer = customers.find((customer: any) => customer.id === subscription.customerId);
-    const paymentMethod = paymentMethods.find((paymentMethod: any) => paymentMethod.customer === subscription.customerId);
+    const paymentMethod = paymentMethods.find(
+      (paymentMethod: any) => paymentMethod.customer === subscription.customerId,
+    );
 
     // ❗ Customers informations should take precedence over subscription informations (because it's more accurate and updated)
     subscription.name = customer?.name ? prettifyName(customer.name) : "";
     subscription.email = customer?.email;
-    subscription.country = convertCountryInitials(customer?.address?.country || subscription.country || paymentMethod?.card?.country);
+    subscription.country = convertCountryInitials(
+      customer?.address?.country || subscription.country || paymentMethod?.card?.country,
+    );
     subscription.line1 = customer?.address?.line1 ?? subscription.line1;
     subscription.city = customer?.address?.city ?? subscription.city;
     subscription.postal_code = customer?.address?.postal_code ?? subscription.postal_code;
@@ -318,7 +335,7 @@ export async function fetchStripeNewCustomers(
 export async function createStripeSubscription(customerId: string, priceId: string) {
   const subscription = await stripe.subscriptions.create({
     customer: customerId,
-    items: [{ price: priceId }]
+    items: [{ price: priceId }],
   });
   return subscription;
 }

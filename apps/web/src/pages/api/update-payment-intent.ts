@@ -4,8 +4,7 @@ import { stripe } from "data-access/stripe";
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }: { request: any }) => {
-  const { paymentIntentId, paymentIntentUpdatedInformations } =
-    await request.json();
+  const { paymentIntentId, paymentIntentUpdatedInformations } = await request.json();
 
   // 1️⃣ Create a payment intent
   let paymentIntent;
@@ -15,15 +14,12 @@ export const POST: APIRoute = async ({ request }: { request: any }) => {
     });
   } catch (error) {
     console.error("Error updating payment intent:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to update payment intent" }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
+    return new Response(JSON.stringify({ error: "Failed to update payment intent" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
   }
 
   // 2️⃣ Return payment intent if successful

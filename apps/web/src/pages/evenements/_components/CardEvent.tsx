@@ -1,11 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
@@ -38,39 +31,29 @@ const BookCoverBackground = ({ bookImage }: { bookImage: any }) => (
     className={cn(
       "absolute right-0 h-full",
       "scale-1 rotate-[15deg] opacity-10",
-      "sm:scale-[1.3] sm:rotate-[25deg] sm:opacity-20",
-    )}>
+      "sm:rotate-[25deg] sm:scale-[1.3] sm:opacity-20",
+    )}
+  >
     {bookImage}
   </div>
 );
 
-const LeftBorderColored = () => (
-  <div className="absolute h-full w-1 bg-[#FCCF00]" />
-);
+const LeftBorderColored = () => <div className="absolute h-full w-1 bg-[#FCCF00]" />;
 
 /* ============== */
 /* |||||||||||||| */
 /* ============== */
 
-function CardEvent({
-  event,
-  children,
-}: Readonly<{ event: Event; children: ReactNode }>) {
+function CardEvent({ event, children }: Readonly<{ event: Event; children: ReactNode }>) {
   return (
-    <Card
-      className={cn(
-        "relative left-0 overflow-hidden bg-white",
-        "first:after:content-none",
-      )}>
+    <Card className={cn("relative left-0 overflow-hidden bg-white", "first:after:content-none")}>
       <LeftBorderColored />
       <BookCoverBackground bookImage={children} />
       <CardHeader>
-        <CardTitle
-          className={cn("first-letter:capitalize", "text-xl", "sm:text-2xl")}>
+        <CardTitle className={cn("first-letter:capitalize", "text-xl", "sm:text-2xl")}>
           {formatDate(event.date, event.displayHour)} - {event.city}
         </CardTitle>
-        <CardDescription
-          className={cn("flex items-center gap-1", "text-base", "sm:text-lg")}>
+        <CardDescription className={cn("flex items-center gap-1", "text-base", "sm:text-lg")}>
           <MapMarkerIcon />
           {event.place}
         </CardDescription>
@@ -85,7 +68,8 @@ function CardEvent({
           <MailIcon />
           <a
             href={`mailto:${event.contact}`}
-            className="underline">
+            className="underline"
+          >
             {event.contact}
           </a>
         </CardFooter>
