@@ -261,9 +261,11 @@ export async function fetchSearchPosts({ term, categorySlug, author, after }: an
   let {
     data: {
       posts: { nodes: posts, pageInfo },
-      category: { name: categoryName } = { name: null },
+      category,
     },
   } = await fetchWordpress({ query });
+
+  const categoryName = category?.name || null;
 
   return { posts, pageInfo, categoryName };
 }

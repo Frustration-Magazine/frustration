@@ -22,35 +22,37 @@ const SUBSCRIBERS_TARGET = 1500;
 let subscribersLastMonth: number | null = null;
 let PERCENTAGE_SUBSCRIBERS: number | null = null;
 
-try {
-  const {
-    result: {
-      _sum: { customers: subscribers },
-    },
-  } = await aggregateRecords({
-    table: "payments",
-    dataToAggregate: {
-      customers: true,
-    },
-    where: {
-      type: {
-        in: ["subscription", "subscription_creation", "subscription_update"],
-      },
-      date: {
-        gte: firstDayOfPrevMonth,
-        lt: firstDayOfCurrentMonth,
-      },
-    },
-    success: true,
-  });
+// ⚠️ Désactivé pour l'instant
 
-  subscribersLastMonth = subscribers;
-  PERCENTAGE_SUBSCRIBERS = subscribersLastMonth ? Math.round((subscribersLastMonth / SUBSCRIBERS_TARGET) * 100) : null;
-} catch (error) {
-  console.warn("⚠️ Impossible de récupérer les données d'abonnés depuis la base de données:", error);
-  subscribersLastMonth = null;
-  PERCENTAGE_SUBSCRIBERS = null;
-}
+// try {
+//   const {
+//     result: {
+//       _sum: { customers: subscribers },
+//     },
+//   } = await aggregateRecords({
+//     table: "payments",
+//     dataToAggregate: {
+//       customers: true,
+//     },
+//     where: {
+//       type: {
+//         in: ["subscription", "subscription_creation", "subscription_update"],
+//       },
+//       date: {
+//         gte: firstDayOfPrevMonth,
+//         lt: firstDayOfCurrentMonth,
+//       },
+//     },
+//     success: true,
+//   });
+
+//   subscribersLastMonth = subscribers;
+//   PERCENTAGE_SUBSCRIBERS = subscribersLastMonth ? Math.round((subscribersLastMonth / SUBSCRIBERS_TARGET) * 100) : null;
+// } catch (error) {
+//   console.warn("⚠️ Impossible de récupérer les données d'abonnés depuis la base de données:", error);
+//   subscribersLastMonth = null;
+//   PERCENTAGE_SUBSCRIBERS = null;
+// }
 
 // await prisma.payments.aggregate({
 //   _sum: {
