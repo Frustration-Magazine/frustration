@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { getSearchPostsQuery } from "@/lib/wordpress";
-import { useState } from "react";
+import { TagIcon } from "lucide-react";
+import { Fragment, useState } from "react";
 import { CgArrowTopRight } from "react-icons/cg";
 
 type Props = {
@@ -16,6 +17,12 @@ type Post = {
   readonly title: string;
   readonly excerpt: string;
   readonly slug: string;
+  readonly categories: {
+    readonly nodes: {
+      readonly name: string;
+      readonly slug: string;
+    }[];
+  };
   readonly featuredImage: {
     readonly node: {
       readonly title: string;
@@ -89,7 +96,7 @@ function Results({ term, categorySlug, author, initialPosts, initialPageInfo }: 
 
   return (
     <div className="flex flex-col items-center gap-8">
-      {posts.map(({ title, excerpt, slug, featuredImage }: Post) => (
+      {posts.map(({ title, excerpt, slug, featuredImage, categories }: Post) => (
         <a
           href={`/${slug}`}
           key={slug}
@@ -105,6 +112,17 @@ function Results({ term, categorySlug, author, initialPosts, initialPageInfo }: 
               />
             )}
             <div className="flex flex-col gap-4">
+              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0">
+                {categories.nodes.map(({ name, slug }) => (
+                  <div
+                    key={slug}
+                    className="flex items-center [&>svg]:mr-1.5 [&>svg]:w-[13px]"
+                  >
+                    <TagIcon />
+                    <span>{name}</span>
+                  </div>
+                ))}
+              </div>
               <Excerpt>{excerpt}</Excerpt>
               <Read />
             </div>
