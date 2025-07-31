@@ -12,8 +12,9 @@ import Frustrarenard from "./assets/frustrarenard.avif";
 import Fist from "./assets/fist.svg";
 import { motion } from "framer-motion";
 
-const prevMonth = new Date(new Date().setMonth(new Date().getMonth() - 1));
-const firstDayOfCurrentMonth = getFirstDayOfTheMonth(new Date());
+const currentDate = new Date();
+const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+const firstDayOfCurrentMonth = getFirstDayOfTheMonth(currentDate);
 const firstDayOfPrevMonth = getFirstDayOfTheMonth(prevMonth);
 
 const SUBSCRIBERS_TARGET = 1500;
@@ -22,52 +23,33 @@ const SUBSCRIBERS_TARGET = 1500;
 let subscribersLastMonth: number | null = null;
 let PERCENTAGE_SUBSCRIBERS: number | null = null;
 
-// ⚠️ Désactivé pour l'instant
+try {
+  const {
+    result: {
+      _sum: { customers: subscribers },
+    },
+  } = await aggregateRecords({
+    table: "payments",
+    dataToAggregate: {
+      customers: true,
+    },
+    where: {
+      type: {
+        in: ["subscription", "subscription_creation", "subscription_update"],
+      },
+      date: {
+        gte: firstDayOfPrevMonth,
+        lt: firstDayOfCurrentMonth,
+      },
+    },
+    success: true,
+  });
 
-// try {
-//   const {
-//     result: {
-//       _sum: { customers: subscribers },
-//     },
-//   } = await aggregateRecords({
-//     table: "payments",
-//     dataToAggregate: {
-//       customers: true,
-//     },
-//     where: {
-//       type: {
-//         in: ["subscription", "subscription_creation", "subscription_update"],
-//       },
-//       date: {
-//         gte: firstDayOfPrevMonth,
-//         lt: firstDayOfCurrentMonth,
-//       },
-//     },
-//     success: true,
-//   });
-
-//   subscribersLastMonth = subscribers;
-//   PERCENTAGE_SUBSCRIBERS = subscribersLastMonth ? Math.round((subscribersLastMonth / SUBSCRIBERS_TARGET) * 100) : null;
-// } catch (error) {
-//   console.warn("⚠️ Impossible de récupérer les données d'abonnés depuis la base de données:", error);
-//   subscribersLastMonth = null;
-//   PERCENTAGE_SUBSCRIBERS = null;
-// }
-
-// await prisma.payments.aggregate({
-//   _sum: {
-//     customers: true,
-//   },
-//   where: {
-//     type: {
-//       in: ["subscription", "subscription_creation", "subscription_update"],
-//     },
-//     date: {
-//       gte: firstDayOfPrevMonth,
-//       lt: firstDayOfCurrentMonth,
-//     },
-//   },
-// });
+  subscribersLastMonth = subscribers;
+  PERCENTAGE_SUBSCRIBERS = subscribersLastMonth ? Math.round((subscribersLastMonth / SUBSCRIBERS_TARGET) * 100) : null;
+} catch (error) {
+  console.warn("⚠️ Impossible de récupérer les données d'abonnés depuis la base de données:", error);
+}
 ---
 
 {
@@ -192,6 +174,7 @@ let PERCENTAGE_SUBSCRIBERS: number | null = null;
     </a>
   ) : null
 }
+
 <style define:vars={{ backgroundUrl }}>
   .banner-container {
     background-image: var(--backgroundUrl);

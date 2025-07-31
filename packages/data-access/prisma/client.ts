@@ -154,6 +154,8 @@ export async function aggregateRecords({
   } catch (e) {
     // ❌ Error | P202
     console.error("Error while aggregating records", e);
+    const readableError = (e as any)?.message ?? "Une erreur inconnue s'est produite";
+    status.error = readableError;
   } finally {
     return { status, result };
   }
