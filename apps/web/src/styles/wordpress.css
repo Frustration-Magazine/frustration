@@ -84,7 +84,7 @@
 }
 
 /* Chapo */
-.content p:has(strong) {
+.content p:has(strong):first-of-type {
   font-weight: 900;
   margin-bottom: 20px;
   padding: 15px 20px;
