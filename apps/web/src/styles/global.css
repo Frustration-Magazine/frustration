@@ -316,10 +316,10 @@
   --color-blue-gray-900: #0f172a;
   --color-blue-gray-950: #020617;
 
-  --color-frustration-yellow: #fff200;
+  --color-primary: #fff200;
+  --color-logo-yellow: #fccf00;
   --color-pale-yellow: #f2ec80;
   --color-pale-purple: #7c76b0;
-  --color-primary: #fff200;
   --color-color-rainbow-1: hsl(var(--color-rainbow-1));
   --color-color-rainbow-2: hsl(var(--color-rainbow-2));
   --color-color-rainbow-3: hsl(var(--color-rainbow-3));

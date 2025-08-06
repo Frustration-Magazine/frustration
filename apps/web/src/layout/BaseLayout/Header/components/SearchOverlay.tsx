@@ -49,7 +49,7 @@ function SearchOverlay() {
       type="text"
       onChange={(e) => setSearch(e.target.value)}
       className={cn(
-        "border-frustration-yellow w-[600px] max-w-[90vw] border-4 border-dashed bg-black px-4 py-2 font-bold",
+        "border-primary w-[600px] max-w-[90vw] border-4 border-dashed bg-black px-4 py-2 font-bold",
         "text-xl",
         "md:text-2xl",
         "xl:text-3xl",
@@ -61,7 +61,7 @@ function SearchOverlay() {
   const SearchButton = (
     <button
       className={cn(
-        "bg-frustration-yellow font-bakbak cursor-pointer rounded-full text-black transition-opacity duration-300 disabled:cursor-default disabled:opacity-20",
+        "bg-primary font-bakbak cursor-pointer rounded-full text-black transition-opacity duration-300 disabled:cursor-default disabled:opacity-20",
         "px-4 py-1.5 text-xl",
         "md:px-6 md:py-2 md:text-2xl",
         "xl:px-6 xl:py-2 xl:text-3xl",

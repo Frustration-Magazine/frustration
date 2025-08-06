@@ -133,7 +133,7 @@ function Results({ term, categorySlug, author, initialPosts, initialPageInfo }: 
       {pageInfo.hasNextPage ? (
         <Button
           className={cn(
-            "text-frustration-yellow hover:text-frustration-yellow font-bebas mt-12 box-content bg-black px-5 py-2 text-2xl hover:bg-black",
+            "text-primary hover:text-primary font-bebas mt-12 box-content bg-black px-5 py-2 text-2xl hover:bg-black",
             "md:px-6 md:py-3 md:text-3xl",
           )}
           onClick={handleMoreArticles}

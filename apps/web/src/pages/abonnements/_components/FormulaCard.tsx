@@ -32,7 +32,7 @@ const FormulaCard = ({
     />
     <label
       htmlFor={id}
-      className="peer-checked peer-checked:text-frustration-yellow block cursor-pointer rounded-lg peer-checked:bg-black"
+      className="peer-checked peer-checked:text-primary block cursor-pointer rounded-lg peer-checked:bg-black"
     >
       <Card className="rounded-lg">
         <CardHeader className="font-bakbak relative mb-2 mt-4 px-5 py-0 text-2xl uppercase">

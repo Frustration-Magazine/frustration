@@ -11,10 +11,7 @@ function MailButton({ className }: Props) {
       href="/contact"
       type="button"
       title="Nous contacter"
-      className={cn(
-        "bg-frustration-yellow rounded-full p-2 text-black opacity-0 transition-opacity duration-1000",
-        className,
-      )}
+      className={cn("bg-primary rounded-full p-2 text-black opacity-0 transition-opacity duration-1000", className)}
       aria-label="Nous contacter"
     >
       <MailIcon size="clamp(30px, 2vw, 58px)" />

@@ -59,7 +59,7 @@ function PostSummary() {
       <h3
         onClick={() => window.scrollTo({ top: 0 })}
         className={cn(
-          "border-b-frustration-yellow font-bakbak mb-4 w-fit cursor-pointer border-b-[6px]",
+          "border-b-primary font-bakbak mb-4 w-fit cursor-pointer border-b-[6px]",
           "text-2xl",
           "lg:text-3xl",
         )}

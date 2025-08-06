@@ -52,22 +52,14 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
     <div class="grow p-4">
       <header class="space-y-3">
         <!-- Title -->
-        <h5
-          class="font-bakbak xs:text-3xl leading-none! text-frustration-yellow text-pretty text-2xl uppercase xl:w-[70%]"
-        >
+        <h5 class="font-bakbak xs:text-3xl leading-none! text-primary text-pretty text-2xl uppercase xl:w-[70%]">
           {title}
         </h5>
         <!-- Categories -->
         <div class="flex flex-wrap gap-1">
           {
             mainCategories.map((category: any) => (
-              <span
-                class={cn(
-                  "bg-frustration-yellow font-bakbak uppercase text-black",
-                  "px-2 pt-[1.5px] text-xs",
-                  "lg:text-sm",
-                )}
-              >
+              <span class={cn("bg-primary font-bakbak uppercase text-black", "px-2 pt-[1.5px] text-xs", "lg:text-sm")}>
                 {category.name}
               </span>
             ))

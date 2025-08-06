@@ -256,7 +256,7 @@ export default function StripeForm({ amount = 900, hasGifts = true }: Props) {
           {isLoading ? (
             <LoaderCircle color="#FFF200" />
           ) : (
-            <span className="text-frustration-yellow text-xl font-bold lg:text-2xl">💝 Soutenir Frustration</span>
+            <span className="text-primary text-xl font-bold lg:text-2xl">💝 Soutenir Frustration</span>
           )}
         </RainbowButton>
       </div>

@@ -229,7 +229,7 @@ export default function StripeForm() {
           {isLoading ? (
             <LoaderCircle color="#FFF200" />
           ) : (
-            <span className="text-frustration-yellow flex gap-3 text-xl font-bold lg:text-2xl">
+            <span className="text-primary flex gap-3 text-xl font-bold lg:text-2xl">
               <span>💸</span>
               <span>Faire un don à Frustration</span>
             </span>

@@ -46,7 +46,7 @@ function MoreArticles() {
   return (
     <div>
       <h3
-        className="font-bakbak mb-6 text-4xl underline decoration-[#FCCF00] decoration-[10px] underline-offset-[-5px]"
+        className="font-bakbak -underline-offset-4 decoration-logo-yellow mb-6 text-4xl underline decoration-[10px]"
         style={{ textDecorationSkipInk: "none" }}
       >
         Plus d'articles

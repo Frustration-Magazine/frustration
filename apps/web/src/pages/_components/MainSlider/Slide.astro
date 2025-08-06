@@ -17,7 +17,7 @@ const IMAGE_SIZE = 1200;
     <div class="font-bakbak absolute left-[50%] top-[50%] w-[90%] max-w-[1000px] translate-x-[-50%] translate-y-[-50%]">
       <h3
         class={cn(
-          "mb-4 uppercase leading-1 text-balance bg-black px-10 py-4 text-center font-bakbak font-bold text-frustration-yellow",
+          "mb-4 uppercase leading-1 text-balance bg-black px-10 py-4 text-center font-bakbak font-bold text-primary",
           "text-2xl",
           "sm:text-3xl",
           "md:text-4xl",
@@ -29,11 +29,11 @@ const IMAGE_SIZE = 1200;
         {title}
       </h3>
       <div
-        class="[&>p]:bg-frustration-yellow hidden xl:block [&>p]:inline [&>p]:text-balance [&>p]:text-center [&>p]:text-xl [&>p]:font-normal [&>p]:leading-snug [&>p]:text-black"
+        class="[&>p]:bg-primary hidden xl:block [&>p]:inline [&>p]:text-balance [&>p]:text-center [&>p]:text-xl [&>p]:font-normal [&>p]:leading-snug [&>p]:text-black"
         set:html={excerpt}
       />
       <div
-        class="bg-frustration-yellow font-bakbak xl:text-frustration-yellow m-auto mt-6 flex w-fit items-center gap-1 px-5 py-1 text-lg font-bold text-black md:gap-2 md:py-2 md:text-xl lg:px-6 lg:py-2 lg:text-2xl xl:gap-3 xl:bg-black"
+        class="bg-primary font-bakbak xl:text-primary m-auto mt-6 flex w-fit items-center gap-1 px-5 py-1 text-lg font-bold text-black md:gap-2 md:py-2 md:text-xl lg:px-6 lg:py-2 lg:text-2xl xl:gap-3 xl:bg-black"
       >
         <Newspaper size={20} />
         <span>Lire</span>
