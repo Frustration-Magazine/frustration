@@ -30,10 +30,16 @@ function MoreArticles() {
     const embedArticles = scanEmbedInternalLinks();
     const links = mapToLinks(embedArticles);
 
-    // Fetch articles
+    // Fetch articles and ignore not found articles
     const linksPreviewPromises = links.map(fetchLinkPreview);
-    Promise.all(linksPreviewPromises).then((values) => {
-      setLinkPreviews(values);
+    Promise.allSettled(linksPreviewPromises).then((results) => {
+      const successfulPreviews = results
+        .filter((result) => result.status === "fulfilled" && result.value)
+        .map((result) => (result as PromiseFulfilledResult<any>).value);
+
+      setLinkPreviews(successfulPreviews);
+
+      // Remove embed articles from the article content
       embedArticles.forEach((node) => {
         const isFrustrationLink = node && node.textContent && node.textContent.match("frustrationmagazine.fr");
         if (isFrustrationLink) node.remove();
