@@ -71,6 +71,34 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
         cet objectif : <b>1 500 abonnés pour permettre à Frustration de continuer et d’aller plus loin !</b>
       </p>
     </article>
+
+    <!-- Portail abonnés & formulaire de contact -->
+    <ul class="mt-10 space-y-2 rounded-md bg-green-100 p-4 text-lg font-semibold text-green-600">
+      <li class="flex items-start gap-2">
+        <span class="text-xl">💡</span>
+        <span>
+          Vous pouvez à tout moment modifier, mettre à jour ou résilier votre abonnement via le ✨ <a
+            class="text-blue underline"
+            href={import.meta.env.STRIPE_PORTAL_CLIENT}
+            target="_blank"
+            >portail abonnés</a
+          > ✨ en utilisant l'adresse email renseignée lors de votre souscription.
+        </span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-xl">❓</span>
+        <span>
+          En cas de difficulté ou pour toute autre question, contactez-nous via le <br />
+          ✍️ <a
+            class="text-blue underline"
+            href="/contact"
+          >
+            formulaire de contact</a
+          > ✍️ en précisant le sujet de votre demande.
+        </span>
+      </li>
+    </ul>
+
     <h3
       class={cn(
         "mt-14 text-pretty text-center font-bold uppercase font-bakbak",
@@ -175,20 +203,6 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
     <div class={cn("mt-6 mb-6", "md:mt-12 md:mb-12")}>
       <SubscriptionFormWrapper client:load />
     </div>
-
-    <p class="mt-16 bg-green-100 p-4 font-semibold text-green-600">
-      💡 Vous pouvez à tout moment modifier, mettre à jour ou résilier votre abonnement sur notre portail abonnés <a
-        class="text-blue underline"
-        href={import.meta.env.STRIPE_PORTAL_CLIENT}
-        target="_blank"
-        >en vous rendant à cette adresse</a
-      > et en utilisant l'adresse email renseignée lors de votre souscription. En cas de difficulté ou pour toute autre question,
-      contactez-nous à <a
-        class="text-blue underline"
-        href={`mailto:${import.meta.env.MAIL_FROM}`}
-        >{import.meta.env.MAIL_FROM}.</a
-      >
-    </p>
 
     <div class={cn("mt-6 mb-6", "md:mt-12 md:mb-12")}>
       <DonationFormWrapper client:load />
