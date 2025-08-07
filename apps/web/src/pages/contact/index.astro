@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import ContactSubjectSelect from "@/pages/contact/_components/ContactSubjectSelect";
 import PageLayout from "@/layout/PageLayout/PageLayout.astro";
 import { cn } from "@/lib/utils";
 import { Resend } from "resend";
@@ -10,22 +11,13 @@ export const prerender = false;
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const INVALID_CAPTCHA_STATUS = {
-  type: "invalid-captcha",
-  message: "Veuillez valider le captcha",
-};
-
-const ERROR_STATUS = {
-  type: "error",
-  message: "Une erreur inattendue est survenue",
-};
-
-const SUCCESS_STATUS = {
-  type: "success",
-  message: "🙂 Votre message a bien été envoyé ! Nous tâcherons de vous répondre dans les plus brefs délais",
-};
+const INVALID_CAPTCHA_STATUS = "invalid-captcha";
+const NO_SUBJECT_STATUS = "no-subject";
+const ERROR_STATUS = "error";
+const SUCCESS_STATUS = "success";
 
 let status = null;
+let subject = "";
 let email = "";
 let message = "";
 
@@ -56,24 +48,29 @@ if (Astro.request.method === "POST") {
   try {
     const data = await Astro.request.formData();
     const hcaptchaResponse = data.get("h-captcha-response");
+    subject = data.get("subject")?.toString() ?? "";
     email = data.get("email")?.toString() ?? "";
     message = data.get("message")?.toString() ?? "";
 
     if (!hcaptchaResponse) {
       status = INVALID_CAPTCHA_STATUS;
+    } else if (!subject) {
+      status = NO_SUBJECT_STATUS;
     } else {
       await resend.emails.send({
         from: import.meta.env.MAIL_FROM,
         to: [import.meta.env.MAIL_FROM],
-        subject: `Formulaire de contact - ${email}`,
+        subject: `Formulaire de contact - ${subject} - ${email}`,
         html: `
+        <h2>Sujet : ${subject}</h4>
         <h3>Demande envoyée par : ${email} le ${formattedDate}</h3>
-        <h5>Message :</h5>
+        <br />
         <p>${message}</p>
         `,
       });
 
       status = SUCCESS_STATUS;
+      subject = "";
       email = "";
       message = "";
     }
@@ -111,6 +108,7 @@ if (Astro.request.method === "POST") {
       method="POST"
       class="font-open-sans flex flex-col gap-4"
     >
+      <ContactSubjectSelect client:load />
       <Input
         type="email"
         placeholder="Votre email de contact"
@@ -129,10 +127,11 @@ if (Astro.request.method === "POST") {
         defaultValue={message}
         required
       />
+
       {
         status &&
-          (status.type === ERROR_STATUS.type ? (
-            <p class="bg-red-200 p-4 text-red-700">
+          (status === ERROR_STATUS ? (
+            <p class="rounded bg-red-200 p-4 text-center text-red-700">
               😔 Une erreur est survenue. Veuillez réessayer ou nous contacter directement à l'adresse{" "}
               <a
                 href={`mailto:${import.meta.env.MAIL_FROM}`}
@@ -142,12 +141,18 @@ if (Astro.request.method === "POST") {
               </a>{" "}
               si le problème persiste.
             </p>
-          ) : status.type === INVALID_CAPTCHA_STATUS.type ? (
-            <p class="bg-red-200 p-4 text-red-700">{status.message}</p>
-          ) : status.type === SUCCESS_STATUS.type ? (
-            <p class="bg-green-200 p-4 text-green-700">{status.message}</p>
+          ) : status === INVALID_CAPTCHA_STATUS ? (
+            <p class="rounded bg-orange-200 p-4 text-center text-orange-700">👇 Veuillez valider le captcha.</p>
+          ) : status === NO_SUBJECT_STATUS ? (
+            <p class="rounded bg-orange-200 p-4 text-center text-orange-700">👆 Veuillez sélectionner un sujet.</p>
+          ) : status === SUCCESS_STATUS ? (
+            <p class="rounded bg-green-200 p-4 text-center text-green-700">
+              🙂 Votre message a bien été envoyé !<br />
+              Nous tâcherons de vous répondre dans les plus brefs délais.
+            </p>
           ) : null)
       }
+
       <div
         class="h-captcha mx-auto"
         data-sitekey={process.env.HCAPTCHA_SITE_KEY}
