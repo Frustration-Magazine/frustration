@@ -82,9 +82,10 @@ try {
         </div>
         {/* Déjà X abonnés ! */}
         <div class="z-1 relative inline-block px-2">
+          {/* Shadow text */}
           <span
             class={cn(
-              "font-bakbak -z-1 text-shadow-[1px_1px_2px_rgba(0,0,0,0.7)] absolute text-2xl text-transparent",
+              "font-bakbak -z-1 text-shadow-[1px_1px_2px_rgba(0,0,0,0.7)] absolute text-nowrap text-transparent",
               "text-xl",
               "sm:text-2xl",
             )}
@@ -97,15 +98,16 @@ try {
             />{" "}
             abonnés !
           </span>
-          <span class={cn("font-bakbak text-2xl shadow-2xl", "text-xl", "sm:text-2xl")}>
-            <span class="to-primary bg-gradient-to-r from-yellow-400 bg-clip-text text-transparent">Déjà</span>
+          {/* Real text */}
+          <span class={cn("font-bakbak text-nowrap shadow-2xl", "text-xl", "sm:text-2xl")}>
+            <span class="to-primary bg-gradient-to-r from-yellow-400 bg-clip-text text-transparent">Déjà </span>
             <NumberTicker
               client:load
               startValue={subscribersLastMonth - 40}
               className="text-primary"
               value={subscribersLastMonth}
             />
-            <span class="from-primary bg-gradient-to-r to-yellow-400 bg-clip-text text-transparent">abonnés !</span>
+            <span class="from-primary bg-gradient-to-r to-yellow-400 bg-clip-text text-transparent"> abonnés !</span>
           </span>
         </div>
         {/* Gauge */}
