@@ -1,5 +1,5 @@
 ---
-import { HiOutlineMailOpen as MailIcon } from "react-icons/hi";
+import { SendHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import H5 from "./H5.astro";
 ---
@@ -8,17 +8,16 @@ import H5 from "./H5.astro";
   <H5> Nous contacter </H5>
   <p class={cn("text-sm mb-2 w-full mt-2 max-w-[400px] font-open-sans", "mx-auto", "sm:mx-0")}>
     Une question à nous poser ? Une information à nous communiquer ? Un article à nous proposer ?
-    <b>N'hésitez pas à nous contacter !</b>
   </p>
   <a
-    href={`mailto:${import.meta.env.MAIL_FROM}`}
+    href="/contact"
     class={cn(
-      "w-full font-open-sans leading-tight underline flex gap-1 font-bold items-center",
+      "w-full font-open-sans leading-tight underline flex gap-2 font-bold items-center",
       "text-sm justify-center",
       "sm:text-base sm:justify-start",
     )}
   >
-    <MailIcon />
-    {import.meta.env.MAIL_FROM}
+    <SendHorizontal size={16} />
+    Contactez-nous !
   </a>
 </div>
