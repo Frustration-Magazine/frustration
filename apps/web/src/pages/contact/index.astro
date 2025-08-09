@@ -108,7 +108,7 @@ if (Astro.request.method === "POST") {
       method="POST"
       class="font-open-sans flex flex-col gap-4"
     >
-      <ContactSubjectSelect client:load />
+      <ContactSubjectSelect portalUrl={import.meta.env.STRIPE_PORTAL_CLIENT} client:load />
       <Input
         type="email"
         placeholder="Votre email de contact"

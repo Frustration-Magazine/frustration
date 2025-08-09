@@ -8,56 +8,66 @@ import {
   SelectLabel,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
-const SUBJECT_OPTIONS = [
-  {
-    label: "Abonnement",
-    items: [
-      { value: "subscription-address", label: "Changement d'adresse" },
-      { value: "subscription-modification", label: "Modification ou résiliation" },
-      { value: "subscription-missing", label: "Numéro ou livre non reçu" },
-    ],
-  },
-  {
-    label: "Contribution",
-    items: [
-      { value: "content-proposal", label: "Proposition d'articles ou de témoignages" },
-      { value: "reader-mail", label: 'Rubrique "Chère Frustration" (courrier des lecteurs)' },
-    ],
-  },
-  {
-    label: "Autre",
-    items: [{ value: "other", label: "Questions, réactions..." }],
-  },
-];
+const SUBJECT_OPTIONS = {
+  Abonnement: ["Changement d'adresse", "Modification ou résiliation", "Numéro ou livre non reçu"],
+  Contribution: ["Proposition d'articles ou de témoignages", 'Rubrique "Chère Frustration" (courrier des lecteurs)'],
+  Autre: ["Questions, réactions..."],
+};
 
-export default function ContactSubjectSelect() {
+const SUBSCRIPTION_SUBJECTS = new Set(SUBJECT_OPTIONS.Abonnement);
+
+export default function ContactSubjectSelect({ portalUrl }: { portalUrl: string }) {
+  const [selectedSubject, setSelectedSubject] = useState<string | undefined>();
+
   return (
-    <Select name="subject">
-      <SelectTrigger className="w-full hover:cursor-pointer">
-        <SelectValue placeholder="Sélectionnez un sujet" />
-      </SelectTrigger>
-      <SelectContent className="bg-white p-2">
-        {SUBJECT_OPTIONS.map((group, groupIndex) => (
-          <SelectGroup
-            key={group.label}
-            className={cn("space-y-1", groupIndex > 0 && "mt-2")}
-          >
-            <SelectLabel className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-              {group.label}
-            </SelectLabel>
-            {group.items.map((item) => (
-              <SelectItem
-                key={item.value}
-                value={item.label}
-                className="ml-4 w-fit hover:cursor-pointer"
-              >
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        ))}
-      </SelectContent>
-    </Select>
+    <>
+      <Select
+        name="subject"
+        value={selectedSubject}
+        onValueChange={setSelectedSubject}
+      >
+        <SelectTrigger className="w-full hover:cursor-pointer">
+          <SelectValue placeholder="Sélectionnez un sujet" />
+        </SelectTrigger>
+        <SelectContent className="bg-white p-2">
+          {Object.entries(SUBJECT_OPTIONS).map(([group, items], groupIndex) => (
+            <SelectGroup
+              key={group}
+              className={cn("space-y-1", groupIndex > 0 && "mt-2")}
+            >
+              <SelectLabel className="text-xs font-semibold uppercase tracking-wide text-gray-500">{group}</SelectLabel>
+              {items.map((item) => (
+                <SelectItem
+                  key={item}
+                  value={item}
+                  className="ml-4 w-fit hover:cursor-pointer"
+                >
+                  {item}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          ))}
+        </SelectContent>
+      </Select>
+
+      {selectedSubject && SUBSCRIPTION_SUBJECTS.has(selectedSubject) && (
+        <div className="flex gap-2 rounded-md bg-green-100 p-4 font-semibold text-green-600">
+          <span className="text-xl">💡</span>
+          <span>
+            Vous pouvez à tout moment modifier vos coordonnées, mettre à jour ou résilier votre abonnement via le ✨{" "}
+            <a
+              className="text-blue underline"
+              href={portalUrl}
+              target="_blank"
+            >
+              portail abonnés
+            </a>{" "}
+            ✨ en vous connectant avec l'adresse email renseignée lors de votre souscription.
+          </span>
+        </div>
+      )}
+    </>
   );
 }
