@@ -12,12 +12,12 @@ import Frustrarenard from "./assets/frustrarenard.avif";
 import Fist from "./assets/fist.svg";
 import { motion } from "framer-motion";
 
+import { SUBSCRIBERS_TARGET } from "@/constants";
+
 const currentDate = new Date();
 const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
 const firstDayOfCurrentMonth = getFirstDayOfTheMonth(currentDate);
 const firstDayOfPrevMonth = getFirstDayOfTheMonth(prevMonth);
-
-const SUBSCRIBERS_TARGET = 2000;
 
 // 🔒 Gestion d'erreur pour éviter qu'une erreur de DB ne casse la page
 let subscribersLastMonth: number | null = null;

@@ -1,0 +1,1 @@
+export const SUBSCRIBERS_TARGET = 2000;

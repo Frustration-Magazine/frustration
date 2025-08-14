@@ -14,6 +14,7 @@ import PageLayout from "@/layout/PageLayout/PageLayout.astro";
 import { SUBSCRIPTIONS } from "./_models";
 
 import { cn } from "@/lib/utils";
+import { SUBSCRIBERS_TARGET } from "@/constants";
 
 const { mini, maxi, medium } = SUBSCRIPTIONS;
 const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
@@ -43,9 +44,10 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
       <p>
         Toutefois pour sortir d’un modèle encore très artisanal, très fragile et précaire, qui n’est pas viable sur le
         moyen terme, notamment du fait de l’augmentation très importante de notre lectorat en peu de temps, nous avons
-        besoin de vous. Nous lançons donc cette campagne <b>pour atteindre 1 500 abonné.e.s</b>, c’est-à-dire 1 500
-        personnes qui, en donnant chaque mois 5, 9 ou 15€ permettent à tout le monde l’accès à un média 100% gratuit et
-        sans publicité, libre de ses convictions et de son ton.
+        besoin de vous. Nous lançons donc cette campagne <b>pour atteindre {SUBSCRIBERS_TARGET} abonné.e.s</b>,
+        c’est-à-dire {SUBSCRIBERS_TARGET}
+        personnes qui, en donnant chaque mois 5, 9 ou 15€ permettent à tout le monde l’accès à un média 100% gratuit et sans
+        publicité, libre de ses convictions et de son ton.
       </p>
 
       <p>Voici plus précisément à quoi sera consacré ce budget :</p>
@@ -68,7 +70,9 @@ const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
       </ul>
       <p>
         Avec votre aide, vos relais, vos mots de soutiens, vos messages sur les réseaux sociaux, nous espérons atteindre
-        cet objectif : <b>1 500 abonnés pour permettre à Frustration de continuer et d’aller plus loin !</b>
+        cet objectif : <b
+          >{SUBSCRIBERS_TARGET} abonnés pour permettre à Frustration de continuer et d’aller plus loin !</b
+        >
       </p>
     </article>
 
