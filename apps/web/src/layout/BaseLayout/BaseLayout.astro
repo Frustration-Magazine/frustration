@@ -17,13 +17,13 @@ import "@fontsource/parisienne";
 import "@fontsource/roboto";
 
 import "../../styles/global.css";
+import { SITE_URL } from "@/constants";
 
-const DEFAULT_IMAGE = "/img/default.png";
+const DEFAULT_IMAGE_URL = `${SITE_URL}img/og/default.webp`;
 const DEFAULT_DESCRIPTION = "Frustration Magazine, média indépendant et offensif qui relate la guerre des classes.";
 
-const { title, description = DEFAULT_DESCRIPTION, author, coverImage } = Astro.props;
+const { title, description = DEFAULT_DESCRIPTION, author, ogImageUrl } = Astro.props;
 const featuredImage = Astro.props?.featuredImage?.node;
-const ogImage = featuredImage?.sourceUrl ?? coverImage ?? DEFAULT_IMAGE;
 
 let width: number | undefined;
 let height: number | undefined;
@@ -45,7 +45,7 @@ if (featuredImage?.mediaDetails) {
     title={title}
     author={author}
     description={description}
-    ogImageUrl={ogImage}
+    ogImageUrl={featuredImage?.sourceUrl ?? ogImageUrl ?? DEFAULT_IMAGE_URL}
     {...width ? { width } : null}
     {...height ? { height } : null}
     {...mimeType ? { mimeType } : null}

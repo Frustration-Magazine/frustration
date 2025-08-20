@@ -1,4 +1,5 @@
 ---
+import PageLayout from "@/layout/PageLayout/PageLayout.astro";
 import SubscriptionCard from "./_components/SubscriptionCard.astro";
 import SubscriptionFormWrapper from "./_components/SubscriptionFormWrapper";
 import DonationFormWrapper from "./_components/DonationFormWrapper";
@@ -9,20 +10,18 @@ import Tipeee from "./_assets/tipeee.webp";
 import ParasitesCover from "./_assets/parasites.webp";
 import Numero2025 from "./_assets/numero_2025.webp";
 
-import PageLayout from "@/layout/PageLayout/PageLayout.astro";
-
 import { SUBSCRIPTIONS } from "./_models";
 
 import { cn } from "@/lib/utils";
-import { SUBSCRIBERS_TARGET } from "@/constants";
+import { OG_IMAGES_URL, SUBSCRIBERS_TARGET } from "@/constants";
 
 const { mini, maxi, medium } = SUBSCRIPTIONS;
-const coverImage = "https://frustrationmagazine.fr/covers/numero_2025.webp";
+const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
 ---
 
 <PageLayout
   title="S'abonner à Frustration Magazine"
-  coverImage={coverImage}
+  ogImageUrl={ogImageUrl}
 >
   <article slot="content">
     <!-- 🅰️ Titles -->

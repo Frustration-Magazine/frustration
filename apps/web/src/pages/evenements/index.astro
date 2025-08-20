@@ -7,8 +7,11 @@ import { readRecords } from "data-access/prisma";
 import { type Event } from "./_models";
 import VousNeDetestez from "./_assets/vous_ne_detestez_pas_le_lundi_compressed.webp";
 import { Image } from "astro:assets";
+import { OG_IMAGES_URL } from "@/constants";
 
 export const prerender = false;
+
+const ogImageUrl = `${OG_IMAGES_URL}evenements.webp`;
 
 const TITLE = "Évenements";
 const DESCRIPTION = "Liste des événements à venir autour de Frustration Magazine et Nicolas Framont";
@@ -21,20 +24,19 @@ const { data: events }: { data: Event[] } = await readRecords({
 });
 
 const displayedEvents = events.filter(({ date, displayEvent }) => displayEvent && date >= new Date());
-
-const thereAreEvents = displayedEvents.length > 0;
 ---
 
 <PageLayout
   title={TITLE}
   description={DESCRIPTION}
+  ogImageUrl={ogImageUrl}
 >
   <article slot="content">
     <H2>Frustra'tour</H2>
     <H3 className="text-center">Venez rencontrer l'équipe de Frustration Magazine lors de nos événements publics !</H3>
     <section class="relative mt-12 space-y-16">
       {
-        thereAreEvents ? (
+        displayedEvents.length ? (
           <>
             {displayedEvents.map((event, index) => (
               <div class="relative z-10">

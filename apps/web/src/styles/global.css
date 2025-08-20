@@ -337,8 +337,9 @@
 
   --breakpoint-xs: 425px;
 
-  --background-image-home-first-section: url("/textures/home-stone-texture.png"), linear-gradient(#fff200, #fff200);
-  --background-image-yellow-with-tiles: url("/textures/footer-spades-texture.png"), linear-gradient(#fff200, #fff200);
+  --background-image-home-first-section: url("/img/textures/home-stone-texture.png"), linear-gradient(#fff200, #fff200);
+  --background-image-yellow-with-tiles:
+    url("/img/textures/footer-spades-texture.png"), linear-gradient(#fff200, #fff200);
   --background-image-spades-separation: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 800 400" x="0px" y="0px" fill="black"><polygon points="400,400 800,33.299 0,33.299 "></polygon></svg>');
   --background-image-gradient-conic: conic-gradient(var(--conic-position, from 45deg), var(--tw-gradient-stops));
 

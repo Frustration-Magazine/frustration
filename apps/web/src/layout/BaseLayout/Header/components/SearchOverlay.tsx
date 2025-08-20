@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5";

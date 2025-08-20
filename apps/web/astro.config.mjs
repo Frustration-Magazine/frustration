@@ -4,6 +4,7 @@ import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import { SITE_URL } from "./src/constants";
 
 const { BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
@@ -11,7 +12,7 @@ const { BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN } = loadEnv(process.env.NODE_EN
 // https://astro.build/config
 export default defineConfig({
   output: "static",
-  site: "https://frustrationmagazine.fr/",
+  site: SITE_URL,
 
   prefetch: true,
 

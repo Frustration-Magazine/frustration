@@ -1,5 +1,3 @@
-"use client";
-
 import MailButton from "./MailButton";
 import AgendaButton from "./AgendaButton";
 import React from "react";
@@ -12,9 +10,10 @@ const CATEGORIES_TO_FILTER_OUT = ["chronique-de-nos-coeurs-mouvementes", "social
 
 type Props = {
   readonly categories: any[];
+  readonly portalUrl: string;
 };
 
-function CategoriesOverlay({ categories }: Props) {
+function CategoriesOverlay({ categories, portalUrl }: Props) {
   const [opened, setOpened] = React.useState(false);
   const standaloneCategories = categories.filter(
     (category) => !category.parent && category.children.nodes.length === 0,
@@ -51,7 +50,7 @@ function CategoriesOverlay({ categories }: Props) {
       onClick={() => setOpened(false)}
       aria-label="Fermer"
     >
-      <IoCloseSharp size="clamp(40px, 5vw, 72px)" />
+      <IoCloseSharp size="clamp(40px, 4vw, 64px)" />
     </button>
   );
 
@@ -65,13 +64,9 @@ function CategoriesOverlay({ categories }: Props) {
         )}
       >
         {CloseButton}
-        <div className={cn("fixed bottom-5 right-5 hidden gap-4", opened && "flex")}>
-          <AgendaButton className={cn(opened && "opacity-100")} />
-          <MailButton className={cn(opened && "opacity-100")} />
-        </div>
         <ul
           className={cn(
-            "scrollbar-track-yellow scrollbar-thumb-yellow font-bakbak scrollbar flex h-full flex-col overflow-y-scroll py-[15dvh] text-center uppercase",
+            "scrollbar-track-yellow scrollbar-thumb-yellow font-bakbak scrollbar flex h-full flex-col overflow-y-scroll py-[10dvh] text-center uppercase",
             "gap-2 text-xl",
             "sm:gap-3 sm:text-2xl",
             "md:gap-3 md:text-3xl",
@@ -102,6 +97,9 @@ function CategoriesOverlay({ categories }: Props) {
               {category.name}
             </a>
           ))}
+          <a href="/evenements">Évènements</a>
+          <a href="/contact">Contact</a>
+          <a href={portalUrl}>Portail abonnés</a>
           <a
             className="mb-1"
             href={`/auteurs`}
@@ -109,6 +107,10 @@ function CategoriesOverlay({ categories }: Props) {
             Qui sommes-nous ?
           </a>
         </ul>
+        <div className={cn("fixed bottom-5 right-5 hidden gap-4", opened && "flex")}>
+          <AgendaButton className={cn(opened && "opacity-100")} />
+          <MailButton className={cn(opened && "opacity-100")} />
+        </div>
       </div>
     </>
   );

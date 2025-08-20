@@ -15,8 +15,8 @@ const categories = await fetchCategories();
 <header
   class={cn(
     "flex justify-between bg-black text-primary sticky top-0 z-20 @container",
-    "p-1.5",
-    "xs:p-2",
+    "p-2",
+    "xs:p-2.5",
     "lg:px-4 lg:py-3",
   )}
 >
@@ -24,7 +24,7 @@ const categories = await fetchCategories();
     aria-label="Page d'accueil"
     title="Page d'accueil"
     href="/"
-    class={cn("w-32", "xs:w-36", "lg:w-48")}
+    class={cn("my-auto", "w-32", "xs:w-36", "lg:w-48")}
   >
     <Image
       src={frustrationLogo}
@@ -36,6 +36,7 @@ const categories = await fetchCategories();
     <SearchOverlay client:load />
     <CategoriesOverlay
       categories={categories}
+      portalUrl={import.meta.env.STRIPE_PORTAL_CLIENT}
       client:load
     />
   </div>

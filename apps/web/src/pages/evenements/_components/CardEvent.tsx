@@ -27,15 +27,7 @@ const formatDate = (date: Date, displayHour: boolean, timezone: string = "Europe
 };
 
 const BookCoverBackground = ({ bookImage }: { bookImage: any }) => (
-  <div
-    className={cn(
-      "absolute right-0 h-full",
-      "scale-1 rotate-[15deg] opacity-10",
-      "sm:rotate-[25deg] sm:scale-[1.3] sm:opacity-20",
-    )}
-  >
-    {bookImage}
-  </div>
+  <div className={cn("absolute right-0 h-full", "rotate-[15deg] opacity-15", "sm:opacity-25")}>{bookImage}</div>
 );
 
 const LeftBorderColored = () => <div className="absolute h-full w-1 bg-[#FCCF00]" />;
