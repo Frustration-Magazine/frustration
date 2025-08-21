@@ -64,7 +64,7 @@ export const FILE_HEADERS: FileHeader[] = [
 /*       UI        */
 /* =============== */
 
-export default function ({
+export const DownloadButton = ({
   customers,
   rangeDate,
 }: {
@@ -73,7 +73,7 @@ export default function ({
     from: Date;
     to: Date;
   };
-}) {
+}) => {
   const handleDownloadCustomersList = () => {
     const headers = customers.length ? Object.keys(customers[0]) : [];
     const CSVinURL = createCSVinURL(headers, customers);
@@ -92,4 +92,4 @@ export default function ({
       <span> Télécharger </span>
     </Button>
   );
-}
+};

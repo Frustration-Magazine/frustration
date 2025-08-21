@@ -52,7 +52,8 @@ export const DatePickerWithRange: any = ({ className, date, setDate, footer }: a
           />
         </PopoverContent>
       </Popover>
-      <span className="text-accent-foreground text-center text-sm">{footer}</span>
+
+      {footer && <span className="text-accent-foreground text-center text-sm">{footer}</span>}
     </div>
   );
 };

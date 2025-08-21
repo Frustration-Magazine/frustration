@@ -127,7 +127,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
 /*       UI        */
 /* =============== */
 
-export default function ({ customers }: { customers: Customer[] }) {
+export const CustomersTable = ({ customers }: { customers: Customer[] }) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const filteredCustomers = customers;
   const table = useReactTable<Customer>({
@@ -141,7 +141,10 @@ export default function ({ customers }: { customers: Customer[] }) {
     },
   });
   // ❌ Early return if no customers loaded
-  if (customers.length === 0) return <p>Aucun nouvel abonné sur cette période 😭</p>;
+  if (customers.length === 0)
+    return (
+      <h3 className="mx-auto mt-5 w-1/2 max-w-[700px] text-center text-xl">😔 Aucun nouvel abonné sur cette période</h3>
+    );
 
   return (
     <div className="max-h-full self-stretch overflow-auto rounded-md bg-white px-6 py-2 shadow-lg">
@@ -177,4 +180,4 @@ export default function ({ customers }: { customers: Customer[] }) {
       </Table>
     </div>
   );
-}
+};
