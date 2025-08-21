@@ -15,7 +15,7 @@ function SearchOverlay() {
     setSearch("");
   };
 
-  const OpenButton = (
+  const OpenButton = () => (
     <button
       type="button"
       title="Recherche"
@@ -27,7 +27,7 @@ function SearchOverlay() {
     </button>
   );
 
-  const CloseButton = (
+  const CloseButton = () => (
     <button
       type="button"
       title="Fermer"
@@ -42,7 +42,7 @@ function SearchOverlay() {
     </button>
   );
 
-  const SearchInput = (
+  const SearchInput = () => (
     <input
       type="text"
       onChange={(e) => setSearch(e.target.value)}
@@ -56,7 +56,7 @@ function SearchOverlay() {
     />
   );
 
-  const SearchButton = (
+  const SearchButton = () => (
     <button
       className={cn(
         "bg-primary font-bakbak cursor-pointer rounded-full text-black transition-opacity duration-300 disabled:cursor-default disabled:opacity-20",
@@ -73,14 +73,14 @@ function SearchOverlay() {
 
   return (
     <>
-      {OpenButton}
+      <OpenButton />
       <div
         className={cn(
           "absolute left-0 top-0 h-0 w-screen overflow-hidden bg-black transition-all duration-1000",
           opened && "h-screen",
         )}
       >
-        {CloseButton}
+        <CloseButton />
         <form
           action={redirectPageResults}
           className={cn(
@@ -88,8 +88,8 @@ function SearchOverlay() {
             opened && "opacity-100",
           )}
         >
-          {SearchInput}
-          {SearchButton}
+          <SearchInput />
+          <SearchButton />
         </form>
         <div className={cn("fixed bottom-5 right-5 hidden gap-4", opened && "flex")}>
           <AgendaButton className={cn(opened && "opacity-100")} />

@@ -27,19 +27,19 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
 
   const categoriesWithChildren = categories.filter((category) => category.children.nodes.length > 0);
 
-  const OpenButton = (
+  const OpenButton = () => (
     <button
       type="button"
-      title="Recherche"
+      title="Menu"
       className={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
       onClick={() => setOpened(true)}
-      aria-label="Recherche"
+      aria-label="Menu"
     >
       <HiOutlineMenuAlt3 size="100%" />
     </button>
   );
 
-  const CloseButton = (
+  const CloseButton = () => (
     <button
       type="button"
       title="Fermer"
@@ -56,14 +56,14 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
 
   return (
     <>
-      {OpenButton}
+      <OpenButton />
       <div
         className={cn(
           "absolute left-0 top-0 grid h-0 w-screen items-center overflow-hidden bg-black transition-all duration-1000",
           opened && "h-screen",
         )}
       >
-        {CloseButton}
+        <CloseButton />
         <ul
           className={cn(
             "scrollbar-track-yellow scrollbar-thumb-yellow font-bakbak scrollbar flex h-full flex-col overflow-y-scroll py-[10dvh] text-center uppercase",
