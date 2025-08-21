@@ -1,3 +1,4 @@
+import { JSON_HEADERS } from "@/constants";
 import { type APIRoute } from "astro";
 import { addSubscriber } from "data-access/mail";
 
@@ -22,9 +23,7 @@ export const POST: APIRoute = async ({ request }: { request: any }) => {
         if (!success) {
           return new Response(JSON.stringify({ error: message }), {
             status: 500,
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: JSON_HEADERS,
           });
         }
       }

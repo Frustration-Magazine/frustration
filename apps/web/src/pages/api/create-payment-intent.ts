@@ -1,3 +1,4 @@
+import { JSON_HEADERS } from "@/constants";
 import type { APIRoute } from "astro";
 import { stripe } from "data-access/stripe";
 
@@ -14,9 +15,7 @@ export const POST: APIRoute = async ({ request }: { request: any }) => {
     console.error("Error creating payment intent:", error);
     return new Response(JSON.stringify({ error: "Failed to create payment intent" }), {
       status: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: JSON_HEADERS,
     });
   }
 
@@ -24,9 +23,7 @@ export const POST: APIRoute = async ({ request }: { request: any }) => {
   if (paymentIntent) {
     return new Response(JSON.stringify({ paymentIntent }), {
       status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: JSON_HEADERS,
     });
   }
 

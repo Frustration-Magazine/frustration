@@ -12,6 +12,9 @@ import { type StripePaymentElementOptions } from "@stripe/stripe-js";
 import { cn } from "@/lib/utils";
 import LoaderCircle from "@/components/loaders/loader-circle";
 import { RainbowButton } from "./RainbowButton";
+import { JSON_HEADERS, SITE_URL, LOCAL_SITE_URL, API_ENDPOINTS } from "@/constants";
+
+const { MODE, PUBLIC_STRIPE_PRODUCT_SUBSCRIPTION } = import.meta.env;
 
 // 💰 Stripe
 const paymentElementOptions: StripePaymentElementOptions = {
@@ -19,18 +22,12 @@ const paymentElementOptions: StripePaymentElementOptions = {
   paymentMethodOrder: ["card", "sepa_debit", "paypal"],
 };
 
-const { MODE, SITE, PUBLIC_STRIPE_PRODUCT_SUBSCRIPTION } = import.meta.env;
-
 // 🔄 Redirection
 
 const CAMPAIGN_TAG = "regular";
 
 const SUCCESS_PAGE = "paiement-termine";
-const REDIRECT_URL_BASE = MODE === "production" ? `${SITE}/${SUCCESS_PAGE}` : `http://localhost:4321/${SUCCESS_PAGE}`;
-
-const CREATE_CUSTOMER_ENDPOINT = "/api/create-customer";
-const UPDATE_PAYMENT_INTENT_ENDPOINT = "/api/update-payment-intent";
-const CREATE_SUBSCRIPTION_ENDPOINT = "/api/create-subscription";
+const REDIRECT_URL_BASE = MODE === "production" ? `${SITE_URL}${SUCCESS_PAGE}` : `${LOCAL_SITE_URL}${SUCCESS_PAGE}`;
 
 // ============== //
 //      UI 🚀     //
@@ -92,9 +89,9 @@ export default function StripeForm({ amount = 900, hasGifts = true }: Props) {
 
     // 1️⃣ Create customer
     if (email) {
-      const resCustomerCreation = await fetch(CREATE_CUSTOMER_ENDPOINT, {
+      const resCustomerCreation = await fetch(API_ENDPOINTS.createCustomer, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: JSON_HEADERS,
         body: JSON.stringify({
           ...(name ? { name } : {}),
           ...(address ? { address } : {}),
@@ -110,9 +107,9 @@ export default function StripeForm({ amount = 900, hasGifts = true }: Props) {
     // 2️⃣ Subscription
     let subscription;
     if (customer) {
-      const resSubscriptionCreation = await fetch(CREATE_SUBSCRIPTION_ENDPOINT, {
+      const resSubscriptionCreation = await fetch(API_ENDPOINTS.createSubscription, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: JSON_HEADERS,
         body: JSON.stringify({
           customerId: customer.id,
           customerAddress: customer.address,
@@ -129,9 +126,9 @@ export default function StripeForm({ amount = 900, hasGifts = true }: Props) {
       if (resSubscriptionCreation?.subscription) {
         subscription = resSubscriptionCreation.subscription;
         const paymentIntentForSubscription = subscription?.latest_invoice?.payment_intent;
-        const resUpdatedPaymentIntent = await fetch(UPDATE_PAYMENT_INTENT_ENDPOINT, {
+        const resUpdatedPaymentIntent = await fetch(API_ENDPOINTS.updatePaymentIntent, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: JSON_HEADERS,
           body: JSON.stringify({
             paymentIntentId: paymentIntentForSubscription.id,
             paymentIntentUpdatedInformations: {

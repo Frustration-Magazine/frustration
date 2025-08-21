@@ -1,3 +1,4 @@
+import { JSON_HEADERS } from "@/constants";
 import type { APIRoute } from "astro";
 import { stripe } from "data-access/stripe";
 import { generateResponseError } from "utils";
@@ -71,9 +72,7 @@ export const POST: APIRoute = async ({ request }: { request: any }) => {
     // 2️⃣ Return subscription if successful
     return new Response(JSON.stringify({ subscription }), {
       status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: JSON_HEADERS,
     });
   } catch (error) {
     console.error("Error creating subscription:", error);

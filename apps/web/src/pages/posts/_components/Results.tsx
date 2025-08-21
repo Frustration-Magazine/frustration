@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { JSON_HEADERS } from "@/constants";
 import { cn } from "@/lib/utils";
 import { getSearchPostsQuery } from "@/lib/wordpress";
 import { TagIcon } from "lucide-react";
@@ -74,7 +75,7 @@ function Results({ term, categorySlug, author, initialPosts, initialPageInfo }: 
     try {
       const res = await fetch(PUBLIC_WORDPRESS_GRAPHQL_API, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: JSON_HEADERS,
         body: JSON.stringify({ query }),
       });
       const json = await res.json();

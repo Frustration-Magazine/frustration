@@ -13,6 +13,9 @@ import { cn } from "@/lib/utils";
 import LoaderCircle from "@/components/loaders/loader-circle";
 import { RainbowButton } from "./RainbowButton";
 import { Slider } from "@/components/ui/slider";
+import { JSON_HEADERS, SITE_URL, LOCAL_SITE_URL, API_ENDPOINTS } from "@/constants";
+
+const { MODE } = import.meta.env;
 
 // 💰 Stripe
 const paymentElementOptions: StripePaymentElementOptions = {
@@ -21,17 +24,12 @@ const paymentElementOptions: StripePaymentElementOptions = {
   paymentMethodOrder: ["card", "paypal"],
 };
 
-const { MODE, SITE } = import.meta.env;
-
 // 🔄 Redirection
 
 const CAMPAIGN_TAG = "regular";
 
 const SUCCESS_PAGE = "paiement-termine";
-const REDIRECT_URL_BASE = MODE === "production" ? `${SITE}/${SUCCESS_PAGE}` : `http://localhost:4321/${SUCCESS_PAGE}`;
-
-const CREATE_CUSTOMER_ENDPOINT = "/api/create-customer";
-const CREATE_PAYMENT_INTENT_ENDPOINT = "/api/create-payment-intent";
+const REDIRECT_URL_BASE = MODE === "production" ? `${SITE_URL}${SUCCESS_PAGE}` : `${LOCAL_SITE_URL}${SUCCESS_PAGE}`;
 
 // ============== //
 //      UI 🚀     //
@@ -76,9 +74,9 @@ export default function StripeForm() {
 
     // 1️⃣ Customer
     if (email) {
-      const resCustomerCreation = await fetch(CREATE_CUSTOMER_ENDPOINT, {
+      const resCustomerCreation = await fetch(API_ENDPOINTS.createCustomer, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: JSON_HEADERS,
         body: JSON.stringify({
           email,
           metadata: {
@@ -93,9 +91,9 @@ export default function StripeForm() {
     // 2️⃣ Payment intent
     let paymentIntent;
     if (customer) {
-      const resPaymentIntentCreation = await fetch(CREATE_PAYMENT_INTENT_ENDPOINT, {
+      const resPaymentIntentCreation = await fetch(API_ENDPOINTS.createPaymentIntent, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: JSON_HEADERS,
         body: JSON.stringify({
           customer: customer.id,
           amount: selectedAmount,
