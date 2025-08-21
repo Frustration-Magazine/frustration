@@ -14,10 +14,10 @@ const formatDate = (date: Date, displayHour: boolean, timezone: string = "Europe
     timeZone: timezone,
     ...(displayHour
       ? {
-          hour: "numeric",
-          minute: "numeric",
-          hour12: false,
-        }
+        hour: "numeric",
+        minute: "numeric",
+        hour12: false,
+      }
       : null),
   };
 
@@ -27,7 +27,7 @@ const formatDate = (date: Date, displayHour: boolean, timezone: string = "Europe
 };
 
 const BookCoverBackground = ({ bookImage }: { bookImage: any }) => (
-  <div className={cn("absolute right-0 h-full", "rotate-[15deg] opacity-15", "sm:opacity-25")}>{bookImage}</div>
+  <div className={cn("absolute right-0 bottom-0 h-fit", "rotate-[15deg] opacity-15", "sm:opacity-25")}>{bookImage}</div>
 );
 
 const LeftBorderColored = () => <div className="absolute h-full w-1 bg-[#FCCF00]" />;
