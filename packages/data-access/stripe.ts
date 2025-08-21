@@ -143,7 +143,7 @@ interface StripePayment {
 /*    SUBSCRIPTIONS     */
 /* -------------------- */
 
-export async function fetchActiveSubscriptions(
+export async function fetchStripeActiveSubscriptions(
   { from, to } = {
     from: firstDayOfCurrentYear,
     to: now,

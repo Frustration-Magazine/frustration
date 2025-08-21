@@ -13,8 +13,8 @@ const NoData = (
 
 function Client() {
   const {
-    customers,
-    activeCustomers,
+    stripeNewCustomers,
+    allActiveCustomersCount,
 
     loadingCustomers,
 
@@ -34,12 +34,12 @@ function Client() {
       ) : (
         <div className="flex min-w-[1100px] max-w-[1600px] grow flex-col space-y-3">
           <TopBar
-            customers={customers}
-            activeCustomers={activeCustomers}
+            newCustomers={stripeNewCustomers}
+            activeCustomersCount={allActiveCustomersCount}
             rangeDate={rangeDate}
           />
           <div className="h-[1px] grow overflow-auto">
-            {customers.length === 0 ? NoData : <CustomersTable customers={customers} />}
+            {stripeNewCustomers.length === 0 ? NoData : <CustomersTable customers={stripeNewCustomers} />}
           </div>
         </div>
       )}

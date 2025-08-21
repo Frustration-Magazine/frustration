@@ -1,14 +1,14 @@
 "use server";
 
-import { Customer, fetchStripeNewCustomers } from "data-access/stripe";
+import { Customer, fetchStripeNewCustomers as fetchStripeNewCustomersFn } from "data-access/stripe";
 import { prisma } from "data-access/prisma";
 
-export async function fetchCustomers({ from, to }: { from: Date; to: Date }): Promise<Customer[]> {
-  const newSubscriptions = await fetchStripeNewCustomers({ from, to });
+export async function fetchStripeNewCustomers({ from, to }: { from: Date; to: Date }): Promise<Customer[]> {
+  const newSubscriptions = await fetchStripeNewCustomersFn({ from, to });
   return newSubscriptions;
 }
 
-export async function fetchActiveCustomers() {
+export async function fetchAllActiveCustomersCount() {
   const firstDayOfLastMonth = new Date();
   firstDayOfLastMonth.setMonth(firstDayOfLastMonth.getMonth() - 1);
   firstDayOfLastMonth.setDate(1);

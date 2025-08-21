@@ -1,14 +1,14 @@
 import { Customer } from "data-access/stripe";
 import { useEffect, useState } from "react";
-import { fetchActiveCustomers, fetchCustomers } from "../_actions";
+import { fetchAllActiveCustomersCount, fetchStripeNewCustomers } from "../_actions";
 
 const firstDayLastMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 const now = new Date();
 
 const useCustomers = () => {
   const [loadingCustomers, setLoadingCustomers] = useState(true);
-  const [customers, setCustomers] = useState<Customer[]>([]);
-  const [activeCustomers, setActiveCustomers] = useState<number | null>(0);
+  const [stripeNewCustomers, setStripeNewCustomers] = useState<Customer[]>([]);
+  const [allActiveCustomersCount, setAllActiveCustomersCount] = useState<number | null>(0);
 
   const [rangeDate, setRangeDate] = useState({
     from: firstDayLastMonth,
@@ -25,12 +25,12 @@ const useCustomers = () => {
         const nextDay = new Date(rangeDate.to);
         nextDay.setDate(nextDay.getDate() + 1);
 
-        const customers = await fetchCustomers({
+        const stripeNewCustomers = await fetchStripeNewCustomers({
           from: rangeDate.from,
           to: nextDay,
         });
 
-        setCustomers(customers);
+        setStripeNewCustomers(stripeNewCustomers);
         setLoadingCustomers(false);
       }
     })();
@@ -40,15 +40,15 @@ const useCustomers = () => {
   useEffect(() => {
     (async () => {
       setLoadingCustomers(true);
-      const activeCustomers = await fetchActiveCustomers();
-      setActiveCustomers(activeCustomers);
+      const allActiveCustomersCount = await fetchAllActiveCustomersCount();
+      setAllActiveCustomersCount(allActiveCustomersCount);
       setLoadingCustomers(false);
     })();
   }, []);
 
   return {
-    activeCustomers,
-    customers,
+    allActiveCustomersCount,
+    stripeNewCustomers,
     loadingCustomers,
     rangeDate,
     setRangeDate,
