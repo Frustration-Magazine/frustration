@@ -5,7 +5,7 @@ import { IoCloseSharp } from "react-icons/io5";
 
 import { cn } from "@/lib/utils";
 
-function SearchOverlay() {
+export const SearchOverlay = () => {
   const [search, setSearch] = useState("");
   const [opened, setOpened] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -95,6 +95,4 @@ function SearchOverlay() {
       </div>
     </>
   );
-}
-
-export default SearchOverlay;
+};

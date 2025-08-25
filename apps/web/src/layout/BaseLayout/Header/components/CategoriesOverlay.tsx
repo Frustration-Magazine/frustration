@@ -3,19 +3,19 @@ import React from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { Menu } from "lucide-react";
 
-import MailButton from "./MailButton";
-import AgendaButton from "./AgendaButton";
+// import MailButton from "./MailButton";
+// import AgendaButton from "./AgendaButton";
 
 import { cn } from "@/lib/utils";
 
-const CATEGORIES_TO_FILTER_OUT = ["chronique-de-nos-coeurs-mouvementes", "socialcast"];
+const CATEGORIES_TO_FILTER_OUT: string[] = [];
 
-type Props = {
+type CategoriesOverlayProps = {
   readonly categories: any[];
   readonly portalUrl: string;
 };
 
-function CategoriesOverlay({ categories, portalUrl }: Props) {
+export const CategoriesOverlay = ({ categories, portalUrl }: CategoriesOverlayProps) => {
   const [opened, setOpened] = React.useState(false);
   const standaloneCategories = categories.filter(
     (category) => !category.parent && category.children.nodes.length === 0,
@@ -27,7 +27,7 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
 
   sortedStandaloneCategories.sort((a, b) => b.count - a.count);
 
-  const categoriesWithChildren = categories.filter((category) => category.children.nodes.length > 0);
+  // const categoriesWithChildren = categories.filter((category) => category.children.nodes.length > 0);
 
   const OpenButton = () => (
     <button
@@ -68,13 +68,43 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
         <CloseButton />
         <ul
           className={cn(
-            "scrollbar-track-yellow scrollbar-thumb-yellow font-bakbak scrollbar flex h-full flex-col overflow-y-scroll py-[10dvh] text-center uppercase",
+            "scrollbar-track-yellow scrollbar-thumb-yellow font-bakbak scrollbar flex h-full flex-col overflow-y-scroll py-[6dvh] text-center uppercase",
             "gap-2 text-xl",
             "sm:gap-3 sm:text-2xl",
             "md:gap-3 md:text-3xl",
           )}
         >
-          {categoriesWithChildren.map((category) => (
+          <li>
+            <a href="/">Accueil</a>
+          </li>
+          <li>
+            <a href="/abonnements">S'abonner</a>
+          </li>
+          <li>
+            <a href="/evenements">Évènements</a>
+          </li>
+          <li>
+            <a href="/posts">Articles</a>
+          </li>
+
+          <li>
+            <details open>
+              <summary className="cursor-pointer">Catégories</summary>
+              <ul className="mx-auto mt-2 flex flex-col gap-1">
+                {sortedStandaloneCategories.map((category: any) => (
+                  <a
+                    style={{ fontSize: ".8em" }}
+                    key={category.slug}
+                    href={`/posts?category=${category.slug}`}
+                  >
+                    {category.name.replace(/^[^-]*-\s/, "")}
+                  </a>
+                ))}
+              </ul>
+            </details>
+          </li>
+
+          {/* {categoriesWithChildren.map((category) => (
             <details key={category.slug}>
               <summary className="mb-2 cursor-pointer">{category.name}</summary>
               <ul className="mx-auto flex flex-col gap-1">
@@ -99,22 +129,22 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
             >
               {category.name}
             </a>
-          ))}
+          ))} */}
 
-          <a href="/evenements">Évènements</a>
-          <a href="/contact">Contact</a>
-          <a
-            href={portalUrl}
-            target="_blank"
-          >
-            Portail abonnés
-          </a>
-          <a
-            className="mb-1"
-            href={`/auteurs`}
-          >
-            Qui sommes-nous ?
-          </a>
+          <li>
+            <a href="/contact">Contact</a>
+          </li>
+          <li>
+            <a
+              href={portalUrl}
+              target="_blank"
+            >
+              Portail abonnés
+            </a>
+          </li>
+          <li>
+            <a href={`/auteurs`}>Qui sommes-nous ?</a>
+          </li>
         </ul>
 
         {/* <div className={cn("fixed bottom-5 right-5 hidden gap-4", opened && "flex")}>
@@ -124,6 +154,4 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
       </div>
     </>
   );
-}
-
-export default CategoriesOverlay;
+};
