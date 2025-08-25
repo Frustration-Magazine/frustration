@@ -1,19 +1,26 @@
-import React from "react";
-import { FaMagnifyingGlass } from "react-icons/fa6";
+import { useState, useRef, useEffect } from "react";
+
+import { Search } from "lucide-react";
 import { IoCloseSharp } from "react-icons/io5";
-import AgendaButton from "./AgendaButton";
-import MailButton from "./MailButton";
 
 import { cn } from "@/lib/utils";
 
 function SearchOverlay() {
-  const [search, setSearch] = React.useState("");
-  const [opened, setOpened] = React.useState(false);
+  const [search, setSearch] = useState("");
+  const [opened, setOpened] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const redirectPageResults = () => {
     window.location.href = `/posts?term=${encodeURIComponent(search)}`;
     setSearch("");
   };
+
+  // Focus l'input quand l'overlay s'ouvre
+  useEffect(() => {
+    if (opened && inputRef.current) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [opened]);
 
   const OpenButton = () => (
     <button
@@ -23,7 +30,7 @@ function SearchOverlay() {
       onClick={() => setOpened(true)}
       aria-label="Rechercher sur le site de Frustration Magazine"
     >
-      <FaMagnifyingGlass size="100%" />
+      <Search size="100%" />
     </button>
   );
 
@@ -39,35 +46,6 @@ function SearchOverlay() {
       aria-label="Fermer la barre de recherche"
     >
       <IoCloseSharp size="clamp(40px, 5vw, 72px)" />
-    </button>
-  );
-
-  const SearchInput = () => (
-    <input
-      type="text"
-      onChange={(e) => setSearch(e.target.value)}
-      className={cn(
-        "border-primary w-[600px] max-w-[90vw] border-4 border-dashed bg-black px-4 py-2 font-bold",
-        "text-xl",
-        "md:text-2xl",
-        "xl:text-3xl",
-      )}
-      aria-label="Rechercher"
-    />
-  );
-
-  const SearchButton = () => (
-    <button
-      className={cn(
-        "bg-primary font-bakbak cursor-pointer rounded-full text-black transition-opacity duration-300 disabled:cursor-default disabled:opacity-20",
-        "px-4 py-1.5 text-xl",
-        "md:px-6 md:py-2 md:text-2xl",
-        "xl:px-6 xl:py-2 xl:text-3xl",
-      )}
-      type="submit"
-      disabled={!search}
-    >
-      Rechercher
     </button>
   );
 
@@ -88,13 +66,32 @@ function SearchOverlay() {
             opened && "opacity-100",
           )}
         >
-          <SearchInput />
-          <SearchButton />
+          <input
+            ref={inputRef}
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className={cn(
+              "border-primary w-[600px] max-w-[90vw] border-4 border-dashed bg-black px-4 py-2 font-bold",
+              "text-xl",
+              "md:text-2xl",
+              "xl:text-3xl",
+            )}
+            aria-label="Rechercher"
+          />
+          <button
+            className={cn(
+              "bg-primary font-bakbak cursor-pointer rounded-full text-black transition-opacity duration-300 disabled:cursor-default disabled:opacity-20",
+              "px-4 py-1.5 text-xl",
+              "md:px-6 md:py-2 md:text-2xl",
+              "xl:px-6 xl:py-2 xl:text-3xl",
+            )}
+            type="submit"
+            disabled={!search}
+          >
+            Rechercher
+          </button>
         </form>
-        <div className={cn("fixed bottom-5 right-5 hidden gap-4", opened && "flex")}>
-          <AgendaButton className={cn(opened && "opacity-100")} />
-          <MailButton className={cn(opened && "opacity-100")} />
-        </div>
       </div>
     </>
   );

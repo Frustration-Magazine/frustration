@@ -1,8 +1,10 @@
+import React from "react";
+
+import { IoCloseSharp } from "react-icons/io5";
+import { Menu } from "lucide-react";
+
 import MailButton from "./MailButton";
 import AgendaButton from "./AgendaButton";
-import React from "react";
-import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { IoCloseSharp } from "react-icons/io5";
 
 import { cn } from "@/lib/utils";
 
@@ -35,7 +37,7 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
       onClick={() => setOpened(true)}
       aria-label="Menu"
     >
-      <HiOutlineMenuAlt3 size="100%" />
+      <Menu size="100%" />
     </button>
   );
 
@@ -88,6 +90,7 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
               </ul>
             </details>
           ))}
+
           {sortedStandaloneCategories.map((category) => (
             <a
               className="mb-1"
@@ -97,9 +100,15 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
               {category.name}
             </a>
           ))}
+
           <a href="/evenements">Évènements</a>
           <a href="/contact">Contact</a>
-          <a href={portalUrl}>Portail abonnés</a>
+          <a
+            href={portalUrl}
+            target="_blank"
+          >
+            Portail abonnés
+          </a>
           <a
             className="mb-1"
             href={`/auteurs`}
@@ -107,10 +116,11 @@ function CategoriesOverlay({ categories, portalUrl }: Props) {
             Qui sommes-nous ?
           </a>
         </ul>
-        <div className={cn("fixed bottom-5 right-5 hidden gap-4", opened && "flex")}>
+
+        {/* <div className={cn("fixed bottom-5 right-5 hidden gap-4", opened && "flex")}>
           <AgendaButton className={cn(opened && "opacity-100")} />
           <MailButton className={cn(opened && "opacity-100")} />
-        </div>
+        </div> */}
       </div>
     </>
   );
