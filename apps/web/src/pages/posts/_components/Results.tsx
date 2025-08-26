@@ -1,18 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { JSON_HEADERS } from "@/constants";
-import { cn } from "@/lib/utils";
+import { cn, formatVideoTitle } from "@/lib/utils";
 import { getSearchPostsQuery } from "@/lib/wordpress";
-import { TagIcon } from "lucide-react";
-import { Fragment, useState } from "react";
-import { CgArrowTopRight } from "react-icons/cg";
-
-type Props = {
-  readonly term: string;
-  readonly categorySlug: string | null;
-  readonly author: string | null;
-  readonly initialPosts: any;
-  readonly initialPageInfo: any;
-};
+import { ArrowRight, TagIcon } from "lucide-react";
+import { useState } from "react";
 
 type Post = {
   readonly title: string;
@@ -33,6 +24,14 @@ type Post = {
   };
 };
 
+type ResultsProps = {
+  readonly term: string;
+  readonly categorySlug: string | null;
+  readonly author: string | null;
+  readonly initialPosts: any;
+  readonly initialPageInfo: any;
+};
+
 const { PUBLIC_WORDPRESS_GRAPHQL_API } = import.meta.env;
 
 const NoResults = (
@@ -51,11 +50,11 @@ const Excerpt = ({ children: excerpt }: { children: string }) => <p dangerouslyS
 const Read = () => (
   <Button className="font-bakbak ml-auto mt-auto flex items-center gap-1 rounded-none text-lg uppercase">
     <span>Lire</span>
-    <CgArrowTopRight size={20} />
+    <ArrowRight />
   </Button>
 );
 
-function Results({ term, categorySlug, author, initialPosts, initialPageInfo }: Props) {
+function Results({ term, categorySlug, author, initialPosts, initialPageInfo }: ResultsProps) {
   const [posts, setPosts] = useState(initialPosts);
   const [loadingPosts, setLoadingPosts] = useState(false);
   const [pageInfo, setPageInfo] = useState(initialPageInfo);
@@ -103,7 +102,7 @@ function Results({ term, categorySlug, author, initialPosts, initialPageInfo }: 
           key={slug}
           className="w-full space-y-4 border p-4 shadow-md md:p-6"
         >
-          <Title>{title}</Title>
+          <Title>{formatVideoTitle(title)}</Title>
           <div className="flex flex-col gap-4 md:flex-row md:gap-6">
             {featuredImage && (
               <img

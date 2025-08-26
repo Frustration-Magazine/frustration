@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { Newspaper } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatVideoTitle } from "@/lib/utils";
 const {
   title,
   slug,
@@ -26,7 +26,7 @@ const IMAGE_SIZE = 1200;
           "3xl:text-6xl",
         )}
       >
-        {title}
+        {formatVideoTitle(title)}
       </h3>
       <div
         class="[&>p]:bg-primary hidden xl:block [&>p]:inline [&>p]:text-balance [&>p]:text-center [&>p]:text-xl [&>p]:font-normal [&>p]:leading-snug [&>p]:text-black"
