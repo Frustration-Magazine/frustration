@@ -1,26 +1,30 @@
 import { useState, useRef, useEffect } from "react";
 
-import { Search } from "lucide-react";
-import { IoCloseSharp } from "react-icons/io5";
+import { Search, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { useModal } from "@/layout/BaseLayout/Header/hooks/useModal";
 
 export const SearchOverlay = () => {
   const [search, setSearch] = useState("");
   const [opened, setOpened] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const redirectPageResults = () => {
-    window.location.href = `/posts?term=${encodeURIComponent(search)}`;
-    setSearch("");
-  };
+  const { handleBackdropClick } = useModal(opened, () => setOpened(false));
 
   // Focus l'input quand l'overlay s'ouvre
   useEffect(() => {
     if (opened && inputRef.current) {
-      setTimeout(() => inputRef.current?.focus(), 100);
+      setTimeout(() => {
+        inputRef.current?.focus({ preventScroll: true });
+      }, 100);
     }
   }, [opened]);
+
+  const redirectPageResults = () => {
+    window.location.href = `/posts?term=${encodeURIComponent(search)}`;
+    setSearch("");
+  };
 
   const OpenButton = () => (
     <button
@@ -28,7 +32,7 @@ export const SearchOverlay = () => {
       title="Recherche"
       className={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
       onClick={() => setOpened(true)}
-      aria-label="Rechercher sur le site de Frustration Magazine"
+      aria-label="Rechercher un article"
     >
       <Search size="100%" />
     </button>
@@ -38,14 +42,11 @@ export const SearchOverlay = () => {
     <button
       type="button"
       title="Fermer"
-      className={cn(
-        "absolute right-5 top-5 cursor-pointer opacity-0 transition-opacity duration-1000",
-        opened && "opacity-100",
-      )}
+      className={cn("absolute right-4 top-2 cursor-pointer")}
       onClick={() => setOpened(false)}
       aria-label="Fermer la barre de recherche"
     >
-      <IoCloseSharp size="clamp(40px, 5vw, 72px)" />
+      <X size="clamp(40px, 4vw, 64px)" />
     </button>
   );
 
@@ -53,9 +54,13 @@ export const SearchOverlay = () => {
     <>
       <OpenButton />
       <div
+        onClick={handleBackdropClick}
         className={cn(
-          "absolute left-0 top-0 h-0 w-screen overflow-hidden bg-black transition-all duration-1000",
-          opened && "h-screen",
+          "absolute left-0 top-0 h-screen w-screen overflow-hidden",
+          "duration-400 transition-all",
+          "bg-black/80 backdrop-blur-xl",
+          "invisible opacity-0",
+          opened && "visible opacity-100",
         )}
       >
         <CloseButton />
@@ -72,7 +77,7 @@ export const SearchOverlay = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className={cn(
-              "border-primary w-[600px] max-w-[90vw] border-4 border-dashed bg-black px-4 py-2 font-bold",
+              "border-primary border-3 w-[600px] max-w-[90vw] rounded-2xl border-double bg-black/50 px-4 py-2 font-bold focus:outline-none",
               "text-xl",
               "md:text-2xl",
               "xl:text-3xl",
