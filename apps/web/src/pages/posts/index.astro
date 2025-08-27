@@ -1,8 +1,9 @@
 ---
 import H2 from "@/components/H2";
 import PageLayout from "@/layout/PageLayout/PageLayout.astro";
+import { Results } from "./_components/Results";
+
 import { fetchSearchPosts } from "@/lib/wordpress";
-import Results from "./_components/Results";
 
 const url = new URL(Astro.request.url);
 const searchParams = new URLSearchParams(url.searchParams);

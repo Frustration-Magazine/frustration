@@ -1,20 +1,17 @@
 ---
 import PageLayout from "../PageLayout/PageLayout.astro";
-import { cn } from "@/lib/utils";
-import { getEntry, getCollection } from "astro:content";
-
 import Title from "./components/Header/Title.astro";
 import Metadata from "./components/Header/Metadata.astro";
 import FeaturedImage from "./components/Header/FeaturedImage.astro";
-
-import "@/styles/wordpress.css";
-
 import CardAuthor from "./components/Footer/CardAuthor.astro";
 import Banner from "./components/Footer/Banner.astro";
-import PostSummary from "./components/PostSummary";
-
 import ScrollWatcher from "./components/ScrollWatcher.astro";
-import MoreArticles from "./components/Footer/MoreArticles";
+
+import { MoreArticles } from "./components/Footer/MoreArticles";
+import { PostSummary } from "./components/PostSummary";
+
+import "@/styles/wordpress.css";
+import { cn, formatVideoTitle } from "@/lib/utils";
 
 const {
   title,
@@ -32,7 +29,7 @@ const featuredImage = Astro.props?.featuredImage?.node;
     <!-- Header -->
     <div class="mb-[30px]">
       <Title>
-        <Fragment set:html={title} />
+        <Fragment set:html={formatVideoTitle(title)} />
       </Title>
       <Metadata
         author={author}

@@ -276,11 +276,9 @@ export async function fetchLinkPreview(link: string) {
       post(id: "${link}", idType: URI) {
         title(format: RENDERED)
         slug
-        featuredImage {
-          node {
-            title(format: RENDERED)
-            altText
-            sourceUrl
+        categories {
+          nodes {
+            name
           }
         }
         author {

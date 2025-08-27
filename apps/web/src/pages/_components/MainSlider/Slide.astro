@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { Newspaper } from "lucide-react";
 import { cn, formatVideoTitle } from "@/lib/utils";
+
 const {
   title,
   slug,
@@ -15,9 +16,10 @@ const IMAGE_SIZE = 1200;
 <li class="splide__slide relative">
   <a href={`/${slug}`}>
     <div class="font-bakbak absolute left-[50%] top-[50%] w-[90%] max-w-[1000px] translate-x-[-50%] translate-y-[-50%]">
+      <!-- Title -->
       <h3
         class={cn(
-          "mb-4 uppercase leading-1 text-balance bg-black px-10 py-4 text-center font-bakbak font-bold text-primary",
+          "rounded-t-sm uppercase leading-1 text-balance bg-black px-10 py-4 text-center font-bakbak font-bold text-primary",
           "text-2xl",
           "sm:text-3xl",
           "md:text-4xl",
@@ -28,17 +30,28 @@ const IMAGE_SIZE = 1200;
       >
         {formatVideoTitle(title)}
       </h3>
+
+      <!-- Excerpt -->
       <div
-        class="[&>p]:bg-primary hidden xl:block [&>p]:inline [&>p]:text-balance [&>p]:text-center [&>p]:text-xl [&>p]:font-normal [&>p]:leading-snug [&>p]:text-black"
+        class="bg-primary hidden rounded-b-sm px-4 py-2 shadow-lg shadow-black/50 xl:block [&>p]:inline [&>p]:text-balance [&>p]:text-center [&>p]:text-xl [&>p]:font-normal [&>p]:leading-snug [&>p]:text-black"
         set:html={excerpt}
       />
+
+      <!-- Read -->
       <div
-        class="bg-primary font-bakbak xl:text-primary m-auto mt-6 flex w-fit items-center gap-1 px-5 py-1 text-lg font-bold text-black md:gap-2 md:py-2 md:text-xl lg:px-6 lg:py-2 lg:text-2xl xl:gap-3 xl:bg-black"
+        class={cn(
+          "font-bakbak m-auto mt-4 flex w-fit items-center rounded-lg font-bold shadow-2xl shadow-black/80",
+          "bg-primary text-black px-5 py-1 gap-1 text-lg",
+          "md:gap-2 md:py-2 md:text-xl",
+          "lg:px-6 lg:py-2 lg:text-2xl",
+          "xl:text-primary xl:bg-black/90 xl:gap-3",
+        )}
       >
         <Newspaper size={20} />
         <span>Lire</span>
       </div>
     </div>
+
     <Image
       class="h-full w-full object-cover"
       src={featuredImage.sourceUrl}

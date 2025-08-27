@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { createIdAnchor } from "utils";
 import { cn } from "@/lib/utils";
 
-function PostSummary() {
+export const PostSummary = () => {
   const [titles, setTitles] = useState<string[]>([]);
   const summaryRef = useRef<HTMLDivElement>(null);
 
@@ -87,6 +87,4 @@ function PostSummary() {
       </ul>
     </div>
   );
-}
-
-export default PostSummary;
+};

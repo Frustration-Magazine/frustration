@@ -12,15 +12,11 @@ const {
   slug,
 } = Astro.props;
 
-// Categories
-let mainCategories = categories.map(({ name, parent, slug }: any) =>
-  parent ? { name: parent.node.name, slug } : { name, slug },
-);
-mainCategories = mainCategories.filter(
-  (obj: any, index: any, self: any) => index === self.findIndex((t: any) => t.name === obj.name),
-);
+const mainCategories = categories
+  .map(({ name, parent, slug }: any) => (parent ? { name: parent.node.name, slug } : { name, slug }))
+  .filter((obj: any, index: any, self: any) => index === self.findIndex((t: any) => t.name === obj.name));
 
-let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
+const DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
   day: "2-digit",
   month: "2-digit",
   year: "numeric",
@@ -34,10 +30,10 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
   <a
     href={`/${slug}`}
     data-card
-    class="flex h-full cursor-pointer flex-col bg-black"
+    class="flex h-full cursor-pointer flex-col rounded-sm bg-black"
   >
     <!-- 🖼️ Image -->
-    <div class="h-[300px] overflow-hidden">
+    <div class="h-[300px] overflow-hidden rounded-t-sm">
       <Image
         class="h-full w-full object-cover"
         title={featuredImage.title}
@@ -48,47 +44,50 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
         height="300"
       />
     </div>
+
     <!-- 🗒️ Content -->
-    <div class="grow p-4">
-      <header class="space-y-3">
-        <!-- Title -->
-        <h5 class="font-bakbak xs:text-3xl leading-none! text-primary text-pretty text-2xl uppercase xl:w-[70%]">
-          {formatVideoTitle(title)}
-        </h5>
-        <!-- Categories -->
-        <div class="flex flex-wrap gap-1">
-          {
-            mainCategories.map((category: any) => (
-              <span class={cn("bg-primary font-bakbak uppercase text-black", "px-2 pt-[1.5px] text-xs", "lg:text-sm")}>
-                {category.name}
-              </span>
-            ))
-          }
-        </div>
-        <!-- Author and date -->
-        <div class="xs:flex font-open-sans hidden items-center gap-1 text-xs text-white md:text-sm lg:text-base">
-          {
-            author ? (
-              <Fragment>
-                {author.avatar.url ? (
-                  <Image
-                    title={author.name}
-                    alt={author.name}
-                    width="100"
-                    height="100"
-                    src={author.avatar.url}
-                    class="mr-1 inline w-[15px] rounded-full"
-                  />
-                ) : null}
-                <span class="author">{author.name}</span>
-                <span>|</span>
-              </Fragment>
-            ) : null
-          }
-          <FcCalendar />
-          <date class="date">{DD_MM_YYYY}</date>
-        </div>
-      </header>
+    <div class="flex grow flex-col gap-3 p-4">
+      <!-- Title -->
+      <h5 class="font-bakbak xs:text-3xl leading-none! text-primary text-pretty text-2xl uppercase">
+        {formatVideoTitle(title)}
+      </h5>
+
+      <!-- Categories -->
+      <div class="mt-auto flex flex-wrap gap-1">
+        {
+          mainCategories.map((category: any) => (
+            <span class={cn("bg-primary font-bakbak uppercase text-black", "px-2 pt-[1.5px] text-xs", "lg:text-sm")}>
+              {category.name}
+            </span>
+          ))
+        }
+      </div>
+
+      <!-- Author and date -->
+      <div
+        class={cn("font-open-sans items-center gap-1 text-white", "hidden text-xs", "xs:flex md:text-sm lg:text-base")}
+      >
+        {
+          author ? (
+            <>
+              {author.avatar.url ? (
+                <Image
+                  title={author.name}
+                  alt={author.name}
+                  width="100"
+                  height="100"
+                  src={author.avatar.url}
+                  class="mr-1 inline w-[15px] rounded-full"
+                />
+              ) : null}
+              <span class="author">{author.name}</span>
+              <span>|</span>
+            </>
+          ) : null
+        }
+        <FcCalendar />
+        <date class="date">{DD_MM_YYYY}</date>
+      </div>
     </div>
 
     <!-- ✨ Overlay -->
@@ -103,6 +102,7 @@ let DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
     </div>
   </a>
 </post-card>
+
 <!-- 🤖 Script -->
 <script>
   class PostCard extends HTMLElement {
