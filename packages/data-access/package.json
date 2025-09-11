@@ -16,16 +16,16 @@
   "author": "Thibaut Izard <thibaut.izard@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@stripe/stripe-js": "^7.3.0",
-    "puppeteer": "^24.9.0",
-    "resend": "^4.5.1",
-    "stripe": "^18.1.1",
+    "@stripe/stripe-js": "^7.9.0",
+    "puppeteer": "^24.20.0",
+    "resend": "^4.8.0",
+    "stripe": "^18.5.0",
     "utils": "workspace:*"
   },
   "devDependencies": {
-    "@prisma/client": "^6.8.2",
-    "@types/node": "^22.15.21",
-    "prisma": "^6.8.2"
+    "@prisma/client": "^6.16.1",
+    "@types/node": "^22.18.1",
+    "prisma": "^6.16.1"
   },
   "exports": {
     "./prisma": "./prisma/client.ts",
