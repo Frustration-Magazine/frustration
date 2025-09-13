@@ -13,12 +13,12 @@ let DD_MM_YYYY = date
   : null;
 ---
 
-<div class={cn("text-sm gap-1 flex flex-col flex-wrap", "md:text-base md:flex-row md:justify-between")}>
+<div class={cn("flex flex-col flex-wrap gap-1 text-sm", "md:flex-row md:justify-between md:text-base")}>
   <a
     href={`/posts?author=${author.slug}`}
     class="flex items-center"
   >
-    <div class={cn("w-5 mr-2 grid place-items-center")}>
+    <div class={cn("mr-2 grid w-5 place-items-center")}>
       <Image
         title={author.name}
         alt={author.name}

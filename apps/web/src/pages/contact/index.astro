@@ -86,7 +86,7 @@ if (Astro.request.method === "POST") {
     <!-- 🅰️ Titles -->
     <h2
       class={cn(
-        "text-balance text-center font-parisienne font-bold",
+        "font-parisienne text-balance text-center font-bold",
         "mb-6 text-4xl",
         "sm:mb-6 sm:text-5xl",
         "md:zs-8 md:mb-8 md:text-5xl",
@@ -95,12 +95,12 @@ if (Astro.request.method === "POST") {
     >
       Chère Frustration,
     </h2>
-    <div class={cn("font-open-sans space-y-3 text-center", "text-base space-y-1", "sm:text-xl sm:space-y-2")}>
+    <div class={cn("font-open-sans space-y-3 text-center", "space-y-1 text-base", "sm:space-y-2 sm:text-xl")}>
       <p>Une réaction à chaud ?</p>
       <p>Une question qui vous turlupine ?</p>
       <p>Une idée d'article ou d'enquête ?</p>
     </div>
-    <p class={cn("font-bold font-open-sans my-10 text-center", "text-2xl", "sm:text-3xl")}>
+    <p class={cn("font-open-sans my-10 text-center font-bold", "text-2xl", "sm:text-3xl")}>
       N'hésitez pas à nous écrire !
     </p>
     <form
@@ -108,7 +108,10 @@ if (Astro.request.method === "POST") {
       method="POST"
       class="font-open-sans flex flex-col gap-4"
     >
-      <ContactSubjectSelect portalUrl={import.meta.env.STRIPE_PORTAL_CLIENT} client:load />
+      <ContactSubjectSelect
+        portalUrl={import.meta.env.STRIPE_PORTAL_CLIENT}
+        client:load
+      />
       <Input
         type="email"
         placeholder="Votre email de contact"

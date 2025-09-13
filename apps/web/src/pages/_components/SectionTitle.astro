@@ -5,14 +5,14 @@ const { position = "left" } = Astro.props;
 
 <h2
   class={cn(
-    /* container */ "relative px-16 mb-8 w-fit select-none bg-black mix-blend-darken",
-    /* text      */ "font-bebas tracking-tighter text-white text-6xl sm:text-7xl md:text-8xl xl:text-9xl",
+    /* container */ "relative mb-8 w-fit select-none bg-black px-16 mix-blend-darken",
+    /* text      */ "font-bebas text-6xl tracking-tighter text-white sm:text-7xl md:text-8xl xl:text-9xl",
     /* sizes     */ "pb-1 pt-4 md:mb-10 md:pr-16 lg:mb-12 lg:pt-8 xl:mb-24",
     /* before    */ "before:absolute before:top-0 before:h-full before:w-screen before:bg-black before:content-['']",
 
     /* position  */
-    position === "left" && { "before:translate-x-[-100%] ml-2": true },
-    position === "right" && { "before:translate-x-[100%] before:right-0 ml-auto": true },
+    position === "left" && { "ml-2 before:translate-x-[-100%]": true },
+    position === "right" && { "ml-auto before:right-0 before:translate-x-[100%]": true },
   )}
 >
   <slot />

@@ -6,11 +6,11 @@ import H5 from "./H5.astro";
 
 <div>
   <H5>
-    Nous suivre <span class={cn("hidden", "xs:inline-block font-open-sans text-sm ml-0.5")}
+    Nous suivre <span class={cn("hidden", "xs:inline-block font-open-sans ml-0.5 text-sm")}
       >(jusqu'à la révolution)</span
     >
   </H5>
-  <p class={cn("mb-4 font-open-sans leading-tight", "text-sm text-center", "sm:text-base sm:text-left")}>
+  <p class={cn("font-open-sans mb-4 leading-tight", "text-center text-sm", "sm:text-left sm:text-base")}>
     Recevez régulièrement une sélection de nos derniers articles !
   </p>
   <form
@@ -29,7 +29,7 @@ import H5 from "./H5.astro";
     <button
       type="submit"
       class={cn(
-        "bg-black py-2 font-open-sans justify-center font-bold text-primary flex items-center gap-2",
+        "font-open-sans text-primary flex items-center justify-center gap-2 bg-black py-2 font-bold",
         "text-base",
         "md:text-lg",
       )}

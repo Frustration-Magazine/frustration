@@ -6,15 +6,15 @@ import H5 from "./H5.astro";
 
 <div class="col-span-full text-center sm:text-left">
   <H5> Nous contacter </H5>
-  <p class={cn("text-sm mb-2 w-full mt-2 max-w-[400px] font-open-sans", "mx-auto", "sm:mx-0")}>
+  <p class={cn("font-open-sans mb-2 mt-2 w-full max-w-[400px] text-sm", "mx-auto", "sm:mx-0")}>
     Une question à nous poser ? Une information à nous communiquer ? Un article à nous proposer ?
   </p>
   <a
     href="/contact"
     class={cn(
-      "w-full font-open-sans leading-tight underline flex gap-2 font-bold items-center",
-      "text-sm justify-center",
-      "sm:text-base sm:justify-start",
+      "font-open-sans flex w-full items-center gap-2 font-bold leading-tight underline",
+      "justify-center text-sm",
+      "sm:justify-start sm:text-base",
     )}
   >
     <SendHorizontal size={16} />

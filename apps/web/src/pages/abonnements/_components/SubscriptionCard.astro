@@ -7,7 +7,7 @@ import GradientButton from "./GradientButton";
 const { id, title, subtitle, numberOfGifts, price, colorsRange, additionalClass, gradient } = Astro.props;
 ---
 
-<aside class={cn("flex flex-col items-center shadow-xl pb-6 w-[450px] max-w-full mx-auto", additionalClass)}>
+<aside class={cn("mx-auto flex w-[450px] max-w-full flex-col items-center pb-6 shadow-xl", additionalClass)}>
   <header class=`w-full relative text-white text-center px-4 py-4`>
     <AnimatedGradient
       client:load

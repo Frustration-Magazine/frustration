@@ -26,12 +26,12 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
   <article slot="content">
     <!-- 🅰️ Titles -->
     <H2> Frustration a besoin de vous ! </H2>
-    <h3 class={cn("text-pretty text-center font-light uppercase font-bakbak -mt-6", "text-2xl", "lg:text-4xl")}>
+    <h3 class={cn("font-bakbak -mt-6 text-pretty text-center font-light uppercase", "text-2xl", "lg:text-4xl")}>
       Faites-nous grandir d'un coup 🌱
     </h3>
     <!-- 🔠 Text -->
     <article
-      class={cn("mt-8 md:mt-10 mx-auto w-[700px] max-w-[90vw] font-open-sans tracking-wide space-y-4", "md:text-lg")}
+      class={cn("font-open-sans mx-auto mt-8 w-[700px] max-w-[90vw] space-y-4 tracking-wide md:mt-10", "md:text-lg")}
     >
       <p>
         Frustration est un <b>média d’opinion, engagé et apartisan</b> : financés à 100% par nos lectrices et lecteurs, nous
@@ -104,11 +104,11 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
 
     <h3
       class={cn(
-        "mt-14 text-pretty text-center font-bold uppercase font-bakbak",
-        "text-4xl mb-6",
-        "sm:text-5xl sm:mb-6",
-        "md:text-5xl md:mb-8",
-        "lg:text-6xl lg:mb-20",
+        "font-bakbak mt-14 text-pretty text-center font-bold uppercase",
+        "mb-6 text-4xl",
+        "sm:mb-6 sm:text-5xl",
+        "md:mb-8 md:text-5xl",
+        "lg:mb-20 lg:text-6xl",
       )}
     >
       Nos formules de soutien
@@ -116,7 +116,7 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
     <!-- 🃏 CARDS -->
     <div
       class={cn(
-        "relative w-[1100px] max-w-[90vw] left-1/2 -translate-x-1/2 grid gap-6",
+        "relative left-1/2 grid w-[1100px] max-w-[90vw] -translate-x-1/2 gap-6",
         "grid-cols-1",
         "lg:grid-cols-3",
       )}
@@ -186,7 +186,7 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
       href={import.meta.env.TIPEEE_URL}
       target="_blank"
     >
-      <h5 class={cn("font-montserrat text-balance font-bold mb-4", "text-2xl", "md:text-3xl")}>
+      <h5 class={cn("font-montserrat mb-4 text-balance font-bold", "text-2xl", "md:text-3xl")}>
         Vous pouvez aussi nous soutenir sur notre Tipeee 😃 <br />
         👇
       </h5>
@@ -203,11 +203,11 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
       /> -->
 
     <!-- 📝 💰 FORMS 💰 -->
-    <div class={cn("mt-6 mb-6", "md:mt-12 md:mb-12")}>
+    <div class={cn("mb-6 mt-6", "md:mb-12 md:mt-12")}>
       <SubscriptionFormWrapper client:load />
     </div>
 
-    <div class={cn("mt-6 mb-6", "md:mt-12 md:mb-12")}>
+    <div class={cn("mb-6 mt-6", "md:mb-12 md:mt-12")}>
       <DonationFormWrapper client:load />
     </div>
   </article>

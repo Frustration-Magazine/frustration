@@ -13,7 +13,7 @@ import { fetchCategories } from "@/lib/wordpress";
 const categories = await fetchCategories();
 ---
 
-<header class={cn("flex justify-between bg-black/90 text-primary sticky top-0 z-20 @container", "px-4 py-3", "xs:p-4")}>
+<header class={cn("text-primary @container sticky top-0 z-20 flex justify-between bg-black/90", "px-4 py-3", "xs:p-4")}>
   <a
     aria-label="Page d'accueil"
     title="Page d'accueil"

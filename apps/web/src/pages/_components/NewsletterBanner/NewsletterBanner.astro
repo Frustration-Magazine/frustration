@@ -35,7 +35,7 @@ const THUMBNAIL_WIDTH = 350;
     <div class="grow">
       <h3
         class={cn(
-          "relative flex w-full justify-center text-white items-end overflow-hidden font-bakbak ",
+          "font-bakbak relative flex w-full items-end justify-center overflow-hidden text-white",
           "text-center text-5xl",
           "md:text-left md:text-6xl",
         )}
@@ -43,13 +43,13 @@ const THUMBNAIL_WIDTH = 350;
         <span class="mr:auto">Newsletter</span>
         <div
           class={cn(
-            "hidden relative grow",
-            "md:block md:bottom-[9px] md:ml-[10px] md:h-[3px] md:bg-linear-to-r md:from-white md:to-transparent",
+            "relative hidden grow",
+            "md:bg-linear-to-r md:bottom-[9px] md:ml-[10px] md:block md:h-[3px] md:from-white md:to-transparent",
           )}
         >
         </div>
       </h3>
-      <p class={cn("text-white mb-6", "text-center text-sm", "md:text-left md:text-base")}>
+      <p class={cn("mb-6 text-white", "text-center text-sm", "md:text-left md:text-base")}>
         <span class="xs:inline hidden"> 🗞️ </span>
         Recevez régulièrement nos dernières actualités !
       </p>
@@ -65,14 +65,14 @@ const THUMBNAIL_WIDTH = 350;
           name="email"
           placeholder="Entrez votre email ici"
           class={cn(
-            "h-[40px] bg-white disabled:bg-white/10 w-full rounded-full px-6 py-2 font-open-sans text-black text-base",
+            "font-open-sans h-[40px] w-full rounded-full bg-white px-6 py-2 text-base text-black disabled:bg-white/10",
           )}
         />
         {/* 📩 Button */}
         <button
           type="submit"
           class={cn(
-            "h-[40px] cursor-pointer w-full rounded-full bg-[linear-gradient(90deg,rgba(252,176,69,1)_0%,rgba(253,29,29,1)_100%)] font-bakbak uppercase text-white",
+            "font-bakbak h-[40px] w-full cursor-pointer rounded-full bg-[linear-gradient(90deg,rgba(252,176,69,1)_0%,rgba(253,29,29,1)_100%)] uppercase text-white",
             "text-lg",
             "md:text-xl",
           )}
