@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -8,16 +8,43 @@ import { Button } from "./button";
 import { Calendar } from "./calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
-// type DateRangePickerProps = {
-//   className: string;
-//   date: DateRange;
-//   setDate: any;
-// };
+type DateRange = {
+  from: Date;
+  to: Date;
+};
 
-export const DatePickerWithRange: any = ({ className, date, setDate, footer }: any) => {
+type DateRangePickerProps = {
+  className?: string;
+  date: DateRange;
+  setDate: (date: DateRange) => void;
+  footer?: string;
+};
+
+export const DatePickerWithRange = ({ className, date, setDate, footer }: DateRangePickerProps) => {
+  const [tempDate, setTempDate] = useState(date);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setTempDate(date);
+  }, [date]);
+
+  const handleValidate = (): void => {
+    if (!tempDate?.from || !tempDate?.to || tempDate === date) return;
+    setDate(tempDate);
+    setOpen(false);
+  };
+
+  const handleCancel = (): void => {
+    setTempDate(date);
+    setOpen(false);
+  };
+
   return (
     <div className={cn("grid gap-2", className)}>
-      <Popover>
+      <Popover
+        open={open}
+        onOpenChange={setOpen}
+      >
         <PopoverTrigger asChild>
           <Button
             id="date"
@@ -46,10 +73,27 @@ export const DatePickerWithRange: any = ({ className, date, setDate, footer }: a
             mode="range"
             defaultMonth={date?.from}
             disabled={(date) => date > new Date() || date < new Date("2023-01-01")}
-            selected={date}
-            onSelect={setDate}
+            selected={tempDate}
+            onSelect={(date) => setTempDate(date as DateRange)}
             numberOfMonths={2}
           />
+
+          <div className="flex justify-end gap-2 border-t p-3">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleCancel}
+            >
+              Annuler
+            </Button>
+            <Button
+              size="sm"
+              onClick={handleValidate}
+              disabled={!tempDate?.from || !tempDate?.to || tempDate === date}
+            >
+              Valider
+            </Button>
+          </div>
         </PopoverContent>
       </Popover>
 
