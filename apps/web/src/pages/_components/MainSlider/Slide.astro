@@ -3,53 +3,77 @@ import { Image } from "astro:assets";
 import { Newspaper } from "lucide-react";
 import { cn, formatVideoTitle } from "@/lib/utils";
 
+type Props = {
+  isArticle: boolean;
+  title: string;
+  slug?: string;
+  link?: string;
+  excerpt: string;
+  featuredImage: { node: { sourceUrl: string; altText: string; title: string } };
+};
+
 const {
+  isArticle = true,
   title,
   slug,
+  link,
   excerpt,
   featuredImage: { node: featuredImage },
-} = Astro.props;
+}: Props = Astro.props;
 
 const IMAGE_SIZE = 1200;
 ---
 
 <li class="splide__slide relative">
-  <a href={`/${slug}`}>
+  <a href={isArticle ? `/${slug}` : link}>
     <div class="font-bakbak absolute left-[50%] top-[50%] w-[90%] max-w-[1000px] translate-x-[-50%] translate-y-[-50%]">
-      <!-- Title -->
-      <h3
-        class={cn(
-          "leading-1 font-bakbak text-primary text-balance rounded-t-sm bg-black px-10 py-4 text-center font-bold uppercase",
-          "text-2xl",
-          "sm:text-3xl",
-          "md:text-4xl",
-          "lg:text-4xl",
-          "xl:text-5xl",
-          "3xl:text-6xl",
-        )}
-      >
-        {formatVideoTitle(title)}
-      </h3>
+      {/* Title */}
+      {
+        title && (
+          <h3
+            class={cn(
+              "leading-1 font-bakbak text-primary text-balance rounded-t-sm bg-black px-10 py-4 text-center font-bold uppercase",
+              "text-2xl",
+              "sm:text-3xl",
+              "md:text-4xl",
+              "lg:text-4xl",
+              "xl:text-5xl",
+              "3xl:text-6xl",
+              { "mx-auto w-fit rounded-b-sm px-16": !isArticle },
+            )}
+          >
+            {formatVideoTitle(title)}
+          </h3>
+        )
+      }
 
-      <!-- Excerpt -->
-      <div
-        class="bg-primary hidden rounded-b-sm px-4 py-2 shadow-lg shadow-black/50 xl:block [&>p]:inline [&>p]:text-balance [&>p]:text-center [&>p]:text-xl [&>p]:font-normal [&>p]:leading-snug [&>p]:text-black"
-        set:html={excerpt}
-      />
+      {/* Excerpt */}
+      {
+        excerpt && (
+          <div
+            class="bg-primary hidden rounded-b-sm px-4 py-2 shadow-lg shadow-black/50 xl:block [&>p]:inline [&>p]:text-balance [&>p]:text-center [&>p]:text-xl [&>p]:font-normal [&>p]:leading-snug [&>p]:text-black"
+            set:html={excerpt}
+          />
+        )
+      }
 
-      <!-- Read -->
-      <div
-        class={cn(
-          "font-bakbak m-auto mt-4 flex w-fit items-center rounded-lg font-bold shadow-2xl shadow-black/80",
-          "bg-primary gap-1 px-5 py-1 text-lg text-black",
-          "md:gap-2 md:py-2 md:text-xl",
-          "lg:px-6 lg:py-2 lg:text-2xl",
-          "xl:text-primary xl:gap-3 xl:bg-black/90",
-        )}
-      >
-        <Newspaper size={20} />
-        <span>Lire</span>
-      </div>
+      {/* Read */}
+      {
+        isArticle && (
+          <div
+            class={cn(
+              "font-bakbak m-auto mt-4 flex w-fit items-center rounded-lg font-bold shadow-2xl shadow-black/80",
+              "bg-primary gap-1 px-5 py-1 text-lg text-black",
+              "md:gap-2 md:py-2 md:text-xl",
+              "lg:px-6 lg:py-2 lg:text-2xl",
+              "xl:text-primary xl:gap-3 xl:bg-black/90",
+            )}
+          >
+            <Newspaper size={20} />
+            <span>Lire</span>
+          </div>
+        )
+      }
     </div>
 
     <Image

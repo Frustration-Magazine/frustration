@@ -169,7 +169,7 @@ export async function fetchAuthorsByIds({ ids }: { ids: string[] }) {
 export async function fetchInterviews({ first = 6 }: any) {
   const query = `
    query fetchInterviews {
-        posts(where: {categoryName: "Entretiens"}, first: ${first}) {
+        posts(where: {categoryName: "Entretien"}, first: ${first}) {
           nodes {
             title(format: RENDERED)
             link

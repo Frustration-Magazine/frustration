@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import frustrationLogo from "./frustration-logo.webp";
 
-import { Calendar, Mail, User } from "lucide-react";
+import { Book, Calendar, Mail, User } from "lucide-react";
 import Banner from "./banners/Banner.astro";
 import { SearchOverlay } from "./components/SearchOverlay";
 import { MenuOverlay } from "./components/MenuOverlay";
@@ -15,9 +15,9 @@ const categories = await fetchCategories();
 
 <header class={cn("text-primary @container sticky top-0 z-20 flex justify-between bg-black/90", "px-4 py-3", "xs:p-4")}>
   <a
-    aria-label="Page d'accueil"
-    title="Page d'accueil"
     href="/"
+    title="Page d'accueil"
+    aria-label="Page d'accueil"
     class={cn("my-auto", "w-32", "xs:w-36", "lg:w-48")}
   >
     <Image
@@ -26,6 +26,7 @@ const categories = await fetchCategories();
       alt="Logo de Frustration"
     />
   </a>
+
   <div class={cn("flex", "gap-4", "md:gap-5")}>
     <SearchOverlay client:load />
 
@@ -33,8 +34,8 @@ const categories = await fetchCategories();
       href="/contact"
       type="button"
       title="Nous contacter"
-      class={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
       aria-label="Nous contacter"
+      class={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
     >
       <Mail size="100%" />
     </a>
@@ -43,19 +44,29 @@ const categories = await fetchCategories();
       href="/evenements"
       type="button"
       title="Voir nos événements"
-      class={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
       aria-label="Voir nos événements"
+      class={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
     >
       <Calendar size="100%" />
     </a>
 
     <a
-      href={import.meta.env.STRIPE_PORTAL_CLIENT}
-      target="_blank"
+      href="/sorties-papier"
       type="button"
-      title="Portail abonnés"
+      title="Voir nos sorties papier"
+      aria-label="Voir nos sorties papier"
       class={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
+    >
+      <Book size="100%" />
+    </a>
+
+    <a
+      href={import.meta.env.STRIPE_PORTAL_CLIENT}
+      type="button"
+      target="_blank"
+      title="Portail abonnés"
       aria-label="Portail abonnés"
+      class={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
     >
       <User size="100%" />
     </a>

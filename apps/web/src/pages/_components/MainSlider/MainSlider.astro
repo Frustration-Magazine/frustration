@@ -1,15 +1,44 @@
 ---
 import ArrowButtons from "./ArrowButtons.astro";
 import Slide from "./Slide.astro";
+import { SITE_URL } from "@/constants";
 
 const { posts } = Astro.props;
+
+const slides = [
+  {
+    isArticle: false,
+    title: "Événements",
+    link: "/evenements",
+    featuredImage: {
+      node: {
+        sourceUrl: "/img/slides/evenements.webp",
+        altText: "Aperçu des événements",
+        title: "Aperçu des événements",
+      },
+    },
+  },
+  {
+    isArticle: false,
+    title: "Sorties papier",
+    link: "/sorties-papier",
+    featuredImage: {
+      node: {
+        sourceUrl: "/img/slides/papers.webp",
+        altText: "Aperçu des sorties papier",
+        title: "Aperçu des sorties papier",
+      },
+    },
+  },
+  ...posts,
+];
 ---
 
 <div class="splide">
   <ArrowButtons />
   <div class="splide__track h-full">
     <ul class="splide__list">
-      {posts.map((post: any) => <Slide {...post} />)}
+      {slides.map((slide: any) => <Slide {...slide} />)}
     </ul>
   </div>
   <div class="splide__progress absolute bottom-0 w-full">

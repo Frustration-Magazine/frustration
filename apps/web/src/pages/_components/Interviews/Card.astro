@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import H5 from "./CardTitle.astro";
+import { formatVideoTitle } from "@/lib/utils";
 const { image, title, slug } = Astro.props;
 ---
 
@@ -13,7 +14,7 @@ const { image, title, slug } = Astro.props;
     height="300"
     class="blurred-edges mb-2 h-[250px] w-auto object-cover contrast-125 saturate-0 lg:h-[350px] xl:h-[400px]"
   />
-  <H5>{title}</H5>
+  <H5>{formatVideoTitle(title)}</H5>
   <button
     class="b-2 font-bakbak m-auto block w-fit border-2 border-white px-4 py-1 text-2xl uppercase text-white transition-all hover:bg-white hover:text-black group-hover:bg-white group-hover:text-black"
   >

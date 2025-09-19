@@ -36,7 +36,11 @@ const Links = ({
       href: "/evenements",
     },
     {
-      label: "📚 Articles",
+      label: "📚 Sorties papier",
+      href: "/sorties-papier",
+    },
+    {
+      label: "📰 Articles",
       href: "/posts",
     },
     {

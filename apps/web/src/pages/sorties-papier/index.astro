@@ -1,0 +1,92 @@
+---
+import PageLayout from "@/layout/PageLayout/PageLayout.astro";
+import CardPaper from "./_components/CardPaper.astro";
+import H2 from "@/components/H2";
+import H3 from "@/components/H3";
+
+import numeroPapier1 from "./_assets/numero-papier-1.webp";
+import numeroPapier2 from "./_assets/numero-papier-2.webp";
+import saintLuigi from "./_assets/saint-luigi.webp";
+
+type PaperItem = {
+  title: string;
+  author?: string;
+  description?: string;
+  image: any;
+  link: string;
+  type: "magazine" | "book";
+};
+
+const papers: PaperItem[] = [
+  {
+    title: "Saint Luigi",
+    author: "Nicolas Framont",
+    description:
+      "Est-il condamnable de tuer une personne responsable de la mort et de la souffrance de milliers d'autres ?",
+    image: saintLuigi,
+    link: "https://www.leslibraires.fr/livre/24552791-saint-luigi-comment-repondre-a-la-violence-du-capitalisme-nicolas-framont-editions-les-liens-qui-liberent",
+    type: "book",
+  },
+  {
+    title: "Frustration #2",
+    author: "Rédaction",
+    description: "Comment tenir face à un monde qui s'effondre autour de nous ?",
+    image: numeroPapier2,
+    link: "https://www.leslibraires.fr/livre/23958625-frustration-n2-comment-tenir--frustration-editions-les-liens-qui-liberent",
+    type: "magazine",
+  },
+  {
+    title: "Frustration #1",
+    author: "Rédaction",
+    description: "Et maintenant, on fait quoi ?",
+    image: numeroPapier1,
+    link: "https://www.leslibraires.fr/livre/22868832-frustration-le-mook-frustration-editions-les-liens-qui-liberent",
+    type: "magazine",
+  },
+];
+---
+
+<PageLayout
+  title="Papier"
+  description="Les numéros papiers de Frustration ainsi que la collection LLL x Frustration"
+>
+  <article slot="content">
+    <H2>Nos sorties papier</H2>
+    <H3 className="text-center text-gray-800"
+      >Procurez-vous le dernier numéro papier de Frustration ainsi que les livres de la nouvelle collection LLL x
+      Frustration !</H3
+    >
+
+    <section class="mt-8 space-y-4">
+      <p class="mx-auto w-full text-gray-600 sm:w-3/4">
+        En cliquant sur un des articles ci-dessous, vous serez redirigés vers un lien d'achat auprès des librairies
+        indépendantes, mais vous pouvez aussi les trouver en grande distribution.
+      </p>
+
+      <p class="mx-auto w-full text-gray-600 sm:w-3/4">
+        Vous pouvez également <a
+          href="/abonnements#formules"
+          class="bg-pale-yellow hover:bg-primary whitespace-nowrap rounded-full px-2 py-1 text-black"
+          >👉 vous abonner 👈</a
+        > à Frustration et recevoir un exemplaire de l'un de ces articles selon votre formule d'abonnement.
+      </p>
+    </section>
+
+    <section class="mt-12">
+      {
+        papers.length ? (
+          <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+            {papers.map((paper) => (
+              <CardPaper paper={paper} />
+            ))}
+          </div>
+        ) : (
+          <div class="py-12 text-center">
+            <p class="text-lg text-gray-600">Aucune sortie papier disponible pour le moment.</p>
+            <p class="mt-2 text-sm text-gray-500">Revenez bientôt pour découvrir nos nouvelles publications !</p>
+          </div>
+        )
+      }
+    </section>
+  </article>
+</PageLayout>

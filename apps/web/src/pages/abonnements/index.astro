@@ -7,8 +7,6 @@ import H2 from "@/components/H2";
 
 import { Image } from "astro:assets";
 import Tipeee from "./_assets/tipeee.webp";
-import ParasitesCover from "./_assets/parasites.webp";
-import Numero2025 from "./_assets/numero_2025.webp";
 
 import { SUBSCRIPTIONS } from "./_models";
 
@@ -103,6 +101,7 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
     </ul>
 
     <h3
+      id="formules"
       class={cn(
         "font-bakbak mt-14 text-pretty text-center font-bold uppercase",
         "mb-6 text-4xl",
@@ -144,7 +143,7 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
             class="drop-shadow-lg"
             width="110"
             height="110"
-            src={Numero2025}
+            src="/img/papers/numero-papier-2.webp"
             alt="Couverture du numéro papier Frustration 2025"
           />
         </div>
@@ -159,14 +158,14 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
           🗞️ <b>Numéro papier 2025</b>
         </p>
         <p>
-          📖 1 exemplaire de <b><i>Parasites</i></b>
+          📖 1 exemplaire de <b><i>Saint Luigi</i></b>
         </p>
         <div class="mx-auto flex w-full items-center justify-center gap-4">
           <Image
             class="drop-shadow-lg"
             width="110"
             height="110"
-            src={Numero2025}
+            src="/img/papers/numero-papier-2.webp"
             alt="Couverture du numéro papier Frustration 2025"
           />
           <span class={cn("text-xl", "lg:text-3xl")}>+</span>
@@ -174,8 +173,8 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
             class="drop-shadow-lg"
             width="100"
             height="100"
-            src={ParasitesCover}
-            alt="Couverture de Parasites"
+            src="/img/papers/saint-luigi.webp"
+            alt="Couverture de Saint Luigi"
           />
         </div>
       </SubscriptionCard>
