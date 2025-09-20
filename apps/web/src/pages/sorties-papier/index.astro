@@ -7,6 +7,7 @@ import H3 from "@/components/H3";
 import numeroPapier1 from "@/assets/papers/numero-papier-1.webp";
 import numeroPapier2 from "@/assets/papers/numero-papier-2.webp";
 import saintLuigi from "@/assets/papers/saint-luigi.webp";
+import { Link } from "@/components/Link";
 
 type PaperItem = {
   title: string;
@@ -64,11 +65,8 @@ const papers: PaperItem[] = [
       </p>
 
       <p class="mx-auto w-full text-gray-600 sm:w-3/4">
-        Vous pouvez également <a
-          href="/abonnements#formules"
-          class="bg-pale-yellow hover:bg-primary whitespace-nowrap rounded-full px-2 py-1 text-black"
-          >👉 vous abonner 👈</a
-        > à Frustration et recevoir un exemplaire de l'un de ces articles selon votre formule d'abonnement.
+        Vous pouvez également <Link href="/abonnements#formules">👉 vous abonner 👈</Link> à Frustration et recevoir un exemplaire
+        de l'un de ces articles selon votre formule d'abonnement.
       </p>
     </section>
 

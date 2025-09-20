@@ -32,7 +32,7 @@ const Links = ({
       href: "/abonnements",
     },
     {
-      label: "🎉 Évènements",
+      label: "📅 Événements",
       href: "/evenements",
     },
     {

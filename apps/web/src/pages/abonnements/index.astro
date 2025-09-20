@@ -13,6 +13,7 @@ import saintLuigi from "@/assets/papers/saint-luigi.webp";
 import { cn } from "@/lib/utils";
 import { OG_IMAGES_URL, SUBSCRIBERS_TARGET } from "@/constants";
 import { SUBSCRIPTIONS } from "./_models";
+import { Link } from "@/components/Link";
 
 const { mini, maxi, medium } = SUBSCRIPTIONS;
 const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
@@ -74,32 +75,46 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
       </p>
     </article>
 
-    <!-- Portail abonnés & formulaire de contact -->
-    <ul class="mt-10 space-y-2 rounded-md bg-green-100 p-4 text-lg font-semibold text-green-600">
-      <li class="flex items-start gap-2">
-        <span class="text-xl">💡</span>
-        <span>
-          Vous pouvez à tout moment modifier, mettre à jour ou résilier votre abonnement via le ✨ <a
-            class="text-blue underline"
-            href={import.meta.env.STRIPE_PORTAL_CLIENT}
-            target="_blank"
-            >portail abonnés</a
-          > ✨ en utilisant l'adresse email renseignée lors de votre souscription.
-        </span>
-      </li>
-      <li class="flex items-start gap-2">
-        <span class="text-xl">❓</span>
-        <span>
-          En cas de difficulté ou pour toute autre question, contactez-nous via le <br />
-          ✍️ <a
-            class="text-blue underline"
-            href="/contact"
-          >
-            formulaire de contact</a
-          > ✍️ en précisant le sujet de votre demande.
-        </span>
-      </li>
-    </ul>
+    <section
+      class={cn(
+        "mt-8 space-y-4",
+        "[&_ul]:space-y-2 [&_ul]:rounded-md [&_ul]:p-4 [&_ul]:text-lg [&_ul]:font-semibold",
+        "[&_li]:flex [&_li]:items-start [&_li]:gap-2",
+      )}
+    >
+      <!-- Disclaimer delay receipt -->
+      <ul class="bg-blue-gray-100 text-blue-gray-600">
+        <li>
+          <span class="text-xl">ℹ️</span>
+          <span>
+            Un petit délai de quelques semaines entre votre abonnement et la réception de votre contrepartie (numéro
+            papier ou livre) peut s'établir car nous référençons tous les nouveaux abonnés avec leurs coordonnées chaque
+            mois avant de procéder à l'expédition des articles.
+          </span>
+        </li>
+      </ul>
+
+      <!-- Portail abonnés & formulaire de contact -->
+      <ul class="bg-green-100 text-green-600">
+        <li>
+          <span class="text-xl">💡</span>
+          <span>
+            Vous pouvez à tout moment modifier, mettre à jour ou résilier votre abonnement via le <Link
+              href={import.meta.env.STRIPE_PORTAL_CLIENT}
+              target="_blank"
+              >portail abonnés</Link
+            > en utilisant l'adresse email renseignée lors de votre souscription.
+          </span>
+        </li>
+        <li>
+          <span class="text-xl">❓</span>
+          <span>
+            En cas de difficulté ou pour toute autre question, contactez-nous via le <br />
+            <Link href="/contact">formulaire de contact</Link> en précisant le sujet de votre demande.
+          </span>
+        </li>
+      </ul>
+    </section>
 
     <h3
       id="formules"
