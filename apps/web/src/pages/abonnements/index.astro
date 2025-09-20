@@ -7,11 +7,12 @@ import H2 from "@/components/H2";
 
 import { Image } from "astro:assets";
 import Tipeee from "./_assets/tipeee.webp";
-
-import { SUBSCRIPTIONS } from "./_models";
+import numeroPapier2 from "@/assets/papers/numero-papier-2.webp";
+import saintLuigi from "@/assets/papers/saint-luigi.webp";
 
 import { cn } from "@/lib/utils";
 import { OG_IMAGES_URL, SUBSCRIBERS_TARGET } from "@/constants";
+import { SUBSCRIPTIONS } from "./_models";
 
 const { mini, maxi, medium } = SUBSCRIPTIONS;
 const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
@@ -143,7 +144,7 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
             class="drop-shadow-lg"
             width="110"
             height="110"
-            src="/img/papers/numero-papier-2.webp"
+            src={numeroPapier2}
             alt="Couverture du numéro papier Frustration 2025"
           />
         </div>
@@ -165,7 +166,7 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
             class="drop-shadow-lg"
             width="110"
             height="110"
-            src="/img/papers/numero-papier-2.webp"
+            src={numeroPapier2}
             alt="Couverture du numéro papier Frustration 2025"
           />
           <span class={cn("text-xl", "lg:text-3xl")}>+</span>
@@ -173,7 +174,7 @@ const ogImageUrl = `${OG_IMAGES_URL}numero_2025.webp`;
             class="drop-shadow-lg"
             width="100"
             height="100"
-            src="/img/papers/saint-luigi.webp"
+            src={saintLuigi}
             alt="Couverture de Saint Luigi"
           />
         </div>

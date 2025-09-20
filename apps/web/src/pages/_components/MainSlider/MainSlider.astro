@@ -1,18 +1,20 @@
 ---
 import ArrowButtons from "./ArrowButtons.astro";
 import Slide from "./Slide.astro";
-import { SITE_URL } from "@/constants";
+
+import evenementsSlide from "./_assets/evenements.webp";
+import papersSlide from "./_assets/papers.webp";
 
 const { posts } = Astro.props;
 
 const slides = [
   {
     isArticle: false,
-    title: "Événements",
+    title: "📅 Événements",
     link: "/evenements",
     featuredImage: {
       node: {
-        sourceUrl: "/img/slides/evenements.webp",
+        sourceUrl: evenementsSlide,
         altText: "Aperçu des événements",
         title: "Aperçu des événements",
       },
@@ -20,11 +22,11 @@ const slides = [
   },
   {
     isArticle: false,
-    title: "Sorties papier",
+    title: "📚 Sorties papier",
     link: "/sorties-papier",
     featuredImage: {
       node: {
-        sourceUrl: "/img/slides/papers.webp",
+        sourceUrl: papersSlide,
         altText: "Aperçu des sorties papier",
         title: "Aperçu des sorties papier",
       },
