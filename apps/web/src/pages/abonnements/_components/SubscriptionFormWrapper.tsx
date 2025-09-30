@@ -67,7 +67,7 @@ export default function Subscription() {
               id="maxi"
               name="Maxi"
               amount={1500}
-              items={["✊ Newsletter", "🗞️ Numéro papier 2025", "📕 1 exemplaire de Parasites"]}
+              items={["✊ Newsletter", "🗞️ Numéro papier 2025", "📕 1 exemplaire de Saint Luigi"]}
               selectedAmount={selectedAmount}
               select={() => setSelectedAmount(1500)}
             />
