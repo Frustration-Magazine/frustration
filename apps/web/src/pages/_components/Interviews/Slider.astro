@@ -1,8 +1,9 @@
 ---
+import Interview from "./Interview.astro";
 import { fetchInterviews } from "@/lib/wordpress";
+
 const NB_INTERVIEWS = 6;
 const interviews = await fetchInterviews({ first: NB_INTERVIEWS });
-import Interview from "./Card.astro";
 ---
 
 <section
@@ -21,6 +22,7 @@ import Interview from "./Card.astro";
     </ul>
   </div>
 </section>
+
 <style is:global>
   .splide-interviews .blurred-edges {
     mask-image: radial-gradient(circle, black 0%, rgba(0, 0, 0, 0) 50%);
@@ -49,6 +51,7 @@ import Interview from "./Card.astro";
     }
   }
 </style>
+
 <script>
   import "./slider";
 </script>

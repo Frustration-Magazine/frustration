@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { FcCalendar } from "react-icons/fc";
-import { cn, formatVideoTitle } from "@/lib/utils";
+import { cn, formatPostTitle } from "@/lib/utils";
 
 const {
   title,
@@ -49,7 +49,7 @@ const DD_MM_YYYY = new Date(date).toLocaleDateString("fr-FR", {
     <div class="flex grow flex-col gap-3 p-4">
       <!-- Title -->
       <h5 class="font-bakbak xs:text-3xl leading-none! text-primary text-pretty text-2xl uppercase">
-        {formatVideoTitle(title)}
+        {formatPostTitle(title)}
       </h5>
 
       <!-- Categories -->

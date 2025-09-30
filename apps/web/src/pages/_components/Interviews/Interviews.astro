@@ -1,9 +1,35 @@
 ---
 import Slider from "./Slider.astro";
-import Title from "./Title.astro";
-import SeeMore from "./SeeMore.astro";
+import { cn } from "@/lib/utils";
+import { LuMessagesSquare as MessageIcon } from "react-icons/lu";
+
+const SEARCH_INTERVIEWS_LINK = "/posts?category=entretien";
 ---
 
-<Title>Entretiens</Title>
+<h2
+  class={cn(
+    "font-bakbak relative m-auto w-fit select-none uppercase text-white",
+    "mb-2 text-4xl",
+    "xs:text-5xl mb-3",
+    "sm:mb-8 sm:text-6xl",
+    "md:mb-12 md:text-7xl",
+    "lg:mb-16 lg:text-8xl",
+  )}
+>
+  Entretiens
+</h2>
+
 <Slider />
-<SeeMore>Tous les entretiens</SeeMore>
+
+<a
+  href={SEARCH_INTERVIEWS_LINK}
+  class={cn(
+    "font-bebas m-auto flex w-fit items-center rounded-sm bg-white leading-none text-black transition-transform hover:scale-105",
+    "mt-20 px-4 py-2 text-2xl",
+    "sm:mt-14 sm:text-3xl",
+    "md:mt-14 md:gap-3 md:px-5 md:py-3",
+  )}
+>
+  <MessageIcon />
+  <span class="relative top-0.5">Tous les entretiens</span>
+</a>

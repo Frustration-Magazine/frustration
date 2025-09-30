@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { Newspaper } from "lucide-react";
-import { cn, formatVideoTitle } from "@/lib/utils";
+import { cn, formatPostTitle } from "@/lib/utils";
 
 type Props = {
   isArticle: boolean;
@@ -42,7 +42,7 @@ const IMAGE_SIZE = 1200;
               { "mx-auto w-fit rounded-b-sm px-16": !isArticle },
             )}
           >
-            {formatVideoTitle(title)}
+            {formatPostTitle(title)}
           </h3>
         )
       }

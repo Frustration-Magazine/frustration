@@ -17,10 +17,7 @@ const options: StripeElementsOptions = {
   },
 };
 
-/* ==================================================== */
-/* ==================================================== */
-
-export default function Subscription() {
+export const DonationFormWrapper = () => {
   return (
     <div
       id="donation-form"
@@ -52,4 +49,4 @@ export default function Subscription() {
       </div>
     </div>
   );
-}
+};

@@ -22,8 +22,9 @@ const options: StripeElementsOptions = {
 /* ==================================================== */
 /* ==================================================== */
 
-export default function Subscription() {
+export const SubscriptionFormWrapper = () => {
   const [selectedAmount, setSelectedAmount] = useState(900);
+
   return (
     <div
       id="subscription-form"
@@ -94,4 +95,4 @@ export default function Subscription() {
       </style>
     </div>
   );
-}
+};

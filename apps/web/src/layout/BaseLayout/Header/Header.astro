@@ -13,7 +13,13 @@ import { fetchCategories } from "@/lib/wordpress";
 const categories = await fetchCategories();
 ---
 
-<header class={cn("text-primary @container sticky top-0 z-20 flex justify-between bg-black/90", "px-4 py-3", "xs:p-4")}>
+<header
+  class={cn(
+    "text-primary @container sticky top-0 z-20 flex justify-between bg-gradient-to-b from-black to-black/85",
+    "px-4 py-3",
+    "xs:p-4",
+  )}
+>
   <a
     href="/"
     title="Page d'accueil"
@@ -45,7 +51,7 @@ const categories = await fetchCategories();
       type="button"
       title="Voir nos événements"
       aria-label="Voir nos événements"
-      class={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
+      class={cn("w-4 translate-y-[-1px] cursor-pointer", "md:w-5", "xl:w-6")}
     >
       <Calendar size="100%" />
     </a>

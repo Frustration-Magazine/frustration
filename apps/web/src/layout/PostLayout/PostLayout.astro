@@ -11,7 +11,7 @@ import { MoreArticles } from "./components/Footer/MoreArticles";
 import { PostSummary } from "./components/PostSummary";
 
 import "@/styles/wordpress.css";
-import { cn, formatVideoTitle } from "@/lib/utils";
+import { cn, formatPostTitle } from "@/lib/utils";
 
 const {
   title,
@@ -29,8 +29,9 @@ const featuredImage = Astro.props?.featuredImage?.node;
     <!-- Header -->
     <div class="mb-[30px]">
       <Title>
-        <Fragment set:html={formatVideoTitle(title)} />
+        <Fragment set:html={formatPostTitle(title)} />
       </Title>
+      <hr class="my-4 border-black/80" />
       <Metadata
         author={author}
         date={date}

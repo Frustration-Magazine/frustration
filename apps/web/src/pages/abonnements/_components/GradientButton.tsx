@@ -14,6 +14,7 @@ function GradientButton({ gradient, id, children }: Props) {
       data-button={id}
       className={cn(
         "relative! group mt-auto inline-flex h-11 w-[80%] overflow-hidden rounded-none p-[3px] ring-offset-black will-change-transform",
+        "transition-transform hover:scale-105",
       )}
     >
       <div className={cn("bg-conic absolute inset-[-1000%] animate-spin blur-sm [animation-duration:5s]", gradient)} />

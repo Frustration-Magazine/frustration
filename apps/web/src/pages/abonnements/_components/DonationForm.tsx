@@ -215,12 +215,10 @@ export default function StripeForm() {
         </div>
       )}
 
-      {/* ====================================================================== */}
-
       {/* ⬛ VALIDATION */}
       <div className={cn("mx-auto mt-10 w-fit", disableCheckout && "opacity-30")}>
         <RainbowButton
-          className="mx-auto rounded-md px-4 py-3 lg:py-4"
+          className="mx-auto rounded-md px-4 py-3 transition-transform hover:scale-105 lg:py-4"
           type="submit"
           id="submit"
         >

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchLinkPreview } from "@/lib/wordpress";
-import { cn, formatVideoTitle } from "@/lib/utils";
+import { cn, formatPostTitle } from "@/lib/utils";
 import LogoSquare from "../../assets/logo_square.png";
 import { TagIcon, UserIcon } from "lucide-react";
 
@@ -84,7 +84,7 @@ export const MoreArticles = () => {
 
                   {/* Title */}
                   <h5 className={cn("font-bakbak leading-none! font-bold", "text-xl", "sm:text-2xl")}>
-                    {formatVideoTitle(title)}
+                    {formatPostTitle(title)}
                   </h5>
                 </div>
 

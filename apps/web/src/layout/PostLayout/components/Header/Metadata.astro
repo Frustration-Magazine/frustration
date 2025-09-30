@@ -1,7 +1,8 @@
 ---
-import { cn } from "@/lib/utils";
-import TagIcon from "../../assets/icons/tag.svg?raw";
+import { TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
+import { cn } from "@/lib/utils";
+
 const { author, date, categories } = Astro.props;
 
 let DD_MM_YYYY = date
@@ -14,40 +15,43 @@ let DD_MM_YYYY = date
 ---
 
 <div class={cn("flex flex-col flex-wrap gap-1 text-sm", "md:flex-row md:justify-between md:text-base")}>
-  <a
-    href={`/posts?author=${author.slug}`}
-    class="flex items-center"
-  >
-    <div class={cn("mr-2 grid w-5 place-items-center")}>
-      <Image
-        title={author.name}
-        alt={author.name}
-        width={50}
-        height={50}
-        src={author.avatar.url}
-        class="inline rounded-full"
-      />
-    </div>
-    <span class={cn("space-x-0.5", "text-base", "md:text-xl")}>
-      <span class="font-bold">{author.name}</span>
-      {
-        date && (
-          <>
-            <span>|</span>
-            <span>{DD_MM_YYYY}</span>
-          </>
-        )
-      }
-    </span>
-  </a>
+  <div class="flex items-center gap-1">
+    <a
+      href={`/posts?author=${author.slug}`}
+      class="flex items-center"
+    >
+      <div class={cn("mr-2 grid w-5 place-items-center")}>
+        <Image
+          title={author.name}
+          alt={author.name}
+          width={50}
+          height={50}
+          src={author.avatar.url}
+          class="inline rounded-full"
+        />
+      </div>
+
+      <span class={cn("text-base font-bold", "md:text-xl")}>{author.name}</span>
+    </a>
+
+    {
+      date && (
+        <>
+          <span class="text-base md:text-xl">•</span>
+          <span class="text-base md:text-xl">{DD_MM_YYYY}</span>
+        </>
+      )
+    }
+  </div>
+
   <div class="categories flex flex-wrap items-center gap-x-2 gap-y-0">
     {
       categories.map((category: any) => (
         <a
           href={`/posts?category=${category.slug}`}
-          class="flex items-center [&>svg]:mr-1.5 [&>svg]:w-[13px]"
+          class="flex items-center gap-1"
         >
-          <Fragment set:html={TagIcon} />
+          <TagIcon className="w-3" />
           <span>{category.name}</span>
         </a>
       ))

@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formatVideoTitle = (title: string): string => {
+export const formatPostTitle = (title: string): string => {
   if (title.startsWith("(Vidéo)")) {
     return title.replace("(Vidéo)", "📼");
   }

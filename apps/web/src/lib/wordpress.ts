@@ -174,6 +174,11 @@ export async function fetchInterviews({ first = 6 }: any) {
             title(format: RENDERED)
             link
             slug
+            categories {
+              nodes {
+                name
+              }
+            }
             featuredImage {
               node {
                 title
@@ -192,11 +197,12 @@ export async function fetchInterviews({ first = 6 }: any) {
     },
   } = await fetchWordpress({ query });
 
-  interviews = interviews.map(({ title, link, slug, featuredImage: { node: image } }: any) => ({
+  interviews = interviews.map(({ title, link, slug, categories, featuredImage: { node: image } }: any) => ({
     title,
     link,
     slug,
     image,
+    categories,
   }));
 
   return interviews;
