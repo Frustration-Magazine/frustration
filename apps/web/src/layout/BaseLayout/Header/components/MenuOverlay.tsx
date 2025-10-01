@@ -159,7 +159,7 @@ export const MenuOverlay = ({ categories, portalUrl }: MenuOverlayProps) => {
       <OpenButton />
       <div
         className={cn(
-          "absolute left-0 top-0 grid h-screen w-screen overflow-hidden",
+          "absolute left-0 top-0 z-30 grid h-screen w-screen overflow-hidden",
           "duration-400 transition-all",
           "bg-black/80 backdrop-blur-lg",
           "invisible opacity-0",

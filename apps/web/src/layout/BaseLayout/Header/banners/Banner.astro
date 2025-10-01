@@ -1,18 +1,19 @@
 ---
-import { Image } from "astro:assets";
-import Banner2025Background from "./assets/banner_bg_2025.jpg";
-import { cn } from "@/lib/utils";
-const backgroundUrl = `url(${Banner2025Background.src})`;
-import { getFirstDayOfTheMonth } from "utils";
-import { aggregateRecords } from "data-access/prisma";
 import { SparklesText } from "@/components/magicui/sparkles-text";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { TextAnimate } from "@/components/magicui/text-animate";
+import Banner2025Background from "./assets/banner_bg_2025.jpg";
 import Frustrarenard from "./assets/frustrarenard.avif";
 import Fist from "./assets/fist.svg";
+
 import { motion } from "framer-motion";
+import { Image } from "astro:assets";
+import { aggregateRecords } from "data-access/prisma";
+import { getFirstDayOfTheMonth } from "utils";
+import { cn } from "@/lib/utils";
 
 import { SUBSCRIBERS_TARGET } from "@/constants";
+const backgroundUrl = `url(${Banner2025Background.src})`;
 
 const currentDate = new Date();
 const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
@@ -54,13 +55,16 @@ try {
 
 {
   subscribersLastMonth ? (
+    // Container
     <a
-      href="abonnements"
+      href="/abonnements"
       id="banner"
-      class="banner-container relative bg-[url('/img/banner_bg_2025.jpg')] bg-cover bg-repeat-round py-4"
+      class="relative bg-cover bg-repeat-round py-4"
+      style={`background-image: ${backgroundUrl}`}
     >
+      {/* Content */}
       <div class="relative mx-auto flex w-[400px] max-w-[90%] flex-col items-center justify-center">
-        {/* OBJECTIF */}
+        {/* Objectif */}
         <div class={cn("font-bakbak relative flex gap-2 text-4xl font-bold text-black", "text-3xl", "sm:text-4xl")}>
           <span
             class={cn(
@@ -148,7 +152,7 @@ try {
         >
           <Fist class={cn("h-[50px] w-[50px]", "h-[40px] w-[40px]", "sm:h-[50px] sm:w-[50px]")} />
         </motion.div>
-        {/* INFORMATIONS  */}
+        {/* Informations */}
         <div>
           <div
             class={cn(
@@ -173,11 +177,7 @@ try {
   ) : null
 }
 
-<style define:vars={{ backgroundUrl }}>
-  .banner-container {
-    background-image: var(--backgroundUrl);
-  }
-
+<style>
   .shimmer-bar::after {
     content: "";
     position: absolute;
