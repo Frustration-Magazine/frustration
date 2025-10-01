@@ -8,7 +8,7 @@ import { Image } from "astro:assets";
 import saintLuigi from "@/assets/papers/saint-luigi.webp";
 
 import { readRecords } from "data-access/prisma";
-import { type Event } from "./_models";
+import { type events as Event } from "@prisma/client";
 import { OG_IMAGES_URL } from "@/constants";
 
 export const prerender = false;

@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { IoMailOutline as MailIcon } from "react-icons/io5";
-import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
-import { Trash, PenIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -28,28 +29,30 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-
 import { Form, FormField } from "@/components/ui/form";
-import { type Event, EventFormSchema } from "../models/models";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Textarea } from "@/components/ui/text-area";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
+
+import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
+import { Trash, PenIcon } from "lucide-react";
+import { IoMailOutline as MailIcon } from "react-icons/io5";
+
+import { cn } from "@/lib/utils";
+import { type events as Event } from "@prisma/client";
+import { EventFormSchema } from "../models/models";
 import { updateEvent } from "../actions/updateEvent";
 import { deleteEvent } from "../actions/deleteEvent";
-import { formatDateHour } from "utils";
-import { useEffect, useState } from "react";
 import {
+  formatDateHour,
   convertHourToNumber,
   convertHourToString,
   convertMinuteToNumber,
   convertMinuteToString,
   getHours,
   getMinutes,
-} from "../utils";
+} from "utils";
 
 type EventFormType = z.infer<typeof EventFormSchema>;
 

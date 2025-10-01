@@ -1,17 +1,5 @@
 import { z } from "zod";
 
-export type Event = {
-  id?: number;
-  date: Date;
-  displayHour: boolean;
-  description: string;
-  city: string;
-  place: string;
-  contact?: string;
-  displayContact?: boolean;
-  displayEvent: boolean;
-};
-
 export const EventFormSchema = z.object({
   id: z.number().optional(),
   date: z
@@ -49,3 +37,5 @@ export const EventFormSchema = z.object({
     required_error: "Veuillez indiquer si l'événement doit être affiché",
   }),
 });
+
+export type EventFormType = z.infer<typeof EventFormSchema>;

@@ -1,22 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import CardEvent from "./CardEvent";
-
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import CardEvent from "./CardEvent";
 import { Form, FormField } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { useForm } from "react-hook-form";
 import { DatePicker } from "@/components/ui/date-picker";
-
-import { type Event, EventFormSchema } from "../models/models";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-import { createEvent } from "../actions/createEvent";
-import { Plus } from "lucide-react";
 import { Dialog, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DialogContent } from "@/components/ui/dialog";
 import { DialogTrigger } from "@/components/ui/dialog";
@@ -26,6 +19,12 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/text-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Plus } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { type events as Event } from "@prisma/client";
+import { EventFormSchema } from "../models/models";
+import { createEvent } from "../actions/createEvent";
 import {
   convertHourToNumber,
   convertHourToString,
@@ -33,7 +32,7 @@ import {
   convertMinuteToString,
   getHours,
   getMinutes,
-} from "../utils";
+} from "utils";
 
 const hours = getHours();
 const minutes = getMinutes();

@@ -1,6 +1,6 @@
 export type Formula = "mini" | "maxi" | "medium";
 
-interface Subscription {
+type Subscription = {
   id: Formula;
   title: string;
   subtitle: string;
@@ -8,7 +8,7 @@ interface Subscription {
   numberOfGifts: number;
   colorsRange: string[];
   gradient: string;
-}
+};
 
 export const SUBSCRIPTIONS: Record<string, Subscription> = {
   // 🤏 MINI

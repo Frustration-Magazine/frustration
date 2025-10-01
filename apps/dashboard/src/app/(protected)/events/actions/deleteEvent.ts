@@ -1,7 +1,6 @@
 "use server";
 
-import { type Event, EventFormSchema } from "../models/models";
-import { deleteRecord, updateRecord } from "data-access/prisma";
+import { deleteRecord } from "data-access/prisma";
 
 type State = {
   success: string | null;

@@ -1,6 +1,6 @@
 "use server";
 
-import { type Event, EventFormSchema } from "../models/models";
+import { EventFormSchema, EventFormType } from "../models/models";
 import { updateRecord } from "data-access/prisma";
 
 type State = {
@@ -13,7 +13,7 @@ const ERROR = {
   error: "Il y a une erreur",
 };
 
-export async function updateEvent(data: Event): Promise<State> {
+export async function updateEvent(data: EventFormType): Promise<State> {
   const parsed = EventFormSchema.safeParse(data);
   if (!parsed.success) return ERROR;
 

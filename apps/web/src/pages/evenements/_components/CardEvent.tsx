@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
 import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
 import { IoMailOutline as MailIcon } from "react-icons/io5";
-import { type Event } from "../_models";
+import { type events as Event } from "@prisma/client";
 
 const formatDate = (date: Date, displayHour: boolean, timezone: string = "Europe/Paris") => {
   const options: Intl.DateTimeFormatOptions = {
