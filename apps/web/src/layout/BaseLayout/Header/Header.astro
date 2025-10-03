@@ -2,10 +2,10 @@
 import { Image } from "astro:assets";
 import frustrationLogo from "./frustration-logo.webp";
 
-import { Book, Calendar, Mail, User } from "lucide-react";
-import Banner from "./banners/Banner.astro";
+import SubscribersBanner from "./banners/SubscribersBanner.astro";
 import { SearchOverlay } from "./components/SearchOverlay";
 import { MenuOverlay } from "./components/MenuOverlay";
+import { Book, Calendar, Mail, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { fetchCategories } from "@/lib/wordpress";
@@ -84,4 +84,4 @@ const categories = await fetchCategories();
     />
   </div>
 </header>
-<Banner />
+<SubscribersBanner />

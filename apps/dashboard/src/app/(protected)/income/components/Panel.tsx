@@ -1,15 +1,20 @@
 "use client";
+
 import { Fragment } from "react";
-import { areSameMonth } from "utils";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { UpdateTipeeeDialog } from "./UpdateTipeee";
 import { Separator } from "@/components/ui/separator";
+import { UpdateTipeeeDialog } from "./UpdateTipeee";
+
 import Stripe from "../assets/stripe.png";
 import Tipeee from "../assets/tipeee.png";
 import Helloasso from "../assets/helloasso.png";
-import { cn } from "@/lib/utils";
+
 import type { Payment } from "data-access/_models";
+import { cn } from "@/lib/utils";
+import { areSameMonth } from "utils";
 import { aggregateByMonth, diffInPercent, inEuros } from "../_utils";
+
 const Entry = ({
   name,
   total,

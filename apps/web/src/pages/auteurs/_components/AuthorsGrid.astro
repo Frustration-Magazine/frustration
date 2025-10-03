@@ -1,23 +1,14 @@
 ---
+import AuthorCard from "@/pages/auteurs/_components/AuthorCard.astro";
+import type { Author } from "../_models";
 import { cn } from "@/lib/utils";
-import AuthorCard from "@/pages/_components/Auteurs/AuthorCard.astro";
 
-interface Props {
+type Props = {
   authors: Author[];
-  className?: string;
-}
-
-type Author = {
-  databaseId: number;
-  name: string;
-  slug: string;
-  description: string;
-  avatar: {
-    url: string;
-  };
+  className: string;
 };
 
-const { authors, className } = Astro.props;
+const { authors, className }: Props = Astro.props;
 ---
 
 <ul class={cn("grid grid-cols-1 gap-8 sm:grid-cols-2", className)}>

@@ -1,12 +1,12 @@
 ---
-interface Props {
+type Props = {
   name: string;
   slug: string;
   description: string;
   avatarUrl: string;
-}
+};
 
-const { name, slug, description, avatarUrl } = Astro.props;
+const { name, slug, description, avatarUrl }: Props = Astro.props;
 ---
 
 <li class="overflow-hidden rounded-xl bg-white shadow-md transition-shadow duration-200 hover:shadow-lg">

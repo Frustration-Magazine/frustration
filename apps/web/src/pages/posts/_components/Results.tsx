@@ -1,35 +1,12 @@
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CalendarIcon, TagIcon, UserIcon } from "lucide-react";
 
+import type { Post } from "../_models";
 import { JSON_HEADERS } from "@/constants";
 import { cn, formatPostTitle } from "@/lib/utils";
 import { getSearchPostsQuery } from "@/lib/wordpress";
-import { useState } from "react";
-
-type Post = {
-  readonly title: string;
-  readonly excerpt: string;
-  readonly slug: string;
-  readonly date: string;
-  readonly author: {
-    readonly node: {
-      readonly name: string;
-    };
-  };
-  readonly categories: {
-    readonly nodes: {
-      readonly name: string;
-      readonly slug: string;
-    }[];
-  };
-  readonly featuredImage: {
-    readonly node: {
-      readonly title: string;
-      readonly sourceUrl: string;
-      readonly altText: string;
-    };
-  };
-};
 
 type ResultsProps = {
   readonly term: string;

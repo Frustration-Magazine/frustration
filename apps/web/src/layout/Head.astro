@@ -1,5 +1,5 @@
 ---
-interface Props {
+type Props = {
   title: string;
   author: { node: { firstName: string; lastName: string } };
   description: string;
@@ -7,8 +7,9 @@ interface Props {
   width?: number;
   height?: number;
   mimeType?: string;
-}
-const { title, description, ogImageUrl, width, height, mimeType } = Astro.props;
+};
+
+const { title, description, ogImageUrl, width, height, mimeType }: Props = Astro.props;
 const permalink = new URL(Astro.url.pathname, Astro.site).href;
 const author = Astro.props.author?.node;
 const authorFullname = `${author?.firstName} ${author?.lastName}`;
