@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Payment } from "data-access/_models";
+import type { payments as Payment } from "@prisma/client";
 import { Chart } from "./Chart";
 import { Panel } from "./Panel";
 import NoData from "./NoData";

@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { type payments as Payment, type PaymentSource, type PaymentType } from "@prisma/client";
+import type { payments as Payment, PaymentSource, PaymentType } from "@prisma/client";
 import { convertUTCtoDate, truncateDateToDay, explicitDate, areSameMonth, truncateMonth } from "utils";
 import { convertCountryInitials, prettifyName } from "utils";
 

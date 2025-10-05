@@ -6,7 +6,7 @@ import { capitalizeFirst } from "utils/";
 import { formatExplicitMonth } from "utils/";
 import { cn } from "@/lib/utils";
 import { inEuros, debounce } from "../_utils";
-import type { Payment, PaymentSource } from "data-access/_models";
+import type { payments as Payment } from "@prisma/client";
 import type { Dispatch, SetStateAction } from "react";
 
 type PaymentChart = Omit<Payment, "date" | "type"> & {

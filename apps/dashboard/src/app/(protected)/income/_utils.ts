@@ -1,4 +1,4 @@
-import type { Payment, PaymentType } from "data-access/_models";
+import type { payments as Payment, PaymentType } from "@prisma/client";
 
 /* Convert number in euros */
 /* ----------------------- */

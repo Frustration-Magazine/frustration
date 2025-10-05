@@ -102,6 +102,7 @@ enum PaymentType {
   subscription_creation
   subscription_update
   donation
+  other
 }
 
 // ***********

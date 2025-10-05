@@ -10,7 +10,7 @@ import Stripe from "../assets/stripe.png";
 import Tipeee from "../assets/tipeee.png";
 import Helloasso from "../assets/helloasso.png";
 
-import type { Payment } from "data-access/_models";
+import type { payments as Payment } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { areSameMonth } from "utils";
 import { aggregateByMonth, diffInPercent, inEuros } from "../_utils";

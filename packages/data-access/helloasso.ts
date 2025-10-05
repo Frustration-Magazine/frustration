@@ -1,4 +1,4 @@
-import { type payments as Payment, type PaymentSource, type PaymentType } from "@prisma/client";
+import type { payments as Payment, PaymentSource, PaymentType } from "@prisma/client";
 import { areSameMonth, explicitDate, truncateMonth } from "utils";
 
 /* ----------------------- */
