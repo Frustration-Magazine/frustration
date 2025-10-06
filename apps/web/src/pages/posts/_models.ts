@@ -17,8 +17,14 @@ export type Post = {
   readonly featuredImage: {
     readonly node: {
       readonly title: string;
-      readonly sourceUrl: string;
       readonly altText: string;
+      readonly caption: string;
+      readonly sourceUrl: string;
+      readonly mediaDetails: {
+        readonly width: number;
+        readonly height: number;
+      };
+      readonly mimeType: string;
     };
   };
 };

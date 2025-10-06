@@ -12,15 +12,17 @@ import { PostSummary } from "./components/PostSummary";
 
 import "@/styles/wordpress.css";
 import { cn, formatPostTitle } from "@/lib/utils";
+import type { Post } from "@/pages/posts/_models";
+
+type Props = Post;
 
 const {
   title,
   author: { node: author },
   categories: { nodes: categories },
   date,
-} = Astro.props;
-
-const featuredImage = Astro.props?.featuredImage?.node;
+  featuredImage: { node: featuredImage },
+}: Post = Astro.props;
 ---
 
 <PageLayout {...Astro.props}>

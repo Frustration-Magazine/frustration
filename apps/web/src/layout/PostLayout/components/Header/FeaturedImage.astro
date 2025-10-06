@@ -3,11 +3,15 @@ import { Image } from "astro:assets";
 const { featuredImage } = Astro.props;
 ---
 
-<Image
-  class="mb-[25px] w-full object-cover"
-  title={featuredImage.title}
-  src={featuredImage.sourceUrl}
-  alt={featuredImage.altText}
-  width="1000"
-  height="600"
-/>
+<div class="featured-image mb-6">
+  <Image
+    class="mb-4 w-full object-cover"
+    title={featuredImage.title}
+    src={featuredImage.sourceUrl}
+    alt={featuredImage.altText}
+    width="1000"
+    height="600"
+  />
+
+  {featuredImage?.caption && <Fragment set:html={featuredImage.caption} />}
+</div>

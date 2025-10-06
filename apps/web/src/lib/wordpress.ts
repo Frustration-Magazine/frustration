@@ -48,6 +48,7 @@ export async function fetchPostBySlug({ slug }: any) {
             node {
               title(format: RENDERED)
               altText
+              caption
               sourceUrl
               mediaDetails { height width }
               mimeType
