@@ -1,7 +1,7 @@
 "use client";
 
 // Inspired by react-hot-toast library
-import * as React from "react";
+import { useState, useEffect } from "react";
 
 import type { ToastActionElement, ToastProps } from "../components/ui/toast";
 
@@ -168,9 +168,9 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
-  const [state, setState] = React.useState<State>(memoryState);
+  const [state, setState] = useState<State>(memoryState);
 
-  React.useEffect(() => {
+  useEffect(() => {
     listeners.push(setState);
     return () => {
       const index = listeners.indexOf(setState);

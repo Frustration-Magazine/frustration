@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useToast } from "./useToast";
 
 type Status = {
@@ -9,7 +9,7 @@ type Status = {
 export const useFormToast = (state: Status) => {
   const { toast } = useToast();
 
-  React.useEffect(
+  useEffect(
     function displayToaster() {
       if (state?.success) {
         setTimeout(() => {

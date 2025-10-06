@@ -1,27 +1,19 @@
 "use client";
 
-// 🔩 Base
-import React from "react";
-
-// 🧱 Components
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-
-// 🪝 Hooks
 import { useToast } from "@/hooks/useToast";
+import { redeploy } from "../_actions";
 
-// 🖼️ Assets
 import { ImUpload } from "react-icons/im";
 import { TbLoaderQuarter } from "react-icons/tb";
-
-// 💥 Actions
-import { redeploy } from "../_actions";
 
 const isProduction = process.env.NODE_ENV === "production";
 
 export default function RedeployButton() {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [requestStatus, setRequestStatus] = React.useState<
+  const [requestStatus, setRequestStatus] = useState<
     | {
         success: string | null;
         error: string | null;
@@ -37,7 +29,7 @@ export default function RedeployButton() {
   };
 
   const { toast } = useToast();
-  React.useEffect(
+  useEffect(
     function displayToaster() {
       if (requestStatus?.success) {
         toast({

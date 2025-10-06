@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+
+import { useState } from "react";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import {
@@ -128,7 +129,7 @@ const columnsCustomers: ColumnDef<Customer>[] = [
 /* =============== */
 
 export const CustomersTable = ({ customers }: { customers: Customer[] }) => {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
   const filteredCustomers = customers;
   const table = useReactTable<Customer>({
     data: filteredCustomers,

@@ -1,3 +1,5 @@
+import { JSON_HEADERS } from "@/constants";
+
 async function fetchWordpress({ query, variables = {} }: any) {
   const PUBLIC_WORDPRESS_GRAPHQL_API = import.meta.env.PUBLIC_WORDPRESS_GRAPHQL_API;
 
@@ -10,7 +12,7 @@ async function fetchWordpress({ query, variables = {} }: any) {
 
   try {
     const headers = {
-      "Content-Type": "application/json",
+      ...JSON_HEADERS,
       ...(username && password ? { Authorization: "Basic " + btoa(`${username}:${password}`) } : null),
     };
 

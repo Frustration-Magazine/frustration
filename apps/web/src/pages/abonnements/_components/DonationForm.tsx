@@ -1,4 +1,4 @@
-import React, { useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import {
   PaymentElement,
   AddressElement,
@@ -50,7 +50,7 @@ export default function StripeForm() {
   const [addToNewsletter, setAddToNewsletter] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const disableCheckout = isLoading || !stripe || !elements;
 

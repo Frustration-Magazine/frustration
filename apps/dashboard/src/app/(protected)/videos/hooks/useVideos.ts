@@ -1,9 +1,8 @@
 "use client";
 
-// 🔩 Base
-import React from "react";
+import { useState, useEffect } from "react";
+import { YoutubeResourceType, getYoutubeResourceId } from "data-access/youtube";
 
-// 💥 Server actions
 import {
   fetchSuggestions,
   createMediaRecord,
@@ -11,9 +10,6 @@ import {
   readMediaByType,
   refreshMediasInDatabase,
 } from "../_actions";
-
-// 🔧 Libs
-import { YoutubeResourceType, getYoutubeResourceId } from "data-access/youtube";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -23,17 +19,17 @@ type Props = {
 
 const useVideos = ({ type }: Props) => {
   /* Term */
-  const [searchTerm, setSearchTerm] = React.useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   /* Suggestions */
-  const [suggestions, setSuggestions] = React.useState<any>([]);
-  const [loadingSuggestions, setLoadingSuggestions] = React.useState<boolean>(false);
+  const [suggestions, setSuggestions] = useState<any>([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
 
   /* Medias */
-  const [medias, setMedias] = React.useState<any>([]);
-  const [loadingMedias, setLoadingMedias] = React.useState(true);
+  const [medias, setMedias] = useState<any>([]);
+  const [loadingMedias, setLoadingMedias] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     (async function () {
       const medias = await readMediaByType(type);
       setMedias(medias);

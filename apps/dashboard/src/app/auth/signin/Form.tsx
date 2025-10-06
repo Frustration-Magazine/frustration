@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useActionState, useEffect } from "react";
 
 import { BiMailSend } from "react-icons/bi";
 
@@ -22,10 +22,10 @@ const initial: Status = {
 };
 
 export default function () {
-  const [state, sendLink, pending] = React.useActionState(serverAction, initial);
+  const [state, sendLink, pending] = useActionState(serverAction, initial);
 
   const { toast } = useToast();
-  React.useEffect(() => {
+  useEffect(() => {
     if (state.success) toast({ title: "✅ Succès", description: state.success });
     if (state.error)
       toast({
