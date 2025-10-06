@@ -4,7 +4,7 @@ export const LOCAL_SITE_URL = "http://localhost:4321/";
 export const OG_IMAGES_URL = `${SITE_URL}img/og/`;
 
 // 🎯 Data
-export const SUBSCRIBERS_TARGET = 2000;
+export const SUBSCRIBERS_TARGET = 5000;
 
 // 📦 Headers
 export const JSON_HEADERS = {
