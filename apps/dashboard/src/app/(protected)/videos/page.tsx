@@ -1,12 +1,10 @@
 import VideosCard from "./components/VideosCard";
 import RedeployButton from "./components/RedeployButton";
-import { redirect } from "next/navigation";
-import { signedIn } from "@/auth";
+import { redirectIfNotSignedIn } from "@/app/auth/auth";
 import { CardsDescription } from "./_models";
 
 async function Page() {
-  const isSignedIn = await signedIn();
-  if (!isSignedIn) redirect("/auth/signin");
+  await redirectIfNotSignedIn();
 
   return (
     <>

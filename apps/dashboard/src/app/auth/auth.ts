@@ -2,6 +2,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "data-access/prisma";
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
+import { redirect } from "next/navigation";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -10,3 +11,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 });
 
 export const signedIn = async () => !!(await auth())?.user;
+export const redirectIfNotSignedIn = async () => {
+  const isSignedIn = await signedIn();
+  if (!isSignedIn) redirect("/auth/signin");
+};

@@ -1,8 +1,7 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getPayments } from "./_actions";
 import { filterByTypes } from "./_utils";
-import { redirect } from "next/navigation";
-import { signedIn } from "@/auth";
+import { redirectIfNotSignedIn } from "@/app/auth/auth";
 import { cn } from "@/lib/utils";
 import { ChartPanel } from "./components/ChartPanel";
 import { UpdateButton } from "./components/UpdateButton";
@@ -24,8 +23,7 @@ const PaymentsType = ({ value, children }: { value: string; children: string }) 
 );
 
 async function Page() {
-  const isSignedIn = await signedIn();
-  if (!isSignedIn) redirect("/auth/signin");
+  await redirectIfNotSignedIn();
 
   const payments = await getPayments();
   const donationsAndSubscriptions = filterByTypes(payments, ["subscription", "donation"]);

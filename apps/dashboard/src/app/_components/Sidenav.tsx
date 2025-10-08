@@ -58,7 +58,10 @@ const LINKS: Link[] = [
   },
 ];
 
-const SignOut = ({ action }: { action: () => void }) => {
+const SignOut = () => {
+  const router = useRouter();
+  const goToSignOut = () => router.push("/auth/signout");
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -76,26 +79,17 @@ const SignOut = ({ action }: { action: () => void }) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Annuler</AlertDialogCancel>
-          <form action={action}>
-            <AlertDialogAction asChild>
-              <Button type="submit">Se déconnecter</Button>
-            </AlertDialogAction>
-          </form>
+          <AlertDialogAction asChild>
+            <Button onClick={goToSignOut}>Se déconnecter</Button>
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
 };
 
-/*********************************/
-/*           🚀 UI               */
-/*********************************/
-
 const Sidenav = () => {
-  const router = useRouter();
   const currentPath = usePathname();
-
-  const goToSignOut = () => router.push("/auth/signout");
 
   return (
     <aside className="flex w-60 shrink-0 flex-col items-center justify-between bg-black pb-4">
@@ -119,7 +113,7 @@ const Sidenav = () => {
           );
         })}
       </ul>
-      <SignOut action={goToSignOut} />
+      <SignOut />
     </aside>
   );
 };

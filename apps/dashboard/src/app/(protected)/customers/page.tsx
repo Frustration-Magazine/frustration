@@ -1,10 +1,8 @@
-import { signedIn } from "@/app/auth/auth";
-import { redirect } from "next/navigation";
+import { redirectIfNotSignedIn } from "@/app/auth/auth";
 import Client from "./_client";
 
 async function Page() {
-  const isSignedIn = await signedIn();
-  if (!isSignedIn) redirect("/auth/signin");
+  await redirectIfNotSignedIn();
   return <Client />;
 }
 
