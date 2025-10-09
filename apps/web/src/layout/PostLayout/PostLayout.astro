@@ -21,8 +21,10 @@ const {
   author: { node: author },
   categories: { nodes: categories },
   date,
-  featuredImage: { node: featuredImage },
 }: Post = Astro.props;
+
+// featuredImage may be undefined
+const featuredImage = Astro.props.featuredImage?.node;
 ---
 
 <PageLayout {...Astro.props}>
