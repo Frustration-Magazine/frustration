@@ -1,6 +1,6 @@
 ---
 import PageLayout from "@/layout/PageLayout/PageLayout.astro";
-import CardEvent from "./_components/CardEvent";
+import { EventsTabs } from "./_components/EventsTabs";
 import H2 from "@/components/H2";
 import H3 from "@/components/H3";
 
@@ -13,19 +13,21 @@ import { OG_IMAGES_URL } from "@/constants";
 
 export const prerender = false;
 
-const ogImageUrl = `${OG_IMAGES_URL}evenements.webp`;
-
 const TITLE = "Événements";
 const DESCRIPTION = "Liste des événements à venir autour de Frustration Magazine et Nicolas Framont";
+const ogImageUrl = `${OG_IMAGES_URL}evenements.webp`;
 
 const { data: events }: { data: Event[] } = await readRecords({
   table: "events",
-  where: {},
-  orderBy: { date: "asc" },
+  where: { displayEvent: true },
+  orderBy: {},
   success: "Events read!",
 });
 
-const displayedEvents = events.filter(({ date, displayEvent }) => displayEvent && date >= new Date());
+const futureEvents = events
+  .filter(({ date }) => date >= new Date())
+  .sort((a, b) => a.date.getTime() - b.date.getTime());
+const pastEvents = events.filter(({ date }) => date < new Date()).sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
 
 <PageLayout
@@ -35,36 +37,21 @@ const displayedEvents = events.filter(({ date, displayEvent }) => displayEvent &
 >
   <article slot="content">
     <H2>Frustra'tour</H2>
-    <H3 className="text-center">Venez rencontrer l'équipe de Frustration Magazine lors de nos événements publics !</H3>
-    <section class="relative mt-12 space-y-16">
-      {
-        displayedEvents.length ? (
-          <>
-            {displayedEvents.map((event, index) => (
-              <div class="relative z-10">
-                <div class="absolute z-10 opacity-5" />
-                <CardEvent {event}>
-                  <Image
-                    src={saintLuigi}
-                    alt={`Couverture de "Saint Luigi" de Nicolas Framont`}
-                    width="200"
-                    height="500"
-                  />
-                </CardEvent>
-                {index > 0 && (
-                  <div class="after-top-[-5px] after-left-1/2 after-transform absolute left-1/2 top-0 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCCF00]" />
-                )}
-              </div>
-            ))}
-            <div class="mt-0! absolute left-1/2 top-0 h-full w-2 -translate-x-1/2 bg-[#FCCF00]" />
-          </>
-        ) : (
-          <p class="text-center">
-            Aucun événement à venir pour l'instant, n'hésitez pas à nous suivre sur nos réseaux sociaux pour ne rien
-            rater de l'actualité de Frustration Magazine 😁
-          </p>
-        )
-      }
-    </section>
+    <H3 className="mb-8 text-center"
+      >Venez rencontrer l'équipe de Frustration Magazine lors de nos événements publics !</H3
+    >
+
+    <EventsTabs
+      client:load
+      futureEvents={futureEvents}
+      pastEvents={pastEvents}
+    >
+      <Image
+        src={saintLuigi}
+        alt={`Couverture de "Saint Luigi" de Nicolas Framont`}
+        width="200"
+        height="500"
+      />
+    </EventsTabs>
   </article>
 </PageLayout>

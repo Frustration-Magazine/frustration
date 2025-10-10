@@ -1,21 +1,8 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogClose,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DialogTrigger } from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -26,263 +13,91 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Form, FormField } from "@/components/ui/form";
-import { DatePicker } from "@/components/ui/date-picker";
-import { Textarea } from "@/components/ui/text-area";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
-import { Trash, PenIcon } from "lucide-react";
+import { Trash, PenIcon, EyeOff, Eye } from "lucide-react";
 import { IoMailOutline as MailIcon } from "react-icons/io5";
 
 import { cn } from "@/lib/utils";
 import { type events as Event } from "@prisma/client";
-import { EventFormSchema } from "../models/models";
+import { EventFormType } from "../models/models";
 import { updateEvent } from "../actions/updateEvent";
 import { deleteEvent } from "../actions/deleteEvent";
-import {
-  formatDateHour,
-  convertHourToNumber,
-  convertHourToString,
-  convertMinuteToNumber,
-  convertMinuteToString,
-  getHours,
-  getMinutes,
-} from "utils";
+import { EventFormModal } from "./EventFormModal";
+import { formatDateHour } from "utils";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Toggle } from "@radix-ui/react-toggle";
 
-type EventFormType = z.infer<typeof EventFormSchema>;
+export const CardEvent = ({
+  event,
+  setEvents,
+}: {
+  event: Event;
+  setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
+}) => {
+  const [displayEvent, setDisplayEvent] = useState(event.displayEvent);
+  const { date, displayHour, city, place, description, contact, displayContact } = event;
 
-function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [event, setEvent] = useState<Event | null>(initialEvent);
+  const handleUpdate = async (data: EventFormType) => {
+    const { success } = await updateEvent(data);
+    if (!success) return;
 
-  const form = useForm<EventFormType>({
-    resolver: zodResolver(EventFormSchema),
-    defaultValues: { ...initialEvent },
-  });
+    const updatedEvent = { ...event, ...data } as Event;
+    setEvents((prevEvents) => prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev)));
+  };
 
-  async function onSubmitUpdate(data: EventFormType) {
-    const result = await updateEvent(data);
-
-    if (result.success) {
-      form.reset(data);
-      setIsOpen(false);
-    }
-  }
-
-  async function onSubmitDelete(id: number | undefined) {
-    if (!id) return;
+  const handleDelete = async (id: number) => {
     const { success } = await deleteEvent(id);
+    if (!success) return;
 
-    if (success) {
-      setEvent(null);
+    setEvents((prevEvents) => prevEvents.filter((e) => e.id !== id));
+  };
+
+  const handleToggleDisplay = async (checked: boolean) => {
+    setDisplayEvent(checked);
+
+    const { success } = await updateEvent({ ...event, displayEvent: checked });
+    if (!success) {
+      // Revert on error
+      setDisplayEvent(!checked);
+      return;
     }
-  }
 
-  form.watch("displayEvent");
-  const { date, displayHour, city, place, description, contact, displayEvent } = form.getValues();
+    // Update the events list
+    const updatedEvent = { ...event, displayEvent: checked } as Event;
+    setEvents((prevEvents) => prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev)));
+  };
 
-  useEffect(() => {
-    onSubmitUpdate({ ...form.getValues(), displayEvent });
-  }, [displayEvent]);
-
-  if (!event) return null;
-
-  const hours = getHours();
-  const minutes = getMinutes();
-
-  const EditButton = (
-    <Dialog
-      open={isOpen}
-      onOpenChange={setIsOpen}
-    >
-      <TooltipProvider delayDuration={0}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <DialogTrigger asChild>
-              <button className="cursor-pointer rounded-md bg-black p-2 text-white">
-                <PenIcon size={16} />
-              </button>
-            </DialogTrigger>
-          </TooltipTrigger>
-          <TooltipContent className="bg-black text-white">
-            <p>Modifier</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Modifier l'événement</DialogTitle>
-          <DialogDescription>Cliquez sur enregistrer lorsque vous avez terminé.</DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form
-            className={cn("w-[650px] space-y-8")}
-            onSubmit={form.handleSubmit(onSubmitUpdate)}
-          >
-            <div className="flex items-center gap-4">
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <div className="grow">
-                    <Label htmlFor="date">Date</Label>
-                    <DatePicker
-                      value={field.value}
-                      onChange={field.onChange}
-                      className="flex w-full"
-                      name="date"
-                    />
-                  </div>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <div className="grow">
-                    <Label htmlFor="hour">Heure</Label>
-                    <div className="flex items-center gap-2">
-                      <Select
-                        value={convertHourToString(field.value.getHours())}
-                        onValueChange={(hours) => {
-                          const newDate = new Date(field.value);
-                          const hoursNumber = convertHourToNumber(hours);
-                          newDate.setHours(hoursNumber);
-                          field.onChange(newDate);
-                        }}
-                      >
-                        <SelectTrigger className="cursor-pointer">
-                          <SelectValue placeholder="Theme" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {hours.map((hour) => (
-                            <SelectItem
-                              key={hour}
-                              value={convertHourToString(hour)}
-                            >
-                              {hour}h
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <Select
-                        value={convertMinuteToString(field.value.getMinutes())}
-                        onValueChange={(minutes) => {
-                          const newDate = new Date(field.value);
-                          const minutesNumber = convertMinuteToNumber(minutes);
-                          newDate.setMinutes(minutesNumber);
-                          field.onChange(newDate);
-                        }}
-                      >
-                        <SelectTrigger className="cursor-pointer">
-                          <SelectValue placeholder="Theme" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {minutes.map((minute) => (
-                            <SelectItem
-                              key={minute}
-                              value={convertMinuteToString(minute)}
-                            >
-                              {minute}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                )}
-              />
-            </div>
-            <div className="flex items-center gap-4">
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <div className="grow">
-                    <Label htmlFor="city">Ville</Label>
-                    <Input {...field} />
-                  </div>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="place"
-                render={({ field }) => (
-                  <div className="grow">
-                    <Label htmlFor="place">Lieu</Label>
-                    <Input {...field} />
-                  </div>
-                )}
-              />
-            </div>
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <div>
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    {...field}
-                    className="max-h-[7lh]"
-                  />
-                </div>
-              )}
-            />
-            <div className="flex items-center gap-4">
-              <FormField
-                control={form.control}
-                name="contact"
-                render={({ field }) => (
-                  <div className="grow">
-                    <Label htmlFor="contact">Email de contact</Label>
-                    <Input
-                      type="email"
-                      {...field}
-                    />
-                  </div>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="displayContact"
-                render={({ field }) => (
-                  <div className="mt-5 flex items-center gap-1.5">
-                    <Checkbox
-                      id="displayContact"
-                      name="displayContact"
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                    <Label
-                      htmlFor="displayContact"
-                      className="cursor-pointer"
-                    >
-                      Afficher publiquement l'email de contact
-                    </Label>
-                  </div>
-                )}
-              />
-            </div>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">Annuler</Button>
-              </DialogClose>
-              <Button type="submit">Enregistrer</Button>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+  const EditButton = () => (
+    <EventFormModal
+      title="Modifier l'événement"
+      description="Cliquez sur enregistrer lorsque vous avez terminé."
+      event={event}
+      onSubmit={handleUpdate}
+      trigger={
+        <TooltipProvider delayDuration={200}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DialogTrigger asChild>
+                <button className="cursor-pointer rounded-md bg-black p-2 text-white">
+                  <PenIcon size={16} />
+                </button>
+              </DialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent className="bg-black text-white">
+              <p>Modifier</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      }
+    />
   );
 
-  const DeleteButton = (
+  const DeleteButton = () => (
     <AlertDialog>
-      <TooltipProvider delayDuration={0}>
+      <TooltipProvider delayDuration={200}>
         <Tooltip>
           <TooltipTrigger asChild>
             <AlertDialogTrigger asChild>
@@ -304,13 +119,35 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
           <AlertDialogCancel>Annuler</AlertDialogCancel>
           <AlertDialogAction
             className="bg-red-500 hover:bg-red-700"
-            onClick={() => onSubmitDelete(event?.id)}
+            onClick={() => handleDelete(event.id)}
           >
             Supprimer
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  );
+
+  const DisplayEventToggle = () => (
+    <TooltipProvider delayDuration={200}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Toggle
+            pressed={displayEvent}
+            onPressedChange={handleToggleDisplay}
+            className={cn(
+              "cursor-pointer rounded-md p-2 text-white transition-colors data-[state=on]:text-white",
+              displayEvent ? "bg-green-500 hover:bg-green-600" : "bg-gray-400 hover:bg-gray-500",
+            )}
+          >
+            {displayEvent ? <Eye size={16} /> : <EyeOff size={16} />}
+          </Toggle>
+        </TooltipTrigger>
+        <TooltipContent className="bg-black text-white">
+          <p>{displayEvent ? "Masquer l'événement du site" : "Afficher l'événement sur le site"}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 
   return (
@@ -328,50 +165,47 @@ function CardEvent({ event: initialEvent }: Readonly<{ event: Event }>) {
             </div>
           </div>
           <div className="flex items-start gap-3">
-            {EditButton}
-            {DeleteButton}
+            <DisplayEventToggle />
+            <EditButton />
+            <DeleteButton />
           </div>
         </CardTitle>
       </CardHeader>
+
       <CardContent>{description}</CardContent>
+
       <CardFooter className="block text-sm">
         <div className="flex w-full items-center justify-between gap-1">
-          <i> Entrée libre</i>
-          <div className="flex items-center gap-1">
-            <MailIcon />
-            <a
-              href={`mailto:${contact}`}
-              className="underline"
+          {/* <i> Entrée libre</i> */}
+          {displayContact && contact && (
+            <div className="flex items-center gap-1">
+              <MailIcon />
+              <a
+                href={`mailto:${contact}`}
+                className="underline"
+              >
+                {contact}
+              </a>
+            </div>
+          )}
+        </div>
+
+        {/* <div className="mt-4 flex items-center gap-1.5">
+          <div className={cn("flex cursor-pointer items-center justify-center gap-2")}>
+            <Switch
+              id="displayEvent"
+              checked={displayEvent}
+              onCheckedChange={handleToggleDisplay}
+            />
+            <Label
+              htmlFor="displayEvent"
+              className="text-base"
             >
-              {contact}
-            </a>
+              Afficher l'événement sur le site
+            </Label>
           </div>
-        </div>
-        <div className="mt-4 flex items-center gap-1.5">
-          <FormField
-            control={form.control}
-            name="displayEvent"
-            render={({ field }) => (
-              <div className={cn("flex cursor-pointer items-center justify-center gap-2")}>
-                <Switch
-                  id="displayEvent"
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  name="displayEvent"
-                />
-                <Label
-                  htmlFor="displayEvent"
-                  className="text-base"
-                >
-                  Afficher l'événement sur le site
-                </Label>
-              </div>
-            )}
-          />
-        </div>
+        </div> */}
       </CardFooter>
     </Card>
   );
-}
-
-export default CardEvent;
+};

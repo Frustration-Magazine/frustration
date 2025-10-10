@@ -30,13 +30,9 @@ const BookCoverBackground = ({ bookImage }: { bookImage: any }) => (
   <div className={cn("absolute bottom-0 right-0 h-fit", "rotate-[15deg] opacity-15", "sm:opacity-25")}>{bookImage}</div>
 );
 
-const LeftBorderColored = () => <div className="absolute h-full w-1 bg-[#FCCF00]" />;
+const LeftBorderColored = () => <div className="bg-logo-yellow absolute h-full w-1" />;
 
-/* ============== */
-/* |||||||||||||| */
-/* ============== */
-
-function CardEvent({ event, children }: Readonly<{ event: Event; children: ReactNode }>) {
+export const CardEvent = ({ event, children }: Readonly<{ event: Event; children: ReactNode }>) => {
   return (
     <Card className={cn("relative left-0 overflow-hidden bg-white", "first:after:content-none")}>
       <LeftBorderColored />
@@ -52,10 +48,10 @@ function CardEvent({ event, children }: Readonly<{ event: Event; children: React
       </CardHeader>
       <CardContent className={cn("w-full text-sm", "sm:w-[75%] sm:text-base")}>
         <p>{event.description}</p>
-        <br />
-        <i> Entrée libre</i>
+        {/* <br />
+        <i> Entrée libre</i> */}
       </CardContent>
-      {event.displayContact && (
+      {event.displayContact && event.contact && (
         <CardFooter className="flex items-center gap-1 text-sm">
           <MailIcon />
           <a
@@ -68,6 +64,4 @@ function CardEvent({ event, children }: Readonly<{ event: Event; children: React
       )}
     </Card>
   );
-}
-
-export default CardEvent;
+};

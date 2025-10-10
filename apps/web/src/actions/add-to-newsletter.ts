@@ -6,8 +6,8 @@ export async function addSubscriberToNewsletter({
   lastName,
 }: {
   email: string;
-  firstName: string | undefined;
-  lastName: string | undefined;
+  firstName?: string;
+  lastName?: string;
 }) {
   // ❌ Early return if the api key is not set
   if (!process.env.RESEND_API_KEY) {
