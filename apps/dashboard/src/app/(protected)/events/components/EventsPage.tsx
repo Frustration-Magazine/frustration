@@ -8,6 +8,7 @@ import { SortToggle } from "./SortToggle";
 import { AddEvent } from "./AddEvent";
 
 import { type events as Event } from "@prisma/client";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
 const now = new Date();
@@ -20,6 +21,7 @@ export const EventsPage = ({ events: initialEvents }: { events: Event[] }) => {
   const [futureSortOrder, setFutureSortOrder] = useState<SortOrder>("asc");
   const [pastSortOrder, setPastSortOrder] = useState<SortOrder>("desc");
   const [activeTab, setActiveTab] = useState<"future" | "past">("future");
+  const isMobile = useIsMobile();
 
   const sortEvents = (eventsList: Event[], sortOrder: SortOrder) => {
     return [...eventsList].sort((a, b) => {
@@ -37,6 +39,13 @@ export const EventsPage = ({ events: initialEvents }: { events: Event[] }) => {
   const isSortingDisabled =
     (activeTab === "future" && futureEvents.length === 0) || (activeTab === "past" && pastEvents.length === 0);
 
+  const eventsToDisplay = useMemo(() => {
+    return [
+      { tab: "future", label: "à venir", events: sortedFutureEvents },
+      { tab: "past", label: "passés", events: sortedPastEvents },
+    ];
+  }, [sortedFutureEvents, sortedPastEvents]);
+
   const handleToggleSort = () => {
     if (activeTab === "future") {
       setFutureSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
@@ -51,31 +60,25 @@ export const EventsPage = ({ events: initialEvents }: { events: Event[] }) => {
       onValueChange={(v) => setActiveTab(v as "future" | "past")}
       className="h-full w-full space-y-4"
     >
-      <header className="grid grid-cols-4">
+      <header className="flex flex-wrap gap-3 lg:grid lg:grid-cols-4 lg:gap-0">
         <AddEvent
           setEvents={setEvents}
-          className="col-span-1 mr-auto h-full"
+          className="order-1 flex-1 lg:order-none lg:col-span-1 lg:mr-auto lg:h-full lg:flex-none"
         />
 
-        <TabsList className="col-span-2 mx-auto h-full bg-black/90">
-          <TabsTrigger
-            value="future"
-            className={cn(
-              "cursor-pointer px-4 text-lg text-white",
-              "data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:text-black",
-            )}
-          >
-            Événements à venir ({futureEvents.length})
-          </TabsTrigger>
-          <TabsTrigger
-            value="past"
-            className={cn(
-              "cursor-pointer px-4 text-lg text-white",
-              "data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:text-black",
-            )}
-          >
-            Événements passés ({pastEvents.length})
-          </TabsTrigger>
+        <TabsList className="order-3 mx-auto w-full bg-black/90 lg:order-none lg:col-span-2 lg:h-full lg:w-auto">
+          {eventsToDisplay.map(({ tab, label, events }) => (
+            <TabsTrigger
+              key={tab}
+              value={tab}
+              className={cn(
+                "flex-1 cursor-pointer px-2 text-sm text-white lg:flex-none lg:px-4 lg:text-lg",
+                "data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:text-black",
+              )}
+            >
+              {isMobile ? label : `Événements ${label}`} ({events.length})
+            </TabsTrigger>
+          ))}
         </TabsList>
 
         <SortToggle
@@ -83,35 +86,26 @@ export const EventsPage = ({ events: initialEvents }: { events: Event[] }) => {
           sortOrder={currentSortOrder}
           disabled={isSortingDisabled}
           activeTab={activeTab}
-          className="col-span-1 ml-auto h-full"
+          className="order-2 flex-1 lg:order-none lg:col-span-1 lg:ml-auto lg:h-full lg:flex-none"
         />
       </header>
 
       <section className="scrollbar-none mask-t-from-97% mask-b-from-97% mx-auto overflow-auto">
-        <TabsContent
-          value="future"
-          className="space-y-5 py-4"
-        >
-          {sortedFutureEvents.map((event) => (
-            <CardEvent
-              key={event.id}
-              event={event}
-              setEvents={setEvents}
-            />
-          ))}
-        </TabsContent>
-        <TabsContent
-          value="past"
-          className="space-y-5 py-4"
-        >
-          {sortedPastEvents.map((event) => (
-            <CardEvent
-              key={event.id}
-              event={event}
-              setEvents={setEvents}
-            />
-          ))}
-        </TabsContent>
+        {eventsToDisplay.map(({ tab, events }) => (
+          <TabsContent
+            key={tab}
+            value={tab}
+            className="space-y-5 py-4"
+          >
+            {events.map((event) => (
+              <CardEvent
+                key={event.id}
+                event={event}
+                setEvents={setEvents}
+              />
+            ))}
+          </TabsContent>
+        ))}
       </section>
     </Tabs>
   );

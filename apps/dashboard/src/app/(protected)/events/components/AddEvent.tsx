@@ -7,6 +7,7 @@ import { createEvent } from "../actions/createEvent";
 import { type events as Event } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const AddEvent = ({
   setEvents,
@@ -15,6 +16,8 @@ export const AddEvent = ({
   setEvents: Dispatch<SetStateAction<Event[]>>;
   className?: string;
 }) => {
+  const isMobile = useIsMobile();
+
   const onSubmit = async (data: EventFormType) => {
     const { success, result } = await createEvent(data);
     if (!success || !result) return;
@@ -31,7 +34,7 @@ export const AddEvent = ({
         <DialogTrigger asChild>
           <Button className={cn(className, "gap-2")}>
             <Plus />
-            <span>Ajouter un événement</span>
+            <span>{isMobile ? "Ajouter" : "Ajouter un événement"}</span>
           </Button>
         </DialogTrigger>
       }

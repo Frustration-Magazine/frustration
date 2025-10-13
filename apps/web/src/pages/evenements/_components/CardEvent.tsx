@@ -1,9 +1,8 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Mail, MapPin } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
-import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
-import { IoMailOutline as MailIcon } from "react-icons/io5";
 import { type events as Event } from "@prisma/client";
 
 const formatDate = (date: Date, displayHour: boolean, timezone: string = "Europe/Paris") => {
@@ -42,7 +41,7 @@ export const CardEvent = ({ event, children }: Readonly<{ event: Event; children
           {formatDate(event.date, event.displayHour)} - {event.city}
         </CardTitle>
         <CardDescription className={cn("flex items-center gap-1", "text-base", "sm:text-lg")}>
-          <MapMarkerIcon />
+          <MapPin size={16} />
           {event.place}
         </CardDescription>
       </CardHeader>
@@ -53,7 +52,10 @@ export const CardEvent = ({ event, children }: Readonly<{ event: Event; children
       </CardContent>
       {event.displayContact && event.contact && (
         <CardFooter className="flex items-center gap-1 text-sm">
-          <MailIcon />
+          <Mail
+            size={14}
+            className="mt-0.5"
+          />
           <a
             href={`mailto:${event.contact}`}
             className="underline"

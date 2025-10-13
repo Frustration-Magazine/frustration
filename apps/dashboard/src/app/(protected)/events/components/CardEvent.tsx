@@ -13,8 +13,8 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+// import { Switch } from "@/components/ui/switch";
+// import { Label } from "@/components/ui/label";
 
 import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
 import { Trash, PenIcon, EyeOff, Eye } from "lucide-react";
@@ -27,7 +27,6 @@ import { updateEvent } from "../actions/updateEvent";
 import { deleteEvent } from "../actions/deleteEvent";
 import { EventFormModal } from "./EventFormModal";
 import { formatDateHour } from "utils";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Toggle } from "@radix-ui/react-toggle";
 
 export const CardEvent = ({
