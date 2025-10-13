@@ -54,7 +54,7 @@ export default function RedeployButton() {
 
   return (
     <Button
-      size="xl"
+      size="lg"
       disabled={loading}
       className="flex gap-2 py-4"
       onClick={handleClick}
