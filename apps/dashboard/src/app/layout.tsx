@@ -1,13 +1,14 @@
-import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
-import Header from "./_components/Header";
-import Sidenav from "./_components/Sidenav";
-
-import { signedIn } from "@/auth";
-
-import { cn } from "@/lib/utils";
 import { Bebas_Neue, Inter, Poppins } from "next/font/google";
+
+import { Toaster } from "@/components/ui/toaster";
+import { Header } from "./_components/Header";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { Sidenav } from "./_components/Sidenav";
+
 import "./globals.css";
+import { signedIn } from "@/auth";
+import { cn } from "@/lib/utils";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -32,14 +33,6 @@ export const metadata: Metadata = {
   description: "Tableau de bord pour Frustration",
 };
 
-const Main = ({ children }: { children: React.ReactNode }) => (
-  <main className="flex grow overflow-auto">{children}</main>
-);
-
-/* ======================= */
-/*         🚀 UI           */
-/* ======================= */
-
 type Props = Readonly<{
   children: React.ReactNode;
 }>;
@@ -58,18 +51,20 @@ export default async function RootLayout({ children }: Props) {
           "bg-yellow bg-[url('/static/background.svg')] bg-cover bg-fixed",
         )}
       >
-        <Header />
-        <Main>
-          {isSignedIn ? (
-            <>
-              <Sidenav />
-              <div className="flex h-full grow flex-col items-center gap-3 overflow-auto p-8">{children}</div>
-            </>
-          ) : (
-            children
-          )}
-        </Main>
-        <Toaster />
+        <SidebarProvider>
+          <Sidenav />
+          <div className="flex flex-1 flex-col">
+            <Header />
+            <main className="flex grow overflow-auto">
+              {isSignedIn ? (
+                <div className="flex h-full grow flex-col items-center gap-3 overflow-auto p-8">{children}</div>
+              ) : (
+                children
+              )}
+            </main>
+          </div>
+          <Toaster />
+        </SidebarProvider>
       </body>
     </html>
   );

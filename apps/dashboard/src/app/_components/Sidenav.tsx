@@ -1,121 +1,92 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { type ReactNode, Fragment } from "react";
-
-import { FaCreditCard } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa6";
-import { IoIosPeople } from "react-icons/io";
-import { MdEvent as CalendarIcon } from "react-icons/md";
-import { RiLogoutBoxLine } from "react-icons/ri";
+import { usePathname } from "next/navigation";
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
 
-interface Link {
-  label: string;
-  icon: ReactNode;
-  href: string;
-  key: string;
-}
+import { cn } from "@/lib/utils";
+import { Calendar, CreditCard, Users, Video } from "lucide-react";
+import { SignOut } from "./SignOut";
 
-const LINKS: Link[] = [
+type Link = {
+  title: string;
+  url: string;
+  icon: React.ElementType;
+};
+
+const items: Link[] = [
   {
-    label: "Revenus",
-    icon: <FaCreditCard />,
-    href: "/income",
-    key: "income",
+    title: "Revenus",
+    url: "/income",
+    icon: CreditCard,
   },
   {
-    label: "Abonnés",
-    icon: <IoIosPeople size={18} />,
-    href: "/customers",
-    key: "customers",
+    title: "Abonnés",
+    url: "/customers",
+    icon: Users,
   },
   {
-    label: "Événements",
-    icon: <CalendarIcon size={18} />,
-    href: "/events",
-    key: "events",
+    title: "Événements",
+    url: "/events",
+    icon: Calendar,
   },
   {
-    label: "Vidéos",
-    icon: <FaYoutube />,
-    href: "/videos",
-    key: "videos",
+    title: "Vidéos",
+    url: "/videos",
+    icon: Video,
   },
 ];
 
-const SignOut = () => {
-  const router = useRouter();
-  const goToSignOut = () => router.push("/auth/signout");
-
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button
-          variant="secondary"
-          className="flex items-center gap-2"
-        >
-          <RiLogoutBoxLine />
-          <span>Se déconnecter</span>
-        </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Voulez-vous vraiment vous déconnecter ?</AlertDialogTitle>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Annuler</AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <Button onClick={goToSignOut}>Se déconnecter</Button>
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
-};
-
-const Sidenav = () => {
+export const Sidenav = () => {
   const currentPath = usePathname();
 
   return (
-    <aside className="flex w-60 shrink-0 flex-col items-center justify-between bg-black pb-4">
-      <ul className="text-yellow w-full space-y-2 px-3">
-        {LINKS.map(({ label, icon, href, key }) => {
-          return (
-            <Fragment key={key}>
-              <li>
-                <Link
-                  href={href}
-                  className={cn(
-                    "font-poppins flex items-center gap-4 whitespace-nowrap rounded-md px-5 py-2 text-lg transition duration-500",
-                    href === currentPath && "bg-yellow-hover",
-                  )}
-                >
-                  {icon} {label}
-                </Link>
-              </li>
-              <Separator className="bg-yellow-hover" />
-            </Fragment>
-          );
-        })}
-      </ul>
-      <SignOut />
-    </aside>
+    <Sidebar className="bg-black py-4 group-data-[side=left]:border-r-black group-data-[side=right]:border-l-black">
+      <SidebarContent className="flex flex-col justify-between bg-black">
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-yellow font-bebas mx-auto mb-8 text-2xl">Navigation</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="">
+              {items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link
+                      href={item.url}
+                      className={cn(
+                        "font-poppins text-yellow gap-4 whitespace-nowrap p-6 text-lg",
+                        item.url === currentPath && "bg-yellow-hover",
+                      )}
+                    >
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SignOut className="mx-auto" />
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
   );
 };
-
-export default Sidenav;
