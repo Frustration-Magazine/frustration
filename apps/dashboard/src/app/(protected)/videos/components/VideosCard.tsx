@@ -53,7 +53,7 @@ export default function VideosCard({ type, title, texts }: Props): React.ReactNo
     <Button
       className="mx-auto flex items-center gap-2 rounded-md"
       disabled={false /*loadingRecords */}
-      variant="inverted"
+      variant="outline"
     >
       <span> Ajouter </span>
     </Button>

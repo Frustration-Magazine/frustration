@@ -86,7 +86,7 @@ export const DownloadButton = ({
     <Button
       onClick={handleDownloadCustomersList}
       className="flex items-center gap-2 rounded-md"
-      variant="inverted"
+      variant="outline"
     >
       <IoIosDownload size={17} />
       <span> Télécharger </span>
