@@ -10,8 +10,10 @@ import saintLuigi from "@/assets/papers/saint-luigi.webp";
 import { readRecords } from "data-access/prisma";
 import { type events as Event } from "@prisma/client";
 import { OG_IMAGES_URL } from "@/constants";
+import { setCacheHeaders, CachePresets } from "@/lib/cache";
 
 export const prerender = false;
+setCacheHeaders(Astro.response.headers, CachePresets.medium);
 
 const TITLE = "Événements";
 const DESCRIPTION = "Liste des événements à venir autour de Frustration Magazine et Nicolas Framont";
