@@ -51,10 +51,10 @@ export default async function RootLayout({ children }: Props) {
           "bg-yellow bg-[url('/static/background.svg')] bg-cover bg-fixed",
         )}
       >
-        <SidebarProvider>
+        <SidebarProvider defaultOpen={isSignedIn}>
           <Sidenav />
           <div className="flex flex-1 flex-col">
-            <Header />
+            <Header isSignedIn={isSignedIn} />
             <main className="flex grow overflow-auto">
               {isSignedIn ? (
                 <div className="flex h-full grow flex-col items-center gap-3 overflow-auto p-8">{children}</div>

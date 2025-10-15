@@ -13,10 +13,10 @@ const DevelopmentBadge =
     </Badge>
   ) : null;
 
-export const Header = () => {
+export const Header = ({ isSignedIn }: { isSignedIn: boolean }) => {
   return (
     <header className="relative flex h-fit w-full items-center justify-center bg-black py-2">
-      <SidebarTrigger className="bg-secondary absolute left-4" />
+      {isSignedIn && <SidebarTrigger className="bg-secondary absolute left-4" />}
       <Link href="/">
         <h1 className="font-bebas text-yellow -mb-1.5 text-6xl uppercase">Dashboard</h1>
       </Link>
