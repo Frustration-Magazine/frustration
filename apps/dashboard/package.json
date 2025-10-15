@@ -9,7 +9,7 @@
     "build:prod": "infisical run --env=prod -- next build",
     "start": "infisical run --env=prod -- next start",
     "lint": "next lint",
-    "vercel-prisma": "cd ../../ && pnpm dlx prisma generate --schema='./packages/data-access/prisma/schema.prisma' && cd -",
+    "vercel-prisma": "cd ../../packages/data-access && prisma generate && prisma migrate deploy && cd -",
     "vercel-build": "pnpm run vercel-prisma && eslint . && next build"
   },
   "dependencies": {

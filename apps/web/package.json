@@ -4,15 +4,15 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "infisical run -- astro dev --host",
-    "dev:prod": "infisical run --env prod -- astro dev --host",
-    "start": "infisical run --env prod -- astro dev",
+    "dev:prod": "infisical run --env =rod -- astro dev --host",
+    "start": "infisical run --env=prod -- astro dev",
     "build": "infisical run -- astro build",
-    "build:prod": "infisical run --env prod -- astro build",
+    "build:prod": "infisical run --env=prod -- astro build",
     "preview": "infisical run -- astro preview",
     "astro": "infisical run -- astro",
     "lint": "eslint .",
-    "stripe-webhook": "stripe listen --forward-to http://localhost:4321/api/webhook",
-    "vercel-prisma": "cd ../../ && pnpm dlx prisma generate --schema='./packages/data-access/prisma/schema.prisma' && cd -",
+    "stripe-webhook:dev": "stripe listen --forward-to http://localhost:4321/api/webhook",
+    "vercel-prisma": "cd ../../packages/data-access && prisma generate && cd -",
     "vercel-build": "pnpm run vercel-prisma && eslint . && astro build"
   },
   "dependencies": {

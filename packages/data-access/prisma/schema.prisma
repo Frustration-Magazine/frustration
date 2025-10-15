@@ -7,10 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ********************
-// 🔑 Authentication  *
-// ********************
-
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -74,40 +70,15 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
-// **************
-// 💰 Payments  *
-// **************
-
 model payments {
   date      DateTime
   amount    Float
-  customers Int           @default(0)
   source    PaymentSource
   type      PaymentType
+  customers Int           @default(0)
 
   @@unique([date, source, type])
 }
-
-// Types
-// ******
-
-enum PaymentSource {
-  stripe
-  helloasso
-  tipeee
-}
-
-enum PaymentType {
-  subscription
-  subscription_creation
-  subscription_update
-  donation
-  other
-}
-
-// ***********
-// 📅 Events  *
-// ***********
 
 model events {
   id             Int      @id @default(autoincrement())
@@ -121,23 +92,18 @@ model events {
   displayEvent   Boolean  @default(true)
 }
 
-// ***********
-// 🎥 Media  *
-// ***********
-
 model media {
   id        String          @id
   type      MediaType
   source    MediaSource
   createdAt DateTime        @default(now())
-  video     media_video[]
   channel   media_channel?
   playlist  media_playlist?
+  video     media_video[]
 }
 
 model media_video {
   id                     String   @id
-  media                  media?   @relation(fields: [mediaId], references: [id])
   mediaId                String?
   title                  String
   description            String
@@ -149,22 +115,22 @@ model media_video {
   playlistId             String?
   publishedAt            DateTime
   createdAt              DateTime @default(now())
+  media                  media?   @relation(fields: [mediaId], references: [id])
 }
 
 model media_channel {
   id          String   @id
-  media       media?   @relation(fields: [mediaId], references: [id])
   mediaId     String?  @unique
   title       String
   description String
   thumbnail   String
   publishedAt DateTime
   createdAt   DateTime @default(now())
+  media       media?   @relation(fields: [mediaId], references: [id])
 }
 
 model media_playlist {
   id           String   @id
-  media        media?   @relation(fields: [mediaId], references: [id])
   mediaId      String?  @unique
   title        String
   description  String
@@ -173,10 +139,32 @@ model media_playlist {
   thumbnail    String
   publishedAt  DateTime
   createdAt    DateTime @default(now())
+  media        media?   @relation(fields: [mediaId], references: [id])
 }
 
-// Types
-// ******
+model authors {
+  id             String   @id @unique
+  name           String
+  email          String?  @default("")
+  xId            String?  @default("")
+  profilePicture String?  @default("")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+}
+
+enum PaymentSource {
+  stripe
+  helloasso
+  tipeee
+}
+
+enum PaymentType {
+  subscription_creation
+  subscription_update
+  donation
+  subscription
+  other
+}
 
 enum MediaSource {
   youtube

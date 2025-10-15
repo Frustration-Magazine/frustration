@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "build": "prisma generate",
-    "dev": "prisma generate && infisical run -- prisma db pull",
-    "migrate": "infisical run -- pnpx prisma migrate dev",
     "generate": "prisma generate",
-    "studio": "infisical run -- pnpx prisma studio",
+    "migrate": "infisical run -- prisma migrate dev",
+    "migrate:prod": "infisical run --env=prod -- prisma migrate deploy",
+    "pull": "infisical run -- prisma db pull && prisma generate",
+    "pull:prod": "infisical run --env=prod -- prisma db pull && prisma generate",
     "push": "infisical run -- prisma db push",
-    "push:prod": "infisical run --env=prod -- prisma db push",
-    "prod": "infisical run -- prisma generate -- prisma db pull"
+    "studio": "infisical run -- prisma studio",
+    "studio:prod": "infisical run --env=prod -- prisma studio"
   },
   "keywords": [],
   "author": "Thibaut Izard <thibaut.izard@gmail.com>",
