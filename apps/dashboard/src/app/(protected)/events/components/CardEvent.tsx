@@ -13,12 +13,9 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
-// import { Switch } from "@/components/ui/switch";
-// import { Label } from "@/components/ui/label";
+import { Toggle } from "@radix-ui/react-toggle";
 
-import { GiPositionMarker as MapMarkerIcon } from "react-icons/gi";
-import { Trash, PenIcon, EyeOff, Eye } from "lucide-react";
-import { IoMailOutline as MailIcon } from "react-icons/io5";
+import { Trash, PenIcon, EyeOff, Eye, LinkIcon, InfoIcon, MailIcon, MapPin } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { type events as Event } from "@prisma/client";
@@ -27,7 +24,6 @@ import { updateEvent } from "../actions/updateEvent";
 import { deleteEvent } from "../actions/deleteEvent";
 import { EventFormModal } from "./EventFormModal";
 import { formatDateHour } from "utils";
-import { Toggle } from "@radix-ui/react-toggle";
 
 export const CardEvent = ({
   event,
@@ -37,13 +33,13 @@ export const CardEvent = ({
   setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
 }) => {
   const [displayEvent, setDisplayEvent] = useState(event.displayEvent);
-  const { date, displayHour, city, place, description, contact, displayContact } = event;
+  const { date, displayHour, city, place, description, link, entrance, contact, displayContact } = event;
 
   const handleUpdate = async (data: EventFormType) => {
     const { success } = await updateEvent(data);
     if (!success) return;
 
-    const updatedEvent = { ...event, ...data } as Event;
+    const updatedEvent: Event = { ...event, ...data };
     setEvents((prevEvents) => prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev)));
   };
 
@@ -57,15 +53,13 @@ export const CardEvent = ({
   const handleToggleDisplay = async (checked: boolean) => {
     setDisplayEvent(checked);
 
-    const { success } = await updateEvent({ ...event, displayEvent: checked });
+    const { success } = await updateEvent({ ...(event as EventFormType), displayEvent: checked });
     if (!success) {
-      // Revert on error
       setDisplayEvent(!checked);
       return;
     }
 
-    // Update the events list
-    const updatedEvent = { ...event, displayEvent: checked } as Event;
+    const updatedEvent: Event = { ...event, displayEvent: checked };
     setEvents((prevEvents) => prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev)));
   };
 
@@ -73,7 +67,7 @@ export const CardEvent = ({
     <EventFormModal
       title="Modifier l'événement"
       description="Cliquez sur enregistrer lorsque vous avez terminé."
-      event={event}
+      event={event as EventFormType}
       onSubmit={handleUpdate}
       trigger={
         <TooltipProvider delayDuration={200}>
@@ -105,7 +99,7 @@ export const CardEvent = ({
               </button>
             </AlertDialogTrigger>
           </TooltipTrigger>
-          <TooltipContent className="bg-red-500 text-white">
+          <TooltipContent className="bg-black text-white">
             <p>Supprimer</p>
           </TooltipContent>
         </Tooltip>
@@ -159,7 +153,7 @@ export const CardEvent = ({
               <span className="first-letter:uppercase">{city}</span>
             </span>
             <div className="flex items-center gap-0.5 font-normal text-gray-500">
-              <MapMarkerIcon size={12} />
+              <MapPin size={12} />
               {place}
             </div>
           </div>
@@ -171,39 +165,41 @@ export const CardEvent = ({
         </CardTitle>
       </CardHeader>
 
-      <CardContent>{description}</CardContent>
+      <CardContent className="text-[15px]">{description}</CardContent>
 
-      <CardFooter className="block text-sm">
-        <div className="flex w-full items-center justify-between gap-1">
-          {/* <i> Entrée libre</i> */}
-          {displayContact && contact && (
+      <CardFooter className="flex justify-between gap-1 text-sm">
+        <div className="space-y-1">
+          <div className="flex items-center gap-1">
+            <InfoIcon size={16} />
+            <i className="not-italic">{entrance ? entrance : "Entrée libre"}</i>
+          </div>
+
+          {link && (
             <div className="flex items-center gap-1">
-              <MailIcon />
+              <LinkIcon size={16} />
               <a
-                href={`mailto:${contact}`}
-                className="underline"
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="max-w-[40ch] truncate underline hover:text-blue-500"
               >
-                {contact}
+                {link}
               </a>
             </div>
           )}
         </div>
 
-        {/* <div className="mt-4 flex items-center gap-1.5">
-          <div className={cn("flex cursor-pointer items-center justify-center gap-2")}>
-            <Switch
-              id="displayEvent"
-              checked={displayEvent}
-              onCheckedChange={handleToggleDisplay}
-            />
-            <Label
-              htmlFor="displayEvent"
-              className="text-base"
+        {displayContact && contact && (
+          <div className="z-10 mt-auto flex items-center gap-1">
+            <MailIcon size={16} />
+            <a
+              href={`mailto:${contact}`}
+              className="underline hover:text-blue-500"
             >
-              Afficher l'événement sur le site
-            </Label>
+              {contact}
+            </a>
           </div>
-        </div> */}
+        )}
       </CardFooter>
     </Card>
   );

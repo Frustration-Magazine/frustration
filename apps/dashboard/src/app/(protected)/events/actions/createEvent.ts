@@ -18,9 +18,16 @@ export async function createEvent(data: EventFormType): Promise<Status & { resul
   const parsed = EventFormSchema.safeParse(data);
   if (!parsed.success) return STATUS_ERROR;
 
+  const dataWithNulls = {
+    ...data,
+    contact: data.contact === "" ? null : data.contact,
+    entrance: data.entrance === "" ? null : data.entrance,
+    link: data.link === "" ? null : data.link,
+  };
+
   const { status, result } = await createRecord({
     table: "events",
-    data,
+    data: dataWithNulls,
     success: "L'événement a été créé avec succès!",
   });
   return { ...status, result };

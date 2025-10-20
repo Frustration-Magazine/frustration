@@ -18,6 +18,10 @@ export const EventFormSchema = z.object({
   contact: z.string().refine((val) => val === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
     message: "Veuillez renseigner un email valide",
   }),
+  link: z.string().refine((val) => val === "" || z.string().url().safeParse(val).success, {
+    message: "Veuillez renseigner un lien valide",
+  }),
+  entrance: z.string(),
   displayContact: z.boolean({
     required_error: "Veuillez indiquer si le contact doit être affiché",
   }),

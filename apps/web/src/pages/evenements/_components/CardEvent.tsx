@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, MapPin } from "lucide-react";
+import { InfoIcon, LinkIcon, Mail, MailIcon, MapPin } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
@@ -36,6 +36,7 @@ export const CardEvent = ({ event, children }: Readonly<{ event: Event; children
     <Card className={cn("relative left-0 overflow-hidden bg-white", "first:after:content-none")}>
       <LeftBorderColored />
       <BookCoverBackground bookImage={children} />
+
       <CardHeader>
         <CardTitle className={cn("first-letter:capitalize", "text-xl", "sm:text-2xl")}>
           {formatDate(event.date, event.displayHour)} - {event.city}
@@ -45,25 +46,45 @@ export const CardEvent = ({ event, children }: Readonly<{ event: Event; children
           {event.place}
         </CardDescription>
       </CardHeader>
+
       <CardContent className={cn("w-full text-sm", "sm:w-[75%] sm:text-base")}>
         <p>{event.description}</p>
-        {/* <br />
-        <i> Entrée libre</i> */}
       </CardContent>
-      {event.displayContact && event.contact && (
-        <CardFooter className="flex items-center gap-1 text-sm">
-          <Mail
-            size={14}
-            className="mt-0.5"
-          />
-          <a
-            href={`mailto:${event.contact}`}
-            className="underline"
-          >
-            {event.contact}
-          </a>
-        </CardFooter>
-      )}
+
+      <CardFooter className="flex justify-between gap-1 text-sm">
+        <div className="space-y-1">
+          <div className="flex items-center gap-1">
+            <InfoIcon size={16} />
+            <i className="not-italic">{event.entrance ? event.entrance : "Entrée libre"}</i>
+          </div>
+
+          {event.link && (
+            <div className="flex items-center gap-1">
+              <LinkIcon size={16} />
+              <a
+                href={event.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue/50 max-w-[40ch] truncate underline"
+              >
+                {event.link}
+              </a>
+            </div>
+          )}
+        </div>
+
+        {event.displayContact && event.contact && (
+          <div className="z-10 mt-auto flex items-center gap-1">
+            <MailIcon size={16} />
+            <a
+              href={`mailto:${event.contact}`}
+              className="hover:text-blue/50 underline"
+            >
+              {event.contact}
+            </a>
+          </div>
+        )}
+      </CardFooter>
     </Card>
   );
 };

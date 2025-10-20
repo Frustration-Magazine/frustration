@@ -31,6 +31,7 @@
     "@radix-ui/react-toast": "^1.2.14",
     "@radix-ui/react-toggle": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@tanstack/react-form": "^1.23.7",
     "@tanstack/react-table": "^8.21.3",
     "@vercel/functions": "^2.1.0",
     "class-variance-authority": "^0.7.1",
@@ -51,7 +52,7 @@
     "recharts": "^2.15.3",
     "tailwind-merge": "^3.3.1",
     "utils": "workspace:*",
-    "zod": "^3.25.28"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",

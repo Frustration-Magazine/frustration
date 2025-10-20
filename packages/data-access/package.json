@@ -5,6 +5,7 @@
   "scripts": {
     "build": "prisma generate",
     "generate": "prisma generate",
+    "reset": "infisical run -- prisma migrate reset",
     "migrate": "infisical run -- prisma migrate dev",
     "migrate:prod": "infisical run --env=prod -- prisma migrate deploy",
     "pull": "infisical run -- prisma db pull && prisma generate",

@@ -87,7 +87,9 @@ model events {
   description    String
   city           String
   place          String
-  contact        String
+  contact        String?
+  link           String?
+  entrance       String?
   displayContact Boolean  @default(true)
   displayEvent   Boolean  @default(true)
 }

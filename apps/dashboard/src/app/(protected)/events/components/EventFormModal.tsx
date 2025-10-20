@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm } from "@tanstack/react-form";
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/date-picker";
 import {
@@ -16,6 +14,7 @@ import {
   DialogClose,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Field, FieldError, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -41,9 +40,11 @@ now.setHours(19, 0, 0, 0);
 const DEFAULT_EVENT: EventFormType = {
   date: now,
   displayHour: true,
-  description: "",
   city: "",
   place: "",
+  description: "",
+  link: "",
+  entrance: "",
   contact: "",
   displayContact: true,
   displayEvent: true,
@@ -53,9 +54,8 @@ type EventFormModalProps = {
   onSubmit: (data: EventFormType) => Promise<void>;
   title: string;
   description: string;
-  event?: Partial<EventFormType>;
+  event?: EventFormType;
   trigger?: React.ReactNode;
-  isLoading?: boolean;
 };
 
 export const EventFormModal = ({
@@ -64,32 +64,37 @@ export const EventFormModal = ({
   description,
   event = DEFAULT_EVENT,
   trigger,
-  isLoading = false,
 }: EventFormModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const form = useForm<EventFormType>({
-    resolver: zodResolver(EventFormSchema),
-    defaultValues: event,
-    mode: "onChange",
+  const form = useForm({
+    defaultValues: {
+      ...event,
+      link: event.link === null ? "" : event.link,
+      entrance: event.entrance === null ? "" : event.entrance,
+      contact: event.contact === null ? "" : event.contact,
+    },
+    validators: {
+      onChange: EventFormSchema,
+      onSubmit: EventFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      try {
+        await onSubmit(value);
+        setIsOpen(false);
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
+    },
   });
-
-  const displayEvent = form.watch("displayEvent");
-
-  const handleSubmit = async (data: EventFormType) => {
-    try {
-      await onSubmit(data);
-      form.reset();
-      setIsOpen(false);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-  };
 
   return (
     <Dialog
       open={isOpen}
-      onOpenChange={setIsOpen}
+      onOpenChange={(open) => {
+        setIsOpen(open);
+        if (!open) form.reset();
+      }}
     >
       {trigger ?? null}
       <DialogContent>
@@ -97,234 +102,340 @@ export const EventFormModal = ({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form
-            className={cn("w-2xl space-y-4 [&_label]:mb-2 [&_label]:block")}
-            onSubmit={form.handleSubmit(handleSubmit)}
-          >
+
+        <form
+          className={cn("w-2xl")}
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+          }}
+        >
+          <FieldGroup>
             {/* 📅 Date et heure */}
-            <div className="flex items-start gap-4">
-              {/* 📅 Date */}
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <FormItem className={cn("basis-1/2", !displayEvent && "opacity-50")}>
-                    <FormLabel>📅 Date</FormLabel>
-                    <FormControl>
-                      <DatePicker
-                        className={cn("w-full", !displayEvent && "opacity-50")}
-                        value={field.value}
-                        onChange={(newDate) => {
-                          if (newDate) {
-                            newDate.setHours(19, 0, 0, 0);
-                            field.onChange(newDate);
-                          }
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* 🕘 Heure */}
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <FormItem className="basis-1/2">
-                    <FormLabel>🕘 Heure</FormLabel>
-                    <FormControl>
-                      <div className="flex items-center gap-2">
-                        {/* Heures */}
-                        <Select
-                          value={field.value.getHours().toString()}
-                          onValueChange={(hours) => {
-                            const newDate = new Date(field.value);
-                            const hoursNumber = convertHourToNumber(hours);
-                            newDate.setHours(hoursNumber);
-                            field.onChange(newDate);
-                          }}
+            <FieldSet className="gap-4">
+              <FieldGroup>
+                <div className="flex items-start gap-4">
+                  {/* 📅 Date */}
+                  <form.Field
+                    name="date"
+                    children={(field) => {
+                      const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field
+                          data-invalid={isInvalid}
+                          className="basis-1/2"
                         >
-                          <SelectTrigger className="cursor-pointer">
-                            <SelectValue placeholder="Heure" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {hours.map((hour) => (
-                              <SelectItem
-                                key={hour}
-                                value={convertHourToString(hour)}
-                              >
-                                {convertHourToString(hour)}h
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                          <FieldLabel htmlFor={field.name}>📅 Date</FieldLabel>
+                          <DatePicker
+                            className="w-full"
+                            value={field.state.value}
+                            onChange={(newDate) => {
+                              if (newDate) {
+                                newDate.setHours(19, 0, 0, 0);
+                                field.handleChange(newDate);
+                              }
+                            }}
+                          />
+                          {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                        </Field>
+                      );
+                    }}
+                  />
 
-                        {/* Minutes */}
-                        <Select
-                          value={field.value.getMinutes().toString().padStart(2, "0")}
-                          onValueChange={(minutes) => {
-                            const newDate = new Date(field.value);
-                            const minutesNumber = convertMinuteToNumber(minutes);
-                            newDate.setMinutes(minutesNumber);
-                            field.onChange(newDate);
-                          }}
+                  {/* 🕘 Heure et minutes */}
+                  <form.Field
+                    name="date"
+                    children={(field) => {
+                      const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field
+                          data-invalid={isInvalid}
+                          className="basis-1/2"
                         >
-                          <SelectTrigger className="cursor-pointer">
-                            <SelectValue placeholder="Min" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {minutes.map((minute) => (
-                              <SelectItem
-                                key={minute}
-                                value={convertMinuteToString(minute)}
-                              >
-                                {convertMinuteToString(minute)}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                          <FieldLabel htmlFor="time">🕘 Heure</FieldLabel>
+                          <div className="flex items-center gap-2">
+                            {/* Heures */}
+                            <Select
+                              value={field.state.value.getHours().toString()}
+                              onValueChange={(hours) => {
+                                const newDate = new Date(field.state.value);
+                                const hoursNumber = convertHourToNumber(hours);
+                                newDate.setHours(hoursNumber);
+                                field.handleChange(newDate);
+                              }}
+                            >
+                              <SelectTrigger className="cursor-pointer">
+                                <SelectValue placeholder="Heure" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {hours.map((hour) => (
+                                  <SelectItem
+                                    key={hour}
+                                    value={convertHourToString(hour)}
+                                  >
+                                    {convertHourToString(hour)}h
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
 
-            {/* 📍 Ville et lieu */}
-            <div className="flex w-full items-start gap-4">
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <FormItem className={cn("basis-1/2", !displayEvent && "opacity-50")}>
-                    <FormLabel>📍 Ville</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Ex: Paris"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="place"
-                render={({ field }) => (
-                  <FormItem className={cn("basis-1/2", !displayEvent && "opacity-50")}>
-                    <FormLabel>📍 Lieu</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Ex: Théâtre de la Ville"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                            {/* Minutes */}
+                            <Select
+                              value={field.state.value.getMinutes().toString().padStart(2, "0")}
+                              onValueChange={(minutes) => {
+                                const newDate = new Date(field.state.value);
+                                const minutesNumber = convertMinuteToNumber(minutes);
+                                newDate.setMinutes(minutesNumber);
+                                field.handleChange(newDate);
+                              }}
+                            >
+                              <SelectTrigger className="cursor-pointer">
+                                <SelectValue placeholder="Min" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {minutes.map((minute) => (
+                                  <SelectItem
+                                    key={minute}
+                                    value={convertMinuteToString(minute)}
+                                  >
+                                    {convertMinuteToString(minute)}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                        </Field>
+                      );
+                    }}
+                  />
+                </div>
+              </FieldGroup>
 
-            {/* 💬 Description */}
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem className={cn(!displayEvent && "opacity-50")}>
-                  <FormLabel>💬 Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      className="max-h-[7lh] resize-none"
-                      placeholder="Décrivez l'événement, les intervenants, le programme..."
+              {/* 📍 Ville et lieu */}
+              <FieldGroup>
+                <div className="flex w-full items-start gap-4">
+                  <form.Field
+                    name="city"
+                    children={(field) => {
+                      const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field
+                          data-invalid={isInvalid}
+                          className="basis-1/2"
+                        >
+                          <FieldLabel htmlFor={field.name}>🗺️ Ville</FieldLabel>
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            value={field.state.value}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            placeholder="Ex: Paris"
+                          />
+                          {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                        </Field>
+                      );
+                    }}
+                  />
+                  <form.Field
+                    name="place"
+                    children={(field) => {
+                      const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field
+                          data-invalid={isInvalid}
+                          className="basis-1/2"
+                        >
+                          <FieldLabel htmlFor={field.name}>📍 Lieu</FieldLabel>
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            value={field.state.value}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            placeholder="Ex: Théâtre de la Ville"
+                          />
+                          {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                        </Field>
+                      );
+                    }}
+                  />
+                </div>
+              </FieldGroup>
+
+              <FieldGroup className="gap-4">
+                {/* 💬 Description */}
+                <form.Field
+                  name="description"
+                  children={(field) => {
+                    const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel htmlFor={field.name}>💬 Description</FieldLabel>
+                        <Textarea
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="max-h-[7lh] resize-none"
+                          placeholder="Décrivez l'événement, les intervenants, le programme..."
+                        />
+                        {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                      </Field>
+                    );
+                  }}
+                />
+
+                {/* 🔗 Lien */}
+                <form.Field
+                  name="link"
+                  children={(field) => {
+                    const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel htmlFor={field.name}>🔗 Lien</FieldLabel>
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          type="url"
+                          placeholder="https://www.exemple.com"
+                        />
+                        {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                      </Field>
+                    );
+                  }}
+                />
+
+                {/* ℹ️ Mention */}
+                <form.Field
+                  name="entrance"
+                  children={(field) => {
+                    const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel htmlFor={field.name}>ℹ️ Mention</FieldLabel>
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          placeholder="Par défaut : Entrée libre"
+                        />
+                        {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                      </Field>
+                    );
+                  }}
+                />
+
+                {/* 📤 Email de contact */}
+                <div className="flex items-start gap-4">
+                  <form.Field
+                    name="contact"
+                    children={(field) => {
+                      const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field
+                          data-invalid={isInvalid}
+                          className="basis-3/4"
+                        >
+                          <FieldLabel htmlFor={field.name}>📤 Email de contact</FieldLabel>
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            value={field.state.value}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            type="email"
+                            placeholder="contact@exemple.com"
+                          />
+                          {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                        </Field>
+                      );
+                    }}
+                  />
+
+                  <form.Field
+                    name="displayContact"
+                    children={(field) => (
+                      <Field
+                        orientation="horizontal"
+                        className="mb-2 mt-auto basis-1/4"
+                      >
+                        <Checkbox
+                          id="display-content-checkbox"
+                          className="my-0"
+                          checked={field.state.value}
+                          onCheckedChange={(checked) => field.handleChange(checked === true)}
+                        />
+                        <FieldLabel
+                          htmlFor="display-content-checkbox"
+                          className="mb-0! w-fit"
+                        >
+                          Afficher l'email
+                        </FieldLabel>
+                      </Field>
+                    )}
+                  />
+                </div>
+              </FieldGroup>
+
+              <Field orientation="horizontal">
+                <DialogFooter className="w-full flex-col-reverse sm:flex-row sm:justify-between sm:space-x-2">
+                  {/* ✅ Afficher l'événement sur le site */}
+                  <form.Field
+                    name="displayEvent"
+                    children={(field) => (
+                      <Field orientation="horizontal">
+                        <Switch
+                          id="display-event-switch"
+                          className="m-0"
+                          checked={field.state.value}
+                          onCheckedChange={(checked) => field.handleChange(checked === true)}
+                        />
+                        <FieldLabel
+                          htmlFor="display-event-switch"
+                          className="mb-0! text-base"
+                        >
+                          Afficher l'événement sur le site
+                        </FieldLabel>
+                      </Field>
+                    )}
+                  />
+
+                  <div className="flex gap-2">
+                    <DialogClose asChild>
+                      <Button
+                        variant="outline"
+                        type="button"
+                      >
+                        Annuler
+                      </Button>
+                    </DialogClose>
+                    <form.Subscribe
+                      selector={(state) => [state.isSubmitting]}
+                      children={([isSubmitting]) => (
+                        <Button
+                          type="submit"
+                          disabled={isSubmitting}
+                          aria-busy={isSubmitting}
+                        >
+                          {isSubmitting ? "Enregistrement..." : "Enregistrer"}
+                        </Button>
+                      )}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* 📤 Email de contact */}
-            <div className="flex items-start gap-4">
-              <FormField
-                control={form.control}
-                name="contact"
-                render={({ field }) => (
-                  <FormItem className={cn("grow", !displayEvent && "opacity-50")}>
-                    <FormLabel>📤 Email de contact</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        {...field}
-                        placeholder="contact@exemple.com"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="displayContact"
-                render={({ field }) => (
-                  <FormItem className={cn("mt-8.5 flex items-center gap-2", !displayEvent && "opacity-50")}>
-                    <FormControl>
-                      <Checkbox
-                        className="my-0"
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel className="mb-0!">Afficher l'email</FormLabel>
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <DialogFooter className="flex-col-reverse sm:flex-row sm:justify-between sm:space-x-2">
-              {/* ✅ Afficher l'événement sur le site */}
-              <FormField
-                control={form.control}
-                name="displayEvent"
-                render={({ field }) => (
-                  <FormItem className="flex items-center gap-2">
-                    <FormControl>
-                      <Switch
-                        className="m-0"
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel className="mb-0! text-base">Afficher l'événement sur le site</FormLabel>
-                  </FormItem>
-                )}
-              />
-
-              <div className="flex gap-2">
-                <DialogClose asChild>
-                  <Button
-                    variant="outline"
-                    type="button"
-                    disabled={isLoading}
-                  >
-                    Annuler
-                  </Button>
-                </DialogClose>
-                <Button
-                  type="submit"
-                  disabled={!form.formState.isValid || isLoading}
-                >
-                  {isLoading ? "Enregistrement..." : "Enregistrer"}
-                </Button>
-              </div>
-            </DialogFooter>
-          </form>
-        </Form>
+                  </div>
+                </DialogFooter>
+              </Field>
+            </FieldSet>
+          </FieldGroup>
+        </form>
       </DialogContent>
     </Dialog>
   );
