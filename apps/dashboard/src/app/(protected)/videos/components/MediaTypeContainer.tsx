@@ -18,6 +18,7 @@ import { YoutubeResourceType, getYoutubeResourceId } from "data-access/youtube";
 import { typesTranslations } from "../_models";
 import { useMedia } from "../hooks/useMedia";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
 type MediaTypeContainerProps = {
   readonly type: YoutubeResourceType;
@@ -26,10 +27,9 @@ type MediaTypeContainerProps = {
 };
 
 export const MediaTypeContainer = ({ type, title, texts }: MediaTypeContainerProps): React.ReactNode => {
-  const {
-    searchTerm,
-    setSearchTerm,
+  const [isOpen, setIsOpen] = useState(false);
 
+  const {
     suggestions,
     loadingSuggestions,
 
@@ -46,7 +46,10 @@ export const MediaTypeContainer = ({ type, title, texts }: MediaTypeContainerPro
   const LoaderMediaList = () => <Loader className="mx-auto my-12" />;
 
   const AddDialog = () => (
-    <Dialog>
+    <Dialog
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
       <DialogTrigger asChild>
         {/* ➕ Ajouter */}
         <Button
@@ -72,8 +75,7 @@ export const MediaTypeContainer = ({ type, title, texts }: MediaTypeContainerPro
           <Input
             type="text"
             placeholder={texts?.placeholder}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            name="search"
           />
           <Button type="submit">Rechercher</Button>
         </form>

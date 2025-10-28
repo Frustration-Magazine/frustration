@@ -14,9 +14,6 @@ import {
 import { isEnvironmentProduction } from "@/lib/utils";
 
 export const useMedia = ({ type }: { type: YoutubeResourceType }) => {
-  /* Term */
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
   /* Suggestions */
   const [suggestions, setSuggestions] = useState<any>([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
@@ -35,6 +32,7 @@ export const useMedia = ({ type }: { type: YoutubeResourceType }) => {
 
   // 📀 Add media
   const handleAddMedia = async ({ type, id }: { type: YoutubeResourceType; id: string }) => {
+    console.log("handleAddMedia", { type, id });
     const status = await createMediaRecord({ type, id });
     // ✅ Resource created !
     if (status.success) {
@@ -76,6 +74,9 @@ export const useMedia = ({ type }: { type: YoutubeResourceType }) => {
   // 🐝 Fetch suggestions
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const search = formData.get("search");
+
     // ⏳ Loading...
     setLoadingSuggestions(true);
 
@@ -86,7 +87,7 @@ export const useMedia = ({ type }: { type: YoutubeResourceType }) => {
     // 🐝 🔁 Fetch youtube suggestions by type
     do {
       let { suggestions, token } = await fetchSuggestions({
-        q: searchTerm,
+        q: search,
         relevanceLanguage: "fr",
         type,
         ...(newToken ? { pageToken: newToken } : null),
@@ -110,8 +111,6 @@ export const useMedia = ({ type }: { type: YoutubeResourceType }) => {
   };
 
   return {
-    searchTerm,
-    setSearchTerm,
     suggestions,
     loadingSuggestions,
     medias,
