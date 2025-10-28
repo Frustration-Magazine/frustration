@@ -12,7 +12,7 @@ const { BACKOFFICE_DOMAIN, YOUTUBE_IMAGES_DOMAIN } = loadEnv(process.env.NODE_EN
 // https://astro.build/config
 export default defineConfig({
   output: "static",
-  site: SITE_URL,
+  site: `${SITE_URL}/`,
 
   prefetch: true,
 

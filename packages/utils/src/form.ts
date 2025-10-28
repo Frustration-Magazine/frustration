@@ -1,8 +1,3 @@
-export type FormSubmissionStatus = {
-  success: string | null;
-  error: string | null;
-};
-
 export const toFormData = (data: any): FormData => {
   const formData = new FormData();
   const fields = Object.keys(data);

@@ -27,7 +27,7 @@ const paymentElementOptions: StripePaymentElementOptions = {
 const CAMPAIGN_TAG = "regular";
 
 const SUCCESS_PAGE = "paiement-termine";
-const REDIRECT_URL_BASE = MODE === "production" ? `${SITE_URL}${SUCCESS_PAGE}` : `${LOCAL_SITE_URL}${SUCCESS_PAGE}`;
+const REDIRECT_URL_BASE = MODE === "production" ? `${SITE_URL}/${SUCCESS_PAGE}` : `${LOCAL_SITE_URL}/${SUCCESS_PAGE}`;
 
 // ============== //
 //      UI 🚀     //

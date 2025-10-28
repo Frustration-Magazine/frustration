@@ -1,30 +1,25 @@
 ---
 import PageLayout from "@/layout/PageLayout/PageLayout.astro";
-import { EventsTabs } from "./_components/EventsTabs";
 import H2 from "@/components/H2";
 import H3 from "@/components/H3";
+import { EventsTabs } from "./_components/EventsTabs";
 
-import { Image } from "astro:assets";
-import saintLuigi from "@/assets/papers/saint-luigi.webp";
-
-import { readRecords } from "data-access/prisma";
-import { type events as Event } from "@prisma/client";
+import { prisma } from "data-access/prisma";
 import { OG_IMAGES_URL } from "@/constants";
 import { setCacheHeaders, CachePresets } from "@/lib/cache";
 
 export const prerender = false;
 setCacheHeaders(Astro.response.headers, CachePresets.medium);
 
-const TITLE = "Événements";
-const DESCRIPTION = "Liste des événements à venir autour de Frustration Magazine et Nicolas Framont";
-const ogImageUrl = `${OG_IMAGES_URL}evenements.webp`;
-
-const { data: events }: { data: Event[] } = await readRecords({
-  table: "events",
+const events = await prisma.events.findMany({
+  include: {
+    image: true,
+  },
   where: { displayEvent: true },
   orderBy: {},
-  success: "Events read!",
 });
+
+export type EventWithImage = (typeof events)[number];
 
 const futureEvents = events
   .filter(({ date }) => date >= new Date())
@@ -33,9 +28,9 @@ const pastEvents = events.filter(({ date }) => date < new Date()).sort((a, b) =>
 ---
 
 <PageLayout
-  title={TITLE}
-  description={DESCRIPTION}
-  ogImageUrl={ogImageUrl}
+  title="Événements"
+  description="Liste des événements à venir autour de Frustration Magazine et Nicolas Framont"
+  ogImageUrl={`${OG_IMAGES_URL}/evenements.webp`}
 >
   <article slot="content">
     <H2>Frustra'tour</H2>
@@ -47,13 +42,6 @@ const pastEvents = events.filter(({ date }) => date < new Date()).sort((a, b) =>
       client:load
       futureEvents={futureEvents}
       pastEvents={pastEvents}
-    >
-      <Image
-        src={saintLuigi}
-        alt={`Couverture de "Saint Luigi" de Nicolas Framont`}
-        width="200"
-        height="500"
-      />
-    </EventsTabs>
+    />
   </article>
 </PageLayout>

@@ -1,17 +1,18 @@
 import React from "react";
 import Link from "next/link";
+
 import { Badge } from "@/components/ui/badge";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { isEnvironmentDevelopment } from "@/lib/utils";
 
-const DevelopmentBadge =
-  process.env.NODE_ENV === "development" ? (
-    <Badge
-      variant="secondary"
-      className="absolute right-4 my-auto text-lg font-bold"
-    >
-      🚧 Dev mode 🚧
-    </Badge>
-  ) : null;
+const DevelopmentBadge = () => (
+  <Badge
+    variant="secondary"
+    className="absolute right-4 my-auto text-lg font-bold"
+  >
+    🚧 Dev mode 🚧
+  </Badge>
+);
 
 export const Header = ({ isSignedIn }: { isSignedIn: boolean }) => {
   return (
@@ -20,7 +21,7 @@ export const Header = ({ isSignedIn }: { isSignedIn: boolean }) => {
       <Link href="/">
         <h1 className="font-bebas text-yellow -mb-1.5 text-6xl uppercase">Dashboard</h1>
       </Link>
-      {DevelopmentBadge}
+      {isEnvironmentDevelopment && <DevelopmentBadge />}
     </header>
   );
 };

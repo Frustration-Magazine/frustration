@@ -11,16 +11,9 @@ import {
   refreshMediasInDatabase,
 } from "../_actions";
 
-const isProduction = process.env.NODE_ENV === "production";
+import { isEnvironmentProduction } from "@/lib/utils";
 
-type Props = {
-  type: YoutubeResourceType;
-};
-
-const useVideos = ({ type }: Props) => {
-  /* Term */
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
+export const useMedia = ({ type }: { type: YoutubeResourceType }) => {
   /* Suggestions */
   const [suggestions, setSuggestions] = useState<any>([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
@@ -39,6 +32,7 @@ const useVideos = ({ type }: Props) => {
 
   // 📀 Add media
   const handleAddMedia = async ({ type, id }: { type: YoutubeResourceType; id: string }) => {
+    console.log("handleAddMedia", { type, id });
     const status = await createMediaRecord({ type, id });
     // ✅ Resource created !
     if (status.success) {
@@ -56,7 +50,7 @@ const useVideos = ({ type }: Props) => {
       setMedias((medias: any[]) => [suggestionToAdd, ...medias]);
 
       // During development mode we fetch directly new medias information instead of redeploying the app
-      if (!isProduction) await refreshMediasInDatabase();
+      if (!isEnvironmentProduction) await refreshMediasInDatabase();
 
       // 2️⃣ Remove suggestion from current suggestions list
       setSuggestions(suggestions.filter((suggestion: any) => getYoutubeResourceId(suggestion) !== id));
@@ -70,7 +64,7 @@ const useVideos = ({ type }: Props) => {
     // ✅ Resource created !
     if (status.success) {
       // During development mode we fetch directly new medias information instead of redeploying the app
-      if (!isProduction) await refreshMediasInDatabase();
+      if (!isEnvironmentProduction) await refreshMediasInDatabase();
 
       // 1️⃣ Remove deleted resource from listed resources
       setMedias(medias.filter((media: any) => media.id !== id));
@@ -80,6 +74,9 @@ const useVideos = ({ type }: Props) => {
   // 🐝 Fetch suggestions
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const search = formData.get("search");
+
     // ⏳ Loading...
     setLoadingSuggestions(true);
 
@@ -90,7 +87,7 @@ const useVideos = ({ type }: Props) => {
     // 🐝 🔁 Fetch youtube suggestions by type
     do {
       let { suggestions, token } = await fetchSuggestions({
-        q: searchTerm,
+        q: search,
         relevanceLanguage: "fr",
         type,
         ...(newToken ? { pageToken: newToken } : null),
@@ -114,8 +111,6 @@ const useVideos = ({ type }: Props) => {
   };
 
   return {
-    searchTerm,
-    setSearchTerm,
     suggestions,
     loadingSuggestions,
     medias,
@@ -125,5 +120,3 @@ const useVideos = ({ type }: Props) => {
     handleSearch,
   };
 };
-
-export default useVideos;

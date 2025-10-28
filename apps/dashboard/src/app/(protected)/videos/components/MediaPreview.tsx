@@ -45,7 +45,7 @@ function getThumbnailSizes(type: string) {
   }
 }
 
-type Props = {
+type MediaPreviewProps = {
   id: string;
   thumbnail: string;
   type: YoutubeResourceType;
@@ -58,7 +58,7 @@ type Props = {
   texts: any;
 };
 
-export default function ({
+export const MediaPreview = ({
   id,
   thumbnail,
   type,
@@ -69,7 +69,7 @@ export default function ({
   iconType,
 
   texts,
-}: Props) {
+}: MediaPreviewProps) => {
   let iconClass = "";
   let Icon: IconType | null = null;
   switch (iconType) {
@@ -185,4 +185,4 @@ export default function ({
       </TooltipProvider>
     </li>
   );
-}
+};

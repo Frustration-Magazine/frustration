@@ -1,8 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { updateTipeee } from "../_actions";
-import { ExternalLink } from "lucide-react";
-import { TiWarning as WarningIcon } from "react-icons/ti";
+import { ExternalLink, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 import { formatExplicitMonth, convertDateForDateInput } from "utils";
 import { Button } from "@/components/ui/button";
@@ -57,7 +56,7 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
         <Tooltip>
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
-              <WarningIcon className="absolute right-5 top-5 size-8 cursor-pointer" />
+              <TriangleAlert className="absolute right-6 top-7 size-6 cursor-pointer" />
             </DialogTrigger>
           </TooltipTrigger>
           <TooltipContent

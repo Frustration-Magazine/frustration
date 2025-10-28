@@ -1,9 +1,10 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { InfoIcon, LinkIcon, Mail, MailIcon, MapPin } from "lucide-react";
+import { InfoIcon, LinkIcon, MailIcon, MapPin } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
 import { type events as Event } from "@prisma/client";
+import type { EventWithImage } from "../index.astro";
 
 const formatDate = (date: Date, displayHour: boolean, timezone: string = "Europe/Paris") => {
   const options: Intl.DateTimeFormatOptions = {
@@ -25,17 +26,22 @@ const formatDate = (date: Date, displayHour: boolean, timezone: string = "Europe
   return formattedDate;
 };
 
-const BookCoverBackground = ({ bookImage }: { bookImage: any }) => (
-  <div className={cn("absolute bottom-0 right-0 h-fit", "rotate-[15deg] opacity-15", "sm:opacity-25")}>{bookImage}</div>
-);
-
-const LeftBorderColored = () => <div className="bg-logo-yellow absolute h-full w-1" />;
-
-export const CardEvent = ({ event, children }: Readonly<{ event: Event; children: ReactNode }>) => {
+export const EventCard = ({ event }: Readonly<{ event: EventWithImage }>) => {
   return (
     <Card className={cn("relative left-0 overflow-hidden bg-white", "first:after:content-none")}>
-      <LeftBorderColored />
-      <BookCoverBackground bookImage={children} />
+      {/* Left border */}
+      <div className="bg-logo-yellow absolute h-full w-1" />
+
+      {/* Event image */}
+      {event.image && (
+        <img
+          className={cn("absolute bottom-0 right-0 h-full", "xs:w-1/3 sm:opacity-33 w-1/2 opacity-15 sm:w-1/4")}
+          src={event.image.url}
+          alt={event.image.name ?? "Image de l'événement"}
+          width={200}
+          height={500}
+        />
+      )}
 
       <CardHeader>
         <CardTitle className={cn("first-letter:capitalize", "text-xl", "sm:text-2xl")}>
@@ -52,37 +58,34 @@ export const CardEvent = ({ event, children }: Readonly<{ event: Event; children
       </CardContent>
 
       <CardFooter className="flex justify-between gap-1 text-sm">
-        <div className="space-y-1">
-          <div className="flex items-center gap-1">
+        <div className="min-w-fit space-y-1">
+          <p className="flex items-center gap-1">
             <InfoIcon size={16} />
             <i className="not-italic">{event.entrance ? event.entrance : "Entrée libre"}</i>
-          </div>
+          </p>
 
           {event.link && (
-            <div className="flex items-center gap-1">
+            <a
+              href={event.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue/50 flex items-center gap-1 truncate underline"
+            >
               <LinkIcon size={16} />
-              <a
-                href={event.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-blue/50 max-w-[40ch] truncate underline"
-              >
-                {event.link}
-              </a>
-            </div>
+              Lien vers l'événement
+            </a>
           )}
         </div>
 
         {event.displayContact && event.contact && (
-          <div className="z-10 mt-auto flex items-center gap-1">
+          <a
+            href={`mailto:${event.contact}`}
+            title={event.contact}
+            className="hover:text-blue/50 z-10 mt-auto flex items-center gap-1 underline"
+          >
             <MailIcon size={16} />
-            <a
-              href={`mailto:${event.contact}`}
-              className="hover:text-blue/50 underline"
-            >
-              {event.contact}
-            </a>
-          </div>
+            Mail de contact
+          </a>
         )}
       </CardFooter>
     </Card>

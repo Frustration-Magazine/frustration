@@ -1,10 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 import { Customer } from "data-access/stripe";
-import { explicitDate } from "utils";
-import { createCSVinURL, downloadFileFromUrl } from "utils";
-import { IoIosDownload } from "react-icons/io";
+import { explicitDate, createCSVinURL, downloadFileFromUrl } from "utils";
 
 export interface FileHeader {
   name: string;
@@ -88,7 +87,7 @@ export const DownloadButton = ({
       className="flex items-center gap-2 rounded-md"
       variant="outline"
     >
-      <IoIosDownload size={17} />
+      <Download />
       <span> Télécharger </span>
     </Button>
   );

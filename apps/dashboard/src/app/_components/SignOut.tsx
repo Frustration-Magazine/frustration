@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,9 +10,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import { RiLogoutBoxLine } from "react-icons/ri";
 
 export const SignOut = ({ className }: { className?: string }) => {
   const router = useRouter();
@@ -24,7 +24,7 @@ export const SignOut = ({ className }: { className?: string }) => {
           variant="secondary"
           className={cn("flex items-center gap-2", className)}
         >
-          <RiLogoutBoxLine />
+          <LogOut />
           <span>Se déconnecter</span>
         </Button>
       </AlertDialogTrigger>

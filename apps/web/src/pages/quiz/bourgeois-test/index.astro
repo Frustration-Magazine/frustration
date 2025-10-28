@@ -16,13 +16,11 @@ function shuffleArray<T>(array: T[]): T[] {
   }
   return array;
 }
-
-const ogImageUrl = `${OG_IMAGES_URL}test_bourgeois.webp`;
 ---
 
 <PageLayout
   title="Quiz | Êtes-vous un bourgeois ?"
-  ogImageUrl={ogImageUrl}
+  ogImageUrl={`${OG_IMAGES_URL}/test_bourgeois.webp`}
 >
   <article
     slot="content"

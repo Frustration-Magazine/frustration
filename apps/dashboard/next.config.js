@@ -27,6 +27,11 @@ const nextConfig = {
         protocol: "https",
         hostname: "i.ytimg.com",
       },
+      // UploadThing
+      {
+        protocol: "https",
+        hostname: "wf254jojd1.ufs.sh",
+      },
     ],
   },
 };
