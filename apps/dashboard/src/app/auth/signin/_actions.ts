@@ -2,30 +2,31 @@
 
 import { signIn } from "@/auth";
 import { prisma } from "data-access/prisma";
-import { schema, type Status } from "./_models";
+import { schema } from "./_models";
+import { type ResponseStatus } from "@/actions/models";
 
 // 💬 Form status
-const INVALID: Status = {
+const INVALID: ResponseStatus = {
   success: null,
   error: "Adresse e-mail invalide.",
 };
 
-const UNAUTHORIZED: Status = {
+const UNAUTHORIZED: ResponseStatus = {
   success: null,
   error: "Cet e-mail n'est pas autorisé à se connecter.",
 };
 
-const NOT_FOUND: Status = {
+const NOT_FOUND: ResponseStatus = {
   success: null,
   error: "Impossible de retrouver les adresses e-mail autorisées.",
 };
 
-const validMail: (email: string) => Status = (email) => ({
+const validMail: (email: string) => ResponseStatus = (email) => ({
   success: `Vous allez recevoir un message à ${email} contenant un lien de connexion.`,
   error: null,
 });
 
-const error = (error: any): Status => ({
+const error = (error: any): ResponseStatus => ({
   success: null,
   error: String(error),
 });
@@ -47,7 +48,7 @@ function parse(data: FormData) {
 /*   📨 SEND MAGIC LINK     */
 /* ------------------------ */
 
-export async function sendLink(currentState: Status, formData: FormData): Promise<Status> {
+export async function sendLink(currentState: ResponseStatus, formData: FormData): Promise<ResponseStatus> {
   // 🔎
   const { success, data: { email } = {} } = parse(formData);
 

@@ -9,30 +9,25 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 import { sendLink as serverAction } from "./_actions";
-import { schema, type Status } from "./_models";
+import { schema } from "./_models";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
-import { useToast } from "@/hooks/useToast";
+import { toast } from "sonner";
+import { type ResponseStatus } from "@/actions/models";
 
-const initial: Status = {
-  success: "",
-  error: "",
+const initial: ResponseStatus = {
+  success: null,
+  error: null,
 };
 
 export default function () {
   const [state, sendLink, pending] = useActionState(serverAction, initial);
 
-  const { toast } = useToast();
   useEffect(() => {
-    if (state.success) toast({ title: "✅ Succès", description: state.success });
-    if (state.error)
-      toast({
-        title: "Erreur",
-        description: state.error,
-        variant: "destructive",
-      });
+    if (state.success) toast.success("Succès", { description: state.success });
+    if (state.error) toast.error("Erreur", { description: state.error });
   }, [state]);
 
   // 📝 Form

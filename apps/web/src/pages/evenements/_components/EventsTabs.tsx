@@ -1,15 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CardEvent } from "./CardEvent";
+import type { EventWithImage } from "../index.astro";
+import { EventCard } from "./EventCard";
 import { cn } from "@/lib/utils";
 
 export const EventsTabs = ({
   futureEvents,
   pastEvents,
-  children: image,
 }: {
-  futureEvents: any[];
-  pastEvents: any[];
-  children: any;
+  futureEvents: EventWithImage[];
+  pastEvents: EventWithImage[];
 }) => {
   const eventsToDisplay = [
     {
@@ -65,8 +64,9 @@ export const EventsTabs = ({
                         key={event.id}
                       >
                         <div className="absolute z-10 opacity-5" />
-                        <CardEvent event={event}>{image}</CardEvent>
-                        {/* Circle */}
+                        <EventCard event={event} />
+
+                        {/* Disk */}
                         {index > 0 && (
                           <div className="after-top-[-5px] after-left-1/2 after-transform bg-logo-yellow absolute left-1/2 top-0 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full md:size-5" />
                         )}

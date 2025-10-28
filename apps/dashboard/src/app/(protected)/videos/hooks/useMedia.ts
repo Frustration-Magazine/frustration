@@ -11,13 +11,9 @@ import {
   refreshMediasInDatabase,
 } from "../_actions";
 
-const isProduction = process.env.NODE_ENV === "production";
+import { isEnvironmentProduction } from "@/lib/utils";
 
-type Props = {
-  type: YoutubeResourceType;
-};
-
-const useVideos = ({ type }: Props) => {
+export const useMedia = ({ type }: { type: YoutubeResourceType }) => {
   /* Term */
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -56,7 +52,7 @@ const useVideos = ({ type }: Props) => {
       setMedias((medias: any[]) => [suggestionToAdd, ...medias]);
 
       // During development mode we fetch directly new medias information instead of redeploying the app
-      if (!isProduction) await refreshMediasInDatabase();
+      if (!isEnvironmentProduction) await refreshMediasInDatabase();
 
       // 2️⃣ Remove suggestion from current suggestions list
       setSuggestions(suggestions.filter((suggestion: any) => getYoutubeResourceId(suggestion) !== id));
@@ -70,7 +66,7 @@ const useVideos = ({ type }: Props) => {
     // ✅ Resource created !
     if (status.success) {
       // During development mode we fetch directly new medias information instead of redeploying the app
-      if (!isProduction) await refreshMediasInDatabase();
+      if (!isEnvironmentProduction) await refreshMediasInDatabase();
 
       // 1️⃣ Remove deleted resource from listed resources
       setMedias(medias.filter((media: any) => media.id !== id));
@@ -125,5 +121,3 @@ const useVideos = ({ type }: Props) => {
     handleSearch,
   };
 };
-
-export default useVideos;

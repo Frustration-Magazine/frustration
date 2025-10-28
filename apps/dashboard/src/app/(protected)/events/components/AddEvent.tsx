@@ -1,27 +1,35 @@
+import type { Dispatch, SetStateAction } from "react";
+
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
+import { toast } from "sonner";
 import { Plus } from "lucide-react";
+
 import { EventFormModal } from "./EventFormModal";
-import { EventFormType } from "../models/models";
+import { EventFormType } from "../models/EventFormSchema";
+
 import { createEvent } from "../actions/createEvent";
-import { type events as Event } from "@prisma/client";
-import { Dispatch, SetStateAction } from "react";
-import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
+import { EventWithImage } from "../page";
 
 export const AddEvent = ({
   setEvents,
   className,
 }: {
-  setEvents: Dispatch<SetStateAction<Event[]>>;
+  setEvents: Dispatch<SetStateAction<EventWithImage[]>>;
   className?: string;
 }) => {
   const isMobile = useIsMobile();
 
   const onSubmit = async (data: EventFormType) => {
-    const { success, result } = await createEvent(data);
-    if (!success || !result) return;
+    const { success, error, result } = await createEvent(data);
+    if (error || !result) {
+      toast.error(error);
+      return;
+    }
 
+    toast.success(success);
     setEvents((prevEvents) => [...prevEvents, result]);
   };
 

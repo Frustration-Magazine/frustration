@@ -7,6 +7,7 @@
     "generate": "prisma generate",
     "reset": "infisical run -- prisma migrate reset",
     "migrate": "infisical run -- prisma migrate dev",
+    "migrate:dev": "infisical run --env=dev -- prisma migrate deploy",
     "migrate:prod": "infisical run --env=prod -- prisma migrate deploy",
     "pull": "infisical run -- prisma db pull && prisma generate",
     "pull:prod": "infisical run --env=prod -- prisma db pull && prisma generate",

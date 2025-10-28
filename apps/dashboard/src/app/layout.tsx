@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Inter, Poppins } from "next/font/google";
 
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { Header } from "./_components/Header";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { TanstackProvider } from "./_components/TanstackProvider";
 import { Sidenav } from "./_components/Sidenav";
 
 import "./globals.css";
@@ -51,20 +52,22 @@ export default async function RootLayout({ children }: Props) {
           "bg-yellow bg-[url('/static/background.svg')] bg-cover bg-fixed",
         )}
       >
-        <SidebarProvider defaultOpen={isSignedIn}>
-          <Sidenav />
-          <div className="flex flex-1 flex-col">
-            <Header isSignedIn={isSignedIn} />
-            <main className="flex grow overflow-auto">
-              {isSignedIn ? (
-                <div className="flex h-full grow flex-col items-center gap-3 overflow-auto p-8">{children}</div>
-              ) : (
-                children
-              )}
-            </main>
-          </div>
-          <Toaster />
-        </SidebarProvider>
+        <TanstackProvider>
+          <SidebarProvider defaultOpen={isSignedIn}>
+            <Sidenav />
+            <div className="flex flex-1 flex-col">
+              <Header isSignedIn={isSignedIn} />
+              <main className="flex grow overflow-auto">
+                {isSignedIn ? (
+                  <div className="flex h-full grow flex-col items-center gap-3 overflow-auto p-8">{children}</div>
+                ) : (
+                  children
+                )}
+              </main>
+            </div>
+            <Toaster />
+          </SidebarProvider>
+        </TanstackProvider>
       </body>
     </html>
   );

@@ -3,27 +3,27 @@
 import React, { useState, useMemo } from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CardEvent } from "./CardEvent";
+import { EventCard } from "./EventCard";
 import { SortToggle } from "./SortToggle";
 import { AddEvent } from "./AddEvent";
 
-import { type events as Event } from "@prisma/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { EventWithImage } from "../page";
 
 const now = new Date();
 now.setHours(19, 0, 0, 0);
 
 type SortOrder = "asc" | "desc";
 
-export const EventsPage = ({ events: initialEvents }: { events: Event[] }) => {
-  const [events, setEvents] = useState<Event[]>(initialEvents);
+export const EventsPage = ({ events: initialEvents }: { events: EventWithImage[] }) => {
+  const [events, setEvents] = useState<EventWithImage[]>(initialEvents);
   const [futureSortOrder, setFutureSortOrder] = useState<SortOrder>("asc");
   const [pastSortOrder, setPastSortOrder] = useState<SortOrder>("desc");
   const [activeTab, setActiveTab] = useState<"future" | "past">("future");
   const isMobile = useIsMobile();
 
-  const sortEvents = (eventsList: Event[], sortOrder: SortOrder) => {
+  const sortEvents = (eventsList: EventWithImage[], sortOrder: SortOrder) => {
     return [...eventsList].sort((a, b) => {
       const timeA = a.date.getTime();
       const timeB = b.date.getTime();
@@ -98,7 +98,7 @@ export const EventsPage = ({ events: initialEvents }: { events: Event[] }) => {
             className="space-y-5 py-4"
           >
             {events.map((event) => (
-              <CardEvent
+              <EventCard
                 key={event.id}
                 event={event}
                 setEvents={setEvents}

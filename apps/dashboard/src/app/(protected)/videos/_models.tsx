@@ -2,7 +2,7 @@
 import { type YoutubeResourceType } from "data-access/youtube";
 
 // Card resources
-interface Card {
+interface MediaCard {
   title: string;
   type: YoutubeResourceType;
   key: string;
@@ -24,7 +24,7 @@ interface Card {
   };
 }
 
-export const CardsDescription: Card[] = [
+export const MEDIA_TYPES_DESCRIPTION: MediaCard[] = [
   // Channels
   {
     title: "Chaînes",
@@ -34,17 +34,17 @@ export const CardsDescription: Card[] = [
       subtitle: "Les vidéos de ces chaînes youtube seront ajoutées aux vidéos à la une",
       dialogTitle: "Rechercher une chaîne",
       dialogDescription: "Rechercher une chaîne youtube en entrant un nom",
-      placeholder: "Rechercher une chaîne youtube",
+      placeholder: "Nom de la chaîne",
       add: {
         tooltip: "Ajouter cette chaîne",
         alertDialogTitle: "Voulez-vous vraiment ajouter cette chaîne ?",
-        alertDialogAction: "Ajouter les vidéos de cette chaîne",
+        alertDialogAction: "Ajouter",
       },
       remove: {
         tooltip: "Supprimer cette chaîne",
         alertDialogTitle:
           "Voulez-vous vraiment supprimer l'affichage des vidéos de cette chaîne de votre page d'accueil ?",
-        alertDialogAction: "Supprimer l'affichage des vidéos de cette chaîne",
+        alertDialogAction: "Supprimer",
       },
     },
   },
@@ -57,17 +57,17 @@ export const CardsDescription: Card[] = [
       subtitle: "Les vidéos de ces playlists youtube seront ajoutées aux vidéos à la une",
       dialogTitle: "Rechercher une playlist",
       dialogDescription: "Rechercher une playlist youtube en entrant un nom ou l'URL d'une vidéo de cette playlist",
-      placeholder: "Rechercher une playlist youtube",
+      placeholder: "Nom de la playlist ou URL d'une vidéo de la playlist",
       add: {
         tooltip: "Ajouter cette playlist",
         alertDialogTitle: "Voulez-vous vraiment ajouter cette playlist ?",
-        alertDialogAction: "Ajouter les vidéos de cette playlist",
+        alertDialogAction: "Ajouter",
       },
       remove: {
         tooltip: "Supprimer cette playlist",
         alertDialogTitle:
           "Voulez-vous vraiment supprimer l'affichage des vidéos de cette playlist de votre page d'accueil ?",
-        alertDialogAction: "Supprimer l'affichage des vidéos de cette playlist",
+        alertDialogAction: "Supprimer",
       },
     },
   },
@@ -80,16 +80,16 @@ export const CardsDescription: Card[] = [
       subtitle: "Ces vidéos seront ajoutées aux vidéos à la une",
       dialogTitle: "Rechercher une vidéo",
       dialogDescription: "Rechercher une vidéo youtube en entrant un nom ou son URL",
-      placeholder: "Rechercher une vidéo youtube",
+      placeholder: "Nom ou URL de la vidéo",
       add: {
         tooltip: "Ajouter cette vidéo",
         alertDialogTitle: "Voulez-vous vraiment ajouter cette vidéo ?",
-        alertDialogAction: "Ajouter cette vidéo",
+        alertDialogAction: "Ajouter",
       },
       remove: {
         tooltip: "Supprimer cette vidéo",
         alertDialogTitle: "Voulez-vous vraiment supprimer l'affichage de cette vidéo de votre page d'accueil ?",
-        alertDialogAction: "Supprimer l'affichage de la vidéo",
+        alertDialogAction: "Supprimer",
       },
     },
   },

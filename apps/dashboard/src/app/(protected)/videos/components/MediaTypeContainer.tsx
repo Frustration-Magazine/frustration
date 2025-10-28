@@ -11,19 +11,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { YoutubeResourceType, getYoutubeResourceId } from "data-access/youtube";
-import React from "react";
-import { typesTranslations } from "../_models";
-import useVideos from "../hooks/useVideos";
-import VideoPreview from "./VideoPreview";
 
-type Props = {
+import { MediaPreview } from "./MediaPreview";
+
+import { YoutubeResourceType, getYoutubeResourceId } from "data-access/youtube";
+import { typesTranslations } from "../_models";
+import { useMedia } from "../hooks/useMedia";
+import { Plus } from "lucide-react";
+
+type MediaTypeContainerProps = {
   readonly type: YoutubeResourceType;
   readonly title: string;
   readonly texts: Record<string, any>;
 };
 
-export default function VideosCard({ type, title, texts }: Props): React.ReactNode {
+export const MediaTypeContainer = ({ type, title, texts }: MediaTypeContainerProps): React.ReactNode => {
   const {
     searchTerm,
     setSearchTerm,
@@ -37,61 +39,50 @@ export default function VideosCard({ type, title, texts }: Props): React.ReactNo
     handleSearch,
     handleAddMedia,
     handleDeleteMedia,
-  } = useVideos({ type });
+  } = useMedia({ type });
 
-  /* Title */
-  /* ===== */
-  const Title = <h3 className="font-bebas text-4xl">{title}</h3>;
+  const Title = () => <h3 className="font-bebas text-4xl">{title}</h3>;
+  const Subtitle = () => <p className="text-zinc-800">{texts?.subtitle}</p>;
+  const LoaderMediaList = () => <Loader className="mx-auto my-12" />;
 
-  /* Subtitle */
-  /* ======== */
-  const Subtitle = <p className="text-zinc-800">{texts?.subtitle}</p>;
-
-  /* Add */
-  /* === */
-  const Add = (
-    <Button
-      className="mx-auto flex items-center gap-2 rounded-md"
-      disabled={false /*loadingRecords */}
-      variant="outline"
-    >
-      <span> Ajouter </span>
-    </Button>
-  );
-
-  /* Search */
-  /* ====== */
-  const Search = (
-    <form
-      className="flex w-full items-center space-x-2"
-      onSubmit={handleSearch}
-    >
-      <Input
-        type="text"
-        placeholder={texts?.placeholder}
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <Button type="submit">Rechercher</Button>
-    </form>
-  );
-
-  /* Dialog */
-  /* ====== */
-  const AddDialog = (
+  const AddDialog = () => (
     <Dialog>
-      <DialogTrigger asChild>{Add}</DialogTrigger>
+      <DialogTrigger asChild>
+        {/* ➕ Ajouter */}
+        <Button
+          className="gap-1"
+          disabled={loadingMedias}
+          variant="outline"
+        >
+          <Plus />
+          <span>Ajouter</span>
+        </Button>
+      </DialogTrigger>
       <DialogContent className="w-[90vw] max-w-[1000px]">
         <DialogHeader className="space-y-0">
           <DialogTitle>{texts?.dialogTitle}</DialogTitle>
           <DialogDescription>{texts?.dialogDescription}</DialogDescription>
         </DialogHeader>
-        {Search}
+
+        {/* 🔍 Rechercher */}
+        <form
+          className="flex w-full items-center space-x-2"
+          onSubmit={handleSearch}
+        >
+          <Input
+            type="text"
+            placeholder={texts?.placeholder}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <Button type="submit">Rechercher</Button>
+        </form>
+
         {loadingSuggestions ? (
           <Loader className="mx-auto my-12" />
         ) : (
           suggestions.map((suggestion: any) => (
-            <VideoPreview
+            <MediaPreview
               id={getYoutubeResourceId(suggestion)}
               key={getYoutubeResourceId(suggestion)}
               title={suggestion.snippet.title}
@@ -108,23 +99,13 @@ export default function VideosCard({ type, title, texts }: Props): React.ReactNo
     </Dialog>
   );
 
-  /* Loader */
-  /* ====== */
-  const LoaderVideosList = <Loader className="mx-auto my-12" />;
-
-  /* No videos */
-  /* ========= */
-  const NoVideos = <p>🤷‍♂️ Aucune {typesTranslations.get(type)} </p>;
-
-  /* Videos list */
-  /* =========== */
-  const VideosList =
+  const MediaList = () =>
     medias.length === 0 ? (
-      NoVideos
+      <p>🤷‍♂️ Aucune {typesTranslations.get(type)}</p>
     ) : (
       <ul className="space-y-1">
         {medias.map((media: any) => (
-          <VideoPreview
+          <MediaPreview
             {...media}
             key={media.id}
             type={type}
@@ -136,20 +117,18 @@ export default function VideosCard({ type, title, texts }: Props): React.ReactNo
       </ul>
     );
 
-  /* =========== */
-  /*    🚀 UI    */
-  /* =========== */
+  /* --- 🚀 UI --- */
   return (
     <div
       key={type}
       className="scrollbar-thin scrollbar-track-white scrollbar-thumb-black max-h-full space-y-5 self-start overflow-auto rounded-md bg-white p-6 text-center shadow-md"
     >
       <div>
-        {Title}
-        {Subtitle}
+        <Title />
+        <Subtitle />
       </div>
-      {AddDialog}
-      {loadingMedias ? LoaderVideosList : VideosList}
+      <AddDialog />
+      {loadingMedias ? <LoaderMediaList /> : <MediaList />}
     </div>
   );
-}
+};

@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 
 import { cn } from "@/lib/utils";
-import { Calendar, CreditCard, Users, Video } from "lucide-react";
+import { Calendar, CreditCard, Image, LibraryBig, Pen, Users, Video } from "lucide-react";
 import { SignOut } from "./SignOut";
 
 type Link = {
@@ -39,6 +39,21 @@ const items: Link[] = [
     title: "Événements",
     url: "/events",
     icon: Calendar,
+  },
+  {
+    title: "Sorties papier",
+    url: "/paper-items",
+    icon: LibraryBig,
+  },
+  {
+    title: "Auteurs",
+    url: "/authors",
+    icon: Pen,
+  },
+  {
+    title: "Images",
+    url: "/images",
+    icon: Image,
   },
   {
     title: "Vidéos",

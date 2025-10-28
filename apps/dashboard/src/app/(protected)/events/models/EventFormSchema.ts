@@ -22,6 +22,7 @@ export const EventFormSchema = z.object({
     message: "Veuillez renseigner un lien valide",
   }),
   entrance: z.string(),
+  imageId: z.string(),
   displayContact: z.boolean({
     required_error: "Veuillez indiquer si le contact doit être affiché",
   }),

@@ -1,34 +1,37 @@
 "use server";
 
-import { type events as Event } from "@prisma/client";
-import { EventFormSchema, EventFormType } from "../models/models";
-import { createRecord } from "data-access/prisma";
+import { prisma } from "data-access/prisma";
+import { EventWithImage } from "../page";
+import { EventFormSchema, type EventFormType } from "../models/EventFormSchema";
+import { DEFAULT_RESPONSE_STATUS, type ResponseStatus } from "@/actions/models";
 
-type Status = {
-  success: string | null;
-  error: string | null;
-};
+export async function createEvent(data: EventFormType): Promise<ResponseStatus & { result?: EventWithImage }> {
+  let response = { ...DEFAULT_RESPONSE_STATUS };
 
-const STATUS_ERROR = {
-  success: null,
-  error: "Il y a une erreur",
-};
-
-export async function createEvent(data: EventFormType): Promise<Status & { result?: Event }> {
+  // Validation des données client côté serveur avec Zod
   const parsed = EventFormSchema.safeParse(data);
-  if (!parsed.success) return STATUS_ERROR;
+  if (!parsed.success) {
+    response.error = "❌ Les données de l'événement sont invalides.";
+    console.error(response.error, parsed.error.message);
+    return response;
+  }
 
-  const dataWithNulls = {
+  // Convertir les données client en données pour la base de données
+  const dataForDb = {
     ...data,
     contact: data.contact === "" ? null : data.contact,
     entrance: data.entrance === "" ? null : data.entrance,
     link: data.link === "" ? null : data.link,
+    imageId: data.imageId === "" ? null : data.imageId,
   };
 
-  const { status, result } = await createRecord({
-    table: "events",
-    data: dataWithNulls,
-    success: "L'événement a été créé avec succès!",
-  });
-  return { ...status, result };
+  try {
+    const createdEvent = await prisma.events.create({
+      data: dataForDb,
+      include: { image: true },
+    });
+    return { ...response, success: "✅ L'événement a été créé avec succès!", result: createdEvent };
+  } catch (error) {
+    return { ...response, error: "❌ Une erreur est survenue lors de la création de l'événement." };
+  }
 }

@@ -7,6 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// MODELS
+
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -80,18 +82,68 @@ model payments {
   @@unique([date, source, type])
 }
 
+model Image {
+  id          String  @id @default(cuid())
+  url         String  @unique
+  name        String?
+  description String?
+
+  events     events[]
+  paperItems PaperItem[]
+  authors    Author[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model events {
-  id             Int      @id @default(autoincrement())
-  date           DateTime
-  displayHour    Boolean  @default(true)
-  description    String
-  city           String
-  place          String
-  contact        String?
-  link           String?
-  entrance       String?
-  displayContact Boolean  @default(true)
-  displayEvent   Boolean  @default(true)
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  description String
+  city        String
+  place       String
+  contact     String?
+  link        String?
+  entrance    String?
+
+  displayHour    Boolean @default(true)
+  displayContact Boolean @default(true)
+  displayEvent   Boolean @default(true)
+
+  imageId String?
+  image   Image?  @relation(fields: [imageId], references: [id])
+}
+
+model Author {
+  id             String  @id @unique
+  name           String
+  email          String? @default("")
+  xId            String? @default("")
+  profilePicture String? @default("")
+
+  paperItems PaperItem[]
+  image      Image?      @relation(fields: [imageId], references: [id])
+  imageId    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PaperItem {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String?
+  link        String?
+  displayItem Boolean       @default(true)
+  releaseDate DateTime
+  type        PaperItemType
+
+  author   Author  @relation(fields: [authorId], references: [id])
+  authorId String
+  image    Image?  @relation(fields: [imageId], references: [id])
+  imageId  String?
+
+  createdAt DateTime @default(now())
 }
 
 model media {
@@ -144,14 +196,12 @@ model media_playlist {
   media        media?   @relation(fields: [mediaId], references: [id])
 }
 
-model authors {
-  id             String   @id @unique
-  name           String
-  email          String?  @default("")
-  xId            String?  @default("")
-  profilePicture String?  @default("")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime
+// ENUMS
+
+enum PaperItemType {
+  magazine
+  book
+  other
 }
 
 enum PaymentSource {

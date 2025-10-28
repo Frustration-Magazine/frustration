@@ -1,7 +1,9 @@
-import VideosCard from "./components/VideosCard";
-import RedeployButton from "./components/RedeployButton";
+import { MediaTypeContainer } from "./components/MediaTypeContainer";
+import { RedeployButton } from "@/app/_components/RedeployButton";
+
 import { redirectIfNotSignedIn } from "@/app/auth/auth";
-import { CardsDescription } from "./_models";
+import { isEnvironmentProduction } from "@/lib/utils";
+import { MEDIA_TYPES_DESCRIPTION } from "./_models";
 
 async function Page() {
   await redirectIfNotSignedIn();
@@ -9,14 +11,15 @@ async function Page() {
   return (
     <>
       <div className="grid w-full grow grid-cols-3 gap-x-4 overflow-auto">
-        {CardsDescription.map(({ key, ...props }) => (
-          <VideosCard
+        {MEDIA_TYPES_DESCRIPTION.map(({ key, ...props }) => (
+          <MediaTypeContainer
             key={key}
             {...props}
           />
         ))}
       </div>
-      <RedeployButton />
+
+      {!isEnvironmentProduction && <RedeployButton refreshOptions={{ videos: true }} />}
     </>
   );
 }

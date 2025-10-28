@@ -4,12 +4,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, CheckCircle, AlertCircle } from "lucide-react";
 import { triggerUpdatePayments, UpdateStatus } from "../_actions";
-import { useToast } from "@/hooks/useToast";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export function UpdateButton() {
   const [status, setStatus] = useState<UpdateStatus>("idle");
-  const { toast } = useToast();
   const router = useRouter();
 
   const handleUpdate = async () => {
@@ -20,28 +19,22 @@ export function UpdateButton() {
       setStatus(result.status);
 
       if (result.status === "success") {
-        toast({
-          title: "Succès",
+        toast.success("Succès", {
           description: result.message || "Paiements mis à jour avec succès",
-          variant: "default",
         });
         // Refresh the page to show updated data
         setTimeout(() => {
           router.refresh();
         }, 1000);
       } else if (result.status === "error") {
-        toast({
-          title: "Erreur",
+        toast.error("Erreur", {
           description: result.message || "Erreur lors de la mise à jour",
-          variant: "destructive",
         });
       }
     } catch (error) {
       setStatus("error");
-      toast({
-        title: "Erreur",
+      toast.error("Erreur", {
         description: "Erreur inattendue lors de la mise à jour",
-        variant: "destructive",
       });
     }
 

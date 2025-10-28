@@ -1,20 +1,30 @@
-import React from "react";
 import { EventsPage } from "./components/EventsPage";
-import { readRecords } from "data-access/prisma";
-import { redirectIfNotSignedIn } from "@/app/auth/auth";
-import { type events as Event } from "@prisma/client";
+import { RedeployButton } from "@/app/_components/RedeployButton";
 
-async function Page() {
+import { prisma } from "data-access/prisma";
+import { redirectIfNotSignedIn } from "@/app/auth/auth";
+import { Prisma } from "@prisma/client";
+import { isEnvironmentProduction } from "@/lib/utils";
+
+export type EventWithImage = Prisma.eventsGetPayload<{
+  include: {
+    image: true;
+  };
+}>;
+
+export default async function Page() {
   await redirectIfNotSignedIn();
 
-  const { data: events }: { data: Event[] } = await readRecords({
-    table: "events",
-    where: {},
-    orderBy: { date: "desc" },
-    success: "Events read !",
+  const events = await prisma.events.findMany({
+    include: {
+      image: true,
+    },
   });
 
-  return <EventsPage events={events} />;
+  return (
+    <>
+      <EventsPage events={events} />
+      {!isEnvironmentProduction && <RedeployButton />}
+    </>
+  );
 }
-
-export default Page;

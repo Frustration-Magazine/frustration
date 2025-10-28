@@ -1,6 +1,5 @@
 "use server";
 
-// 🔧 Libs
 import {
   fetchYoutube,
   getYoutubeResourceId,
@@ -9,10 +8,7 @@ import {
   YOUTUBE_PLAYLIST_URL_REGEX,
 } from "data-access/youtube";
 
-// 💽 Database
 import { prisma, createRecord, deleteRecord } from "data-access/prisma";
-
-// 🌍 i18n
 import { typesTranslations } from "./_models";
 
 /* --------------------------- */
@@ -184,8 +180,7 @@ async function upsertYoutubeChannel(youtubeChannel: any, mediaId: string) {
 /* 📀 Database transactions */
 /* ------------------------ */
 
-/* Read video (by type)  */
-/* --------------------- */
+/* ⬇️ Read media (by type)  */
 export async function readMediaByType(type: YoutubeResourceType = "video"): Promise<any> {
   // 🔁 📀 Fetch
   let table = `media_${type}` as any;
@@ -204,9 +199,7 @@ export async function readMediaByType(type: YoutubeResourceType = "video"): Prom
   }
 }
 
-/* Add video */
-/* --------- */
-
+/* ➕ Add media */
 export async function createMediaRecord({ type, id }: { type: YoutubeResourceType; id: string }): Promise<any> {
   // 🔁 📀 Add
   const status = await createRecord({
@@ -223,9 +216,7 @@ export async function createMediaRecord({ type, id }: { type: YoutubeResourceTyp
   return status;
 }
 
-/* Remove video */
-/* ------------ */
-
+/* ❌ Delete media */
 export async function deleteMediaRecord({ id, type }: { id: string; type: YoutubeResourceType }): Promise<any> {
   // 🔁 📀 Remove
   const status = deleteRecord({
@@ -238,9 +229,7 @@ export async function deleteMediaRecord({ id, type }: { id: string; type: Youtub
   return status;
 }
 
-/* Fetch and update media records */
-/* ------------------------------ */
-
+/* 🔄 Fetch and update one media record */
 export async function insertOrUpdateMediaRecord({ type, id }: { type: YoutubeResourceType; id: string }): Promise<any> {
   // 1. Video
   if (type === "video") {
@@ -326,53 +315,10 @@ export async function insertOrUpdateMediaRecord({ type, id }: { type: YoutubeRes
   }
 }
 
-/* Refresh medias in database */
-/* -------------------------- */
+/* 🔄 Refresh all media records in database */
 export async function refreshMediasInDatabase() {
   console.info("🔄 Refreshing medias in database...");
   const medias = await prisma.media.findMany();
   await prisma.media_video.deleteMany();
   medias.forEach(async ({ type, id }) => await insertOrUpdateMediaRecord({ type, id }));
-}
-
-/* ------------------------ */
-/* 🪝 Deployment hooks      */
-/* ------------------------ */
-
-export async function redeploy() {
-  let status: {
-    success: string | null;
-    error: string | null;
-  } = {
-    success: null,
-    error: null,
-  };
-
-  // ✨ Refresh from existing medias in database
-  await refreshMediasInDatabase();
-
-  // ❌ Early return | Not redeploying in development
-  if (process.env.NODE_ENV !== "production") {
-    status.error = "Le redéploiement n'est pas possible en environnement de développement";
-    return status;
-  }
-
-  // ❌ Early return | No deploy hook found
-  if (!process.env.VERCEL_DEPLOY_HOOK) {
-    status.error = "Aucun hook de déploiement trouvé parmi les variables d'environnement";
-    return status;
-  }
-
-  try {
-    const response = await fetch(process.env.VERCEL_DEPLOY_HOOK, {
-      method: "POST",
-    });
-    if (response.ok) status.success = "🚀 Redéploiement du site...";
-    if (!response.ok) status.error = "❌ Une erreur est survenue lors de la tentative de redéploiement";
-  } catch (e) {
-    status.error = `❌ Error while fetching with git hook`;
-    console.error(e);
-  }
-
-  return status;
 }
