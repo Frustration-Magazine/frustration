@@ -19,7 +19,7 @@ async function Page() {
         ))}
       </div>
 
-      {!isEnvironmentProduction && <RedeployButton refreshOptions={{ videos: true }} />}
+      {isEnvironmentProduction && <RedeployButton refreshOptions={{ videos: true }} />}
     </>
   );
 }

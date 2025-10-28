@@ -24,7 +24,7 @@ export default async function Page() {
   return (
     <>
       <EventsPage events={events} />
-      {!isEnvironmentProduction && <RedeployButton />}
+      {isEnvironmentProduction && <RedeployButton />}
     </>
   );
 }

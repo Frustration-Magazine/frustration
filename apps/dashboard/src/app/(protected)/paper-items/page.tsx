@@ -23,7 +23,7 @@ export default async function Page() {
   return (
     <>
       <PaperItemsPage paperItems={paperItems} />
-      {!isEnvironmentProduction && <RedeployButton />}
+      {isEnvironmentProduction && <RedeployButton />}
     </>
   );
 }
