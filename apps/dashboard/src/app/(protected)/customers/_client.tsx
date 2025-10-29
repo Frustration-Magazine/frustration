@@ -6,7 +6,7 @@ import { Header } from "./components/Header";
 import { TopBar } from "./components/TopBar";
 import useCustomers from "./hooks/useCustomers";
 
-function Client() {
+export const Client = () => {
   const {
     stripeNewCustomers,
     allActiveCustomersCount,
@@ -38,6 +38,4 @@ function Client() {
       )}
     </>
   );
-}
-
-export default Client;
+};

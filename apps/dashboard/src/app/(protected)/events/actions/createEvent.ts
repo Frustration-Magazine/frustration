@@ -3,15 +3,17 @@
 import { prisma } from "data-access/prisma";
 import { EventWithImage } from "../page";
 import { EventFormSchema, type EventFormType } from "../models/EventFormSchema";
-import { DEFAULT_RESPONSE_STATUS, type ResponseStatus } from "@/actions/models";
+import { DEFAULT_RESPONSE_STATUS, type ResponseStatus } from "@/actions/_models";
+import { requireSession } from "@/lib/auth";
 
 export async function createEvent(data: EventFormType): Promise<ResponseStatus & { result?: EventWithImage }> {
+  await requireSession();
   let response = { ...DEFAULT_RESPONSE_STATUS };
 
   // Validation des données client côté serveur avec Zod
   const parsed = EventFormSchema.safeParse(data);
   if (!parsed.success) {
-    response.error = "❌ Les données de l'événement sont invalides.";
+    response.error = "Les données de l'événement sont invalides.";
     console.error(response.error, parsed.error.message);
     return response;
   }
@@ -30,8 +32,8 @@ export async function createEvent(data: EventFormType): Promise<ResponseStatus &
       data: dataForDb,
       include: { image: true },
     });
-    return { ...response, success: "✅ L'événement a été créé avec succès!", result: createdEvent };
+    return { ...response, success: "L'événement a été créé avec succès!", result: createdEvent };
   } catch (error) {
-    return { ...response, error: "❌ Une erreur est survenue lors de la création de l'événement." };
+    return { ...response, error: "Une erreur est survenue lors de la création de l'événement." };
   }
 }

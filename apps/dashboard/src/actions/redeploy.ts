@@ -1,6 +1,7 @@
 "use server";
 
-import { DEFAULT_RESPONSE_STATUS, type ResponseStatus } from "./models";
+import { requireSession } from "@/lib/auth";
+import { DEFAULT_RESPONSE_STATUS, type ResponseStatus } from "./_models";
 import { refreshMediasInDatabase } from "@/app/(protected)/videos/_actions";
 
 export type RefreshOptions = {
@@ -8,6 +9,7 @@ export type RefreshOptions = {
 };
 
 export async function redeploy(options: RefreshOptions = {}): Promise<ResponseStatus> {
+  await requireSession();
   let status = { ...DEFAULT_RESPONSE_STATUS };
 
   // 🔄 Refresh data based on options
@@ -32,9 +34,9 @@ export async function redeploy(options: RefreshOptions = {}): Promise<ResponseSt
       method: "POST",
     });
     if (response.ok) status.success = "🚀 Redéploiement du site...";
-    if (!response.ok) status.error = "❌ Une erreur est survenue lors de la tentative de redéploiement";
+    if (!response.ok) status.error = "Une erreur est survenue lors de la tentative de redéploiement";
   } catch (e) {
-    status.error = `❌ Error while fetching with git hook`;
+    status.error = `Error while fetching deploy hook`;
     console.error(e);
   }
 

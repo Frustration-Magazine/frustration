@@ -20,8 +20,8 @@ export const RedeployButton = ({ className, refreshOptions = {} }: RedeployButto
   const handleClick = async () => {
     setLoading(true);
     const { success, error } = await redeploy(refreshOptions);
-    if (success) toast.success("✅ Succès", { description: success });
-    if (error) toast.error("❌ Une erreur s'est produite", { description: error });
+    if (success) toast.success(success);
+    if (error) toast.error(error);
     setLoading(false);
   };
 

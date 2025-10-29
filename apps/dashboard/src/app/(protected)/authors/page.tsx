@@ -1,4 +1,4 @@
-import { redirectIfNotSignedIn } from "@/app/auth/auth";
+import { redirectIfNotSignedIn } from "@/lib/auth";
 
 export default async function Page() {
   await redirectIfNotSignedIn();

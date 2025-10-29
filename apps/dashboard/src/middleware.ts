@@ -1,18 +1,17 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
 
 // Define the paths that require authentication
-const protectedPaths = ["/customers", "/events", "/videos", "/income"];
+const protectedPaths = ["/customers", "/events", "/videos", "/income", "/paper-items", "/authors", "/images"];
 
 export async function middleware(req: NextRequest) {
-  // Invalid authentication logic waiting implementation
-  // const token = req.cookies.get("authToken");
-  // const isProtectedPath = protectedPaths.some((path) => req.nextUrl.pathname.startsWith(path));
+  const isProtected = protectedPaths.some((p) => req.nextUrl.pathname.startsWith(p));
+  if (!isProtected) return NextResponse.next();
 
-  // If the user is not authenticated and trying to access a protected path
-  // if (!token && isProtectedPath) {
-  //   return NextResponse.redirect(new URL("/auth/signin", req.url));
-  // }
+  // Important: ceci n'est PAS une validation de sécurité, juste une redirection UX
+  const cookie = getSessionCookie(req);
+  if (!cookie) return NextResponse.redirect(new URL("/signin", req.url));
+
   return NextResponse.next();
 }
 

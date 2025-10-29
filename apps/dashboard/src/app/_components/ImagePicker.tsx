@@ -40,20 +40,12 @@ type ImagePickerProps = {
 };
 
 export const ImagePicker = ({ initialImageId, trigger, onSubmit }: ImagePickerProps) => {
-  // const [images, setImages] = useState<Image[]>([]);
   const [selectedImageId, setSelectedImageId] = useState<string | undefined>(initialImageId);
 
   const { data: images, refetch: refetchImages } = useQuery({
     queryKey: ["images"],
     queryFn: async () => await getImages(),
   });
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const images = await getImages();
-  //     setImages(images);
-  //   })();
-  // }, []);
 
   const handleSelectImage = (id: string) => {
     if (selectedImageId === id) {
@@ -128,7 +120,6 @@ export const ImagePicker = ({ initialImageId, trigger, onSubmit }: ImagePickerPr
                         onClick={async () => {
                           const { success, error } = await deleteImage(image.id);
                           if (success) {
-                            // setImages((prevImages) => prevImages.filter((img) => img.id !== image.id));
                             refetchImages();
                             toast.success(success);
                           } else {
@@ -173,7 +164,7 @@ export const ImagePicker = ({ initialImageId, trigger, onSubmit }: ImagePickerPr
             }
           }}
           onUploadError={() => {
-            toast.error("❌ Une erreur est survenue lors de l'upload de l'image !");
+            toast.error("Une erreur est survenue lors de l'upload de l'image !");
           }}
         />
 

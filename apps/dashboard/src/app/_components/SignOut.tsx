@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,11 +10,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
+
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export const SignOut = ({ className }: { className?: string }) => {
   const router = useRouter();
-  const goToSignOut = () => router.push("/auth/signout");
+  const goToSignOut = () => router.push("/signout");
 
   return (
     <AlertDialog>

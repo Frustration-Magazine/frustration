@@ -1,8 +1,10 @@
 "use server";
 import { prisma } from "data-access/prisma";
 import { updatePayments } from "@/actions/update-payments";
+import { requireSession } from "@/lib/auth";
 
 export async function getPayments() {
+  await requireSession();
   const firstDayOfCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 
   const transactions = await prisma.payments.findMany({
@@ -19,6 +21,7 @@ export async function getPayments() {
 }
 
 export async function updateTipeee({ amount, customers, date }: { amount: number; customers: number; date: Date }) {
+  await requireSession();
   try {
     await prisma.payments.create({
       data: {
@@ -39,6 +42,7 @@ export async function updateTipeee({ amount, customers, date }: { amount: number
 export type UpdateStatus = "idle" | "loading" | "success" | "error";
 
 export async function triggerUpdatePayments(): Promise<{ status: UpdateStatus; message?: string }> {
+  await requireSession();
   try {
     await updatePayments();
     return { status: "success", message: "Paiements mis à jour avec succès" };

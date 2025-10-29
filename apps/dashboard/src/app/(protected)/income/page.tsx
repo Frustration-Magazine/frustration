@@ -1,10 +1,10 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getPayments } from "./_actions";
 import { filterByTypes } from "./_utils";
-import { redirectIfNotSignedIn } from "@/app/auth/auth";
 import { cn } from "@/lib/utils";
 import { ChartPanel } from "./components/ChartPanel";
 import { UpdateButton } from "./components/UpdateButton";
+import { redirectIfNotSignedIn } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 

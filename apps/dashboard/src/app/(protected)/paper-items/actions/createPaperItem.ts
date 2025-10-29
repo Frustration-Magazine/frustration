@@ -3,17 +3,19 @@
 import { prisma } from "data-access/prisma";
 import { PaperItemWithRelations } from "../page";
 import { PaperItemFormSchema, type PaperItemFormType } from "../models/PaperItemFormSchema";
-import { DEFAULT_RESPONSE_STATUS, type ResponseStatus } from "@/actions/models";
+import { DEFAULT_RESPONSE_STATUS, type ResponseStatus } from "@/actions/_models";
+import { requireSession } from "@/lib/auth";
 
 export async function createPaperItem(
   data: PaperItemFormType,
 ): Promise<ResponseStatus & { result?: PaperItemWithRelations }> {
+  await requireSession();
   let response = { ...DEFAULT_RESPONSE_STATUS };
 
   // Validation des données client côté serveur avec Zod
   const parsed = PaperItemFormSchema.safeParse(data);
   if (!parsed.success) {
-    response.error = "❌ Les données de l'item papier sont invalides.";
+    response.error = "Les données de l'item papier sont invalides.";
     console.error(response.error, parsed.error.message);
     return response;
   }
@@ -31,8 +33,8 @@ export async function createPaperItem(
       data: dataForDb,
       include: { image: true, author: true },
     });
-    return { ...response, success: "✅ L'item papier a été créé avec succès!", result: createdPaperItem };
+    return { ...response, success: "L'item papier a été créé avec succès!", result: createdPaperItem };
   } catch (error) {
-    return { ...response, error: "❌ Une erreur est survenue lors de la création de l'item." };
+    return { ...response, error: "Une erreur est survenue lors de la création de l'item." };
   }
 }

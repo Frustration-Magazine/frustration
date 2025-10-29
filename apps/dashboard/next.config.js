@@ -18,7 +18,7 @@ const nextConfig = {
   // 🔗 Allow fetching images from external sources
   images: {
     remotePatterns: [
-      // Youtube
+      // --- Youtube ---
       {
         protocol: "https",
         hostname: "yt3.ggpht.com",
@@ -27,10 +27,16 @@ const nextConfig = {
         protocol: "https",
         hostname: "i.ytimg.com",
       },
-      // UploadThing
+      // --- UploadThing ---
+      // Production
       {
         protocol: "https",
         hostname: "wf254jojd1.ufs.sh",
+      },
+      // Development
+      {
+        protocol: "https",
+        hostname: "pmdx9cesfv.ufs.sh",
       },
     ],
   },

@@ -2,9 +2,9 @@ import { EventsPage } from "./components/EventsPage";
 import { RedeployButton } from "@/app/_components/RedeployButton";
 
 import { prisma } from "data-access/prisma";
-import { redirectIfNotSignedIn } from "@/app/auth/auth";
 import { Prisma } from "@prisma/client";
 import { isEnvironmentProduction } from "@/lib/utils";
+import { redirectIfNotSignedIn } from "@/lib/auth";
 
 export type EventWithImage = Prisma.eventsGetPayload<{
   include: {

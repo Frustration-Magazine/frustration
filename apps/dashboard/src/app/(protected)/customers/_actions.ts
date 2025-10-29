@@ -2,13 +2,16 @@
 
 import { Customer, fetchStripeNewCustomers as fetchStripeNewCustomersFn } from "data-access/stripe";
 import { prisma } from "data-access/prisma";
+import { requireSession } from "@/lib/auth";
 
 export async function fetchStripeNewCustomers({ from, to }: { from: Date; to: Date }): Promise<Customer[]> {
+  await requireSession();
   const newSubscriptions = await fetchStripeNewCustomersFn({ from, to });
   return newSubscriptions;
 }
 
 export async function fetchAllActiveCustomersCount() {
+  await requireSession();
   const firstDayOfLastMonth = new Date();
   firstDayOfLastMonth.setMonth(firstDayOfLastMonth.getMonth() - 1);
   firstDayOfLastMonth.setDate(1);

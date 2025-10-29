@@ -10,12 +10,14 @@ import {
 
 import { prisma, createRecord, deleteRecord } from "data-access/prisma";
 import { typesTranslations } from "./_models";
+import { requireSession } from "@/lib/auth";
 
 /* --------------------------- */
 /* Fetch youtube suggestions   */
 /* --------------------------- */
 
 export async function fetchSuggestions(params: Record<string, any>): Promise<any> {
+  await requireSession();
   // 🥘 Prepare
   const isVideoUrl = YOUTUBE_VIDEO_URL_REGEX.test(params.q);
   const isPlaylistUrl = YOUTUBE_PLAYLIST_URL_REGEX.test(params.q);
@@ -83,6 +85,7 @@ export async function fetchSuggestions(params: Record<string, any>): Promise<any
 /* -------------------------------------- */
 
 export async function fetchYoutubeByIdsAndType(ids: string[], type: YoutubeResourceType): Promise<any> {
+  await requireSession();
   // 🥘 Prepare
   // Necessay to concatenate ids for the fetch
   const concatenatedIds = ids.join(",");
@@ -100,6 +103,7 @@ export async function fetchYoutubeByIdsAndType(ids: string[], type: YoutubeResou
 }
 
 async function upsertYoutubeVideo(youtubeVideo: any, mediaId: string) {
+  await requireSession();
   const res = await prisma.media_video.upsert({
     where: {
       id: youtubeVideo.id,
@@ -131,6 +135,7 @@ async function upsertYoutubeVideo(youtubeVideo: any, mediaId: string) {
 }
 
 async function upsertYoutubePlaylist(youtubePlaylist: any, mediaId: string) {
+  await requireSession();
   await prisma.media_playlist.upsert({
     where: {
       id: youtubePlaylist.id,
@@ -156,6 +161,7 @@ async function upsertYoutubePlaylist(youtubePlaylist: any, mediaId: string) {
 }
 
 async function upsertYoutubeChannel(youtubeChannel: any, mediaId: string) {
+  await requireSession();
   await prisma.media_channel.upsert({
     where: {
       id: youtubeChannel.id,
@@ -182,6 +188,7 @@ async function upsertYoutubeChannel(youtubeChannel: any, mediaId: string) {
 
 /* ⬇️ Read media (by type)  */
 export async function readMediaByType(type: YoutubeResourceType = "video"): Promise<any> {
+  await requireSession();
   // 🔁 📀 Fetch
   let table = `media_${type}` as any;
 
@@ -201,6 +208,7 @@ export async function readMediaByType(type: YoutubeResourceType = "video"): Prom
 
 /* ➕ Add media */
 export async function createMediaRecord({ type, id }: { type: YoutubeResourceType; id: string }): Promise<any> {
+  await requireSession();
   // 🔁 📀 Add
   const status = await createRecord({
     table: "media",
@@ -218,6 +226,7 @@ export async function createMediaRecord({ type, id }: { type: YoutubeResourceTyp
 
 /* ❌ Delete media */
 export async function deleteMediaRecord({ id, type }: { id: string; type: YoutubeResourceType }): Promise<any> {
+  await requireSession();
   // 🔁 📀 Remove
   const status = deleteRecord({
     table: "media",
@@ -231,6 +240,7 @@ export async function deleteMediaRecord({ id, type }: { id: string; type: Youtub
 
 /* 🔄 Fetch and update one media record */
 export async function insertOrUpdateMediaRecord({ type, id }: { type: YoutubeResourceType; id: string }): Promise<any> {
+  await requireSession();
   // 1. Video
   if (type === "video") {
     const { items } = await fetchYoutube({

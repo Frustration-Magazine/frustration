@@ -20,8 +20,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@/auth": ["./src/app/auth/auth.ts"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [

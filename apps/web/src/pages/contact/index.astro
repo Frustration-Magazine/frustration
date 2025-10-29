@@ -5,11 +5,9 @@ import { Textarea } from "@/components/ui/textarea";
 import ContactSubjectSelect from "@/pages/contact/_components/ContactSubjectSelect";
 import PageLayout from "@/layout/PageLayout/PageLayout.astro";
 import { cn } from "@/lib/utils";
-import { Resend } from "resend";
+import { resend } from "data-access/mail";
 
 export const prerender = false;
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const INVALID_CAPTCHA_STATUS = "invalid-captcha";
 const NO_SUBJECT_STATUS = "no-subject";

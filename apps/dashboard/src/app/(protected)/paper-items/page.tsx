@@ -1,6 +1,6 @@
 import React from "react";
+import { redirectIfNotSignedIn } from "@/lib/auth";
 import { prisma, Prisma } from "data-access/prisma";
-import { redirectIfNotSignedIn } from "@/app/auth/auth";
 import { PaperItemsPage } from "./components/PaperItemsPage";
 import { RedeployButton } from "@/app/_components/RedeployButton";
 import { isEnvironmentProduction } from "@/lib/utils";

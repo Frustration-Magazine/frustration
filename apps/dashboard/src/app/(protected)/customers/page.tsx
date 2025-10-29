@@ -1,5 +1,5 @@
-import { redirectIfNotSignedIn } from "@/app/auth/auth";
-import Client from "./_client";
+import { redirectIfNotSignedIn } from "@/lib/auth";
+import { Client } from "./_client";
 
 async function Page() {
   await redirectIfNotSignedIn();

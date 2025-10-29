@@ -1,4 +1,4 @@
-import { resend } from "./index";
+import { resend } from "data-access/mail";
 
 export async function addSubscriberToNewsletter({
   email,

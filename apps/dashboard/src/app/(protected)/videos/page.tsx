@@ -1,7 +1,7 @@
 import { MediaTypeContainer } from "./components/MediaTypeContainer";
 import { RedeployButton } from "@/app/_components/RedeployButton";
 
-import { redirectIfNotSignedIn } from "@/app/auth/auth";
+import { redirectIfNotSignedIn } from "@/lib/auth";
 import { isEnvironmentProduction } from "@/lib/utils";
 import { MEDIA_TYPES_DESCRIPTION } from "./_models";
 

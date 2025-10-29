@@ -1,11 +1,7 @@
-import { signedIn } from "@/auth";
 import { redirect } from "next/navigation";
-const DEFAULT_HOMEPAGE = "/income";
+import { redirectIfNotSignedIn } from "@/lib/auth";
 
-async function Root() {
-  const signed = await signedIn();
-  if (!signed) redirect("/auth/signin");
-  if (signed) redirect(DEFAULT_HOMEPAGE);
+export default async function Root() {
+  await redirectIfNotSignedIn();
+  redirect("/income");
 }
-
-export default Root;

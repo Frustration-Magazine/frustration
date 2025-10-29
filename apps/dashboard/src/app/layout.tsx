@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Bebas_Neue, Inter, Poppins } from "next/font/google";
 
 import { Toaster } from "@/components/ui/sonner";
@@ -8,8 +9,8 @@ import { TanstackProvider } from "./_components/TanstackProvider";
 import { Sidenav } from "./_components/Sidenav";
 
 import "./globals.css";
-import { signedIn } from "@/auth";
 import { cn } from "@/lib/utils";
+import { auth } from "@/lib/auth";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -39,7 +40,11 @@ type Props = Readonly<{
 }>;
 
 export default async function RootLayout({ children }: Props) {
-  const isSignedIn = await signedIn();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const isSignedIn = !!session;
 
   return (
     <html
@@ -54,7 +59,7 @@ export default async function RootLayout({ children }: Props) {
       >
         <TanstackProvider>
           <SidebarProvider defaultOpen={isSignedIn}>
-            <Sidenav />
+            {isSignedIn && <Sidenav />}
             <div className="flex flex-1 flex-col">
               <Header isSignedIn={isSignedIn} />
               <main className="flex grow overflow-auto">
