@@ -12,9 +12,7 @@ const nextConfig = {
     return config;
   },
   // 🧪 Experimental features
-  experimental: {
-    authInterrupts: true,
-  },
+  experimental: {},
   // 🔗 Allow fetching images from external sources
   images: {
     remotePatterns: [
