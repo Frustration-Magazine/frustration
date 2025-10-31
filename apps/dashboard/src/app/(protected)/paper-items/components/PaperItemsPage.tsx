@@ -64,7 +64,7 @@ export const PaperItemsPage = ({ paperItems: initialPaperItems }: { paperItems: 
         </TabsList>
       </header>
 
-      <section>
+      <section className="scrollbar-none mask-t-from-97% mask-b-from-97% mx-auto overflow-auto py-5">
         {paperItemsToDisplay.map(({ tab, items }) => (
           <TabsContent
             key={tab}

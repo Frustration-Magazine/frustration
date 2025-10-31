@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EventCard } from "./EventCard";
@@ -10,9 +10,6 @@ import { AddEvent } from "./AddEvent";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { EventWithImage } from "../page";
-
-const now = new Date();
-now.setHours(19, 0, 0, 0);
 
 type SortOrder = "asc" | "desc";
 
@@ -90,12 +87,12 @@ export const EventsPage = ({ events: initialEvents }: { events: EventWithImage[]
         />
       </header>
 
-      <section className="scrollbar-none mask-t-from-97% mask-b-from-97% mx-auto overflow-auto">
+      <section className="scrollbar-none mask-t-from-97% mask-b-from-97% mx-auto overflow-auto py-5">
         {eventsToDisplay.map(({ tab, events }) => (
           <TabsContent
             key={tab}
             value={tab}
-            className="space-y-5 py-4"
+            className="space-y-5"
           >
             {events.map((event) => (
               <EventCard
