@@ -6,10 +6,11 @@ import H3 from "@/components/H3";
 
 import { Link } from "@/components/Link";
 import { prisma } from "data-access/prisma";
-import { setCacheHeaders, CachePresets } from "@/lib/cache";
 
-export const prerender = false;
-setCacheHeaders(Astro.response.headers, CachePresets.medium);
+/* Keep it SSG to save compute time on Neon, an admin can rebuild the page from the dashboard */
+// import { setCacheHeaders, CachePresets } from "@/lib/cache";
+// export const prerender = false;
+// setCacheHeaders(Astro.response.headers, CachePresets.medium);
 
 const paperItems = await prisma.paperItem.findMany({
   include: {

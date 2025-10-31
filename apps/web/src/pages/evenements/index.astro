@@ -6,10 +6,11 @@ import { EventsTabs } from "./_components/EventsTabs";
 
 import { prisma } from "data-access/prisma";
 import { OG_IMAGES_URL } from "@/constants";
-import { setCacheHeaders, CachePresets } from "@/lib/cache";
 
-export const prerender = false;
-setCacheHeaders(Astro.response.headers, CachePresets.medium);
+/* Keep it SSG to save compute time on Neon, an admin can rebuild the page from the dashboard */
+// import { setCacheHeaders, CachePresets } from "@/lib/cache";
+// export const prerender = false;
+// setCacheHeaders(Astro.response.headers, CachePresets.medium);
 
 const events = await prisma.events.findMany({
   include: {
@@ -20,11 +21,6 @@ const events = await prisma.events.findMany({
 });
 
 export type EventWithImage = (typeof events)[number];
-
-const futureEvents = events
-  .filter(({ date }) => date >= new Date())
-  .sort((a, b) => a.date.getTime() - b.date.getTime());
-const pastEvents = events.filter(({ date }) => date < new Date()).sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
 
 <PageLayout
@@ -40,8 +36,7 @@ const pastEvents = events.filter(({ date }) => date < new Date()).sort((a, b) =>
 
     <EventsTabs
       client:load
-      futureEvents={futureEvents}
-      pastEvents={pastEvents}
+      events={events}
     />
   </article>
 </PageLayout>

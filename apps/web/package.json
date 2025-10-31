@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "infisical run -- astro dev --host",
-    "dev:prod": "infisical run --env =rod -- astro dev --host",
+    "dev:prod": "infisical run --env=prod -- astro dev --host",
     "start": "infisical run --env=prod -- astro dev",
     "build": "infisical run -- astro build",
     "build:prod": "infisical run --env=prod -- astro build",

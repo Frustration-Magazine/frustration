@@ -20,13 +20,13 @@ This is the Frustration Dashboard (as a part of monorepository Frustration), a w
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/frustration-dashboard.git
+git clone https://github.com/Frustration-Magazine/frustration.git
 ```
 
 2. Navigate to the project directory:
 
 ```bash
-cd frustration-dashboard
+cd frustration/app/dashboard
 ```
 
 3. Install dependencies:
@@ -72,4 +72,4 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For any inquiries, please contact [frustrationmagazine@gmail.com](mailto:frustrationmagazine@gmail.com).
+For any inquiries, please contact [redaction@frustrationmagazine](mailto:redaction@frustrationmagazine.fr).

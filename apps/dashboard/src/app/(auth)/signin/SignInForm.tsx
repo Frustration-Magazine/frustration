@@ -44,7 +44,7 @@ export const SignInForm = () => {
               <FormLabel>📧 Email</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="frustrationmagazine@gmail.com"
+                  placeholder="login@exemple.com"
                   disabled={pending}
                   {...field}
                 />
