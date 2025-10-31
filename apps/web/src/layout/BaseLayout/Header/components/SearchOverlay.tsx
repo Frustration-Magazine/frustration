@@ -29,7 +29,7 @@ export const SearchOverlay = () => {
   const OpenButton = () => (
     <button
       type="button"
-      title="Recherche"
+      title="Rechercher un article"
       className={cn("w-4 cursor-pointer", "md:w-5", "xl:w-6")}
       onClick={() => setOpened(true)}
       aria-label="Rechercher un article"

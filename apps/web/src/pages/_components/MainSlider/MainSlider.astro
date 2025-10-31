@@ -8,6 +8,7 @@ import papersSlide from "./_assets/papers.webp";
 const { posts } = Astro.props;
 
 const slides = [
+  ...posts,
   {
     isArticle: false,
     title: "📅 Événements",
@@ -32,7 +33,6 @@ const slides = [
       },
     },
   },
-  ...posts,
 ];
 ---
 
