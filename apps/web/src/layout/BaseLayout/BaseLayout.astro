@@ -1,9 +1,10 @@
 ---
 import { fade } from "astro:transitions";
-import Head from "../Head.astro";
 
+import Head from "../Head.astro";
 import Footer from "./Footer/Footer.astro";
 import Header from "./Header/Header.astro";
+import SubscribersBanner from "./Header/banners/SubscribersBanner.astro";
 
 import "@fontsource/bakbak-one";
 import "@fontsource/bebas-neue";
@@ -53,6 +54,7 @@ if (featuredImage?.mediaDetails) {
   <title>Frustration Magazine - {title}</title>
   <body class="flex min-h-screen flex-col overflow-x-hidden bg-black">
     <Header transition:persist />
+    <SubscribersBanner />
     <main class="flex grow flex-col">
       <slot transition:animate={fade({ duration: "0.4s" })} />
     </main>

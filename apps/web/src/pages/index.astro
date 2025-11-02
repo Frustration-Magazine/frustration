@@ -6,9 +6,10 @@ import MainSlider from "./_components/MainSlider/MainSlider.astro";
 import NewsletterBanner from "./_components/NewsletterBanner/NewsletterBanner.astro";
 import SeparationWave from "./_components/Separators/Wave.astro";
 import Videos from "./_components/Videos/Videos.astro";
-
 import Interviews from "./_components/Interviews/Interviews.astro";
 import SeparationSpades from "./_components/Separators/Spades.astro";
+
+import { fetchLastPosts } from "@/lib/wordpress";
 
 const metadata = {
   title: "Accueil",
@@ -16,9 +17,6 @@ const metadata = {
     "Page d'accueil du magazine de critique sociale pour grand public Frustration Magazine sur lequel vous pourrez retrouver nos dernières vidéos et articles pour mieux comprendre l'actualité politique, économique et sociale ainsi que toutes nos analyses sur la guerre en cours que mène la bourgeoisie contre les travailleuses et travailleurs.",
 };
 
-import { fetchLastPosts } from "@/lib/wordpress";
-
-// Database import
 const MAX_POSTS = 9;
 const posts = await fetchLastPosts({ first: MAX_POSTS });
 ---
