@@ -58,7 +58,7 @@ export const ImagePicker = ({ initialImageId, trigger, onSubmit }: ImagePickerPr
   return (
     <Dialog>
       {trigger ?? null}
-      <DialogContent>
+      <DialogContent className="w-fit sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-center">🖼️ Bibliothèque d'images</DialogTitle>
         </DialogHeader>
@@ -66,7 +66,7 @@ export const ImagePicker = ({ initialImageId, trigger, onSubmit }: ImagePickerPr
           Sélectionnez une image depuis la bibliothèque d'images ou uploadez une nouvelle image.
         </DialogDescription>
 
-        <div className="mx-auto grid max-h-[50vh] w-fit grid-cols-3 overflow-y-auto border">
+        <div className="mx-auto grid max-h-[50vh] grid-cols-3 overflow-y-auto border">
           {images?.map((image) => (
             <div
               className="relative col-span-1 border"

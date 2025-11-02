@@ -68,7 +68,7 @@ export const UpdateTipeeeDialog = ({ missingTipeeeMonths }: { missingTipeeeMonth
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <DialogContent className="w-[800px] max-w-[90vw]">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-2xl">Mise à jour Tipeee</DialogTitle>
           <div className="text-muted-foreground gap-x-1 text-sm">

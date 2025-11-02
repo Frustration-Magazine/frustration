@@ -108,14 +108,14 @@ export const EventFormModal = ({ onSubmit, title, description, event, trigger }:
       }}
     >
       {trigger ?? null}
-      <DialogContent>
+      <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
         <form
-          className="w-2xl space-y-4"
+          className="space-y-4"
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();

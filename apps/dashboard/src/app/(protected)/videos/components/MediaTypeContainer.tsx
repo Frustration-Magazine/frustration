@@ -61,7 +61,7 @@ export const MediaTypeContainer = ({ type, title, texts }: MediaTypeContainerPro
           <span>Ajouter</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[90vw] max-w-[1000px]">
+      <DialogContent className="sm:max-w-3xl">
         <DialogHeader className="space-y-0">
           <DialogTitle>{texts?.dialogTitle}</DialogTitle>
           <DialogDescription>{texts?.dialogDescription}</DialogDescription>
@@ -69,7 +69,7 @@ export const MediaTypeContainer = ({ type, title, texts }: MediaTypeContainerPro
 
         {/* 🔍 Rechercher */}
         <form
-          className="flex w-full items-center space-x-2"
+          className="flex items-center space-x-2"
           onSubmit={handleSearch}
         >
           <Input

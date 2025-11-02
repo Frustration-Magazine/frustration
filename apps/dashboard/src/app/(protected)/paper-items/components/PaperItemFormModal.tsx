@@ -100,14 +100,14 @@ export const PaperItemFormModal = ({ onSubmit, title, description, paperItem, tr
       }}
     >
       {trigger ?? null}
-      <DialogContent>
+      <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
         <form
-          className="w-2xl space-y-4"
+          className="space-y-4"
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
