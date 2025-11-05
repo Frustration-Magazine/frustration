@@ -18,7 +18,8 @@ article .featured-image {
 }
 
 /* Youtube videos */
-.content div:has(iframe[src^="https://www.youtube.com"])
+.content div:has(iframe[src^="https://www.youtube.com"]),
+.content div:has(iframe[src^="https://geo.dailymotion.com"])
 {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -145,7 +146,7 @@ article .featured-image {
   margin-left: 10px;
 }
 
-.content iframe:not([src^="https://www.youtube.com"])
+.content iframe:not([src^="https://www.youtube.com"]):not([src^="https://geo.dailymotion.com"])
 {
   display: none;
 }
