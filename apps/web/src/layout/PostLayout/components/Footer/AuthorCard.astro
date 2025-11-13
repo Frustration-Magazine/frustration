@@ -1,13 +1,14 @@
 ---
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
-import { GrArticle as ArticleIcon } from "react-icons/gr";
-import BackgroundCard from "./background.avif";
+import { NewspaperIcon } from "lucide-react";
+import BackgroundCard from "./background.webp";
+
 const { author } = Astro.props;
 ---
 
 <a
-  class={cn("block rounded-xl bg-cover bg-bottom text-white shadow-md", "my-3 p-3", "sm:my-5 sm:p-6")}
+  class={cn("block rounded-md bg-cover bg-bottom text-white shadow-md", "my-3 p-3", "sm:my-5 sm:p-6")}
   href={`/posts?author=${author.slug}`}
   style={`background-image: url(${BackgroundCard.src})`}
 >
@@ -28,14 +29,14 @@ const { author } = Astro.props;
         {author.name}
       </h5>
       {
-        author.description ? (
+        author.description && (
           <h6 class={cn("font-bebas leading-none!", "text-lg", "sm:text-xl")}>{author.description}</h6>
-        ) : null
+        )
       }
       {
         (
           <div class={cn("font-open-sans mt-1 flex items-center gap-1.5 font-semibold", "text-xs", "sm:text-sm")}>
-            <ArticleIcon />
+            <NewspaperIcon size={16} />
             <span> Tous les articles </span>
           </div>
         )

@@ -3,8 +3,8 @@ import PageLayout from "../PageLayout/PageLayout.astro";
 import Title from "./components/Header/Title.astro";
 import Metadata from "./components/Header/Metadata.astro";
 import FeaturedImage from "./components/Header/FeaturedImage.astro";
-import CardAuthor from "./components/Footer/CardAuthor.astro";
-import Banner from "./components/Footer/Banner.astro";
+import AuthorCard from "./components/Footer/AuthorCard.astro";
+import SubscribeBanner from "./components/Footer/SubscribeBanner.astro";
 import ScrollWatcher from "./components/ScrollWatcher.astro";
 
 import { MoreArticles } from "./components/Footer/MoreArticles";
@@ -50,8 +50,8 @@ const featuredImage = Astro.props.featuredImage?.node;
     </section>
 
     <!-- Footer -->
-    <CardAuthor author={author} />
-    <Banner />
+    <AuthorCard author={author} />
+    <SubscribeBanner />
     <MoreArticles client:idle />
   </article>
 
