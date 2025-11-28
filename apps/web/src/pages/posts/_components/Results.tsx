@@ -92,13 +92,13 @@ export const Results = ({ term, categorySlug, author, initialPosts, initialPageI
               <div className="flex items-start justify-between">
                 {/* 📌 Categories */}
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-0">
-                  {categories.nodes.map(({ name, slug }) => (
+                  {categories.nodes.map((category) => (
                     <div
-                      key={slug}
+                      key={`${slug}-${category.slug}`}
                       className="flex items-center gap-1"
                     >
                       <TagIcon className="w-3" />
-                      <span>{name}</span>
+                      <span>{category.name}</span>
                     </div>
                   ))}
                 </div>

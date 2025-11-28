@@ -1,10 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { InfoIcon, LinkIcon, MailIcon, MapPin } from "lucide-react";
-
+import type { EventWithImage } from "../_models";
 import { cn } from "@/lib/utils";
-import { type ReactNode } from "react";
-import { type events as Event } from "@prisma/client";
-import type { EventWithImage } from "../index.astro";
 
 const formatDate = (date: Date, displayHour: boolean, timezone: string = "Europe/Paris") => {
   const options: Intl.DateTimeFormatOptions = {
@@ -45,7 +42,7 @@ export const EventCard = ({ event }: Readonly<{ event: EventWithImage }>) => {
 
       <CardHeader>
         <CardTitle className={cn("first-letter:capitalize", "text-xl", "sm:text-2xl")}>
-          {formatDate(event.date, event.displayHour)} - {event.city}
+          {formatDate(new Date(event.date), event.displayHour)} - {event.city}
         </CardTitle>
         <CardDescription className={cn("flex items-center gap-1", "text-base", "sm:text-lg")}>
           <MapPin size={16} />

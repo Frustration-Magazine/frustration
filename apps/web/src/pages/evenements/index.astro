@@ -5,22 +5,19 @@ import H3 from "@/components/H3";
 import { EventsTabs } from "./_components/EventsTabs";
 
 import { prisma } from "data-access/prisma";
+import { eventsQuery } from "./_models";
+import { setCacheHeaders, CachePresets } from "@/lib/cache";
 import { OG_IMAGES_URL } from "@/constants";
 
-/* Keep it SSG to save compute time on Neon, an admin can rebuild the page from the dashboard */
-// import { setCacheHeaders, CachePresets } from "@/lib/cache";
-// export const prerender = false;
-// setCacheHeaders(Astro.response.headers, CachePresets.medium);
+export const prerender = false;
+setCacheHeaders(Astro.response.headers, CachePresets.events);
 
-const events = await prisma.events.findMany({
-  include: {
-    image: true,
-  },
-  where: { displayEvent: true },
-  orderBy: {},
-});
+const events = await prisma.events.findMany(eventsQuery);
 
-export type EventWithImage = (typeof events)[number];
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const futureEvents = events.filter(({ date }) => date >= today);
+const pastEvents = events.filter(({ date }) => date < today).reverse();
 ---
 
 <PageLayout
@@ -36,7 +33,8 @@ export type EventWithImage = (typeof events)[number];
 
     <EventsTabs
       client:load
-      events={events}
+      futureEvents={futureEvents}
+      pastEvents={pastEvents}
     />
   </article>
 </PageLayout>

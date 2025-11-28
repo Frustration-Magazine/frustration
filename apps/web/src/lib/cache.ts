@@ -52,6 +52,9 @@ export const CachePresets = {
   // Semi-dynamic content
   medium: { browser: { minutes: 5 }, cdn: { hours: 1 } },
 
+  // Daily updated events list
+  events: { browser: { minutes: 5 }, cdn: { days: 1 } },
+
   // Stable content
   long: { browser: { minutes: 5 }, cdn: { days: 7 } },
 

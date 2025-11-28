@@ -1,21 +1,26 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { type EventWithImage } from "../index.astro";
 import { EventCard } from "./EventCard";
+import type { EventWithImage } from "../_models";
 import { cn } from "@/lib/utils";
 
-export const EventsTabs = ({ events }: { events: EventWithImage[] }) => {
+type EventsTabsProps = {
+  futureEvents: EventWithImage[];
+  pastEvents: EventWithImage[];
+};
+
+export const EventsTabs = ({ futureEvents, pastEvents }: EventsTabsProps) => {
   const eventsToDisplay = [
     {
       value: "future" as const,
       label: "➡️ Événements à venir",
-      events: events.filter(({ date }) => date >= new Date()).sort((a, b) => a.date.getTime() - b.date.getTime()),
+      events: futureEvents,
       emptyMessage:
         "Aucun événement à venir pour l'instant, n'hésitez pas à nous suivre sur nos réseaux sociaux pour ne rien rater de l'actualité de Frustration Magazine 😁",
     },
     {
       value: "past" as const,
       label: "⌛ Événements passés",
-      events: events.filter(({ date }) => date < new Date()).sort((a, b) => b.date.getTime() - a.date.getTime()),
+      events: pastEvents,
       emptyMessage: null,
     },
   ];
